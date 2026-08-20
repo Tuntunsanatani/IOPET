@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="hi" translate="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>GCI · NMMS दैनिक अभ्यास</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D; --surface:#16161A; --line:#2C2C34;
+  --ink:#F2F2F4; --muted:#8A8A94;
+  --blue:#3B5BFD; --blue-bg:#101838;
+  --green:#21C55D; --green-bg:#0A2E17;
+  --amber:#E8B923; --amber-bg:#33280A;
+  --red:#F05252; --bolt:#D4F31F; --teal:#2DBFA8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#000}
+body{font-family:'Noto Sans Devanagari','Noto Sans',system-ui,-apple-system,sans-serif;color:var(--ink)}
+button{font-family:inherit;border:none;cursor:pointer}
+input{font-family:inherit;outline:none}
+#app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.pad{padding:0 20px}
+
+.topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 10px}
+.xbtn{background:none;color:var(--muted);font-size:26px;line-height:1;width:30px;text-align:left}
+.track{flex:1;display:flex;gap:3px}
+.seg{flex:1;height:9px;border-radius:6px;background:#2A2A31;transition:background .35s ease}
+.seg.done{background:var(--green)}
+.bolt{display:flex;align-items:center;gap:4px;font-weight:700;font-size:15px;color:var(--bolt)}
+.bolt svg{width:17px;height:17px}
+.brand{text-align:center;font-size:11px;letter-spacing:3px;color:#4A4A54;font-weight:700}
+
+.body{flex:1;overflow-y:auto;padding-top:30px;padding-bottom:20px}
+.qtext{font-size:21px;line-height:1.55;font-weight:600;letter-spacing:-.2px}
+.vis{margin:22px 0 4px}
+.vis svg{width:100%;height:auto;display:block}
+.viscap{text-align:center;font-size:12px;color:#5E5E68;font-weight:500;margin-top:2px}
+.opts{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.opt{width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:17px 18px;font-size:17px;font-weight:500;color:var(--ink);transition:border-color .15s,background .15s,opacity .15s}
+.opt.sel{border-color:var(--blue);background:var(--blue-bg);color:#A9BCFF}
+.opt.ok{border-color:var(--green);background:var(--green-bg);color:#7BE6A6}
+.opt.no{border-color:var(--red);background:#2E0E0E;color:#FF9A9A}
+.opt.dead{opacity:.32;pointer-events:none}
+.opt.lock{pointer-events:none}
+
+.foot{padding:14px 20px calc(20px + env(safe-area-inset-bottom));background:var(--bg)}
+.cta{width:100%;padding:17px;border-radius:40px;font-size:17px;font-weight:700}
+.cta.idle{background:#26262D;color:#5E5E68;pointer-events:none}
+.cta.go{background:#EDEDED;color:#111}
+.cta.green{background:var(--green);color:#04200E}
+.cta.amber{background:var(--amber);color:#2A2000}
+.cta.ghost{background:none;border:1.5px solid var(--line);color:var(--muted);font-size:15px;padding:14px}
+
+.fb{border-radius:22px 22px 0 0;margin:0 -20px -14px;padding:20px 20px 12px;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.fb.correct{background:var(--green-bg)}
+.fb.wrong{background:var(--amber-bg)}
+.fb.reveal{background:#2A1010}
+.fbrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.fbtitle{font-size:21px;font-weight:700;color:#fff}
+.xp{font-size:15px;font-weight:700;color:var(--green)}
+.whybtn{background:rgba(255,255,255,.13);color:#fff;font-size:14px;font-weight:700;padding:10px 18px;border-radius:30px}
+.note{font-size:15px;line-height:1.65;color:rgba(255,255,255,.82);margin-top:12px}
+.note b{color:#fff;font-weight:600}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 24px}
+.top{flex:1;display:flex;flex-direction:column;padding:26px 22px 10px;overflow-y:auto}
+.mascot{width:88px;height:88px;margin-bottom:22px}
+.h1{font-size:28px;font-weight:700;line-height:1.3;letter-spacing:-.5px}
+.h2{font-size:22px;font-weight:700;margin-bottom:6px}
+.sub{font-size:15px;color:var(--muted);margin-top:10px;line-height:1.6}
+
+.field{margin-top:18px;text-align:left}
+.lbl{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:7px;display:block}
+.inp{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:15px 16px;font-size:17px;color:var(--ink)}
+.inp:focus{border-color:var(--blue)}
+.pin{letter-spacing:14px;text-align:center;font-size:26px;font-weight:700;padding:16px}
+
+.selfiebox{width:150px;height:150px;border-radius:50%;background:var(--surface);border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin:6px auto 0;overflow:hidden;color:var(--muted);font-size:13px}
+.selfiebox.filled{border-style:solid;border-color:var(--green)}
+.selfiebox img{width:100%;height:100%;object-fit:cover}
+
+.slist{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.srow{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--line);border-radius:15px;padding:13px 15px;text-align:left;width:100%}
+.srow:active{border-color:var(--blue)}
+.av{width:46px;height:46px;border-radius:50%;background:#22323F;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;color:var(--teal)}
+.av img{width:100%;height:100%;object-fit:cover}
+.sname{font-size:16px;font-weight:600;color:var(--ink)}
+.smeta{font-size:12px;color:var(--muted);margin-top:2px}
+
+.card{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px}
+.idrow{display:flex;align-items:center;gap:14px;text-align:left}
+.idav{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--green)}
+.idav img{width:100%;height:100%;object-fit:cover}
+.cards{display:flex;gap:11px;width:100%;margin-top:12px}
+.stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 10px}
+.statv{font-size:32px;font-weight:700}
+.statl{font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:600;margin-top:5px}
+.review{width:100%;margin-top:20px;text-align:left}
+.rvh{font-size:11px;letter-spacing:1.5px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.rvitem{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:14px;line-height:1.5;color:#C9C9D2}
+.rvitem b{color:var(--green);font-weight:600}
+.allok{background:var(--green-bg);border:1px solid #1B5030;border-radius:12px;padding:14px;font-size:14px;color:#7BE6A6;text-align:center}
+.tip{background:#101828;border:1px solid #1E3A5F;border-radius:12px;padding:13px 15px;font-size:13.5px;line-height:1.6;color:#A9BCFF;margin-top:16px;text-align:left}
+.rank{width:30px;text-align:center;font-size:17px;font-weight:700;color:var(--muted);flex-shrink:0}
+.rank.r1{color:#F5C542}.rank.r2{color:#C9CBD0}.rank.r3{color:#D08A4E}
+.srow.me{border-color:var(--green);background:var(--green-bg)}
+.sc{margin-left:auto;text-align:right;flex-shrink:0;padding-left:8px}
+.scv{font-size:17px;font-weight:700;color:var(--ink)}
+.scx{font-size:11px;color:var(--bolt);font-weight:600;margin-top:1px}
+.empty{text-align:center;color:var(--muted);font-size:15px;line-height:1.7;padding:26px 10px}
+.err{color:#FF9A9A;font-size:13.5px;font-weight:600;margin-top:12px;min-height:18px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<input type="file" accept="image/*" capture="user" id="cam" style="display:none">
+<input type="file" accept="image/*" id="gal" style="display:none">
+
+<script>
+/* ===============================================================
+   GCI · NMMS Bihar — एक चर वाला रैखिक समीकरण
+   =============================================================== */
+const CHAPTER = "एक चर वाला रैखिक समीकरण";
+
+/* ===============================================================
+   ROSTER — अपने बैच के छात्र यहीं भर दीजिए (एक बार).
+   हर छात्र को उसका roll + PIN एक पर्ची पर छापकर दे दीजिए.
+   rid कभी मत बदलिए — उसी से रिकॉर्ड जुड़ा रहता है.
+   =============================================================== */
+/* ROSTER खाली है — हर छात्र अपना नाम खुद जोड़ेगा.
+   चाहें तो यहाँ पहले से नाम भर सकते हैं:
+   {rid:"r01", name:"नाम", roll:"01", pin:"1234"}   */
+const ROSTER = [];
+
+/* CLASS_SCORES — पूरी क्लास का स्कोरबोर्ड.
+   WhatsApp पर आए स्क्रीनशॉट देखकर आप यहाँ भरिए, फिर वही फ़ाइल दोबारा ग्रुप में भेज दीजिए —
+   तब हर बच्चे को पूरी क्लास की रैंक दिखेगी, वरना सिर्फ़ इसी फ़ोन के छात्र दिखेंगे.
+   {name:"नाम", roll:"07", score:8, total:9, xp:110}   */
+const CLASS_SCORES = [];
+
+const inFrame = (()=>{ try{ return window.self!==window.top }catch(e){ return true } })();
+
+const QB = [
+ {id:"SAT-LEQ-001",level:1,
+  q:"5x − 3 = 12 में x का मान क्या है?",
+  vis:{t:"balance",cap:"तराजू दोनों ओर बराबर है",
+       L:[{k:"x"},{k:"x"},{k:"x"},{k:"x"},{k:"x"},{k:"neg",t:"3"}],R:[{k:"w",t:"12"}]},
+  opts:["2","3","4","5"],ans:1,
+  hint:"लाल वाला −3 हटाने के लिए दोनों पलड़ों में 3 जोड़िए।",
+  sol:"5x − 3 = 12 → 5x = 12 + 3 = 15 → x = 15 ÷ 5 = 3"},
+
+ {id:"SAT-LEQ-002",level:1,
+  q:"2x + 5 = x + 11 का हल है:",
+  vis:{t:"balance",cap:"दोनों पलड़ों से एक x हटाइए",
+       L:[{k:"x"},{k:"x"},{k:"w",t:"5"}],R:[{k:"x"},{k:"w",t:"11"}]},
+  opts:["4","5","6","8"],ans:2,
+  hint:"दोनों ओर से एक x और 5 हटा दीजिए — जो बचेगा वही उत्तर है।",
+  sol:"2x − x = 11 − 5 → x = 6"},
+
+ {id:"SAT-LEQ-003",level:1,
+  q:"3(x − 2) = 12 में x बराबर है:",
+  vis:{t:"balance",cap:"तीन बराबर हिस्से, कुल भार 12",
+       L:[{k:"g",t:"x − 2"},{k:"g",t:"x − 2"},{k:"g",t:"x − 2"}],R:[{k:"w",t:"12"}]},
+  opts:["4","5","6","7"],ans:2,
+  hint:"तीन बराबर हिस्सों का कुल 12 है, तो एक हिस्सा कितना?",
+  sol:"3(x − 2) = 12 → x − 2 = 4 → x = 6"},
+
+ {id:"SAT-LEQ-004",level:2,
+  q:"यदि x/3 + 1 = 4 है, तो x का मान है:",
+  vis:{t:"balance",cap:"x/3 यानी x का एक तिहाई हिस्सा",
+       L:[{k:"g",t:"x/3"},{k:"w",t:"1"}],R:[{k:"w",t:"4"}]},
+  opts:["6","9","12","15"],ans:1,
+  hint:"पहले दोनों ओर से 1 हटाइए — तब x/3 का मान मिलेगा।",
+  sol:"x/3 = 4 − 1 = 3 → x = 3 × 3 = 9"},
+
+ {id:"SAT-LEQ-005",level:2,
+  q:"दो क्रमागत प्राकृत संख्याओं का योग 45 है। इनमें छोटी संख्या कौन-सी है?",
+  vis:{t:"bars",cap:"क्रमागत यानी अगली संख्या ठीक 1 अधिक",
+       rows:[{label:"छोटी",segs:[{t:"x"}]},{label:"बड़ी",segs:[{t:"x"},{t:"+1",s:1}]}],
+       total:"कुल = 45"},
+  opts:["21","22","23","24"],ans:1,
+  hint:"आरेख देखिए — 45 में से 1 हटा दें तो दो बराबर x बचते हैं।",
+  sol:"x + (x + 1) = 45 → 2x + 1 = 45 → 2x = 44 → x = 22. संख्याएँ 22 और 23 हैं।"},
+
+ {id:"SAT-LEQ-006",level:2,
+  q:"राम की आयु उसके पुत्र की आयु की 3 गुनी है। दोनों की आयु का योग 48 वर्ष है। पुत्र की आयु कितनी है?",
+  vis:{t:"bars",cap:"राम की पट्टी पुत्र से 3 गुनी लंबी है",
+       rows:[{label:"पुत्र",segs:[{t:"x"}]},{label:"राम",segs:[{t:"x"},{t:"x"},{t:"x"}]}],
+       total:"कुल = 48 वर्ष"},
+  opts:["10 वर्ष","12 वर्ष","14 वर्ष","16 वर्ष"],ans:1,
+  hint:"आरेख में कुल कितने बराबर हिस्से बने? 48 को उतने से भाग दीजिए।",
+  sol:"x + 3x = 48 → 4x = 48 → x = 12 वर्ष. राम की आयु 36 वर्ष है।"},
+
+ {id:"SAT-LEQ-007",level:2,
+  q:"2(x + 4) = 3(x − 1) का हल है:",
+  vis:{t:"balance",cap:"बाएँ 2 हिस्से, दाएँ 3 हिस्से — फिर भी बराबर",
+       L:[{k:"g",t:"x + 4"},{k:"g",t:"x + 4"}],R:[{k:"g",t:"x − 1"},{k:"g",t:"x − 1"},{k:"g",t:"x − 1"}]},
+  opts:["9","10","11","12"],ans:2,
+  hint:"दोनों कोष्ठक खोलिए, फिर x एक ओर और संख्याएँ दूसरी ओर।",
+  sol:"2x + 8 = 3x − 3 → 8 + 3 = 3x − 2x → x = 11"},
+
+ {id:"SAT-LEQ-008",level:3,
+  q:"(2x − 3)/5 = 3 में x का मान है:",
+  vis:{t:"bars",cap:"(2x − 3) को 5 बराबर भागों में बाँटा गया",
+       rows:[{label:"",segs:[{t:"3"},{t:"3"},{t:"3"},{t:"3"},{t:"3"}]}],
+       total:"पूरी पट्टी = 2x − 3"},
+  opts:["6","7.5","9","12"],ans:2,
+  hint:"पाँच भाग, हर भाग 3 — तो पूरी पट्टी कितनी हुई?",
+  sol:"2x − 3 = 5 × 3 = 15 → 2x = 18 → x = 9"},
+
+ {id:"SAT-LEQ-009",level:3,
+  q:"एक आयत की लंबाई उसकी चौड़ाई से 5 सेमी अधिक है। यदि आयत का परिमाप 50 सेमी है, तो चौड़ाई कितनी है?",
+  vis:{t:"rect",cap:"परिमाप = चारों भुजाओं का योग",w:"x",l:"x + 5",note:"परिमाप = 50 सेमी"},
+  opts:["8 सेमी","10 सेमी","12 सेमी","15 सेमी"],ans:1,
+  hint:"परिमाप = 2 × (लंबाई + चौड़ाई). चौड़ाई x मानिए।",
+  sol:"2(x + x + 5) = 50 → 2(2x + 5) = 50 → 4x + 10 = 50 → 4x = 40 → x = 10 सेमी"}
+];
+
+/* ---------------- storage (localStorage + memory fallback) ---------------- */
+const DB=(()=>{
+  let mem={},ok=false;
+  try{localStorage.setItem("_t","1");localStorage.removeItem("_t");ok=true}catch(e){}
+  return{ok,
+    get(k){try{return ok?localStorage.getItem(k):mem[k]}catch(e){return mem[k]}},
+    set(k,v){try{ok?localStorage.setItem(k,v):(mem[k]=v)}catch(e){mem[k]=v}}};
+})();
+const loadExtra=()=>{try{return JSON.parse(DB.get("gci_extra")||"[]")}catch(e){return[]}};
+const saveExtra=a=>DB.set("gci_extra",JSON.stringify(a));
+const loadProg=()=>{try{return JSON.parse(DB.get("gci_prog")||"{}")}catch(e){return{}}};
+const saveProg=o=>DB.set("gci_prog",JSON.stringify(o));
+const allStudents=()=>ROSTER.concat(loadExtra());
+
+/* ---------------- diagram builders ---------------- */
+const F="'Noto Sans Devanagari',sans-serif";
+const itemW=it=>it.k==="g"?Math.max(58,it.t.length*9+22):(it.k==="w"?44:36);
+
+function drawItem(it,x,y){
+  const w=itemW(it);
+  if(it.k==="w") return `<path d="M${x},${y} L${x+7},${y-29} Q${x+8},${y-33} ${x+12},${y-33} L${x+w-12},${y-33} Q${x+w-8},${y-33} ${x+w-7},${y-29} L${x+w},${y} Z" fill="#9AA0A6"/><text x="${x+w/2}" y="${y-11}" font-family="${F}" font-size="15" font-weight="700" fill="#1B1B1F" text-anchor="middle">${it.t}</text>`;
+  if(it.k==="neg") return `<circle cx="${x+18}" cy="${y-18}" r="17" fill="#3A1212" stroke="#F05252" stroke-width="1.6"/><text x="${x+18}" y="${y-12}" font-family="${F}" font-size="14" font-weight="700" fill="#FF9A9A" text-anchor="middle">−${it.t}</text>`;
+  const txt=it.k==="g"?it.t:"x";
+  return `<rect x="${x}" y="${y-36}" width="${w}" height="36" rx="8" fill="#1F5F58" stroke="#2DBFA8" stroke-width="1.6"/><text x="${x+w/2}" y="${y-12}" font-family="${F}" font-size="15" font-weight="600" fill="#7FE8D8" text-anchor="middle">${txt}</text>`;
+}
+function drawPan(items,cx,baseY){
+  const MAXW=152,rows=[[]],ws=[0];
+  items.forEach(it=>{const iw=itemW(it)+6;
+    if(ws[ws.length-1]+iw>MAXW&&rows[rows.length-1].length){rows.push([]);ws.push(0)}
+    rows[rows.length-1].push(it);ws[ws.length-1]+=iw});
+  let out="";
+  rows.forEach((row,r)=>{const tot=row.reduce((a,it)=>a+itemW(it)+6,0)-6;
+    let x=cx-tot/2;const y=baseY-r*42;
+    row.forEach(it=>{out+=drawItem(it,x,y);x+=itemW(it)+6})});
+  return out;
+}
+function visBalance(v){
+  const baseY=112,beamY=baseY+24,LX=88,RX=262;
+  return `<svg viewBox="0 0 350 196" role="img">${drawPan(v.L,LX,baseY)}${drawPan(v.R,RX,baseY)}
+   <rect x="${LX-66}" y="${baseY}" width="132" height="9" rx="4" fill="#8E8E96"/>
+   <rect x="${RX-66}" y="${baseY}" width="132" height="9" rx="4" fill="#8E8E96"/>
+   <rect x="${LX-2}" y="${baseY+9}" width="4" height="15" fill="#6C6C74"/>
+   <rect x="${RX-2}" y="${baseY+9}" width="4" height="15" fill="#6C6C74"/>
+   <rect x="${LX}" y="${beamY}" width="${RX-LX}" height="7" rx="3.5" fill="#8E8E96"/>
+   <circle cx="175" cy="${beamY+3}" r="9" fill="#B4B4BC"/>
+   <path d="M166,${beamY+7} L152,${beamY+42} L198,${beamY+42} L184,${beamY+7} Z" fill="#7A7A82"/>
+   <rect x="132" y="${beamY+42}" width="86" height="10" rx="5" fill="#9AA0A6"/></svg>`;
+}
+function visBars(v){
+  const X0=v.rows.some(r=>r.label)?74:20,UW=46,SW=34,H=32,GAP=5,RH=42;
+  let maxX=X0,out="";
+  v.rows.forEach((row,r)=>{const y=10+r*RH;
+    if(row.label) out+=`<text x="${X0-12}" y="${y+21}" font-family="${F}" font-size="14" font-weight="600" fill="#9A9AA4" text-anchor="end">${row.label}</text>`;
+    let x=X0;
+    row.segs.forEach(s=>{const w=s.s?SW:UW,sm=!!s.s;
+      out+=`<rect x="${x}" y="${y}" width="${w}" height="${H}" rx="8" fill="${sm?'#4A3A08':'#1F5F58'}" stroke="${sm?'#E8B923':'#2DBFA8'}" stroke-width="1.6"/><text x="${x+w/2}" y="${y+21}" font-family="${F}" font-size="15" font-weight="600" fill="${sm?'#F0D064':'#7FE8D8'}" text-anchor="middle">${s.t}</text>`;
+      x+=w+GAP});
+    maxX=Math.max(maxX,x-GAP)});
+  const by=10+v.rows.length*RH+2;
+  out+=`<path d="M${X0},${by} L${X0},${by+8} L${maxX},${by+8} L${maxX},${by}" fill="none" stroke="#6C6C74" stroke-width="1.6"/><text x="${(X0+maxX)/2}" y="${by+29}" font-family="${F}" font-size="15" font-weight="700" fill="#E4E4EA" text-anchor="middle">${v.total}</text>`;
+  return `<svg viewBox="0 0 ${Math.max(350,maxX+20)} ${by+42}" role="img">${out}</svg>`;
+}
+function visRect(v){
+  return `<svg viewBox="0 0 350 176" role="img">
+   <rect x="86" y="34" width="182" height="86" rx="6" fill="#12332F" stroke="#2DBFA8" stroke-width="2"/>
+   <text x="177" y="24" font-family="${F}" font-size="15" font-weight="600" fill="#7FE8D8" text-anchor="middle">${v.l}</text>
+   <text x="177" y="140" font-family="${F}" font-size="15" font-weight="600" fill="#7FE8D8" text-anchor="middle">${v.l}</text>
+   <text x="72" y="82" font-family="${F}" font-size="15" font-weight="600" fill="#7FE8D8" text-anchor="end">${v.w}</text>
+   <text x="282" y="82" font-family="${F}" font-size="15" font-weight="600" fill="#7FE8D8" text-anchor="start">${v.w}</text>
+   <text x="177" y="166" font-family="${F}" font-size="15" font-weight="700" fill="#E4E4EA" text-anchor="middle">${v.note}</text></svg>`;
+}
+const renderVis=v=>!v?"":`<div class="vis">${v.t==="balance"?visBalance(v):v.t==="bars"?visBars(v):visRect(v)}<div class="viscap">${v.cap}</div></div>`;
+
+/* ---------------- assets ---------------- */
+const MASCOT=`<svg class="mascot" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3FD44E"/><stop offset="1" stop-color="#A8E80F"/></linearGradient></defs><path d="M50 2C54 28 72 46 98 50C72 54 54 72 50 98C46 72 28 54 2 50C28 46 46 28 50 2Z" fill="url(#mg)"/><rect x="35" y="35" width="30" height="30" rx="8" fill="#fff"/><rect x="44" y="44" width="13" height="13" rx="1" fill="#0B0B0D"/></svg>`;
+const BOLT=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>`;
+
+/* ---------------- state ---------------- */
+let S={i:0,sel:null,phase:"pick",attempt:0,xp:0,correct:0,why:false,wrong:[],dead:[]};
+let ME=null, TODAY_PHOTO=null, TMP={name:"",roll:"",pin:"",photo:null};
+const app=document.getElementById("app");
+const cam=document.getElementById("cam");
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const today=()=>new Date().toLocaleDateString("hi-IN",{day:"numeric",month:"short",year:"numeric"});
+const dayKey=()=>new Date().toISOString().slice(0,10);
+
+/* ---------------- selfie (optional, never blocks) ---------------- */
+let photoCB=null;
+function wire(el){
+  el.addEventListener("change",e=>{
+    const f=e.target.files&&e.target.files[0]; e.target.value="";
+    if(!f||!photoCB) return;
+    const img=new Image();
+    img.onload=()=>{
+      const N=200,c=document.createElement("canvas");c.width=N;c.height=N;
+      const g=c.getContext("2d"),sz=Math.min(img.width,img.height);
+      g.drawImage(img,(img.width-sz)/2,(img.height-sz)/2,sz,sz,0,0,N,N);
+      photoCB(c.toDataURL("image/jpeg",0.62));
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror=()=>photoCB(null);
+    img.src=URL.createObjectURL(f);
+  });
+}
+wire(document.getElementById("cam")); wire(document.getElementById("gal"));
+function grab(mode,cb){
+  photoCB=cb;
+  try{ document.getElementById(mode==="gallery"?"gal":"cam").click(); }
+  catch(e){ alert("इस ब्राउज़र में कैमरा बंद है — 'अभी छोड़ें' दबाकर आगे बढ़िए।"); }
+}
+
+const frameTip = inFrame
+  ? `<div class="tip">⚠ यह फ़ाइल preview में खुली है — यहाँ <b>कैमरा और सेव दोनों बंद</b> रहते हैं। फ़ाइल डाउनलोड करके Chrome में खोलिए। अभ्यास फिर भी चलेगा।</div>` : "";
+
+/* ---------------- screens ---------------- */
+function screenGate(){ screenPicker(); }
+
+function screenPicker(){
+  const list=allStudents(), prog=loadProg();
+  if(!list.length){ screenSetup(); return; }
+  app.innerHTML=`<div class="top">
+    <div class="brand" style="text-align:left">GYAN CAREER INSTITUTE</div>
+    <div class="h1" style="margin-top:16px">कौन अभ्यास कर रहा है?</div>
+    <div class="sub" style="margin-top:6px">${CHAPTER}</div>
+    ${frameTip}
+    <div class="slist">${list.map(st=>{
+      const pr=prog[st.rid]||{}, h=pr.history||[];
+      return `<button class="srow" onclick="chooseStudent('${st.rid}')">
+        <div class="av">${pr.photo?`<img src="${pr.photo}" alt="">`:esc(st.name.trim()[0]||"?")}</div>
+        <div><div class="sname">${esc(st.name)}</div>
+          <div class="smeta">${st.roll?"रोल "+esc(st.roll)+" · ":""}${h.length?h.length+" अभ्यास पूरे":"अभी शुरू नहीं"}</div></div>
+      </button>`;}).join("")}</div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="cta ghost" style="flex:1" onclick="screenSetup()">+ अपना नाम जोड़ें</button>
+      <button class="cta ghost" style="flex:1" onclick="screenBoard(null)">स्कोरबोर्ड</button>
+    </div>
+  </div>`;
+}
+
+function screenSetup(){
+  app.innerHTML=`<div class="top">
+    <div class="h2">अपना नाम जोड़ें</div>
+    <div class="sub" style="margin-top:0">एक बार भरिए — आगे सिर्फ़ अपना नाम चुनकर PIN डालना होगा।</div>
+    <div class="field"><label class="lbl">पूरा नाम</label>
+      <input class="inp" value="${esc(TMP.name)}" placeholder="अपना पूरा नाम लिखिए" oninput="TMP.name=this.value"></div>
+    <div class="field"><label class="lbl">रोल नंबर</label>
+      <input class="inp" value="${esc(TMP.roll)}" inputmode="numeric" placeholder="अपना रोल नंबर" oninput="TMP.roll=this.value"></div>
+    <div class="field"><label class="lbl">4 अंकों का PIN</label>
+      <input class="inp pin" value="${esc(TMP.pin)}" inputmode="numeric" maxlength="4" placeholder="••••" oninput="TMP.pin=this.value.replace(/\D/g,'')"></div>
+    <div class="err" id="e1"></div>
+  </div>
+  <div class="foot"><button class="cta go" onclick="saveStudent()">सेव करें</button>
+  ${allStudents().length?`<div style="margin-top:9px"><button class="cta ghost" onclick="screenPicker()">वापस</button></div>`:""}</div>`;
+}
+
+function saveStudent(){
+  const e=document.getElementById("e1");
+  if(!TMP.name.trim()){e.textContent="पूरा नाम लिखिए।";return}
+  if(TMP.pin.length!==4){e.textContent="PIN ठीक 4 अंकों का होना चाहिए।";return}
+  const ex=loadExtra();
+  ex.push({rid:"x"+Date.now(),name:TMP.name.trim(),roll:TMP.roll.trim(),pin:TMP.pin});
+  saveExtra(ex);
+  TMP={name:"",roll:"",pin:"",photo:null};
+  screenPicker();
+}
+
+let PICKED=null, PINTRY="";
+function chooseStudent(rid){ PICKED=rid; PINTRY=""; screenPin(); }
+const meOf=rid=>allStudents().find(s=>s.rid===rid);
+
+function screenPin(){
+  const st=meOf(PICKED), pr=loadProg()[PICKED]||{};
+  app.innerHTML=`<div class="center">
+    <div class="av" style="width:76px;height:76px;font-size:28px">${pr.photo?`<img src="${pr.photo}" alt="">`:esc(st.name[0])}</div>
+    <div class="h2" style="margin-top:16px">${esc(st.name)}</div>
+    <div class="sub" style="margin-top:2px">अपना 4 अंकों का PIN डालिए</div>
+    <input class="inp pin" id="p-in" inputmode="numeric" maxlength="4" placeholder="••••"
+      style="max-width:220px;margin-top:22px" value="${PINTRY}" oninput="PINTRY=this.value.replace(/\D/g,'')">
+    <div class="err" id="e2"></div>
+  </div>
+  <div class="foot"><button class="cta go" onclick="checkPin()">आगे बढ़ें</button>
+  <div style="margin-top:9px"><button class="cta ghost" onclick="screenPicker()">दूसरा छात्र</button></div></div>`;
+  setTimeout(()=>{const el=document.getElementById("p-in"); if(el)el.focus();},80);
+}
+function checkPin(){
+  const st=meOf(PICKED);
+  if(PINTRY!==st.pin){document.getElementById("e2").textContent="PIN ग़लत है। फिर से कोशिश कीजिए।";PINTRY="";return}
+  ME=st; TODAY_PHOTO=null; screenSelfie();
+}
+
+function screenSelfie(){
+  app.innerHTML=`<div class="center">
+    <div class="h2">आज की फ़ोटो</div>
+    <div class="sub" style="margin-top:2px">हर अभ्यास से पहले एक selfie —<br>ताकि पता रहे कि अभ्यास आपने ही किया।</div>
+    <div class="selfiebox ${TODAY_PHOTO?"filled":""}" style="margin-top:22px" onclick="grab('camera',p=>{TODAY_PHOTO=p;screenSelfie()})">
+      ${TODAY_PHOTO?`<img src="${TODAY_PHOTO}" alt="">`:`<div style="font-size:34px">🤳</div><div>कैमरा खोलिए</div>`}
+    </div>
+    <div style="display:flex;gap:10px;width:100%;margin-top:18px">
+      <button class="cta ghost" style="flex:1" onclick="grab('gallery',p=>{TODAY_PHOTO=p;screenSelfie()})">गैलरी से चुनें</button>
+      <button class="cta ghost" style="flex:1" onclick="screenStart()">अभी छोड़ें</button>
+    </div>
+    <div class="sub" style="font-size:13px;margin-top:14px">फ़ोटो ज़रूरी नहीं है — कैमरा न खुले तो सीधे आगे बढ़िए।</div>
+  </div>
+  <div class="foot"><button class="cta go" onclick="screenStart()">आगे बढ़ें</button></div>`;
+}
+
+function screenStart(){
+  app.innerHTML=`<div class="center">
+    ${MASCOT}
+    <div class="brand" style="margin-bottom:12px">GYAN CAREER INSTITUTE</div>
+    <div class="h1">${CHAPTER}</div>
+    <div class="sub">${esc(ME.name)}${ME.roll?" · रोल "+esc(ME.roll):""}<br>NMMS बिहार · गणित · 9 प्रश्न</div>
+  </div>
+  <div class="foot"><button class="cta go" onclick="begin()">शुरू करें</button></div>`;
+}
+
+function screenQ(){
+  const q=QB[S.i];
+  const segs=QB.map((_,k)=>`<div class="seg ${k<S.i?"done":""}"></div>`).join("");
+  const opts=q.opts.map((o,k)=>{
+    let c="opt";
+    if(S.phase==="pick"){ if(S.sel===k)c+=" sel"; if(S.dead.includes(k))c+=" dead"; }
+    else{ c+=" lock";
+      if(k===q.ans&&S.phase!=="wrong")c+=" ok";
+      else if(k===S.sel)c+=" no";
+      else if(S.dead.includes(k))c+=" dead"; }
+    return `<button class="${c}" onclick="pick(${k})">${esc(o)}</button>`;
+  }).join("");
+  app.innerHTML=`
+  <div class="topbar"><button class="xbtn" onclick="quit()">&times;</button>
+    <div class="track">${segs}</div><div class="bolt">${BOLT}${S.xp}</div></div>
+  <div class="body pad"><div class="qtext">${esc(q.q)}</div>${renderVis(q.vis)}
+    <div class="opts">${opts}</div></div>
+  <div class="foot pad">${footHTML(q)}</div>`;
+}
+
+function footHTML(q){
+  if(S.phase==="pick") return `<button class="cta ${S.sel===null?"idle":"go"}" onclick="check()">जाँचें</button>`;
+  if(S.phase==="right"){
+    const g=S.attempt===1?15:5;
+    return `<div class="fb correct"><div class="fbrow">
+      <div><span class="fbtitle">सही!</span> <span class="xp">+${g} XP</span></div>
+      <button class="whybtn" onclick="toggleWhy()">${S.why?"बंद करें":"क्यों?"}</button></div>
+      ${S.why?`<div class="note">${esc(q.sol)}</div>`:""}
+      <div style="margin-top:14px"><button class="cta green" onclick="next()">आगे बढ़ें</button></div></div>`;
+  }
+  if(S.phase==="wrong") return `<div class="fb wrong">
+    <div class="fbrow"><span class="fbtitle">दोबारा सोचिए।</span></div>
+    <div class="note"><b>संकेत:</b> ${esc(q.hint)}</div>
+    <div style="margin-top:14px"><button class="cta amber" onclick="retry()">फिर से कोशिश करें</button></div></div>`;
+  return `<div class="fb reveal">
+    <div class="fbrow"><span class="fbtitle">सही उत्तर: ${esc(q.opts[q.ans])}</span></div>
+    <div class="note">${esc(q.sol)}</div>
+    <div style="margin-top:14px"><button class="cta go" onclick="next()">आगे बढ़ें</button></div></div>`;
+}
+
+function screenDone(){
+  const prog=loadProg();
+  const pr=prog[PICKED]||{history:[]};
+  pr.history=pr.history||[];
+  if(TODAY_PHOTO) pr.photo=TODAY_PHOTO;
+  pr.history.push({date:dayKey(),score:S.correct,total:QB.length,xp:S.xp});
+  prog[PICKED]=pr; saveProg(prog);
+  const rv=S.wrong.length
+    ? `<div class="review"><div class="rvh">दोबारा देखिए</div>`+S.wrong.map(k=>`<div class="rvitem">${esc(QB[k].q)}<br><b>उत्तर: ${esc(QB[k].opts[QB[k].ans])}</b></div>`).join("")+`</div>`
+    : `<div class="review"><div class="allok">सभी 9 प्रश्न पहली बार में सही — शानदार।</div></div>`;
+  app.innerHTML=`<div class="top" style="text-align:center;align-items:center">
+    <div class="brand">GYAN CAREER INSTITUTE · NMMS</div>
+    <div class="h1" style="margin-top:14px">अभ्यास पूरा!</div>
+    <div class="card"><div class="idrow">
+      <div class="idav" style="${TODAY_PHOTO?"":"border-color:#2C2C34;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#2DBFA8"}">${TODAY_PHOTO?`<img src="${TODAY_PHOTO}" alt="">`:esc(ME.name[0])}</div>
+      <div><div class="sname" style="font-size:17px">${esc(ME.name)}</div>
+        <div class="smeta">${ME.roll?"रोल "+esc(ME.roll)+" · ":""}${today()}</div>
+        <div class="smeta" style="color:#7FE8D8">${CHAPTER}</div></div></div>
+      <div class="cards">
+        <div class="stat"><div class="statv" style="color:var(--bolt)">${S.xp}</div><div class="statl">कुल XP</div></div>
+        <div class="stat"><div class="statv">${S.correct}<span style="font-size:19px;color:var(--muted)">/${QB.length}</span></div><div class="statl">स्कोर</div></div>
+      </div></div>
+    <div class="tip">📸 इस स्क्रीन का <b>स्क्रीनशॉट</b> लेकर GCI WhatsApp ग्रुप में भेजिए — नाम, फ़ोटो और स्कोर तीनों एक साथ चले जाएँगे।</div>
+    ${rv}
+  </div>
+  <div class="foot"><button class="cta go" onclick="screenBoard(PICKED)">आगे — स्कोरबोर्ड देखें →</button></div>`;
+}
+
+function boardRows(){
+  const prog=loadProg(), out=[];
+  allStudents().forEach(st=>{
+    const h=(prog[st.rid]||{}).history||[];
+    if(!h.length) return;
+    let best=h[0];
+    h.forEach(r=>{ if(r.score>best.score||(r.score===best.score&&r.xp>best.xp)) best=r; });
+    out.push({rid:st.rid,name:st.name,roll:st.roll,photo:(prog[st.rid]||{}).photo,
+              score:best.score,total:best.total||QB.length,xp:best.xp});
+  });
+  CLASS_SCORES.forEach(c=>{
+    if(out.some(o=>o.name.trim()===String(c.name).trim())) return;
+    out.push({rid:"c_"+c.name,name:c.name,roll:c.roll||"",photo:null,
+              score:c.score,total:c.total||QB.length,xp:c.xp||0});
+  });
+  out.sort((a,b)=> b.score-a.score || b.xp-a.xp || a.name.localeCompare(b.name,"hi"));
+  return out;
+}
+
+function screenBoard(meRid){
+  const rows=boardRows();
+  const mine=rows.findIndex(r=>r.rid===meRid);
+  const body = rows.length ? `<div class="slist">${rows.map((r,k)=>`
+      <div class="srow ${r.rid===meRid?"me":""}">
+        <div class="rank ${k===0?"r1":k===1?"r2":k===2?"r3":""}">${k+1}</div>
+        <div class="av">${r.photo?`<img src="${r.photo}" alt="">`:esc(String(r.name).trim()[0]||"?")}</div>
+        <div style="min-width:0"><div class="sname">${esc(r.name)}</div>
+          <div class="smeta">${r.roll?"रोल "+esc(r.roll):"&nbsp;"}</div></div>
+        <div class="sc"><div class="scv">${r.score}/${r.total}</div><div class="scx">${r.xp} XP</div></div>
+      </div>`).join("")}</div>`
+    : `<div class="empty">अभी तक किसी ने अभ्यास पूरा नहीं किया।<br>पहला नाम आपका हो सकता है।</div>`;
+  app.innerHTML=`<div class="top">
+    <div class="brand" style="text-align:left">GCI · NMMS स्कोरबोर्ड</div>
+    <div class="h1" style="margin-top:14px">स्कोरबोर्ड</div>
+    <div class="sub" style="margin-top:6px">${CHAPTER} · ${rows.length} छात्रों ने अभ्यास किया${mine>=0?` · आपकी रैंक <b style="color:#7BE6A6">${mine+1}</b>`:""}</div>
+    ${body}
+    <div class="tip">📸 इस स्कोरबोर्ड का स्क्रीनशॉट GCI ग्रुप में भेजिए। सर सबके स्कोर मिलाकर पूरी क्लास की रैंक अपडेट कर देंगे।</div>
+  </div>
+  <div class="foot"><button class="cta go" onclick="screenPicker()">पूरा हुआ</button></div>`;
+}
+
+/* ---------------- quiz actions ---------------- */
+function begin(){ S={i:0,sel:null,phase:"pick",attempt:0,xp:0,correct:0,why:false,wrong:[],dead:[]}; screenQ(); }
+function pick(k){ if(S.phase!=="pick"||S.dead.includes(k))return; S.sel=k; screenQ(); }
+function check(){
+  if(S.sel===null)return;
+  const q=QB[S.i]; S.attempt++;
+  if(S.sel===q.ans){S.xp+=S.attempt===1?15:5;S.correct++;S.phase="right"}
+  else if(S.attempt===1){S.phase="wrong"}
+  else {S.phase="shown";S.wrong.push(S.i)}
+  screenQ();
+}
+function retry(){ S.dead.push(S.sel); S.sel=null; S.phase="pick"; screenQ(); }
+function toggleWhy(){ S.why=!S.why; screenQ(); }
+function next(){ S.i++;S.sel=null;S.phase="pick";S.attempt=0;S.why=false;S.dead=[];
+  if(S.i>=QB.length) screenDone(); else screenQ(); }
+function quit(){ if(confirm("अभ्यास छोड़ दें?")) screenPicker(); }
+
+screenGate();
+</script>
+</body>
+</html>
