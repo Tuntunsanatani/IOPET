@@ -35,6 +35,7 @@
   --pur-bg:rgba(167,139,250,.14);--pur-line:rgba(167,139,250,.34);
   --nav:#1A1824;--modal:#1F1C2B;--scrim:rgba(5,3,12,.74);--toast:#2A2540;--shadow:rgba(0,0,0,.55);
   --glow-a:rgba(124,92,255,.30);--glow-b:rgba(56,189,248,.16);--glow-c:rgba(251,146,60,.18);
+  --bar:#221C3E;                    /* the phone's top bar (BAR in app.js, the same value): the top of the app fades out of it */
   --ic-p:#FFFFFF;--ic-ps:#C9C5DA;--ic-pes:#B3AECB;--ic-pef:#D8D4E6;--ic-pw:#3B2C24;--ic-pedge:transparent;
   --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;--r-pill:50px;
   /* system fonts first-paint, Google Fonts swap in when loaded; Hindi always uses the phone's own Devanagari font */
@@ -56,6 +57,7 @@
   --pur-bg:#F0EBFF;--pur-line:#CDBDFB;
   --nav:#FFFFFF;--modal:#FFFFFF;--scrim:rgba(24,18,48,.45);--toast:#2A2440;--shadow:rgba(40,30,90,.16);
   --glow-a:rgba(124,92,255,.16);--glow-b:rgba(56,189,248,.14);--glow-c:rgba(251,146,60,.14);
+  --bar:#EAE6F8;
   --ic-p:#FFFFFF;--ic-ps:#CFCADF;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pw:#FFF1E4;--ic-pedge:rgba(40,30,80,.12);
   color-scheme:light;
 }
@@ -641,6 +643,14 @@ input[type=date]{color-scheme:inherit}
    Only transform and opacity move (the phone's graphics chip does that work); the confetti is one small canvas that stops by itself. */
 .cele{position:absolute;top:0;right:0;bottom:0;left:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;
   background:var(--bg);background:radial-gradient(90% 55% at 50% 38%,var(--glow-a),transparent 75%),var(--bg);animation:cele-in .25s ease-out}
+/* 3.7.2 the phone's top bar and the app meet without a line: on a phone (the app fills the screen) its top 24px — the screens'
+   own top margin — fade out of the bar's colour. It stays put while a screen scrolls under it, and lies over a dimmed screen
+   (a question box) but under the messages and the "please wait" card; the celebration brings its own. On a tablet or a computer
+   (the phone-sized frame) there is no such edge, so nothing changes there. */
+@media not all and (min-width:500px) and (min-height:560px){
+  .phone::after{content:'';position:absolute;top:0;left:0;right:0;height:24px;background:linear-gradient(var(--bar),transparent);pointer-events:none;z-index:65}
+  .cele{background:linear-gradient(var(--bar),transparent 24px),radial-gradient(90% 55% at 50% 38%,var(--glow-a),transparent 75%),var(--bg)}
+}
 .cele canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .cele-stage{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;perspective:600px}
 .cele-rays{position:absolute;top:-30px;left:-30px;width:240px;height:240px;border-radius:50%;opacity:.55;
@@ -1804,7 +1814,7 @@ function chHue(ch) { return IC[has(ICON_HUE, ch) ? ICON_HUE[ch] : 'violet']; }
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.7.1',
+  VERSION: '3.7.2',
   SPLASH_MS: 800,                              // CHANGE #7 (was 2200)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
@@ -2513,17 +2523,30 @@ function themeOf(u) {
    the first screen after it. */
 function applyTheme(s) {
   var on = (s || (stack.length ? top().s : 'splash')) === 'splash', th = on ? 'dark' : themeOf(user || bootUser()), root = document.documentElement,
-    meta = document.querySelector('meta[name="theme-color"]'), bar = on ? SPLASH_BAR : th === 'light' ? '#F4F2F8' : '#111018';
+    meta = document.querySelector('meta[name="theme-color"]'), bar = on ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th];
   if (root.getAttribute('data-theme') !== th) root.setAttribute('data-theme', th);
   if (meta && meta.getAttribute('content') !== bar) meta.setAttribute('content', bar);      // the colour of the phone's top bar
 }
 var SPLASH_BAR = '#221C3E';                                        // the top edge of the splash
+/* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
+   one colour. So the bar takes the app's purple, and the top of the app fades out of that very colour (--bar in the style sheet,
+   the same two values): bar and page meet without a line, as in the phone's own apps. Dark is the splash's purple, so the bar
+   keeps one colour from the moment the app starts.
+   On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
+   the frame, not the app: there it keeps the plain ground colours it always had. */
+var BAR = { dark: '#221C3E', light: '#EAE6F8' }, BAR_FRAMED = { dark: '#111018', light: '#F4F2F8' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
+function framed() {
+  try { if (!frameMq && window.matchMedia) frameMq = window.matchMedia(FRAME_MQ); } catch (e) { frameMq = null; }
+  return !!(frameMq && frameMq.matches);
+}
 function bootUser() { return db && db.session && has(db.users, db.session) ? db.users[db.session] : null; }
 function watchTheme() {
-  themeOf(null);
-  if (!themeMq) return;
+  themeOf(null); framed();
   var fn = function () { applyTheme(); };
-  try { if (themeMq.addEventListener) themeMq.addEventListener('change', fn); else if (themeMq.addListener) themeMq.addListener(fn); } catch (e) { /* the phone cannot tell: the choice stays as it is */ }
+  [themeMq, frameMq].forEach(function (mq) {                       // the phone turns light or dark; a tablet turns, a window is resized
+    if (!mq) return;
+    try { if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); } catch (e) { /* the phone cannot tell: the choice stays as it is */ }
+  });
 }
 
 /* ════════════════════════════════════════════════════════════════════
