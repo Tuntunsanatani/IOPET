@@ -8,7 +8,7 @@
    time. So a new version reaches every phone the next time the app is opened, and nobody stays stuck on an old one.
    The pictures (icons) and the manifest: kept on the phone, renewed with every new version of this file. */
 'use strict';
-var VERSION = '3.7.1';
+var VERSION = '3.7.3';
 var CACHE = 'iopet-' + VERSION;
 var FILES = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'maskable-192.png', 'maskable-512.png'];
 var WAIT_MS = 3000;

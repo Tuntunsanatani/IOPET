@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: 'self'; connect-src https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'"/>
 <title>IOPET — Padho. Samjho. Aage badho.</title>
 <link rel="manifest" href="manifest.webmanifest"/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='21' fill='%231B1464'/%3E%3Cg transform='translate(21 19.1) scale(.675)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='%23FFB020'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23A383FF'/%3E%3Cstop offset='1' stop-color='%235528E0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='21' fill='url(%23g)'/%3E%3Cg transform='translate(21 19.1) scale(.675)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='%23FFB020'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
 
 <!-- CHANGE #8: Google Fonts load without blocking the first paint -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1814,7 +1814,7 @@ function chHue(ch) { return IC[has(ICON_HUE, ch) ? ICON_HUE[ch] : 'violet']; }
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.7.2',
+  VERSION: '3.7.3',
   SPLASH_MS: 800,                              // CHANGE #7 (was 2200)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
@@ -2531,7 +2531,8 @@ var SPLASH_BAR = '#221C3E';                                        // the top ed
 /* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
    one colour. So the bar takes the app's purple, and the top of the app fades out of that very colour (--bar in the style sheet,
    the same two values): bar and page meet without a line, as in the phone's own apps. Dark is the splash's purple, so the bar
-   keeps one colour from the moment the app starts.
+   keeps one colour from the moment the page opens. Before it, the phone's own start screen (the icon on a dark ground) is all one
+   colour, its top bar included: the manifest's theme_color is its background_color (3.7.3).
    On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
    the frame, not the app: there it keeps the plain ground colours it always had. */
 var BAR = { dark: '#221C3E', light: '#EAE6F8' }, BAR_FRAMED = { dark: '#111018', light: '#F4F2F8' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
