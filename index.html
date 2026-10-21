@@ -65,7 +65,7 @@
   --nav:#1E1E22;--modal:var(--surface);--scrim:rgba(6,6,8,.66);--toast:#2A2A30;--shadow:rgba(0,0,0,.5);
   --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);   /* only the celebration glows (--glow-a) */
   --bar:#121214;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour (3.10.0: no haze) */
-  --ic-p:#FFFFFF;--ic-ps:#C4C4C8;--ic-pes:#ADADB3;--ic-pef:#D4D4D8;--ic-pw:#3B2C24;--ic-pedge:transparent;
+  --ic-p:#FFFFFF;--ic-ps:#C4C4C8;--ic-pes:#ADADB3;--ic-pef:#D4D4D8;--ic-pedge:transparent;
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;
   --font-display:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
@@ -95,7 +95,7 @@
   --nav:#FFFFFF;--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
   --glow-a:rgba(91,69,245,.14);--glow-b:rgba(47,116,240,.12);--glow-c:rgba(255,122,26,.12);
   --bar:#E7E2FF;
-  --ic-p:#FFFFFF;--ic-ps:#CFCADF;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pw:#FFF1E4;--ic-pedge:rgba(40,30,80,.12);
+  --ic-p:#FFFFFF;--ic-ps:#CFCADF;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pedge:rgba(40,30,80,.12);
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -669,7 +669,6 @@ input[type=date]{color-scheme:inherit}
 .chi .ps{fill:var(--ic-ps)}
 .chi .pe-s{stroke:var(--ic-pes)}
 .chi .pe-f{fill:var(--ic-pef)}
-.chi .pw{fill:var(--ic-pw)}
 .chi text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .chi.dim{opacity:.5;filter:saturate(.35)}
 
@@ -847,7 +846,7 @@ input[type=date]{color-scheme:inherit}
 
 /* ── CHOOSE, THEN CHECK (3.6.0) ── the chosen option: a violet ring, a soft fill, a tick; CHECK wakes up only when something is chosen */
 .opt-btn.sel{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 2px var(--primary)}
-.opt-btn.sel .opt-key{background:var(--primary);border-color:var(--primary);color:#fff}
+.opt-btn.sel .opt-key{background:var(--primary);border-color:var(--primary);color:var(--on-mark)}
 
 /* ── NON-VERBAL FIGURES ── ink on paper, like the exam; colour only in the explanation patches (H1–H4) */
 .fv-l{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
@@ -870,8 +869,6 @@ input[type=date]{color-scheme:inherit}
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
 .opts.grid .fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
-/* 3.10.0 the tick on the chosen option's violet disc is dark (5.8:1; white was 3.1:1) — it overrides .opt-btn.sel .opt-key above */
-.opts .opt-btn.sel .opt-key{color:var(--on-mark)}
 /* small examples side by side in an explanation (counting: one coloured example of each kind) */
 .fb-text .fig-fig svg,.rv-x .fig-fig svg{width:auto;max-width:92px;max-height:82px}
 .fb-text .figs .fig-fig,.rv-x .figs .fig-fig{margin:4px 5px}
@@ -2181,7 +2178,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.9.0',
+  VERSION: '3.10.0',
   SPLASH_MS: 800,                              // CHANGE #7 (was 2200)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
