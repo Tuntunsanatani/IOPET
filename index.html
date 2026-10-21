@@ -4913,17 +4913,18 @@ function confetti(cv, hue) {
 }
 /* the score counts up when the results appear (a small celebration for every finished test) */
 AFTER.summary = function (sc) {
-  var el = sc && sc.querySelector('.summary-big'), to, t0 = 0;
+  var el = sc && sc.querySelector('.summary-big'), to, rest, t0 = 0;
   if (!el || calmMotion() || !window.requestAnimationFrame || (S && S.cele)) return;     // under a celebration nobody sees it: no work for nothing
   to = parseInt(el.textContent, 10) || 0;
+  rest = el.textContent.replace(/^\d+/, '');                     // "/12": the score is right/total (3.10.0: it showed "10%")
   if (!to) return;
-  el.classList.add('count'); el.textContent = '0%';
+  el.classList.add('count'); el.textContent = '0' + rest;
   function step(ts) {
     var k;
     if (!t0) t0 = ts;
     k = Math.min(1, (ts - t0) / 750); k = 1 - Math.pow(1 - k, 3);
     if (!el.parentNode) return;
-    el.textContent = Math.round(to * k) + '%';
+    el.textContent = Math.round(to * k) + rest;
     if (k < 1) window.requestAnimationFrame(step);
   }
   window.requestAnimationFrame(step);
