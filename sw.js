@@ -1,16 +1,17 @@
 /* IOPET — the small helper behind the installed app (3.7.1).
 
    It lets the app open without internet and keeps it up to date. It looks only at the app's own files, at this same address:
-   sign-in, the backup in the cloud and the fonts go straight to Google, past it — it never sees, keeps or changes any of them.
+   sign-in and the backup in the cloud go straight to Google, past it — it never sees, keeps or changes any of them.
 
    The app itself (index.html): every time it is opened, the newest copy is asked for. With no internet, or when the internet is too
    slow to answer within WAIT_MS, the copy kept on the phone opens at once, and the new one, when it arrives, is kept for the next
    time. So a new version reaches every phone the next time the app is opened, and nobody stays stuck on an old one.
-   The pictures (icons) and the manifest: kept on the phone, renewed with every new version of this file. */
+   The pictures (icons), the font and the manifest: kept on the phone, renewed with every new version of this file. */
 'use strict';
-var VERSION = '3.7.3';
+var VERSION = '3.9.0';
 var CACHE = 'iopet-' + VERSION;
-var FILES = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'maskable-192.png', 'maskable-512.png'];
+var FILES = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'maskable-192.png', 'maskable-512.png',
+  'mukta-400.woff2', 'mukta-600.woff2', 'mukta-700.woff2', 'mukta-hi-400.woff2', 'mukta-hi-600.woff2', 'mukta-hi-700.woff2'];   // 3.9.0 the font
 var WAIT_MS = 3000;
 
 self.addEventListener('install', function (e) {
@@ -66,7 +67,7 @@ self.addEventListener('fetch', function (e) {
   var req = e.request, url;
   if (req.method !== 'GET') return;
   url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;                // sign-in, the cloud backup, the fonts: not ours
+  if (url.origin !== self.location.origin) return;                // sign-in, the cloud backup: not ours
   if (req.mode === 'navigate') {
     if (isApp(url)) e.respondWith(openApp(e));
     return;
