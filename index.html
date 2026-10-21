@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#221C3E"/>
+<meta name="theme-color" content="#121214"/>
 <meta name="referrer" content="no-referrer"/>
 <!-- The page may only talk to the three Google sign-in / database hosts. Its font (3.9.0) is a file next to it. No other script, frame, image or request is allowed.
      (3.7.1: and, from its own web address, read its manifest and start its helper sw.js — the files next to it.) -->
@@ -24,19 +24,31 @@
 
 :root{
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
-     3.9.0: calm neutrals; colour only where it means something (violet = progress, selection, the active tab; green = right / done;
-     orange = streak and wrong — never red). The old names (--cream60, --pur-bg …) stay as aliases, so every rule keeps working. */
-  --bg:#0F0E1A;--bg-deep:#0A0913;--surface:#1A1830;--surface-2:#24213F;--surface-3:#2E2B4A;
-  --line:#2E2B4A;--line-2:#3B3760;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.12);
-  --ink:#F3F2FA;--ink2:#AEABC6;--ink3:#9693B3;--ink-deco:#6C6987;
+     3.10.0: colour = meaning, shade = state. The chrome is neutral grey (no violet cast, no haze); a hue appears only where it
+     means something, and each hue means one thing in both themes:
+       white (--cta)          the one thing to do on the screen; nothing else is white-filled
+       violet (--primary)     course, current, selected, progress — fills, rings, bars; its text is --primary-ink, and a glyph
+                              on a violet fill is dark (--on-mark), never white
+       gold (--gold)          reward: XP, the streak earned today, badges, achievements (the diya's flame)
+       green (--good)         right, done
+       vermilion (--wrong)    wrong, error, delete — fills and borders; its text is --wrong-ink (never danger-red)
+       no hue                 info, warnings, hints and the timer (ink2); locked and inactive (ink3, --mark-off for marks)
+     Orange is no longer a colour of its own: --flame and --warn follow gold, --red and --bad-* follow vermilion.
+     The old names (--cream60, --pur-bg …) stay as aliases, so every rule keeps working. */
+  --bg:#121214;--bg-deep:#0C0C0E;--surface:#1E1E22;--surface-2:#27272C;--surface-3:#313137;
+  --line:#323238;--line-2:#45454D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.12);
+  --ink:#F2F2F5;--ink2:#B0B0B9;--ink3:#8E8E98;--ink-deco:#5C5C66;   /* ink3: never on surface-3 (4.0:1); ink-deco: hairlines only, never text */
+  --mark-off:#707079;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
-  --primary:#8E80FF;--primary-2:#B4AAFF;--primary-soft:#2A2556;--primary-ink:#D6D0FF;
-  --cta:#FFFFFF;--on-cta:#15132B;
-  --flame:#FF8A33;--flame-soft:#3A2516;--flame-ink:#FFD2A8;--warn:#F5A04A;
-  --good:#3BD07F;--good-soft:#13301F;--good-ink:#B9F0CF;
-  --haze:#2B2357;--haze-2:#142441;--hero-1:#2A2456;--hero-2:#1D2A52;--hero-3:#19324A;
-  --chart:#3B3573;--track:rgba(255,255,255,.14);--glow:rgba(142,128,255,.28);
-  --t-violet:#262150;--t-blue:#172744;--t-teal:#123432;--t-green:#14301F;--t-pink:#3A1A2B;--t-yellow:#362C14;--t-orange:#3A2516;
+  --primary:#8E80FF;--primary-2:#B4AAFF;--primary-soft:#26262B;--primary-ink:#B4AAFF;   /* a selected thing: violet ring + ink, on a neutral fill */
+  --cta:#FFFFFF;--on-cta:#15132B;--on-mark:#15132B;                    /* --on-mark: a glyph on a violet, green, gold or vermilion fill */
+  --gold:#FFB020;--gold-soft:#3B3122;
+  --wrong:#E66022;--wrong-soft:#302422;--wrong-ink:#FF8F5E;           /* the wrong option is mostly its outline; the right one is filled */
+  --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--gold);
+  --good:#4ADE8B;--good-soft:#243931;--good-ink:var(--good);
+  --haze:var(--bg);--haze-2:var(--bg);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
+  --chart:#27272C;--track:rgba(255,255,255,.10);--glow:rgba(255,255,255,.06);
+  --t-violet:#26262B;--t-blue:#26262B;--t-teal:#26262B;--t-green:#26262B;--t-pink:#26262B;--t-yellow:#26262B;--t-orange:#26262B;   /* every icon sits on one neutral plate */
   --shadow-1:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3);
   --shadow-2:0 2px 6px rgba(0,0,0,.32),0 18px 40px rgba(0,0,0,.42);
   --shadow-cta:0 14px 26px -14px rgba(0,0,0,.9);
@@ -44,16 +56,16 @@
   --shadow-sheet:0 -10px 40px rgba(0,0,0,.5);
   --purple:var(--primary);--purple-dark:#4330D6;--brand:var(--primary);--brand-lip:transparent;--brand-ink:#FFFFFF;
   --go:var(--cta);--go-ink:var(--on-cta);--go-lip:transparent;
-  --green:var(--good);--amber:var(--warn);--red:#FF9A52;--blue:#8CC4FF;--orange:var(--flame);
-  --ok-bg:var(--good-soft);--ok-line:#24603F;--ok-ink:var(--good-ink);--ok-lip:transparent;
-  --bad-bg:var(--flame-soft);--bad-line:#6A4022;--bad-ink:var(--flame-ink);--bad-lip:transparent;
-  --warn-bg:var(--t-yellow);--warn-line:#5C4A1F;--warn-ink:#FFE0A0;
-  --info-bg:var(--t-blue);--info-line:#2A4470;--info-ink:#BCD7FF;
-  --pur-bg:var(--primary-soft);--pur-line:#463F8A;
-  --nav:#1E1C36;--modal:var(--surface);--scrim:rgba(5,4,14,.66);--toast:#2A2556;--shadow:rgba(0,0,0,.5);
-  --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);
-  --bar:#2B2357;                    /* the phone's top bar (BAR in app.js, the same value) = the haze at the top of every screen */
-  --ic-p:#FFFFFF;--ic-ps:#C9C5DA;--ic-pes:#B3AECB;--ic-pef:#D8D4E6;--ic-pw:#3B2C24;--ic-pedge:transparent;
+  --green:var(--good);--amber:var(--warn);--red:var(--wrong-ink);--blue:#8CC4FF;--orange:var(--flame);
+  --ok-bg:var(--good-soft);--ok-line:#306B4C;--ok-ink:var(--good-ink);--ok-lip:transparent;
+  --bad-bg:var(--wrong-soft);--bad-line:#6E3822;--bad-ink:var(--wrong-ink);--bad-lip:transparent;
+  --warn-bg:var(--t-yellow);--warn-line:var(--line-2);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own */
+  --info-bg:var(--t-blue);--info-line:var(--line);--info-ink:var(--ink2);
+  --pur-bg:var(--primary-soft);--pur-line:var(--line-2);
+  --nav:#1E1E22;--modal:var(--surface);--scrim:rgba(6,6,8,.66);--toast:#2A2A30;--shadow:rgba(0,0,0,.5);
+  --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);   /* only the celebration glows (--glow-a) */
+  --bar:#121214;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour (3.10.0: no haze) */
+  --ic-p:#FFFFFF;--ic-ps:#C4C4C8;--ic-pes:#ADADB3;--ic-pef:#D4D4D8;--ic-pw:#3B2C24;--ic-pedge:transparent;
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;
   --font-display:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
@@ -64,8 +76,10 @@
   --line:#EBE9F2;--line-2:#DCD9E8;--fill:rgba(21,19,43,.05);--fill-2:rgba(21,19,43,.09);
   --ink:#15132B;--ink2:#67647D;--ink3:#77748C;--ink-deco:#A7A4B9;
   --primary:#5B45F5;--primary-2:#8A7BFF;--primary-soft:#EFECFF;--primary-ink:#3D2BC2;
-  --cta:#15132B;--on-cta:#FFFFFF;
-  --flame:#FF7A1A;--flame-soft:#FFF0E2;--flame-ink:#9A4300;--warn:#B35400;
+  --cta:#15132B;--on-cta:#FFFFFF;--on-mark:#FFFFFF;
+  --mark-off:#878791;
+  --gold:#9A5A00;--gold-soft:#FFF3D9;              /* 3.10.0 reward and wrong get one colour each in light too (gold text 5.5:1, vermilion 5.7:1 on white) */
+  --wrong:#C2410C;--wrong-soft:#FDEEE7;--wrong-ink:#B93A0A;
   --good:#14A35A;--good-soft:#E6F7EE;--good-ink:#0A6536;
   --haze:#E7E2FF;--haze-2:#E2EFFF;--hero-1:#F1EDFF;--hero-2:#E4EDFF;--hero-3:#EAF8FF;
   --chart:#DCD6FF;--track:rgba(255,255,255,.75);--glow:rgba(255,255,255,.9);
@@ -76,8 +90,8 @@
   --shadow-nav:0 14px 34px rgba(21,19,43,.13),0 2px 6px rgba(21,19,43,.05);
   --shadow-sheet:0 -10px 40px rgba(21,19,43,.10);
   --purple-dark:#3D2BC2;
-  --green:#11834A;--red:#B84A00;--blue:#1F58CC;--orange:#C25400;
-  --ok-line:#B5E5CA;--bad-line:#FFCFA6;--warn-line:#F2DA9C;--warn-ink:#6E4A00;--info-line:#BCD3FB;--info-ink:#1F4AA8;--pur-line:#D4CCFF;
+  --green:#11834A;--blue:#1F58CC;
+  --ok-line:#B5E5CA;--bad-line:#F5C2AD;--warn-line:#F2DA9C;--warn-ink:#6E4A00;--info-line:#BCD3FB;--info-ink:#1F4AA8;--pur-line:#D4CCFF;
   --nav:#FFFFFF;--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
   --glow-a:rgba(91,69,245,.14);--glow-b:rgba(47,116,240,.12);--glow-c:rgba(255,122,26,.12);
   --bar:#E7E2FF;
@@ -138,7 +152,8 @@ sub,sup{font-size:.72em;line-height:0}
 .page.auth{padding-top:28px}
 .page.nav-pad{padding-bottom:124px}
 .page>*+*{margin-top:12px}
-/* 3.9.0 every screen has the same ground: a soft lavender haze at the top that fades into the page colour */
+/* 3.9.0 every screen has the same ground: a soft haze at the top that fades into the page colour (3.10.0: in dark the haze is the
+   page colour itself, so the ground is flat; light keeps its lavender haze) */
 .bg-auth,.bg-dash,.bg-topics,.bg-progress,.bg-profile{background:var(--bg);background:radial-gradient(120% 48% at 50% -6%,var(--haze),transparent 62%),var(--bg)}
 .bg-practice{background:var(--bg)}
 
@@ -162,7 +177,8 @@ sub,sup{font-size:.72em;line-height:0}
 .btn-primary:active{box-shadow:0 6px 14px -10px rgba(21,19,43,.6)}
 .btn-sec{background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);color:var(--ink)}
 .btn-danger{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad-ink)}
-.link{display:inline-block;color:var(--purple);font-size:14px;font-weight:600;padding:10px 6px}
+.link{display:inline-block;color:var(--primary-ink);font-size:14px;font-weight:600;padding:10px 6px}
+[data-theme="light"] .link{color:var(--purple)}
 .link.block{display:block;width:100%;text-align:center}
 .pbar{height:8px;background:var(--fill-2);border-radius:8px;overflow:hidden}
 .pbar>i{display:block;height:100%;border-radius:8px;background:var(--primary)}
@@ -185,8 +201,10 @@ sub,sup{font-size:.72em;line-height:0}
 .cp b{color:var(--ink);font-weight:700;margin-right:3px}
 .cp.v{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}
 .cp.g{background:var(--good-soft);border-color:transparent;color:var(--good-ink)}
-.cp.o{background:var(--flame-soft);border-color:transparent;color:var(--flame-ink)}
-.cp.lvl{background:var(--cta);border-color:transparent;color:var(--on-cta);font-weight:700;letter-spacing:.3px}
+.cp.y{background:var(--gold-soft);border-color:transparent;color:var(--gold)}   /* 3.10.0 a reward (XP earned) is gold */
+/* the Mark of a card: a neutral chip (3.10.0) — white is only for the one button to press */
+.cp.lvl{background:var(--surface-3);border-color:transparent;color:var(--ink);font-weight:700;letter-spacing:.3px}
+[data-theme="light"] .cp.lvl{background:var(--cta);color:var(--on-cta)}
 /* a line icon (24px grid, 2px stroke) — every UI icon of the app is one of these, never a picture */
 .li{display:inline-block;flex:none;width:24px;height:24px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -195,7 +213,8 @@ sub,sup{font-size:.72em;line-height:0}
 .input-wrap:focus-within{border-color:var(--purple);background:var(--pur-bg)}
 .input-wrap input{flex:1;min-width:0;width:100%;padding:13px 4px;font-size:16px;font-weight:600}
 .input-icon{flex:none;width:24px;display:flex;justify-content:center;color:var(--ink3);font-size:15px}
-.eye{flex:none;font-size:13px;font-weight:700;color:var(--purple);padding:10px 4px}
+.eye{flex:none;font-size:13px;font-weight:700;color:var(--primary-ink);padding:10px 4px}
+[data-theme="light"] .eye{color:var(--purple)}
 .field-lbl{display:block;font-size:13px;font-weight:700;color:var(--cream60);letter-spacing:.4px;margin-bottom:6px}
 textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:12px;font-size:16px;line-height:1.45}
 textarea.ta:focus{border-color:var(--purple)}
@@ -208,7 +227,7 @@ input[type=date]{color-scheme:inherit}
 .splash-foot{flex:none;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:11px;color:var(--cream60);letter-spacing:.6px}
 /* The opening screen always wears the diya's own dark colours, whatever the theme (3.7.1): the installed app opens on the same
    dark ground the phone shows while it starts it, and a light phone never flashes white before the diya */
-.splash{--bg:#0F0E1A;--glow-a:rgba(124,92,255,.30);--ink:#FFF8E7;--ink2:rgba(255,248,231,.74);--cream60:rgba(255,248,231,.74);color:#FFF8E7;color-scheme:dark}
+.splash{--bg:#121214;--glow-a:rgba(124,92,255,.30);--ink:#FFF8E7;--ink2:rgba(255,248,231,.74);--cream60:rgba(255,248,231,.74);color:#FFF8E7;color-scheme:dark}
 
 /* ── AUTH ── */
 .auth-logo-row{display:flex;align-items:flex-end;margin-bottom:12px}   /* the diya stands on the same line as the letters */
@@ -240,7 +259,8 @@ input[type=date]{color-scheme:inherit}
 
 /* ── WELCOME ── */
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.success-circle{width:90px;height:90px;border-radius:50%;background:#22c55e;background:linear-gradient(135deg,#4ade80,#22c55e);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(74,222,128,.35)}
+.success-circle{width:90px;height:90px;border-radius:50%;background:var(--good);color:var(--on-cta);display:flex;align-items:center;justify-content:center}   /* 3.10.0 the tick is dark: white on green was 2.3:1 */
+[data-theme="light"] .success-circle{background:#22c55e;background:linear-gradient(135deg,#4ade80,#22c55e);box-shadow:0 12px 40px rgba(74,222,128,.35)}
 .welcome .btn{max-width:280px;margin-top:26px}
 
 /* ── HOME (3.9.0): greeting, one hero card, two small cards ── */
@@ -251,13 +271,17 @@ input[type=date]{color-scheme:inherit}
 .greeting-badge{font-size:14px;font-weight:600;color:var(--ink2)}
 .greeting-name{font-size:30px;font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exam-pill{display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:5px 12px 5px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:13px;font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.exam-pill .li{margin-right:6px;color:var(--primary)}
-.avatar-circle{flex:none;width:48px;height:48px;border-radius:50%;background:var(--primary);background:linear-gradient(150deg,var(--primary-2),var(--primary));color:#fff;font-size:19px;font-weight:700;text-align:center;box-shadow:0 0 0 3px var(--surface),var(--shadow-1)}
+.exam-pill .li{margin-right:6px;color:var(--ink2)}
+[data-theme="light"] .exam-pill .li{color:var(--primary)}
+/* 3.10.0 the avatar is a neutral disc with an ink letter (white on violet was 2.1-3.1:1); light keeps its violet disc */
+.avatar-circle{flex:none;width:48px;height:48px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:19px;font-weight:700;text-align:center;box-shadow:0 0 0 3px var(--surface),var(--shadow-1)}
+[data-theme="light"] .avatar-circle{background:var(--primary);background:linear-gradient(150deg,var(--primary-2),var(--primary));color:#fff}
 .hero{position:relative;border-radius:var(--r-xl);padding:22px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--line)}
 [data-theme="light"] .hero{border-color:rgba(255,255,255,.8)}
 .hero-top{display:flex;align-items:flex-start}
 .hero-txt{flex:1;min-width:0}
-.hero-kick{background:var(--glow);border-color:transparent}
+.hero-kick{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}   /* "Next up" / "Continue": a state, in violet text */
+[data-theme="light"] .hero-kick{background:var(--glow);color:var(--ink2)}
 .hero-name{font-size:24px;font-weight:700;line-height:1.3;margin-top:12px;word-wrap:break-word}
 .hero-en{font-size:14px;color:var(--ink2);margin-top:2px}
 .hero-art{flex:none;margin:-6px -6px 0 8px}
@@ -278,11 +302,11 @@ input[type=date]{color-scheme:inherit}
 .mini-n{font-size:28px;line-height:1.1;margin-top:10px}
 .mini-l{font-size:14px;font-weight:600}
 .mini-s{font-size:13px;color:var(--ink2);margin-top:2px}
-.mini-s.warn{color:var(--flame-ink);font-weight:600}
-[data-theme="light"] .mini-s.warn{color:var(--warn)}
+.mini-s.warn{color:var(--gold);font-weight:600}
+.mini .chi.off{filter:grayscale(1);opacity:.55}   /* 3.10.0 the streak flame is lit (gold) only once today's practice is done */
 .mini-s.ok{color:var(--green);font-weight:600}
 .ring{fill:none;stroke-width:5}
-.ring-t{stroke:var(--fill-2)}
+.ring-t{stroke:var(--mark-off)}
 .ring-v{stroke:var(--primary);stroke-linecap:round}
 .ring.done .ring-v{stroke:var(--good)}
 .ring-k{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
@@ -307,9 +331,9 @@ input[type=date]{color-scheme:inherit}
 .q-header{display:flex;align-items:center}
 .q-header .q-progress{flex:1;min-width:0;margin:0 14px}
 .q-counter{flex:none;font-size:15px;color:var(--ink2)}
-.q-timer{flex:none;min-width:44px;text-align:right;font-size:15px;color:var(--warn)}
+.q-timer{flex:none;min-width:44px;text-align:right;font-size:15px;color:var(--ink2)}   /* 3.10.0 the clock is information, not an alarm */
 .q-progress{height:10px;background:var(--fill-2);border-radius:10px;overflow:hidden}
-.q-progress>i{display:block;height:100%;border-radius:10px;background:var(--primary)}
+.q-progress>i{display:block;height:100%;border-radius:10px;background:var(--primary)}   /* full width, slid in from the left (transform, 3.10.0) */
 .q-card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .practice .q-card{margin-top:20px}
 .q-level{display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:10px}
@@ -320,29 +344,32 @@ input[type=date]{color-scheme:inherit}
 .opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:13px 16px;font-size:17px;font-weight:600;line-height:1.4;text-align:left;transition:transform .12s,border-color .12s,background-color .12s}
 .opt-btn:active{transform:translateY(2px)}
 .opt-btn[disabled]{cursor:default;transform:none}
+/* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
 .opt-btn.correct{background:var(--good-soft);border-color:var(--good)}
-.opt-btn.wrong{background:var(--flame-soft);border-color:var(--flame)}
+.opt-btn.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
 .opt-btn.dim{opacity:.55;box-shadow:none}
 .opt-key{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink2);margin-right:12px}
 .opt-key .li{stroke-width:3}
-.opt-btn.correct .opt-key{background:var(--good);border-color:var(--good);color:#fff}
-.opt-btn.wrong .opt-key{background:var(--flame);border-color:var(--flame);color:#fff}
+.opt-btn.correct .opt-key{background:var(--good);border-color:var(--good);color:var(--on-mark)}
+.opt-btn.wrong .opt-key{background:var(--wrong);border-color:var(--wrong);color:var(--on-mark)}
 .opt-txt{flex:1;min-width:0}
 .feedback-box{border-radius:var(--r-lg);padding:18px 18px 16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2)}
 .feedback-box.correct-fb{border-top:4px solid var(--good)}
-.feedback-box.wrong-fb{border-top:4px solid var(--flame)}
+.feedback-box.wrong-fb{border-top:4px solid var(--wrong)}
 .fb-head{display:flex;align-items:center}
 .fb-ico{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:10px;background:var(--fill-2);color:var(--ink2)}
 .fb-ico .li{stroke-width:3}
-.correct-fb .fb-ico{background:var(--good);color:#fff}
-.wrong-fb .fb-ico{background:var(--flame);color:#fff}
+.correct-fb .fb-ico{background:var(--good);color:var(--on-mark)}
+.wrong-fb .fb-ico{background:var(--wrong);color:var(--on-mark)}
 .fb-title{flex:1;font-size:20px;font-weight:700}
 .correct-fb .fb-title{color:var(--green)}
-.wrong-fb .fb-title{color:var(--warn)}
+.wrong-fb .fb-title{color:var(--wrong-ink)}
 .fb-xp{flex:none}
 .fb-sub{font-size:13px;color:var(--ink2);margin-top:8px}
 .fb-text{font-size:15px;color:var(--ink);line-height:1.7;margin-top:10px}
 .practice .btn-primary{margin-top:20px}
+.practice .link{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}   /* 3.10.0 skip / report: grey, underlined, not violet */
+[data-theme="light"] .practice .link{color:var(--purple);text-decoration:none}
 .btn-check{margin-top:20px !important}
 .btn-check[disabled]{opacity:1;background:var(--fill-2);color:var(--ink3);box-shadow:none}
 
@@ -367,7 +394,7 @@ input[type=date]{color-scheme:inherit}
 .bl-ico .li{width:20px;height:20px}
 .badge-line.g .bl-ico{background:var(--good-soft);color:var(--green)}
 .badge-line.v .bl-ico{background:var(--primary-soft);color:var(--primary)}
-.badge-line.o .bl-ico{background:var(--flame-soft);color:var(--warn)}
+.badge-line.y .bl-ico{background:var(--gold-soft);color:var(--gold)}   /* 3.10.0 the streak and achievements: gold */
 .next-card{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 16px}
 .next-t{font-size:16px;font-weight:700}
 .next-l{font-size:13px;color:var(--ink2)}
@@ -379,13 +406,13 @@ input[type=date]{color-scheme:inherit}
 .rv-line{display:flex;align-items:flex-start;font-size:14px;line-height:1.5;margin-top:8px}
 .rv-line .li{margin:2px 6px 0 0;stroke-width:3}
 .rv-line.ok{color:var(--green)}
-.rv-line.bad{color:var(--warn)}
+.rv-line.bad{color:var(--wrong-ink)}
 .rv-x{font-size:14px;color:var(--ink2);line-height:1.6;margin-top:8px}
 
 /* ── PROGRESS ── */
 .progress>*+*,.profile>*+*{margin-top:20px}
 .next-step .ns-row{margin-top:14px}
-.next-step .ch-tile{background:var(--glow) !important}
+[data-theme="light"] .next-step .ch-tile{background:var(--glow) !important}
 .ns-name{font-size:19px;font-weight:700;line-height:1.3}
 .ns-l{font-size:13px;color:var(--ink2);margin-top:2px}
 .prog-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
@@ -399,7 +426,7 @@ input[type=date]{color-scheme:inherit}
 .bar-col{flex:1;min-width:0;text-align:center;padding:0 4px}
 .bar-num{font-size:13px;font-weight:700;color:var(--primary);height:18px;line-height:18px}
 .bar-track{height:78px;display:flex;align-items:flex-end}
-.bar{width:100%;min-height:4px;border-radius:8px 8px 3px 3px;background:var(--chart)}
+.bar{width:100%;min-height:4px;border-radius:8px 8px 3px 3px;background:var(--mark-off)}   /* 3.10.0 other days grey (3.4:1), today violet */
 .bar-col.today .bar{background:var(--primary)}
 .bar-lbl{font-size:13px;font-weight:600;color:var(--ink3);margin-top:6px}
 .bar-col.today .bar-lbl{color:var(--ink)}
@@ -412,10 +439,12 @@ input[type=date]{color-scheme:inherit}
 /* ── PROFILE + SUB-SCREENS ── */
 .prof-header{text-align:center;padding:4px 0 0}
 .prof-ring{width:104px;height:104px;margin:0 auto 12px;border-radius:50%;padding:6px;background:var(--fill-2);background:conic-gradient(var(--primary) calc(var(--p) * 1%),var(--fill-2) 0)}
-.prof-avatar{width:92px;height:92px;line-height:92px;border-radius:50%;background:var(--primary);background:linear-gradient(150deg,var(--primary-2),var(--primary));color:#fff;font-size:36px;font-weight:700;box-shadow:0 0 0 4px var(--bg)}
+.prof-avatar{width:92px;height:92px;line-height:92px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:36px;font-weight:700;box-shadow:0 0 0 4px var(--bg)}
+[data-theme="light"] .prof-avatar{background:var(--primary);background:linear-gradient(150deg,var(--primary-2),var(--primary));color:#fff}
 .prof-name{font-size:26px;font-weight:700;line-height:1.25;word-wrap:break-word;overflow-wrap:break-word}
 .prof-email{font-size:14px;color:var(--ink2);margin-top:2px;word-break:break-all}
-.prof-rank{display:inline-block;background:var(--primary-soft);border-radius:var(--r-pill);padding:5px 14px;font-size:14px;font-weight:700;color:var(--primary-ink);margin-top:12px}
+.prof-rank{display:inline-flex;align-items:center;background:var(--primary-soft);border-radius:var(--r-pill);padding:5px 14px;font-size:14px;font-weight:700;color:var(--ink);margin-top:12px}
+.prof-rank .li{margin:0 6px 0 -2px;color:var(--gold)}   /* 3.10.0 the level: a neutral pill, its star gold (a reward) */
 [data-theme="light"] .prof-rank{color:var(--primary)}
 .prof-next{font-size:14px;color:var(--ink2);margin-top:8px}
 .prof-next b{color:var(--ink);font-weight:700}
@@ -434,7 +463,7 @@ input[type=date]{color-scheme:inherit}
 .menu-meta{flex:none;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;color:var(--ink2);margin-right:4px}
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
-.menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--warn)}
+.menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
 .sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);font-size:16px;font-weight:600;color:var(--ink2);margin-top:24px !important}
 .sign-out .li{margin-right:8px}
 .sign-out:active{opacity:.75}
@@ -444,7 +473,7 @@ input[type=date]{color-scheme:inherit}
 .toggle-info{flex:1;min-width:0;padding-right:12px}
 .toggle-label{font-size:15px;font-weight:600}
 .toggle-desc{font-size:13px;color:var(--cream60);margin-top:2px;line-height:1.45}
-.toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--fill-2);box-shadow:inset 0 0 0 1px var(--line-2);transition:background-color .15s}
+.toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--mark-off);transition:background-color .15s}   /* off: a grey track that can be seen (3.10.0) */
 .toggle:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .15s}
 .toggle:before{content:'';position:absolute;top:-11px;right:-10px;bottom:-11px;left:-10px}   /* 66x48 tap area around the 46x26 switch */
 .toggle.on{background:var(--primary)}
@@ -467,7 +496,10 @@ input[type=date]{color-scheme:inherit}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:10px;gap:10px}
 .ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 10px;text-align:center}
 .ach-card:active{transform:translateY(3px);box-shadow:none}
-.ach-card.earned{background:var(--surface);border-color:var(--primary)}
+.ach-card.earned{background:var(--surface)}   /* 3.10.0 earned: the icon in full colour and an ink name; no violet frame */
+[data-theme="light"] .ach-card.earned{border-color:var(--primary)}
+.ach-card.locked .ach-name{color:var(--ink3)}
+[data-theme="light"] .ach-card.locked .ach-name{color:inherit}
 .ach-card>span{display:block}
 .ach-emoji{font-size:30px;line-height:1.2}
 .ach-card.locked .ach-emoji{opacity:.4;filter:grayscale(.9)}
@@ -493,9 +525,14 @@ input[type=date]{color-scheme:inherit}
 .co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;transition:transform .07s}
 .co-row:active{transform:translateY(3px);box-shadow:none}
 .co-row.big{padding:17px 15px;margin-top:12px !important}
-.co-row.current{border-color:var(--ok-line);background:var(--ok-bg)}
+.co-row.current{border-color:var(--primary)}   /* 3.10.0 your course is the selected one: violet, like every selection */
+[data-theme="light"] .co-row.current{border-color:var(--ok-line);background:var(--ok-bg)}
 .co-row.locked:active{transform:none;box-shadow:var(--shadow-1)}
-.co-row.locked .co-ico,.co-row.locked .co-info{opacity:.55}
+.co-row.locked .co-ico{opacity:.55}
+.co-row.locked .co-name,.co-row.locked .co-sub{color:var(--ink3)}   /* dimmed by its ink, not by opacity: 5.1:1 (3.10.0; it was 3.3:1) */
+[data-theme="light"] .co-row.locked .co-info{opacity:.55}
+[data-theme="light"] .co-row.locked .co-name{color:inherit}
+[data-theme="light"] .co-row.locked .co-sub{color:var(--cream60)}
 .co-ico{flex:none;width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:21px;margin-right:13px}
 .co-ico b{font-family:var(--font-display);font-size:18px;font-weight:700}
 .co-row.big .co-ico{width:50px;height:50px;border-radius:14px;font-size:25px}
@@ -504,12 +541,14 @@ input[type=date]{color-scheme:inherit}
 .co-row.big .co-name{font-size:16px}
 .co-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px;line-height:1.45}
 .co-state{display:block;font-size:13px;font-weight:700;color:var(--cream60);margin-top:5px}
-.co-state.on{color:var(--green)}
+.co-state.on{color:var(--primary-ink)}
+[data-theme="light"] .co-state.on{color:var(--green)}
 .co-state:before{content:'';display:inline-block;width:7px;height:7px;border:1.5px solid currentColor;border-radius:50%;margin-right:6px}   /* the dot and the arrow below are drawn, not letters: no phone can lack them */
 .co-state.on:before{background:currentColor}
 .co-right{flex:none;display:flex;align-items:center;margin-left:10px}
 .co-soon{font-size:13px;font-weight:700;letter-spacing:.3px;background:var(--fill);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
-.co-cur{font-size:13px;font-weight:700;color:var(--green);margin-right:8px;white-space:nowrap}
+.co-cur{font-size:13px;font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
+[data-theme="light"] .co-cur{color:var(--green)}
 .course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-pill);padding:7px 12px;font-size:13px;font-weight:700;white-space:nowrap}
 .course-pill:before{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}   /* a taller tap area for the small pill */
 .course-pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;margin-right:6px}
@@ -568,12 +607,15 @@ input[type=date]{color-scheme:inherit}
 .toast{position:absolute;left:0;right:0;bottom:112px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
 .toast.show{opacity:1;visibility:visible}
 .toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:14px;font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
+.toast .li{margin:-3px 7px 0 -4px;color:var(--gold)}   /* 3.10.0 "Achievement unlocked": its star is gold (the toast is dark in both looks) */
+[data-theme="light"] .toast .li{color:#FFB020}
 
 /* ── "PLEASE WAIT" (sign in, create account, delete account …) ── */
 .busy{position:absolute;top:0;right:0;bottom:0;left:0;display:none;align-items:center;justify-content:center;padding:20px;background:var(--scrim);z-index:80}
 .busy.show{display:flex}
 .busy-card{min-width:150px;max-width:260px;background:var(--modal);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px 22px;text-align:center;box-shadow:0 20px 60px var(--shadow)}
-.spin{width:26px;height:26px;margin:0 auto;border:2.5px solid rgba(167,139,250,.25);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}
+.spin{width:26px;height:26px;margin:0 auto;border:2.5px solid var(--fill-2);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}
+[data-theme="light"] .spin{border-color:rgba(167,139,250,.25);border-top-color:var(--purple)}
 .busy-t{font-size:13px;font-weight:700;line-height:1.4;margin-top:12px}
 
 @media (max-width:340px){
@@ -581,13 +623,14 @@ input[type=date]{color-scheme:inherit}
   .nav-item{padding:7px 11px}
   .stat-grid{grid-template-columns:1fr 1fr}
   }
-/* ── FIGURES in questions (drawn by figHtml) ── lines and numbers take the colour of the text around them; a "?" is amber */
+/* ── FIGURES in questions (drawn by figHtml) ── lines and numbers take the colour of the text around them; a "?" is violet (3.10.0:
+   it was amber, which would now read as wrong or as a reward — the "?" is the place the chosen, violet-ringed option goes) */
 .figs{display:block;text-align:center;margin:10px 0 2px;line-height:0}
 .fig{display:inline-block;vertical-align:middle;margin:4px 6px;line-height:1.3}
 .fig svg{display:block;overflow:visible}
 .fig text{fill:currentColor;font-family:var(--font-display);font-weight:700}
 .fig .fig-lbl{font-family:var(--font-body);font-weight:800;opacity:.8}
-.fig .fig-q,.fig-grid td.fig-q{fill:var(--amber);color:var(--amber);font-weight:800}
+.fig .fig-q,.fig-grid td.fig-q{fill:var(--primary-ink);color:var(--primary-ink);font-weight:800}
 .fig-line{fill:none;stroke:currentColor;stroke-width:1.6;stroke-opacity:.75}
 .fig-hub{fill:var(--fill-2);stroke:currentColor;stroke-width:1.4;stroke-opacity:.7}
 .fig-grid{border-collapse:collapse;margin:0 auto}
@@ -597,7 +640,7 @@ input[type=date]{color-scheme:inherit}
 .rv-q .figs,.rv-line .figs,.rv-x .figs,.fb-text .figs{margin:6px 0 2px}
 /* ── MOTION THAT HELPS THE EYE (3.4.0) ── short, only where something just changed; none with "Reduce animations" or a phone set
    to reduce motion. The answer arrives (explanation rises in, the chosen option gives a small pop, the progress bar grows),
-   a dialog opens softly, and every tappable thing answers the finger. */
+   a dialog opens softly, and every tappable thing answers the finger. 3.10.0: the progress bar slides (transform), it is not widened. */
 .feedback-box.fresh{animation:fb-in .24s ease-out}
 .opt-btn.pop{animation:opt-pop .26s ease-out}
 .q-progress>i.grow{animation:qp-grow .35s ease-out}
@@ -605,7 +648,7 @@ input[type=date]{color-scheme:inherit}
 .modal.open .m-card{animation:m-pop .2s ease-out}
 @keyframes fb-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes opt-pop{0%{transform:scale(1)}45%{transform:scale(1.02)}100%{transform:scale(1)}}
-@keyframes qp-grow{from{width:var(--from)}}
+@keyframes qp-grow{from{transform:translateX(var(--from))}}
 @keyframes m-fade{from{opacity:0}to{opacity:1}}
 @keyframes m-pop{from{transform:translateY(40px)}to{transform:none}}
 .calm .feedback-box.fresh,.calm .opt-btn.pop,.calm .q-progress>i.grow,.calm .modal.open,.calm .modal.open .m-card{animation:none}
@@ -670,7 +713,8 @@ input[type=date]{color-scheme:inherit}
 .ch-flag{flex:none;display:flex;color:var(--ink3);margin:0 5px 0 6px}
 .ch-n{flex:none;font-size:13px;font-weight:700;color:var(--ink)}
 .ch-st{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;color:var(--ink3)}
-.ch-st.play{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
+.ch-st.play{background:var(--primary);color:var(--on-mark)}   /* 3.10.0 on the go: violet (state), not white — white is the one button to press */
+[data-theme="light"] .ch-st.play{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
 .ch-st.play .li{margin-left:2px}
 .ch-st.done{background:var(--good-soft);color:var(--good-ink)}
 [data-theme="light"] .ch-st.done{color:var(--green)}
@@ -679,7 +723,10 @@ input[type=date]{color-scheme:inherit}
 .ch-card.k-locked .ch-tile,.ch-card.k-locked .ch-name{opacity:.6}
 .ch-card.k-locked .ch-tile .chi{filter:saturate(.5)}
 .ch-card.k-soon{background:transparent;box-shadow:none;border-style:dashed}
-.ch-card.k-soon .ch-tile,.ch-card.k-soon .topic-info{opacity:.55}
+.ch-card.k-soon .ch-tile{opacity:.55}
+.ch-card.k-soon .topic-info,.ch-card.k-soon .topic-row-meta{color:var(--ink3)}   /* dimmed by its ink, not by opacity: still 5.8:1 (3.10.0) */
+[data-theme="light"] .ch-card.k-soon .topic-info{opacity:.55;color:inherit}
+[data-theme="light"] .ch-card.k-soon .topic-row-meta{color:var(--ink2)}
 .ch-card.k-soon .ch-tile .chi{filter:grayscale(.8)}
 /* ── THE CHAPTER PAGE ── */
 .chapter>*+*{margin-top:20px}
@@ -688,17 +735,23 @@ input[type=date]{color-scheme:inherit}
 .chp-art .chi{width:136px;height:136px}
 .chp-name{font-size:30px;font-weight:700;line-height:1.25;margin-top:8px}
 .chp-en{font-size:15px;color:var(--ink2);margin-top:2px}
-.chp-why{display:flex;align-items:center;background:var(--primary-soft);border-radius:var(--r-md);padding:14px 16px;font-size:14px;color:var(--ink)}
-.chp-why .li{margin-right:10px;color:var(--primary)}
+/* the exam weight is information (3.10.0): a plain card, a grey icon, the number in bold ink — no violet, which means "current" */
+.chp-why{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;font-size:14px;color:var(--ink)}
+.chp-why .li{margin-right:10px;color:var(--ink2)}
+[data-theme="light"] .chp-why{background:var(--primary-soft);border:0}
+[data-theme="light"] .chp-why .li{color:var(--primary)}
 .chp-why b{font-weight:700}
 .steps-list{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:6px 0}
 .step{position:relative;display:flex;align-items:flex-start;width:100%;padding:14px 18px;text-align:left}
 .step+.step{border-top:1px solid var(--line)}
 .step:active{background:var(--surface-2)}
 .step-dot{flex:none;width:32px;height:32px;margin-right:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;background:var(--fill-2);color:var(--ink2)}
-.step.now .step-dot{background:var(--primary);color:#fff}
-.step.done .step-dot{background:var(--good);color:#fff}
-.step.due{background:var(--primary-soft)}
+/* 3.10.0 the step to do is its violet dot (a dark number on it, 5.8:1) and its bold title — the row itself is not filled */
+.step.now .step-dot{background:var(--primary);color:var(--on-mark)}
+.step.done .step-dot{background:var(--good);color:var(--on-mark)}
+.step.locked .step-dot{background:var(--surface-2);color:var(--ink3)}
+[data-theme="light"] .step.due{background:var(--primary-soft)}
+[data-theme="light"] .step.locked .step-dot{background:var(--fill-2);color:var(--ink2)}
 .step-b{flex:1;min-width:0;display:block}
 .step-t{display:block;font-size:16px;font-weight:700}
 .step-l{display:block;font-size:13px;color:var(--ink2);margin-top:1px}
@@ -708,7 +761,10 @@ input[type=date]{color-scheme:inherit}
 .step .ch-prog{margin-top:8px}
 .step-badge{margin-top:8px}
 .step.locked .step-t,.step.locked .step-l{color:var(--ink3)}
-.step.soon .step-badge{opacity:.6}
+.cp.v.step-badge{color:var(--ink2)}   /* a badge still to earn has no hue (3.10.0: shade = state) */
+.step.soon .step-badge{color:var(--ink3)}
+[data-theme="light"] .cp.v.step-badge{color:var(--primary-ink)}
+[data-theme="light"] .step.soon .step-badge{opacity:.6;color:var(--primary-ink)}
 .chp-out{margin-top:24px}
 .chapter .btn-cta{margin-top:16px}
 .sheet-list .topic-row{box-shadow:none}
@@ -808,6 +864,8 @@ input[type=date]{color-scheme:inherit}
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
 .opts.grid .fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
+/* 3.10.0 the tick on the chosen option's violet disc is dark (5.8:1; white was 3.1:1) — it overrides .opt-btn.sel .opt-key above */
+.opts .opt-btn.sel .opt-key{color:var(--on-mark)}
 /* small examples side by side in an explanation (counting: one coloured example of each kind) */
 .fb-text .fig-fig svg,.rv-x .fig-fig svg{width:auto;max-width:92px;max-height:82px}
 .fb-text .figs .fig-fig,.rv-x .figs .fig-fig{margin:4px 5px}
@@ -822,15 +880,18 @@ input[type=date]{color-scheme:inherit}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
 .pack-name{display:block;font-size:14px;font-weight:700}
 .pack-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px}
-.pack-price{flex:none;margin-left:10px;font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--purple)}
+.pack-price{flex:none;margin-left:10px;font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--primary-ink)}
+[data-theme="light"] .pack-price{color:var(--purple)}
 .pack-hero{text-align:center;padding:6px 0 4px}
 .pack-hero-ico{font-size:40px;line-height:1.2}
 .pack-hero-name{font-family:var(--font-display);font-size:20px;font-weight:700;margin-top:4px !important}
-.pack-hero-price{display:inline-block;margin-top:10px !important;background:var(--brand);color:#fff;border-radius:var(--r-pill);padding:5px 16px;font-family:var(--font-display);font-size:17px;font-weight:700;box-shadow:0 3px 0 var(--brand-lip)}
+.pack-hero-price{display:inline-block;margin-top:10px !important;background:var(--primary-soft);color:var(--primary-ink);border-radius:var(--r-pill);padding:5px 16px;font-family:var(--font-display);font-size:17px;font-weight:700;box-shadow:0 3px 0 var(--brand-lip)}   /* 3.10.0 violet text, 7.2:1 (white on violet was 3.1:1) */
+[data-theme="light"] .pack-hero-price{background:var(--brand);color:#fff}
 .pack-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:var(--ink2)}
 .pay-steps>*+*{margin-top:12px}
 .pay-step{display:flex;font-size:13px;line-height:1.5}
-.pay-n{flex:none;margin-right:10px;width:24px;height:24px;border-radius:50%;background:var(--pur-bg);color:var(--purple);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.pay-n{flex:none;margin-right:10px;width:24px;height:24px;border-radius:50%;background:var(--pur-bg);color:var(--primary-ink);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+[data-theme="light"] .pay-n{color:var(--purple)}
 .pay-row{display:flex;flex-wrap:wrap;margin:6px -4px 0}
 .pay-btn{display:flex;align-items:center;justify-content:center;width:auto;flex:1 1 130px;margin:4px;padding:11px 12px;font-size:13px;text-decoration:none}
 .code-form>*+*{margin-top:10px}
@@ -2764,15 +2825,15 @@ function applyTheme(s) {
   if (root.getAttribute('data-theme') !== th) root.setAttribute('data-theme', th);
   if (meta && meta.getAttribute('content') !== bar) meta.setAttribute('content', bar);      // the colour of the phone's top bar
 }
-var SPLASH_BAR = '#221C3E';                                        // the top edge of the splash
+var SPLASH_BAR = '#121214';                                        // the top edge of the splash (3.10.0: its flat ground, = BAR.dark)
 /* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
-   one colour. So the bar takes the app's purple, and the top of the app fades out of that very colour (--bar in the style sheet,
-   the same two values): bar and page meet without a line, as in the phone's own apps. Dark is the splash's purple, so the bar
-   keeps one colour from the moment the page opens. Before it, the phone's own start screen (the icon on a dark ground) is all one
-   colour, its top bar included: the manifest's theme_color is its background_color (3.7.3).
+   one colour. So the bar takes the colour of the top of the app (--bar in the style sheet, the same two values): bar and page
+   meet without a line, as in the phone's own apps. 3.10.0: in dark that is the page colour itself (no haze, no purple), the same
+   as the splash, the manifest and the first theme-color, so the bar keeps one colour from the phone's start screen (the icon on a
+   dark ground, the manifest's theme_color = its background_color, 3.7.3) to the last screen.
    On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
    the frame, not the app: there it keeps the plain ground colours it always had. */
-var BAR = { dark: '#2B2357', light: '#E7E2FF' }, BAR_FRAMED = { dark: '#0A0913', light: '#EDEDF4' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
+var BAR = { dark: '#121214', light: '#E7E2FF' }, BAR_FRAMED = { dark: '#0C0C0E', light: '#EDEDF4' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
 function framed() {
   try { if (!frameMq && window.matchMedia) frameMq = window.matchMedia(FRAME_MQ); } catch (e) { frameMq = null; }
   return !!(frameMq && frameMq.matches);
@@ -3627,8 +3688,8 @@ function formNote(msg) {
   if (el) { el.textContent = ''; el.classList.remove('show'); }
   toast(msg);
 }
-function toast(msg) {
-  elToast.innerHTML = '<span>' + esc(msg) + '</span>';
+function toast(msg, ico) {                                         // ico: a line icon (li()) before the words, or nothing
+  elToast.innerHTML = '<span>' + (ico || '') + esc(msg) + '</span>';
   elToast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function () { elToast.classList.remove('show'); }, 2400);
@@ -3726,18 +3787,20 @@ function greeting() {
   if (h < 17) return { e: '☀️', t: 'Good afternoon' };
   return { e: h < 21 ? '🌆' : '🌙', t: 'Good evening' };
 }
+/* the bar's colour says the one thing that matters (3.10.0): vermilion while the password would be refused or is weak, green when
+   it is strong, grey in between — the theme's own colours, never red */
 function passStrength(p) {
   var s = 0, min = CONFIG.PASS_MIN;
   if (!p) return { w: 0, c: 'transparent', t: 'At least ' + min + ' characters' };
-  if (p.length < min) return { w: 20, c: '#F87171', t: 'Too short — at least ' + min + ' characters' };
-  if (passProblem(p, '')) return { w: 30, c: '#F87171', t: 'Too easy to guess' };
+  if (p.length < min) return { w: 20, c: 'var(--wrong)', t: 'Too short — at least ' + min + ' characters' };
+  if (passProblem(p, '')) return { w: 30, c: 'var(--wrong)', t: 'Too easy to guess' };
   if (p.length >= 12) s++;
   if (/[a-z]/.test(p) && /[A-Z]/.test(p)) s++;
   if (/\d/.test(p)) s++;
   if (/[^A-Za-z0-9]/.test(p)) s++;
-  if (s <= 1) return { w: 45, c: '#FB923C', t: 'Weak — add numbers or capital letters' };
-  if (s === 2) return { w: 70, c: '#FBBF24', t: 'Good' };
-  return { w: 100, c: '#4ADE80', t: 'Strong' };
+  if (s <= 1) return { w: 45, c: 'var(--wrong)', t: 'Weak — add numbers or capital letters' };
+  if (s === 2) return { w: 70, c: 'var(--ink2)', t: 'Good' };
+  return { w: 100, c: 'var(--good)', t: 'Strong' };
 }
 function passField(id, placeholder, auto, strength) {
   return '<div class="input-wrap"><span class="input-icon">' + li('lock', 20) + '</span><input id="' + id + '" type="password" autocomplete="' + auto + '" maxlength="64" placeholder="' +
@@ -3828,7 +3891,7 @@ SCREENS.sent = function (p) {
 
 SCREENS.welcome = function () {
   return '<div class="page bg-auth auth welcome"><div class="success-circle"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">' +
-    '<path d="M10 22l8 8 14-16" stroke="#FFF8E7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+    '<path d="M10 22l8 8 14-16" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
     '<div class="auth-title" style="margin-top:18px">You’re all set!</div><div class="auth-sub">Welcome to IOPET, ' + esc(firstName(user.name)) + '</div>' +
     '<button type="button" class="btn btn-primary" data-act="home">' + (courseOf(user) ? 'Get started' : 'Choose your course') + '</button></div>';
 };
@@ -3955,10 +4018,11 @@ SCREENS.home = function () {
     : '<div class="hero"><div class="hero-name">Choose a topic</div><div class="hero-note">Your course has no questions to practise yet.</div>' +
       '<button class="btn btn-primary btn-cta" data-act="tab" data-tab="topics">Open Topics</button></div>';
 
-  /* the streak: the one warning that matters (it ends tonight) is said here, in its own card, in orange */
+  /* the streak: the one warning that matters (it ends tonight) is said here, in its own card, in gold (3.10.0). The flame is lit
+     (gold) once today's practice is done and grey until then — shade says the state, as on every other card */
   warn = u.notif.streak && st > 0 && u.lastDay !== tk;
   sub = st === 0 ? (u.bestStreak ? 'Best ' + u.bestStreak + ' · start again' : 'Answer 1 to start') : u.lastDay === tk ? 'Done today' : 'Practice today';
-  html += '<div class="mini-row' + (u.notif.daily ? '' : ' one') + '"><div class="mini streak-card">' + statIcon('flame', 44) +
+  html += '<div class="mini-row' + (u.notif.daily ? '' : ' one') + '"><div class="mini streak-card">' + statIcon('flame', 44, u.lastDay === tk ? '' : 'off') +
     '<div class="mini-n num streak-count">' + st + '</div><div class="mini-l">day streak</div>' +
     '<div class="mini-s' + (warn ? ' warn' : '') + '">' + (warn ? 'Ends at midnight' : sub) + '</div></div>';
   if (u.notif.daily)
@@ -3988,7 +4052,8 @@ SCREENS.topics = function () {
 };
 
 /* The Topics page of an exam studied in Marks (3.5.0): one card per chapter, sorted by where the student stands —
-   on the go · ready to start · waiting · passed · coming soon. Each chapter has its own drawn icon and colour. */
+   on the go · ready to start · waiting · passed · coming soon. Each chapter has its own drawn icon (3.10.0: on one neutral plate;
+   the only colours on a row are its state — violet on the go, green passed). */
 function markLockText(lk, t) {
   if (lk.kind === 'slots') return 'Opens when you finish one of the ' + plural(lk.wait.length, 'chapter') + ' on the go';
   if (lk.kind === 'pass') return 'Pass ' + (lk.by.ch === t.ch ? 'Mark ' + lk.by.mark : esc(chapterOf(lk.by).name) + ' · Mark ' + lk.by.mark) + ' first';
@@ -4334,7 +4399,7 @@ SCREENS.practice = function () {
   var answered = it.pick !== null, last = S.i === total - 1, fresh = !!S.fresh, html, ok, skipped;
   S.fresh = false;
   html = '<div class="page bg-practice practice"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
-    '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + pct(S.i, total) + '%;' : ' style="') + 'width:' + pct(S.i + (answered ? 1 : 0), total) + '%"></i></div>' +
+    '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + (pct(S.i, total) - 100) + '%;' : ' style="') + 'transform:translateX(' + (pct(S.i + (answered ? 1 : 0), total) - 100) + '%)"></i></div>' +
     '<div class="q-counter num">' + (S.i + 1) + '/' + total + '</div>' +
     (user.settings.timer ? '<div class="q-timer num" id="timer">' + fmtTime(sessionMs()) + '</div>' : '') + '</div>' +
     '<div class="q-card"><div class="q-level">' + (t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 22) : '') + '<span>' + esc(t.short) + '</span></div><div class="q-text">' + figHtml(q.q) + '</div>' +
@@ -4354,10 +4419,10 @@ SCREENS.practice = function () {
   html += '</div>';
   if (answered) {
     ok = it.pick === q.a; skipped = it.pick === -1;
-    /* the answer sheet: green for right, orange for wrong (never red); a mistake costs nothing, and the way to the answer is shown */
+    /* the answer sheet: green for right, vermilion for wrong (never danger-red, 3.10.0); a mistake costs nothing, and the way to the answer is shown */
     html += '<div class="feedback-box ' + (ok ? 'correct-fb' : skipped ? 'skip-fb' : 'wrong-fb') + (fresh ? ' fresh' : '') + '" id="fb"><div class="fb-head"><span class="fb-ico">' +
       (ok ? li('check', 20) : skipped ? li('chev', 20) : li('close', 18)) + '</span><span class="fb-title">' + (ok ? 'Correct!' : skipped ? 'Skipped' : 'Not quite') + '</span>' +
-      (ok && it.xp ? '<span class="cp g fb-xp">+' + it.xp + ' XP</span>' : '') + '</div>' +
+      (ok && it.xp ? '<span class="cp y fb-xp">+' + it.xp + ' XP</span>' : '') + '</div>' +
       (ok ? '' : '<div class="fb-sub">' + (skipped ? 'Here is the answer.' : 'No XP is lost for a mistake. See how it is solved:') + '</div>') +
       '<div class="fb-text">' + figHtml(explainOf(q)) + '</div></div>' +
       '<button class="btn btn-primary" data-act="next">' + (last ? 'See results' : 'Next') + '</button>' +
@@ -4384,9 +4449,9 @@ SCREENS.summary = function () {
     else got.push([li('target'), markLine(u, t), '']);
   }
   S.unlocked.forEach(function (name) { got.push([li('unlock'), /^You can/.test(name) ? name : 'New topic unlocked: ' + name, 'v']); });
-  if (st > 0) got.push([li('flame'), plural(st, 'day') + ' streak' + (st > S.streak0 ? ' · extended today' : ''), 'o']);
+  if (st > 0) got.push([li('flame'), plural(st, 'day') + ' streak' + (st > S.streak0 ? ' · extended today' : ''), 'y']);
   var achs = S.newAch.map(function (id) { return ACH.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
-  if (achs.length) got.push([li('star'), (achs.length > 1 ? 'Achievements: ' : 'Achievement: ') + achs.map(function (a) { return a.n; }).join(', '), 'v']);
+  if (achs.length) got.push([li('star'), (achs.length > 1 ? 'Achievements: ' : 'Achievement: ') + achs.map(function (a) { return a.n; }).join(', '), 'y']);
   html += '<div class="sum-sec">What you got</div><div class="got-list">' + got.map(function (g) {
     return '<div class="badge-line' + (g[2] ? ' ' + g[2] : '') + '"><span class="bl-ico">' + g[0] + '</span><span>' + g[1] + '</span></div>';
   }).join('') + '</div>';
@@ -4494,7 +4559,7 @@ SCREENS.profile = function () {
   on = ['daily', 'streak', 'weekly'].filter(function (k) { return n[k]; }).length;
   return '<div class="page bg-profile nav-pad profile"><div class="prof-header"><div class="prof-ring" style="--p:' + ring + '"><div class="prof-avatar">' + esc(initialOf(u.name)) + '</div></div>' +
     '<div class="prof-name">' + esc(u.name) + '</div><div class="prof-email">' + (u.guest ? 'Guest · saved on this device only' : esc(u.email)) + '</div>' +
-    '<div class="prof-rank">Level ' + lv.n + ' · ' + lv.title + '</div>' +
+    '<div class="prof-rank">' + li('star', 16) + 'Level ' + lv.n + ' · ' + lv.title + '</div>' +
     '<div class="prof-next">Level ' + (lv.n + 1) + ' in <b>' + need + ' XP</b>' + (per ? ' · about ' + plural(Math.max(1, Math.ceil(need / per)), 'set') : '') + '</div></div>' +
     '<button class="ach-strip" data-act="go" data-to="achievements">' + statIcon('star', 40) + '<span class="grow"><span class="ach-strip-t">Achievements</span><span class="ach-strip-l">' + got + ' of ' + ACH.length + ' unlocked</span>' +
     '<span class="pbar thin"><i style="width:' + pct(got, ACH.length) + '%"></i></span></span><span class="menu-arrow">' + li('chev', 20) + '</span></button>' +
@@ -4556,7 +4621,7 @@ SCREENS.goals = function () {
     '<div class="step-val">' + u.goal.daily + '<small>questions a day</small></div>' +
     '<button class="step-btn" data-act="daily-step" data-d="5" aria-label="Increase daily target">+</button></div>' +
     '<div class="row between small"><span class="muted">Today</span><b class="num">' + td.n + '/' + u.goal.daily + '</b></div>' +
-    '<div class="pbar"><i style="width:' + Math.min(100, pct(td.n, u.goal.daily)) + '%;background:var(--green)"></i></div>' +
+    '<div class="pbar"><i style="width:' + Math.min(100, pct(td.n, u.goal.daily)) + '%' + (td.n >= u.goal.daily ? ';background:var(--green)' : '') + '"></i></div>' +
     '<div class="small muted">Target met on ' + met + ' of the last 7 days.</div></div></div>';
 };
 
@@ -4701,7 +4766,7 @@ function startSession(topicId) {
 function noteAch(silent) {
   var fresh = checkAch(user);
   fresh.forEach(function (a) { if (S && S.newAch.indexOf(a.id) < 0) S.newAch.push(a.id); });
-  if (fresh.length && !silent) toast('Achievement unlocked: ' + fresh[0].n + (fresh.length > 1 ? ' +' + (fresh.length - 1) + ' more' : ''));
+  if (fresh.length && !silent) toast('Achievement unlocked: ' + fresh[0].n + (fresh.length > 1 ? ' +' + (fresh.length - 1) + ' more' : ''), li('star', 18));   // a gold star (3.10.0)
 }
 function finishSession() {
   var u = user, n = S.items.length;
