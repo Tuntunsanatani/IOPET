@@ -730,21 +730,27 @@ input[type=date]{color-scheme:inherit}
 @keyframes opt-no{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
 .spark{position:absolute;left:26px;top:50%;width:0;height:0;pointer-events:none}
 .spark i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;opacity:0;animation:spark .6s ease-out forwards}
-.spark i:nth-child(1){background:#FFC233;--x:-26px;--y:-24px}
-.spark i:nth-child(2){background:#22C55E;--x:0;--y:-34px}
-.spark i:nth-child(3){background:#33B5F0;--x:26px;--y:-24px}
-.spark i:nth-child(4){background:#F2559A;--x:34px;--y:2px}
-.spark i:nth-child(5){background:#FFC233;--x:24px;--y:26px}
-.spark i:nth-child(6){background:#8E63F7;--x:-2px;--y:32px}
-.spark i:nth-child(7){background:#22C55E;--x:-26px;--y:24px}
-.spark i:nth-child(8){background:#FF8A3D;--x:-34px;--y:0}
+/* 3.10.0 the sparks are gold (a reward) and violet, nothing else */
+.spark i:nth-child(odd){background:var(--gold,#FFB020)}
+.spark i:nth-child(even){background:var(--primary)}
+.spark i:nth-child(1){--x:-26px;--y:-24px}
+.spark i:nth-child(2){--x:0;--y:-34px}
+.spark i:nth-child(3){--x:26px;--y:-24px}
+.spark i:nth-child(4){--x:34px;--y:2px}
+.spark i:nth-child(5){--x:24px;--y:26px}
+.spark i:nth-child(6){--x:-2px;--y:32px}
+.spark i:nth-child(7){--x:-26px;--y:24px}
+.spark i:nth-child(8){--x:-34px;--y:0}
 @keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1.2)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.4)}}
-.xp-fly{position:absolute;right:14px;top:50%;margin-top:-11px;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--green);pointer-events:none;opacity:0;animation:xp-fly .9s ease-out forwards}
+/* 3.10.0 XP earned is gold (a reward), not green (green = right); on the light theme the darker gold, for 4.5:1 */
+.xp-fly{position:absolute;right:14px;top:50%;margin-top:-11px;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--gold,#FFB020);pointer-events:none;opacity:0;animation:xp-fly .9s ease-out forwards}
+[data-theme="light"] .xp-fly{color:var(--gold-ink,#9A5A00)}
 @keyframes xp-fly{0%{opacity:0;transform:translateY(6px)}25%{opacity:1;transform:translateY(-4px)}100%{opacity:0;transform:translateY(-26px)}}
 .summary-big.count{font-variant-numeric:tabular-nums}
 
 /* ── CELEBRATION (a Mark passed): the chapter's icon turns over in 3D and lands, rays turn behind it, confetti falls ──
-   Only transform and opacity move (the phone's graphics chip does that work); the confetti is one small canvas that stops by itself. */
+   Only transform and opacity move (the phone's graphics chip does that work); the confetti is one small canvas that stops by itself.
+   3.10.0 violet and gold rays (no colour per chapter) that turn for 4.5 s and come to rest — nothing on the screen moves for ever. */
 .cele{position:absolute;top:0;right:0;bottom:0;left:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;
   background:var(--bg);background:radial-gradient(90% 55% at 50% 38%,var(--glow-a),transparent 75%),var(--bg);animation:cele-in .25s ease-out}
 /* 3.7.2 the phone's top bar and the app meet without a line: on a phone (the app fills the screen) its top 24px — the screens'
@@ -758,19 +764,19 @@ input[type=date]{color-scheme:inherit}
 .cele canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .cele-stage{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;perspective:600px}
 .cele-rays{position:absolute;top:-30px;left:-30px;width:240px;height:240px;border-radius:50%;opacity:.55;
-  background:repeating-conic-gradient(from 0deg,var(--hl) 0deg 9deg,transparent 9deg 30deg);
-  -webkit-mask:radial-gradient(circle,#000 22%,transparent 68%);mask:radial-gradient(circle,#000 22%,transparent 68%);animation:rays 9s linear infinite;will-change:transform}
+  background:repeating-conic-gradient(from 0deg,var(--hl) 0deg 9deg,transparent 9deg 30deg,var(--gold,#FFB020) 30deg 39deg,transparent 39deg 60deg);
+  -webkit-mask:radial-gradient(circle,#000 22%,transparent 68%);mask:radial-gradient(circle,#000 22%,transparent 68%);animation:rays 4.5s cubic-bezier(.2,.6,.35,1) both}
 .cele-icon{position:relative;transform-style:preserve-3d;animation:flip3d 1.15s cubic-bezier(.2,.9,.25,1.12) both;will-change:transform}
 .cele-icon .chi{filter:drop-shadow(0 10px 0 rgba(0,0,0,.18))}
-.cele-badge{position:absolute;right:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:#22C55E;color:#fff;display:flex;align-items:center;justify-content:center;
-  border:4px solid var(--bg);box-shadow:0 4px 0 #15803D;animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}
+.cele-badge{position:absolute;right:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:var(--good);color:#15132B;display:flex;align-items:center;justify-content:center;
+  border:4px solid var(--bg);box-shadow:0 4px 0 #1E8A40;animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}   /* 3.10.0 a dark tick on green: white was 2.3:1 */
 .cele-badge svg{width:24px;height:24px}
 .cele-t{font-size:28px;font-weight:900;line-height:1.2;margin-top:26px;animation:rise .45s ease-out .55s both}
 .cele-s{font-size:15px;font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
 .cele-s b{color:var(--ink)}
 .cele .btn{max-width:300px;margin-top:28px;animation:rise .45s ease-out .9s both}
 @keyframes cele-in{from{opacity:0}to{opacity:1}}
-@keyframes rays{to{transform:rotate(360deg)}}
+@keyframes rays{from{transform:rotate(-60deg)}to{transform:none}}
 @keyframes flip3d{0%{opacity:0;transform:translateY(60px) scale(.3) rotateY(-540deg) rotateX(25deg)}60%{opacity:1;transform:translateY(-14px) scale(1.12) rotateY(-30deg) rotateX(0)}
   80%{transform:translateY(4px) scale(.96) rotateY(8deg)}100%{transform:none}}
 @keyframes badge-pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:none}}
@@ -1742,8 +1748,9 @@ var BANK = {
 /* ════════════════════════════════════════════════════════════════════
    CHAPTER ICONS — one drawing per chapter, made for IOPET (no emoji, nothing copied, nothing downloaded).
    The style is "2.5D": every solid has a face and a darker side under it, so it reads as a small block that stands
-   off the page, on a dark and on a light screen alike. Identity comes from the SHAPE first (a child who cannot tell
-   two colours apart still knows the chapter); each chapter also has its own colour, which the cards use for their accents.
+   off the page, on a dark and on a light screen alike. Identity comes from the SHAPE (a child who cannot tell
+   two colours apart still knows the chapter). 3.10.0: no chapter has its own colour any more — every icon is violet with
+   one gold accent and paper parts (colour means something in the app; see ICONS below).
    Everything is drawn in a 64 x 64 box. Paper-white parts take their colour from the theme (classes p / ps / pe).
    ════════════════════════════════════════════════════════════════════ */
 var IC = {
@@ -1791,217 +1798,258 @@ function icPerson(cx, top, c) {        /* a person seen from the front: head and
   return icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.s, ' transform="translate(0 2.5)"') +
     icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.f) + icDisc(cx, top + 6.5, 6, c, 2);
 }
-var ICONS = {
-  /* English alphabet — three toy blocks, A B C */
-  ab: function () {
-    return icBlk(6, 31, 23, 23, 5, IC.blue, 5) + icT(17.5, 42.5, 'A', 15, '#fff') +
-      icBlk(35, 31, 23, 23, 5, IC.yellow, 5) + icT(46.5, 42.5, 'B', 15, '#7A4A00') +
-      '<g transform="rotate(-9 32 18)">' + icBlk(20.5, 6, 23, 23, 5, IC.pink, 5) + icT(32, 17.5, 'C', 15, '#fff') + '</g>';
-  },
-  /* Classification — three alike, one different that stands out */
-  cl: function () {
-    return icDisc(17, 18, 10, IC.blue, 3.5) + icDisc(45, 18, 10, IC.blue, 3.5) + icDisc(17, 45, 10, IC.blue, 3.5) +
-      '<ellipse cx="45" cy="57" rx="11" ry="2.6" fill="#000" opacity=".16"/>' +
-      icP('M45 30.5L57.5 51.5H32.5Z', IC.orange.s, ' transform="translate(0 3.5)" stroke="' + IC.orange.s + '" stroke-width="3" stroke-linejoin="round"') +
-      icP('M45 30.5L57.5 51.5H32.5Z', IC.orange.f, ' stroke="' + IC.orange.f + '" stroke-width="3" stroke-linejoin="round"') +
-      icP('M56 27l3-3M59.5 33h4M51 24.5l.5-4', 'none', ' stroke="' + IC.yellow.f + '" stroke-width="2.6" stroke-linecap="round"');
-  },
-  /* Missing number — a table of tiles with one gap to fill */
-  mn: function () {
-    var o = '', r, c, x, y;
-    for (r = 0; r < 3; r++) for (c = 0; c < 3; c++) {
-      x = 5 + c * 19; y = 4 + r * 19;
-      o += r === 1 && c === 1 ? '' : icBlk(x, y, 16, 16, 4, IC.teal, 3);
-    }
-    return o + icBlk(22, 21.5, 20, 20, 5, IC.yellow, 4) + icT(32, 31.5, '?', 15, '#7A4A00');
-  },
-  /* Analogy — two pairs that follow the same rule: circle → square, triangle → ? */
-  an: function () {
-    var arr = function (y) { return icP('M27 ' + y + 'h8m-3-3.5 3.5 3.5-3.5 3.5', 'none', ' stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"'); };
-    return icBlk(4, 6, 56, 22, 7, IC.violet, 4) + icC(16, 17, 6, '#fff') + arr(17) + icR(41.5, 11, 12, 12, 2.5, '#fff') +
-      icBlk(4, 35, 56, 22, 7, IC.violet, 4) + icP('M16 39.5l7 12h-14z', '#fff', ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round"') + arr(46) +
-      icBlk(40.5, 39, 14, 14, 3.5, IC.yellow, 2.5, false) + icT(47.5, 46, '?', 11, '#7A4A00');
-  },
-  /* Series — steps that grow, the next one still to come */
-  se: function () {
-    return icBlk(4, 41, 12, 13, 3.5, IC.green, 4) + icBlk(18.5, 32, 12, 22, 3.5, IC.green, 4) + icBlk(33, 23, 12, 31, 3.5, IC.green, 4) +
-      icR(48.5, 13.5, 11, 43.5, 3.5, 'none', ' stroke="' + IC.green.f + '" stroke-width="2.4" stroke-dasharray="4 3"') +
-      icDisc(54, 33, 6.5, IC.yellow, 2.5) + icT(54, 33, '?', 10, '#7A4A00') +
-      icP('M7 30L36 9', 'none', ' stroke="' + IC.yellow.f + '" stroke-width="2.8" stroke-linecap="round"') + icP('M29.5 8.5L36.5 8.5L34 15', 'none', ' stroke="' + IC.yellow.f + '" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"');
-  },
-  /* Coding-decoding — a letter turns into its code, with the key */
-  cd: function () {
-    return icBlk(4, 5, 21, 21, 5, 'paper', 4) + icT(14.5, 15.5, 'A', 14, IC.pink.s) +
-      icP('M28 15.5h7m-3-3.5 3.5 3.5-3.5 3.5', 'none', ' class="pe-s" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"') +
-      icBlk(39, 5, 21, 21, 5, IC.pink, 4) + icT(49.5, 15.5, 'D', 14, '#fff') +
-      icC(17, 46.5, 10.5, IC.yellow.s) + icR(24, 43, 34, 9, 3, IC.yellow.s) + icR(46, 47, 5, 10, 1.5, IC.yellow.s) + icR(53, 47, 5, 8, 1.5, IC.yellow.s) +
-      icC(17, 44, 10.5, IC.yellow.f) + icR(24, 40.5, 34, 9, 3, IC.yellow.f) + icR(46, 45, 5, 9.5, 1.5, IC.yellow.f) + icR(53, 45, 5, 7.5, 1.5, IC.yellow.f) +
-      icC(16, 44, 4, IC.yellow.s);
-  },
-  /* Ranking and order — the winners' stand */
-  rk: function () {
-    var star = 'M32 3.5l3.1 6.4 7 .9-5.1 4.9 1.3 6.9L32 19.3l-6.3 3.3 1.3-6.9-5.1-4.9 7-.9z';
-    return icBlk(4, 35, 18, 20, 3, IC.blue, 4) + icT(13, 44.5, '2', 12, '#fff') +
-      icBlk(42, 41, 18, 14, 3, IC.teal, 4) + icT(51, 48, '3', 12, '#fff') +
-      icBlk(23, 27, 18, 28, 3, IC.coral, 4) + icT(32, 38, '1', 14, '#fff') +
-      icP(star, IC.yellow.s, ' transform="translate(0 2.5)"') + icP(star, IC.yellow.f);
-  },
-  /* Maths operations — + and × trade places */
-  mo: function () {
-    return icBlk(5, 5, 24, 24, 6, IC.sky, 4) + icP('M17 11v12M11 17h12', 'none', ' stroke="#fff" stroke-width="3.4" stroke-linecap="round"') +
-      icBlk(35, 33, 24, 24, 6, IC.yellow, 4) + icP('M42.5 40.5l9 9m0-9-9 9', 'none', ' stroke="#7A4A00" stroke-width="3.4" stroke-linecap="round"') +
-      icP('M35 10.5c9 0 16 5 17.5 15', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round" fill="none"') + icP('M48.5 22.5l4 4.2 3.6-4.6', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"') +
-      icP('M29 53.5c-9 0-16-5-17.5-15', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round" fill="none"') + icP('M15.5 41.5l-4-4.2-3.6 4.6', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"');
-  },
-  /* Blood relations — a small family tree */
-  br: function () {
-    return icP('M32 24v7M14 31h36M14 31v5M50 31v5', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"') +
-      icPerson(32, 0, IC.violet) + icPerson(14, 35, IC.orange) + icPerson(50, 35, IC.teal);
-  },
-  /* Arithmetic reasoning — the abacus */
-  ar: function () {
-    var o = icR(5, 9, 54, 47, 7, IC.orange.s) + icR(5, 6, 54, 47, 7, IC.orange.f) + icR(11, 12, 42, 35, 4, '.pw'), i,
-      rows = [[[15, IC.coral], [21.5, IC.coral], [28, IC.coral], [47, IC.coral]], [[15, IC.yellow], [21.5, IC.yellow], [40.5, IC.yellow], [47, IC.yellow]], [[15, IC.blue], [34, IC.blue], [40.5, IC.blue], [47, IC.blue]]];
-    for (i = 0; i < 3; i++) {
-      o += icR(11, 18.5 + i * 11, 42, 2, 1, '.pe-f');
-      rows[i].forEach(function (b) { o += '<ellipse cx="' + b[0] + '" cy="' + (21 + i * 11) + '" rx="3.4" ry="4.6" fill="' + b[1].s + '"/><ellipse cx="' + b[0] + '" cy="' + (19.5 + i * 11) + '" rx="3.4" ry="4.6" fill="' + b[1].f + '"/>'; });
-    }
-    return o;
-  },
-  /* Direction sense — the compass */
-  di: function () {
-    return icDisc(32, 30, 26, IC.teal, 4) + icC(32, 30, 20.5, '.p') +
-      icP('M32 13l5.5 17h-11z', IC.coral.f) + icP('M32 47l5.5-17h-11z', '.ps') + icC(32, 30, 3.4, IC.teal.s) +
-      icT(32, 8.6, 'N', 8.5, '#fff') + icR(50, 29, 3.4, 2.4, 1, IC.teal.s) + icR(10.6, 29, 3.4, 2.4, 1, IC.teal.s);
-  },
-  /* Dictionary order — an open book from A to Z */
-  dc: function () {
-    return icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', IC.blue.s, ' transform="translate(0 4)"') +
-      icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', IC.blue.f) +
-      icP('M8 15q12-3 22 2v31q-10-4-22-1z', '.p') + icP('M56 15q-12-3-22 2v31q10-4 22-1z', '.p') +
-      icT(18.5, 29, 'A', 14, IC.blue.s) + icT(45.5, 29, 'Z', 14, IC.blue.s) +
-      icP('M23 41h5M36 41h5', 'none', ' stroke="' + IC.blue.l + '" stroke-width="2.4" stroke-linecap="round"') +
-      icP('M39 10h7v15l-3.5-3-3.5 3z', IC.yellow.f) + icR(39, 10, 7, 2, .5, IC.yellow.s);
-  },
-  /* Logical word sequence — seed, sprout, plant: things in their natural order */
-  ws: function () {
-    var leaf = function (x, y, s, flip) { return icP('M' + x + ' ' + y + 'q' + (flip ? -1 : 1) * 10 * s + ' ' + (-9 * s) + ' ' + (flip ? -1 : 1) * 15 * s + ' ' + (-3 * s) + 'q' + (flip ? 1 : -1) * 6 * s + ' ' + 9 * s + ' ' + (flip ? 1 : -1) * 15 * s + ' ' + 3 * s + 'z', IC.green.f); };
-    return icR(2, 52, 60, 7, 3.5, IC.orange.s) + icR(2, 50, 60, 6, 3, IC.orange.f) +
-      '<ellipse cx="10" cy="46.5" rx="5" ry="4" fill="' + IC.orange.s + '"/>' + '<ellipse cx="10" cy="45.5" rx="5" ry="3.6" fill="#A86A3D"/>' +
-      icP('M30 50v-10', 'none', ' stroke="' + IC.green.s + '" stroke-width="2.6" stroke-linecap="round"') + leaf(30, 42, .7) + leaf(30, 42, .7, 1) +
-      icP('M52 50V18', 'none', ' stroke="' + IC.green.s + '" stroke-width="3" stroke-linecap="round"') + leaf(52, 40, 1) + leaf(52, 31, 1, 1) + leaf(52, 22, .85) +
-      icP('M17.5 39l3 3-3 3M39 35l3 3-3 3', 'none', ' stroke="' + IC.yellow.f + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"');
-  },
-  /* Calendar — a page with one day ringed */
-  ca: function () {
-    var o = icR(7, 13, 50, 45, 7, '.ps') + icR(7, 9, 50, 45, 7, '.p') + icP('M7 16a7 7 0 0 1 7-7h36a7 7 0 0 1 7 7v7H7z', IC.coral.f), r, c;
-    for (r = 0; r < 3; r++) for (c = 0; c < 4; c++) o += icR(13.5 + c * 10, 29 + r * 8, 6, 4.5, 1.3, r === 1 && c === 2 ? 'none' : '.pe-f');
-    return o + icC(36.5, 39.3, 6.4, 'none', ' stroke="' + IC.yellow.f + '" stroke-width="3"') + icC(36.5, 39.3, 2.6, IC.coral.f) +
-      icR(18, 4, 5, 11, 2.5, '.pe-s') + icR(41, 4, 5, 11, 2.5, '.pe-s');
-  },
-  /* Venn diagram — three overlapping circles */
-  vn: function () {
-    return icC(23, 24, 16, IC.blue.f, ' opacity=".78"') + icC(41, 24, 16, IC.pink.f, ' opacity=".72"') + icC(32, 40, 16, IC.yellow.f, ' opacity=".72"') +
-      icC(23, 24, 16, 'none', ' stroke="' + IC.blue.s + '" stroke-width="2.4"') + icC(41, 24, 16, 'none', ' stroke="' + IC.pink.s + '" stroke-width="2.4"') + icC(32, 40, 16, 'none', ' stroke="' + IC.yellow.s + '" stroke-width="2.4"') +
-      '';
-  },
-  /* Word formation — letter tiles coming together, one still flying in */
-  wf: function () {
-    return icBlk(3, 38, 17, 17, 4, IC.violet, 3.5) + icT(11.5, 46.5, 'W', 11, '#fff') +
-      icBlk(23.5, 38, 17, 17, 4, IC.violet, 3.5) + icT(32, 46.5, 'O', 11, '#fff') +
-      icBlk(44, 38, 17, 17, 4, IC.violet, 3.5) + icT(52.5, 46.5, 'R', 11, '#fff') +
-      '<g transform="rotate(14 44 15)">' + icBlk(35, 6, 18, 18, 4.5, IC.yellow, 3.5) + icT(44, 15, 'D', 12, '#7A4A00') + '</g>' +
-      icP('M16 22h10M12 28h8', 'none', ' stroke="' + IC.yellow.f + '" stroke-width="2.6" stroke-linecap="round" opacity=".8"');
-  },
-  /* Statements and conclusions — what is said, and what follows from it (the three dots of "therefore") */
-  sc: function () {
-    var b = 'M10 5h38a7 7 0 0 1 7 7v22a7 7 0 0 1-7 7H25l-9 8v-8h-6a7 7 0 0 1-7-7V12a7 7 0 0 1 7-7z';
-    return icP(b, '.ps', ' transform="translate(0 3.5)"') + icP(b, '.p') +
-      icC(29, 15, 3.8, IC.violet.f) + icC(21, 29, 3.8, IC.violet.f) + icC(37, 29, 3.8, IC.violet.f) +
-      icDisc(49, 47, 11.5, IC.green, 3.5) + icP('M43.5 47l4 4 7.5-8', 'none', ' stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"');
-  },
-  /* Seating arrangement — a round table with its chairs */
-  st: function () {
-    return icBlk(25, 3, 14, 11, 3.5, IC.blue, 3) + icBlk(50, 25, 11, 14, 3.5, IC.pink, 3) + icBlk(25, 50, 14, 10, 3.5, IC.teal, 3) + icBlk(3, 25, 11, 14, 3.5, IC.yellow, 3) +
-      icDisc(32, 31, 16, IC.orange, 4) + icC(32, 31, 10.5, IC.orange.l, ' opacity=".55"');
-  },
-  /* Figure series — the same shape turning step by step */
-  fs: function () {
-    var arrow = 'M-6 2h7v4l7-7-7-7v4h-7z', tile = function (x, y, rot) { return icBlk(x, y, 26, 26, 6, 'paper', 3.5) + '<g transform="translate(' + (x + 13) + ' ' + (y + 13) + ') rotate(' + rot + ')">' + icP(arrow, IC.blue.f, ' transform="translate(-1 1)"') + '</g>'; };
-    return tile(3, 3, 0) + tile(35, 3, 90) + tile(3, 34, 180) + icBlk(35, 34, 26, 26, 6, IC.yellow, 3.5) + icT(48, 47, '?', 15, '#7A4A00');
-  },
-  /* Figure analogy and matrix — a frame of figures with one place empty */
-  fa: function () {
-    return icBlk(4, 4, 56, 54, 9, IC.violet, 4) + icR(9, 9, 21, 21, 4, '.p') + icR(34, 9, 21, 21, 4, '.p') + icR(9, 33, 21, 21, 4, '.p') +
-      icC(19.5, 19.5, 6, IC.violet.f) + icC(44.5, 19.5, 6, 'none', ' stroke="' + IC.violet.f + '" stroke-width="3"') + icR(14, 38, 11, 11, 2, IC.violet.f) +
-      icR(34, 33, 21, 21, 4, IC.yellow.f) + icT(44.5, 43.5, '?', 14, '#7A4A00');
-  },
-  /* Counting figures — how many triangles hide in one? */
-  cf: function () {
-    return icP('M32 6L60 54H4z', IC.teal.s, ' transform="translate(0 4)" stroke="' + IC.teal.s + '" stroke-width="3" stroke-linejoin="round"') +
-      icP('M32 6L60 54H4z', IC.teal.f, ' stroke="' + IC.teal.f + '" stroke-width="3" stroke-linejoin="round"') +
-      icP('M18 30h28L32 54z', IC.yellow.f) + icP('M18 30h28L32 54zM32 6v0', 'none', ' stroke="#fff" stroke-width="2.4" stroke-linejoin="round"') +
-      icP('M18 30L4 54M46 30l14 24', 'none', ' stroke="#fff" stroke-width="2.4" opacity=".7"');
-  },
-  /* Mirror and water image — a figure and its reflection */
-  mi: function () {
-    var f = 'M0 0h15v6H6v5h8v6H6v12H0z';
-    return icR(29, 2, 6, 58, 3, IC.sky.l) + icR(29, 2, 2.4, 58, 1.2, '#fff', ' opacity=".7"') +
-      '<g transform="translate(6 15)">' + icP(f, IC.pink.s, ' transform="translate(0 3)"') + icP(f, IC.pink.f) + '</g>' +
-      '<g transform="translate(58 15) scale(-1 1)">' + icP(f, IC.pink.l, ' transform="translate(0 3)" opacity=".6"') + icP(f, IC.pink.l) + '</g>';
-  },
-  /* Figure from pieces — the missing piece of a square */
-  fp: function () {
-    return icP('M6 8h24v14a6 6 0 0 1 0 12v24H12a6 6 0 0 1-6-6z', IC.green.s, ' transform="translate(0 4)"') + icP('M6 8h24v14a6 6 0 0 1 0 12v24H12a6 6 0 0 1-6-6z', IC.green.f) +
-      icP('M6 14a6 6 0 0 1 6-6h18v14a6 6 0 0 1 0 12', 'none') +
-      '<g transform="translate(4 -2) rotate(8 46 33)">' + icP('M30 8h20a6 6 0 0 1 6 6v38a6 6 0 0 1-6 6H30V34a6 6 0 0 0 0-12z', IC.yellow.s, ' transform="translate(0 4)"') + icP('M30 8h20a6 6 0 0 1 6 6v38a6 6 0 0 1-6 6H30V34a6 6 0 0 0 0-12z', IC.yellow.f) + '</g>';
+/* 3.10.0 the chapter icons, redrawn to one palette (built and measured in the icon audit): V = the course violet is the body,
+   G = gold marks the ONE thing the chapter asks about (the answer, the odd one, the missing term), paper does the rest.
+   No other hue in a chapter icon, no ticks / locks / stars in one (the app uses those for done, locked and XP), and "?" only
+   where the paper itself asks for a missing term (mn, se, an). Parts that carry the meaning are >= 4 units, strokes >= 3:
+   the icons are drawn at 22 to 150 px. */
+var ICONS = (function () {
+  var V = IC.violet, G = IC.yellow, GI = '#7A4A00';           /* GI: ink on gold */
+  /* a short right arrow, as a theme-grey stroke */
+  function arrowR(x, y, len, cls) {
+    return icP('M' + x + ' ' + y + 'h' + len + 'm-3.5-3.8 3.8 3.8-3.8 3.8', 'none', ' class="' + (cls || 'pe-s') + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"');
   }
-};
-/* the subjects of a course (3.7.0), for the row of tiles at the top of Topics: MAT, then the three parts of SAT */
+  /* a ring of the Venn diagram: its side, then its face */
+  function ring(cx, cy) {
+    return icC(cx, cy + 3, 16.5, 'none', ' stroke="' + V.s + '" stroke-width="5"') + icC(cx, cy, 16.5, 'none', ' stroke="' + V.f + '" stroke-width="5"');
+  }
+  return {
+    /* English alphabet — the toy blocks A B C: A and B violet, the C on top gold */
+    ab: function () {
+      return icBlk(5, 31, 24, 24, 5, V, 5) + icT(17, 43, 'A', 16, '#fff') +
+        icBlk(35, 31, 24, 24, 5, V, 5) + icT(47, 43, 'B', 16, '#fff') +
+        '<g transform="rotate(-8 32 19)">' + icBlk(20, 6, 24, 24, 5, G, 5) + icT(32, 18, 'C', 16, GI) + '</g>';
+    },
+    /* Classification — three alike, the odd one gold */
+    cl: function () {
+      return icDisc(17, 18, 10, V, 3.5) + icDisc(45, 18, 10, V, 3.5) + icDisc(17, 45, 10, V, 3.5) +
+        '<ellipse cx="45" cy="57" rx="11" ry="2.6" fill="#000" opacity=".16"/>' +
+        icP('M45 30.5L57.5 51.5H32.5Z', G.s, ' transform="translate(0 3.5)" stroke="' + G.s + '" stroke-width="3" stroke-linejoin="round"') +
+        icP('M45 30.5L57.5 51.5H32.5Z', G.f, ' stroke="' + G.f + '" stroke-width="3" stroke-linejoin="round"') +
+        icP('M56 27l3-3M59.5 33h4M51 24.5l.5-4', 'none', ' class="pe-s" stroke-width="2.6" stroke-linecap="round"');
+    },
+    /* Missing number — the 3 x 3 number table of the paper (2 3 5 / 4 1 5 / 6 2 ?), the missing cell gold */
+    mn: function () {
+      var o = '', r, c, x, y, d = [['2', '3', '5'], ['4', '1', '5'], ['6', '2', '?']];
+      for (r = 0; r < 3; r++) for (c = 0; c < 3; c++) {
+        x = 6 + c * 18; y = 5 + r * 18;
+        if (r === 2 && c === 2) continue;
+        o += icBlk(x, y, 15, 15, 4, V, 3) + icT(x + 7.5, y + 7.5, d[r][c], 9.5, '#fff');
+      }
+      return o + icBlk(40, 39, 19, 19, 5, G, 3.5) + icT(49.5, 48.5, '?', 14, GI);
+    },
+    /* Analogy (6 : 36 :: 9 : ?) — a balanced scale, one pair on each pan; the answer cube gold */
+    an: function () {
+      var pan = function (x) { var d = 'M' + x + ' 33h28c0 5-6 8.5-14 8.5S' + x + ' 38 ' + x + ' 33z'; return icP(d, V.s, ' transform="translate(0 2.5)"') + icP(d, V.f); };
+      return icR(29, 42, 6, 12, 2, V.s) + icBlk(19, 53, 26, 5, 2.5, V, 3) +
+        icBlk(10, 39, 44, 5.5, 2.75, V, 2.5) + icDisc(32, 41.7, 3.6, 'paper', 1.5) +
+        pan(2) + pan(34) +
+        icBlk(4, 19, 11, 12, 2.5, 'paper', 2) + icT(9.5, 25, '3', 9, V.s) +
+        icBlk(16, 14, 13, 17, 3, 'paper', 2) + icT(22.5, 22.5, '9', 11, V.s) +
+        icBlk(36, 19, 11, 12, 2.5, 'paper', 2) + icT(41.5, 25, '4', 9, V.s) +
+        icBlk(48, 14, 13, 17, 3, G, 2) + icT(54.5, 22.5, '?', 12, GI);
+    },
+    /* Series — steps that grow; the arrow is theme grey, so gold marks only the next term */
+    se: function () {
+      return icBlk(4, 41, 12, 13, 3.5, V, 4) + icBlk(18.5, 32, 12, 22, 3.5, V, 4) + icBlk(33, 23, 12, 31, 3.5, V, 4) +
+        icR(48.5, 13.5, 11, 43.5, 3.5, 'none', ' stroke="' + V.l + '" stroke-width="3" stroke-dasharray="4.5 3.5"') +
+        icDisc(54, 33, 7, G, 2.5) + icT(54, 33, '?', 10.5, GI) +
+        icP('M7 30L36 9', 'none', ' class="pe-s" stroke-width="3.2" stroke-linecap="round"') + icP('M29.5 8.5L36.5 8.5L34 15', 'none', ' class="pe-s" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"');
+    },
+    /* Coding-decoding — A (paper) turns into its code D (gold), with the key */
+    cd: function () {
+      return icBlk(4, 5, 21, 21, 5, 'paper', 4) + icT(14.5, 15.5, 'A', 14, V.s) + arrowR(28, 15.5, 7) +
+        icBlk(39, 5, 21, 21, 5, G, 4) + icT(49.5, 15.5, 'D', 14, GI) +
+        icC(17, 46.5, 10.5, V.s) + icR(24, 43, 34, 9, 3, V.s) + icR(46, 47, 5, 10, 1.5, V.s) + icR(53, 47, 5, 8, 1.5, V.s) +
+        icC(17, 44, 10.5, V.f) + icR(24, 40.5, 34, 9, 3, V.f) + icR(46, 45, 5, 9.5, 1.5, V.f) + icR(53, 45, 5, 7.5, 1.5, V.f) +
+        icC(16, 44, 4, V.d);
+    },
+    /* Ranking and order — the winners' stand; the place asked about (1) gold */
+    rk: function () {
+      return icBlk(4, 33, 18, 22, 3, V, 4) + icT(13, 43, '2', 12, '#fff') +
+        icBlk(42, 40, 18, 15, 3, V, 4) + icT(51, 47.5, '3', 12, '#fff') +
+        icBlk(23, 21, 18, 34, 3, G, 4) + icT(32, 32, '1', 15, GI);
+    },
+    /* Maths operations — + and × trade places; the × (the sign that changes) gold */
+    mo: function () {
+      return icBlk(5, 5, 24, 24, 6, V, 4) + icP('M17 11v12M11 17h12', 'none', ' stroke="#fff" stroke-width="3.6" stroke-linecap="round"') +
+        icBlk(35, 33, 24, 24, 6, G, 4) + icP('M42.5 40.5l9 9m0-9-9 9', 'none', ' stroke="' + GI + '" stroke-width="3.6" stroke-linecap="round"') +
+        icP('M35 10.5c9 0 16 5 17.5 15', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"') + icP('M48.5 22.5l4 4.2 3.6-4.6', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"') +
+        icP('M29 53.5c-9 0-16-5-17.5-15', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"') + icP('M15.5 41.5l-4-4.2-3.6 4.6', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"');
+    },
+    /* Blood relations — a small family tree; the person asked about gold */
+    br: function () {
+      return icP('M32 24v7M14 31h36M14 31v5M50 31v5', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"') +
+        icPerson(32, 0, V) + icPerson(14, 35, V) + icPerson(50, 35, G);
+    },
+    /* Arithmetic reasoning — the abacus: two bars, two posts, the rods running through the posts, round beads; the counted
+       row gold. No feet and no panel behind the beads, so it cannot read as a television. */
+    ar: function () {
+      var o = '', i, k, ry = [20.2, 29.2, 38.2], rows = [[17.4, 24.8, 32.2, 46.4], [17.4, 24.8, 32.2, 39.6], [17.4, 32.2, 39.6, 46.4]];
+      for (i = 0; i < 3; i++) o += icP('M2 ' + ry[i] + 'H62', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"');
+      o += icR(6, 9, 7, 38, 2, V.s) + icR(51, 9, 7, 38, 2, V.s) + icR(7.5, 9, 5.5, 38, 2, V.f) + icR(51, 9, 5.5, 38, 2, V.f) +
+        icBlk(4, 5, 56, 7, 3, V, 3.5) + icBlk(4, 44, 56, 7, 3, V, 3.5);
+      for (i = 0; i < 3; i++) for (k = 0; k < 4; k++)
+        o += icC(rows[i][k], ry[i] + 1.5, 3.7, i === 1 ? G.s : V.s) + icC(rows[i][k], ry[i], 3.7, i === 1 ? G.f : V.l);
+      return o;
+    },
+    /* Direction sense — the compass on a four-point rose (so its outline is not a plain disc); the north needle gold */
+    di: function () {
+      var rose = 'M32 1L38.5 23.5L61 30L38.5 36.5L32 59L25.5 36.5L3 30L25.5 23.5Z';
+      return icP(rose, V.d, ' transform="translate(0 3)"') + icP(rose, V.s) +
+        icDisc(32, 30, 21, V, 3.5) + icC(32, 30, 15.5, '.p') +
+        icP('M32 16.5l5 13.5h-10z', G.s, ' transform="translate(0 1.5)"') + icP('M32 16.5l5 13.5h-10z', G.f) + icP('M32 43.5l5-13.5h-10z', '.ps') + icC(32, 30, 3, V.s) +
+        icT(32, 12.2, 'N', 6.5, '#fff');
+    },
+    /* Dictionary order — an open book from A to Z; the bookmark gold */
+    dc: function () {
+      return icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.s, ' transform="translate(0 4)"') +
+        icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.f) +
+        icP('M8 15q12-3 22 2v31q-10-4-22-1z', '.p') + icP('M56 15q-12-3-22 2v31q10-4 22-1z', '.p') +
+        icT(18.5, 29, 'A', 14, V.s) + icT(45.5, 29, 'Z', 14, V.s) +
+        icP('M23 41h5M36 41h5', 'none', ' stroke="' + V.l + '" stroke-width="2.4" stroke-linecap="round"') +
+        icP('M39 8h7v17l-3.5-3-3.5 3z', G.f, ' stroke="' + G.s + '" stroke-width="1.2" stroke-linejoin="round"') + icR(39, 8, 7, 2, .5, G.s);
+    },
+    /* Logical word sequence — seed, sprout, tree on one bank, numbered 1 2 3 (the answers are orders like 2, 5, 4, 1, 3);
+       the gold arrow is the order itself. Few parts and big numerals, so it still reads at 40 px. */
+    ws: function () {
+      var bank = 'M3 45h58v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z', arc = 'M6 27C9 13 22 6 36 8', head = 'M30 2.5L36.5 8L30 13.5';
+      return icP(bank, V.s, ' transform="translate(0 3)"') + icP(bank, V.f) +
+        '<ellipse cx="12" cy="42.4" rx="5.2" ry="3.8" class="ps"/><ellipse cx="12" cy="41" rx="5.2" ry="3.8" class="p"/>' +
+        icP('M31 45V34', 'none', ' stroke="' + V.l + '" stroke-width="3.6" stroke-linecap="round"') +
+        icP('M31 37c-1-5-5-8-10-7 0 5 4 8 10 7z', V.l) + icP('M31 35c1-5 5-8 10-7 0 5-4 8-10 7z', V.l) +
+        icR(48, 29, 6, 16, 3, V.l) + icDisc(51, 23, 11, V, 3) +
+        icT(12, 51.5, '1', 10.5, '#fff') + icT(31, 51.5, '2', 10.5, '#fff') + icT(51, 51.5, '3', 10.5, '#fff') +
+        icP(arc, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" transform="translate(0 1.8)"') +
+        icP(head, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.8)"') +
+        icP(arc, 'none', ' stroke="' + G.f + '" stroke-width="4.4" stroke-linecap="round"') +
+        icP(head, 'none', ' stroke="' + G.f + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"');
+    },
+    /* Calendar — a page with a violet header, the asked day ringed in gold; the folded corner keeps the outline off a plain square */
+    ca: function () {
+      var page = 'M14 9h36a7 7 0 0 1 7 7v30L45 58H14a7 7 0 0 1-7-7V16a7 7 0 0 1 7-7z', o, r, c;
+      o = icP(page, '.ps', ' transform="translate(0 4)"') + icP(page, '.p') + icP('M7 16a7 7 0 0 1 7-7h36a7 7 0 0 1 7 7v7H7z', V.f) +
+        icP('M57 46L45 58v-7a5 5 0 0 1 5-5z', '.ps');
+      for (r = 0; r < 3; r++) for (c = 0; c < 4; c++) if (!(r === 2 && c === 3)) o += icR(13.5 + c * 10, 29 + r * 8, 6, 4.5, 1.3, r === 1 && c === 2 ? 'none' : '.pe-f');
+      return o + icC(36.5, 40.8, 6.4, 'none', ' stroke="' + G.s + '" stroke-width="3.2"') + icC(36.5, 39.3, 6.4, 'none', ' stroke="' + G.f + '" stroke-width="3.2"') + icC(36.5, 39.3, 2.6, G.s) +
+        icR(18, 4, 5, 11, 2.5, '.pe-s') + icR(41, 4, 5, 11, 2.5, '.pe-s');
+    },
+    /* Venn diagram — three thick violet rings; the part common to all three is gold, drawn over them so it shows even at 40 px */
+    vn: function () {
+      var g = 'M40.5 20.72A16.5 16.5 0 0 1 32 35.43A16.5 16.5 0 0 1 23.5 20.72A16.5 16.5 0 0 1 40.5 20.72Z';
+      return ring(24, 21) + ring(40, 21) + ring(32, 34.86) +
+        icP(g, G.s, ' transform="translate(0 2)"') + icP(g, G.f, ' stroke="' + G.f + '" stroke-width="1.5" stroke-linejoin="round"');
+    },
+    /* Word formation — letter tiles coming together; the one still flying in gold */
+    wf: function () {
+      return icBlk(3, 38, 17, 17, 4, V, 3.5) + icT(11.5, 46.5, 'W', 11, '#fff') +
+        icBlk(23.5, 38, 17, 17, 4, V, 3.5) + icT(32, 46.5, 'O', 11, '#fff') +
+        icBlk(44, 38, 17, 17, 4, V, 3.5) + icT(52.5, 46.5, 'R', 11, '#fff') +
+        '<g transform="rotate(14 44 15)">' + icBlk(35, 6, 18, 18, 4.5, G, 3.5) + icT(44, 15, 'D', 12, GI) + '</g>' +
+        icP('M16 22h10M12 28h8', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round"');
+    },
+    /* Statements and conclusions — what is said (a paper bubble, two statement lines) and what follows (a gold disc, "therefore") */
+    sc: function () {
+      var b = 'M10 5h36a7 7 0 0 1 7 7v20a7 7 0 0 1-7 7H25l-9 8v-8h-6a7 7 0 0 1-7-7V12a7 7 0 0 1 7-7z';
+      return icP(b, '.ps', ' transform="translate(0 3.5)"') + icP(b, '.p') +
+        icR(11, 13, 34, 5, 2.5, V.f) + icR(11, 24, 24, 5, 2.5, V.f) +
+        icDisc(47, 46, 13, G, 3.5) + icC(47, 40, 3.3, V.d) + icC(41.5, 50, 3.3, V.d) + icC(52.5, 50, 3.3, V.d);
+    },
+    /* Seating arrangement — a violet table with six seats ("six friends A-F round a table"); the seat asked about gold */
+    st: function () {
+      var o = '', i, seats = [[26.5, 2.5], [45.6, 13.5], [45.6, 35.5], [26.5, 46.5], [7.4, 35.5], [7.4, 13.5]];
+      for (i = 0; i < 6; i++) o += icBlk(seats[i][0], seats[i][1], 11, 11, 3.5, i === 1 ? G : 'paper', 3);
+      return o + icDisc(32, 30, 14.5, V, 4) + icC(32, 30, 9, V.l, ' opacity=".35"');
+    },
+    /* Figure series — three figure cards down a staircase, the arrow turning 45 degrees each step; the next card gold */
+    fs: function () {
+      var arrow = 'M-8 2.8h8v5l9-7.8-9-7.8v5h-8z';
+      var card = function (x, y, rot, c) {
+        return icBlk(x, y, 21, 21, 5, c, 3.5) + '<g transform="translate(' + (x + 10.5) + ' ' + (y + 10.5) + ') rotate(' + rot + ')">' + icP(arrow, c === G ? V.s : V.f) + '</g>';
+      };
+      return card(2, 3, 0, 'paper') + card(21.5, 19.5, 45, 'paper') + card(41, 36, 90, G) +
+        icP('M26 11h3.5M45.5 27.5h3.5', 'none', ' class="pe-s" stroke-width="2.6" stroke-linecap="round" stroke-dasharray=".1 4.5"');
+    },
+    /* Figure analogy — A -> B on top, C -> ? below, on two staggered rails; the answer figure gold */
+    fa: function () {
+      return icBlk(3, 6, 44, 20, 7, V, 4) + icP('M7.5 21a7 7 0 0 1 14 0z', '#fff') + arrowR(23.5, 16.5, 7, 'pe-f') + icP('M33 11a7 7 0 0 0 14 0z', '#fff', ' transform="translate(-1.5 2)"') +
+        icBlk(17, 34, 44, 20, 7, V, 4) + icP('M22 49.5l6.5-11 6.5 11z', '#fff', ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round"') + arrowR(37.5, 44, 7, 'pe-f') +
+        icP('M47.5 38.5h13l-6.5 11z', G.s, ' transform="translate(0 2)" stroke="' + G.s + '" stroke-width="1.5" stroke-linejoin="round"') + icP('M47.5 38.5h13l-6.5 11z', G.f, ' stroke="' + G.f + '" stroke-width="1.5" stroke-linejoin="round"');
+    },
+    /* Counting figures — how many triangles hide in one? The hidden one gold */
+    cf: function () {
+      return icP('M32 6L60 54H4z', V.s, ' transform="translate(0 4)" stroke="' + V.s + '" stroke-width="3" stroke-linejoin="round"') +
+        icP('M32 6L60 54H4z', V.f, ' stroke="' + V.f + '" stroke-width="3" stroke-linejoin="round"') +
+        icP('M18 30h28L32 54z', G.f) + icP('M18 30h28L32 54z', 'none', ' stroke="#fff" stroke-width="2.4" stroke-linejoin="round"') +
+        icP('M18 30L4 54M46 30l14 24', 'none', ' stroke="#fff" stroke-width="2.4" opacity=".7"');
+    },
+    /* Mirror and water image — a bold F, a silver mirror, and its reflection in gold (the image is the answer) */
+    mi: function () {
+      var f = 'M4 13h19v7.5H12v6h9v7h-9V51H4z';
+      return icP(f, V.s, ' transform="translate(0 3.5)"') + icP(f, V.f) +
+        icBlk(28, 5, 8, 51, 4, 'paper', 3.5) + icP('M30 22l4-5M30 31l4-5', 'none', ' class="pe-f" stroke-width="1.8" stroke-linecap="round"') +
+        '<g transform="translate(64 0) scale(-1 1)">' + icP(f, G.s, ' transform="translate(0 3.5)"') + icP(f, G.f) + '</g>';
+    },
+    /* Figure from pieces — a square of four pieces; the gold one is lifted out and turned, so its empty place shows */
+    fp: function () {
+      var base = 'M5 18h20v5.5a4.5 4.5 0 0 0 0 9V38h5.5a4.5 4.5 0 0 1 9 0H45v20H11a6 6 0 0 1-6-6z';
+      var piece = 'M25 18h14a6 6 0 0 1 6 6v14h-5.5a4.5 4.5 0 0 0-9 0H25v-5.5a4.5 4.5 0 0 1 0-9z';
+      return icP(base, V.s, ' transform="translate(0 4)"') + icP(base, V.f) +
+        '<g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.s, ' transform="translate(0 3.5)"') + icP(piece, G.f) + '</g>';
+    }
+  };
+})();
+/* the subjects of a course (3.7.0), for the row of tiles at the top of Topics: MAT, then the three parts of SAT.
+   3.10.0 the same palette as the chapters: violet, gold for one idea, paper. */
 var SUBJ_ICONS = {
   /* MAT — mental ability: a bulb, an idea */
   mat: function () {
     return icDisc(32, 25, 18, IC.yellow, 4) + icC(25, 18, 5, '#fff', ' opacity=".5"') +
-      icP('M27 37v-7l2.5-3 2.5 3 2.5-3 2.5 3v7', 'none', ' stroke="#9E6C00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"') +
+      icP('M27 37v-7l2.5-3 2.5 3 2.5-3 2.5 3v7', 'none', ' stroke="' + IC.yellow.d + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"') +
       icBlk(23, 45, 18, 6, 3, IC.violet, 3) + icBlk(26, 54, 12, 5, 2.5, IC.violet, 2.5);
   },
-  /* Science — a flask with something bubbling in it */
+  /* Science — a flask with something bubbling in it (one bubble gold) */
   sci: function () {
     var body = 'M26 8h12v15l13 24a6 6 0 0 1-5.3 9H18.3a6 6 0 0 1-5.3-9l13-24z';
-    return icP(body, IC.teal.s, ' transform="translate(0 4)"') + icP(body, '.p') +
-      icP('M18 39h28l5.2 9.6a4 4 0 0 1-3.5 5.9H16.3a4 4 0 0 1-3.5-5.9z', IC.teal.f) +
-      icC(27, 47, 2.8, '#fff', ' opacity=".75"') + icC(36, 43, 2, '#fff', ' opacity=".75"') + icBlk(23, 4, 18, 6, 3, IC.teal, 2.5);
+    return icP(body, IC.violet.s, ' transform="translate(0 4)"') + icP(body, '.p') +
+      icP('M18 39h28l5.2 9.6a4 4 0 0 1-3.5 5.9H16.3a4 4 0 0 1-3.5-5.9z', IC.violet.f) +
+      icC(26, 48, 2.6, '#fff', ' opacity=".75"') + icDisc(36, 44.5, 4, IC.yellow, 1.5) +
+      icBlk(23, 4, 18, 6, 3, IC.violet, 2.5);
   },
-  /* Social science — the globe on its stand */
+  /* Social science — the globe on its stand: paper land on a violet sea, the stand gold */
   sst: function () {
-    return icDisc(32, 26, 20, IC.blue, 4) +
-      icP('M19 17c5-5 12-4 14 1s-3 6-1 10-4 8-8 5-7-9-5-16z', IC.green.f) + icP('M40 30c4-2 9 0 9 5s-5 9-8 8-4-10-1-13z', IC.green.f) +
-      icC(25, 16, 4, '#fff', ' opacity=".35"') + icR(29, 49, 6, 6, 1, IC.violet.s) + icBlk(18, 54, 28, 6, 3, IC.violet, 2.5);
+    return icDisc(32, 26, 20, IC.violet, 4) +
+      icP('M19 17c5-5 12-4 14 1s-3 6-1 10-4 8-8 5-7-9-5-16z', '.p') + icP('M40 30c4-2 9 0 9 5s-5 9-8 8-4-10-1-13z', '.p') +
+      icC(25, 16, 4, '#fff', ' opacity=".35"') + icR(29, 49, 6, 6, 1, IC.yellow.s) + icBlk(18, 54, 28, 6, 3, IC.yellow, 2.5);
   },
-  /* Maths — the four signs */
+  /* Maths — the four signs: three violet tiles, the + gold */
   math: function () {
-    return icBlk(5, 5, 25, 25, 6, IC.coral, 4) + icT(17.5, 16.5, '+', 22, '#fff') + icBlk(34, 5, 25, 25, 6, IC.sky, 4) + icT(46.5, 16.5, '−', 22, '#fff') +
-      icBlk(5, 34, 25, 25, 6, IC.green, 4) + icT(17.5, 45.5, '×', 20, '#fff') + icBlk(34, 34, 25, 25, 6, IC.orange, 4) + icT(46.5, 45.5, '÷', 20, '#fff');
+    return icBlk(5, 5, 25, 25, 6, IC.yellow, 4) + icT(17.5, 16.5, '+', 22, '#7A4A00') + icBlk(34, 5, 25, 25, 6, IC.violet, 4) + icT(46.5, 16.5, '−', 22, '#fff') +
+      icBlk(5, 34, 25, 25, 6, IC.violet, 4) + icT(17.5, 45.5, '×', 20, '#fff') + icBlk(34, 34, 25, 25, 6, IC.violet, 4) + icT(46.5, 45.5, '÷', 20, '#fff');
   }
 };
 function subjIcon(id, size, cls) {
   if (!has(SUBJ_ICONS, id)) return '';
   return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + SUBJ_ICONS[id]() + '</svg>';
 }
-/* each chapter's own colour (cards, rings, the glow behind its icon) */
-var ICON_HUE = { ab: 'blue', cl: 'orange', mn: 'teal', an: 'violet', se: 'green', cd: 'pink', rk: 'coral', mo: 'sky', br: 'violet', ar: 'orange', di: 'teal',
-  dc: 'blue', ws: 'green', ca: 'coral', vn: 'pink', wf: 'violet', sc: 'green', st: 'orange', fs: 'blue', fa: 'violet', cf: 'teal', mi: 'sky', fp: 'green' };
+/* the hue a chapter's celebration, rings and plate follow. 3.10.0: violet for every chapter — the colour of the course and of
+   progress, not of the chapter (the shape tells the chapters apart) */
+var ICON_HUE = {};
+(function () { for (var k in ICONS) if (Object.prototype.hasOwnProperty.call(ICONS, k)) ICON_HUE[k] = 'violet'; })();
 function chIcon(ch, size, cls) {
   if (!has(ICONS, ch)) return '';
   return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + ICONS[ch]() + '</svg>';
 }
-/* STAT ICONS (3.9.0) — the same glossy recipe for the few numbers that are about the student himself */
+/* a glyph drawn ON a coloured fill (the tick on green): dark ink, never white (3.10.0) */
+var IC_INK = '#15132B';
+/* STAT ICONS (3.9.0) — the same glossy recipe for the few numbers that are about the student himself.
+   3.10.0 coloured by meaning: gold = something earned (XP, streak, a run, a medal), green = right answers, the clock neutral. */
 var STAT_ICONS = {
-  /* the streak: a flame with a yellow heart */
+  /* the streak: a gold flame with a light heart (3.10.0 gold, not orange: a streak is a reward) */
   flame: function () {
     var o = 'M32 5c3 9 12 15 16 24 6 13-2 30-16 30S10 46 15 32c2-6 6-9 8-14 1 6 3 9 6 10-1-8 0-16 3-23z';
-    return icP(o, IC.orange.d, ' transform="translate(0 3)"') + icP(o, IC.orange.f) +
-      icP('M32 31c4 5 9 9 9 15a9 9 0 0 1-18 0c0-6 5-9 9-15z', IC.yellow.f) +
+    return icP(o, IC.yellow.d, ' transform="translate(0 3)"') + icP(o, IC.yellow.f) +
+      icP('M32 31c4 5 9 9 9 15a9 9 0 0 1-18 0c0-6 5-9 9-15z', '#FFF3D1') +
       '<ellipse cx="22" cy="30" rx="3.2" ry="7" transform="rotate(24 22 30)" fill="#fff" opacity=".5"/>';
   },
   /* XP: a star */
@@ -2009,35 +2057,48 @@ var STAT_ICONS = {
     var d = 'M32 6l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 44.8l-15.2 8 2.9-16.9-12.3-12 17-2.5z';
     return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="20" rx="3" ry="6" transform="rotate(30 27 20)" fill="#fff" opacity=".5"/>';
   },
-  /* time: a clock face */
+  /* time: a clock — neutral (3.10.0): a paper face in a grey rim, violet hands */
   clock: function () {
-    return icDisc(32, 30, 23, IC.blue, 4) + icC(32, 30, 17, '.p') +
-      icP('M32 18v12l8 5', 'none', ' stroke="#1F3B94" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"') + '<ellipse cx="21" cy="17" rx="3" ry="5.5" transform="rotate(40 21 17)" fill="#fff" opacity=".5"/>';
+    return icDisc(32, 30, 23, 'paper', 4) + icC(32, 30, 19.5, 'none', ' class="pe-s" stroke-width="3"') +
+      icP('M32 17v13l8.5 5.5', 'none', ' stroke="' + IC.violet.d + '" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"') + icC(32, 30, 3, IC.violet.d);
   },
   /* a run of right answers: a lightning bolt */
   bolt: function () {
     var d = 'M37 4L14 36h15l-4 24 25-34H35z';
     return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="19" rx="2.6" ry="6" transform="rotate(35 27 19)" fill="#fff" opacity=".5"/>';
   },
-  /* a hit: a target with its centre */
+  /* a hit: a violet target, its centre gold */
   target: function () {
-    return icDisc(32, 30, 24, IC.pink, 4) + icC(32, 30, 17, '.p') + icC(32, 30, 10, IC.pink.f) + icC(32, 30, 4, '.p') +
+    return icDisc(32, 30, 24, IC.violet, 4) + icC(32, 30, 17, '.p') + icC(32, 30, 11, IC.violet.f) + icDisc(32, 30, 5.5, IC.yellow, 1.5) +
       '<ellipse cx="20" cy="17" rx="3" ry="5.5" transform="rotate(40 20 17)" fill="#fff" opacity=".5"/>';
   },
-  /* a medal on its ribbon */
+  /* a gold medal on its violet ribbon */
   medal: function () {
-    return icP('M20 4h9l6 18h-9z', IC.blue.f) + icP('M44 4h-9l-6 18h9z', IC.violet.f) + icDisc(32, 38, 18, IC.yellow, 4) + icC(32, 38, 11, IC.yellow.s) +
+    return icP('M20 4h9l6 18h-9z', IC.violet.f) + icP('M44 4h-9l-6 18h9z', IC.violet.s) + icDisc(32, 38, 18, IC.yellow, 4) + icC(32, 38, 11, IC.yellow.s) +
       icP('M32 31l2.4 4.8 5.3.8-3.9 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.9-3.7 5.3-.8z', '#fff', ' opacity=".9"') + '<ellipse cx="22" cy="29" rx="2.6" ry="5" transform="rotate(40 22 29)" fill="#fff" opacity=".5"/>';
   },
-  /* the night: a moon */
+  /* the night: a violet moon and one gold star */
   moon: function () {
-    var d = 'M40 6a24 24 0 1 0 18 34A20 20 0 0 1 40 6z';
-    return icP(d, IC.violet.d, ' transform="translate(0 3)"') + icP(d, IC.violet.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>';
+    var d = 'M40 6a24 24 0 1 0 18 34A20 20 0 0 1 40 6z', s = 'M50 9l2.2 5.3 5.3 2.2-5.3 2.2L50 24l-2.2-5.3-5.3-2.2 5.3-2.2z';
+    return icP(d, IC.violet.d, ' transform="translate(0 3)"') + icP(d, IC.violet.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>' +
+      icP(s, IC.yellow.s, ' transform="translate(0 1.5)"') + icP(s, IC.yellow.f);
   },
-  /* right answers: a green tick in a disc */
+  /* right answers: a green disc with a dark tick (3.10.0: a white tick on green is too faint) */
   tick: function () {
-    return icDisc(32, 30, 23, IC.green, 4) + icP('M21 31l7.5 7.5L44 23', 'none', ' stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"') +
+    return icDisc(32, 30, 23, IC.green, 4) + icP('M21 31l7.5 7.5L44 23', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"') +
       '<ellipse cx="21" cy="17" rx="3" ry="5.5" transform="rotate(40 21 17)" fill="#fff" opacity=".5"/>';
+  },
+  /* 3.10.0 for achievements, which are all rewards (gold): a milestone flag on its pole (questions answered) */
+  flag: function () {
+    var f = 'M24 9c8-4 14 4 23 0v20c-9 4-15-4-23 0z';
+    return icR(17, 6, 6, 51, 3, IC.violet.s) + icR(17, 5, 4.5, 51, 2.25, IC.violet.f) +
+      icP(f, IC.yellow.s, ' transform="translate(0 3.5)"') + icP(f, IC.yellow.f) + icBlk(10, 53, 20, 6, 3, IC.violet, 2.5);
+  },
+  /* ... and the sun coming up over the hills (an answer before 7 in the morning) */
+  sun: function () {
+    var hill = 'M2 54c6-8 14-12 22-12 7 0 11 3 15 3s9-5 15-5c4 0 7 2 8 4v10a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z';
+    return icP('M32 6v6M13.6 13.6l4.3 4.3M50.4 13.6l-4.3 4.3M6 32h6M52 32h6', 'none', ' stroke="' + IC.yellow.s + '" stroke-width="4" stroke-linecap="round"') +
+      icDisc(32, 34, 15, IC.yellow, 3) + icP(hill, IC.violet.s, ' transform="translate(0 3)"') + icP(hill, IC.violet.f);
   }
 };
 function statIcon(id, size, cls) {
@@ -4039,8 +4100,9 @@ var LI_PATHS = {
   chart: '<path d="M5 20V11M12 20V4M19 20v-6"/>'
 };
 /* the menus were written with small pictures; each is drawn as its line icon instead (3.9.0) */
-/* each achievement is drawn with a glossy stat icon (3.9.0), not its emoji */
-var ACH_ICON = { first: 'tick', q25: 'tick', q100: 'star', run5: 'bolt', run10: 'target', perfect: 'star', d3: 'flame', d7: 'flame', xp500: 'star', master: 'medal', early: 'clock', night: 'moon' };
+/* each achievement is drawn with a glossy stat icon (3.9.0), not its emoji. 3.10.0 an achievement is a reward, so its icon is
+   gold: the questions answered get the flag (the green tick means "right"), the early bird the sun (the clock is grey now) */
+var ACH_ICON = { first: 'flag', q25: 'flag', q100: 'star', run5: 'bolt', run10: 'target', perfect: 'star', d3: 'flame', d7: 'flame', xp500: 'star', master: 'medal', early: 'sun', night: 'moon' };
 function achIcon(a, size) { return statIcon(has(ACH_ICON, a.id) ? ACH_ICON[a.id] : 'medal', size); }
 var EMOJI_LI = { '✉': 'mail', '📨': 'mail', '📬': 'mail', '⚠️': 'alert', '⚠': 'alert', '👤': 'edit', '✏': 'edit', '📚': 'book', '☁️': 'cloud', '🎯': 'target', '🏆': 'medal', '🔔': 'bell', '⚙️': 'gear', '🎫': 'ticket', '🔑': 'key', '❓': 'help', '✏️': 'edit',
   '🔒': 'shield', '🔐': 'key', '❌': 'trash', '💬': 'chat', '🔄': 'sync', '🚩': 'flag' };
@@ -4056,11 +4118,10 @@ function passBar(u, t) {
   return '<span class="ch-prog"><span class="ch-bar"><i style="width:' + w + '%"></i></span><span class="ch-flag">' + FLAG_SVG + '</span>' +
     '<span class="ch-n num" aria-label="' + st.mastered + ' of ' + need + ' right answers needed to pass">' + st.mastered + '/' + need + '</span></span>';
 }
-/* the tint behind a chapter icon: its hue, as one of the soft tints of the theme */
-var HUE_TINT = { blue: 'blue', violet: 'violet', teal: 'teal', green: 'green', yellow: 'yellow', orange: 'orange', pink: 'pink', coral: 'pink', sky: 'blue' };
+/* the plate behind a chapter icon. 3.10.0 one plate for every chapter (the theme's --t-violet), not a tint per chapter:
+   the old tints were the same colours as the right and wrong answers */
 function chTile(ch, size) {
-  var h = has(ICON_HUE, ch) ? ICON_HUE[ch] : 'violet';
-  return '<span class="ch-tile" style="background:var(--t-' + (HUE_TINT[h] || 'violet') + ')">' + chIcon(ch, size || 40) + '</span>';
+  return '<span class="ch-tile" style="background:var(--t-violet)">' + chIcon(ch, size || 40) + '</span>';
 }
 var STEP_NAME = { 1: 'Learn', 2: 'Revise', 3: 'Master' };
 /* how much a chapter weighs in the exam, from the plan (questions per paper, on average); '' when not known */
@@ -4723,7 +4784,8 @@ function finishSession() {
 /* ── CELEBRATION ── a Mark passed is the biggest moment in the app, so it gets the whole screen: the chapter's own icon
    turns over in 3D and lands, a tick pops on it, confetti falls, and the phone plays the "win" rhythm and chime with it.
    Everything moves on the graphics chip (transform, opacity, one small canvas), it stops by itself, and a tap ends it.
-   With "Reduce animations" (or a phone set to reduce motion) the same screen simply appears, still. */
+   With "Reduce animations" (or a phone set to reduce motion) the same screen simply appears, still.
+   3.10.0 in the course violet (chHue: the same for every chapter) and the gold of a reward, nothing else. */
 var celeEl = null, confettiRaf = 0;
 function celebrateMark() {
   var t = S && topicById(S.topic), c, free, lines;
@@ -4738,7 +4800,7 @@ function celebrate(o) {
   celeEl = document.createElement('div');
   celeEl.className = 'cele';
   celeEl.setAttribute('role', 'dialog'); celeEl.setAttribute('aria-modal', 'true'); celeEl.setAttribute('aria-label', o.title);
-  celeEl.style.setProperty('--hl', o.hue.l);
+  celeEl.style.setProperty('--hl', o.hue.f);                    // the violet rays; the gold ones come from the CSS
   celeEl.innerHTML = '<canvas aria-hidden="true"></canvas><div class="cele-stage"><div class="cele-rays"></div><div class="cele-icon">' + chIcon(o.ch, 150) +
     '<span class="cele-badge">' + CHECK_SVG + '</span></div></div><div class="cele-t">' + esc(o.title) + '</div><div class="cele-s">' + o.sub + '</div>' +
     '<button class="btn btn-primary" data-act="cele-close">Continue</button>';
@@ -4754,9 +4816,9 @@ function closeCelebration() {
 }
 ACTIONS['cele-close'] = function () { closeCelebration(); };
 /* ninety paper bits shot up from below the icon; each one turns (its width follows a cosine: that is the 3D flip),
-   falls with gravity and fades. ~2.4 s, then the canvas is cleared and the loop ends. */
+   falls with gravity and fades. ~2.4 s, then the canvas is cleared and the loop ends. 3.10.0 violet and gold bits only */
 function confetti(cv, hue) {
-  var ctx, w, h, dpr = Math.min(2, window.devicePixelRatio || 1), parts = [], cols = [hue.f, hue.l, '#FFC233', '#33C25E', '#33B5F0', '#F2559A', '#8E63F7', '#FF8A3D'], t0 = 0, i, a, v;
+  var ctx, w, h, dpr = Math.min(2, window.devicePixelRatio || 1), parts = [], cols = [hue.f, IC.yellow.f, hue.l, IC.yellow.s, hue.s, IC.yellow.l], t0 = 0, i, a, v;
   if (!cv || !cv.getContext || !window.requestAnimationFrame) return;
   w = cv.clientWidth; h = cv.clientHeight;
   if (!w || !h) return;
