@@ -33,6 +33,9 @@
        green (--good)         right, done
        vermilion (--wrong)    wrong, error, delete — fills and borders; its text is --wrong-ink (never danger-red)
        no hue                 info, warnings, hints and the timer (ink2); locked and inactive (ink3, --mark-off for marks)
+     Shade ranks the rest: the state you are in is white and bold, the next or locked one grey and regular; a warning that
+     matters (the streak ends tonight) is said by weight and words, not by a hue. A card is lifted by a lighter grey, not a shadow.
+     One exception: the coloured patches inside a question's figure (.fv-h1..h4) are part of the question, not of the UI.
      Orange is no longer a colour of its own: --flame and --warn follow gold, --red and --bad-* follow vermilion.
      The old names (--cream60, --pur-bg …) stay as aliases, so every rule keeps working. */
   --bg:#121214;--bg-deep:#0C0C0E;--surface:#1E1E22;--surface-2:#27272C;--surface-3:#313137;
@@ -42,15 +45,14 @@
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#8E80FF;--primary-2:#B4AAFF;--primary-soft:#26262B;--primary-ink:#B4AAFF;   /* a selected thing: violet ring + ink, on a neutral fill */
   --cta:#FFFFFF;--on-cta:#15132B;--on-mark:#15132B;                    /* --on-mark: a glyph on a violet, green, gold or vermilion fill */
-  --gold:#FFB020;--gold-soft:#3B3122;
-  --wrong:#E66022;--wrong-soft:#302422;--wrong-ink:#FF8F5E;           /* the wrong option is mostly its outline; the right one is filled */
+  --gold:#FFB020;--gold-ink:var(--gold);--gold-soft:#3B3122;
+  --wrong:#E66022;--wrong-soft:#302422;--wrong-ink:#F6712F;           /* the wrong option is mostly its outline; the right one is filled */
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--gold);
   --good:#4ADE8B;--good-soft:#243931;--good-ink:var(--good);
   --haze:var(--bg);--haze-2:var(--bg);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#27272C;--track:rgba(255,255,255,.10);--glow:rgba(255,255,255,.06);
   --t-violet:#26262B;--t-blue:#26262B;--t-teal:#26262B;--t-green:#26262B;--t-pink:#26262B;--t-yellow:#26262B;--t-orange:#26262B;   /* every icon sits on one neutral plate */
-  --shadow-1:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3);
-  --shadow-2:0 2px 6px rgba(0,0,0,.32),0 18px 40px rgba(0,0,0,.42);
+  --shadow-1:none;--shadow-2:none;   /* 3.10.0 dark: a card is lifted by its lighter grey, not by a shadow (a shadow only darkens the page round it) */
   --shadow-cta:0 14px 26px -14px rgba(0,0,0,.9);
   --shadow-nav:0 14px 34px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);
   --shadow-sheet:0 -10px 40px rgba(0,0,0,.5);
@@ -60,7 +62,7 @@
   --ok-bg:var(--good-soft);--ok-line:#306B4C;--ok-ink:var(--good-ink);--ok-lip:transparent;
   --bad-bg:var(--wrong-soft);--bad-line:#6E3822;--bad-ink:var(--wrong-ink);--bad-lip:transparent;
   --warn-bg:var(--t-yellow);--warn-line:var(--line-2);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own */
-  --info-bg:var(--t-blue);--info-line:var(--line);--info-ink:var(--ink2);
+  --info-bg:transparent;--info-line:var(--line-2);--info-ink:var(--ink2);
   --pur-bg:var(--primary-soft);--pur-line:var(--line-2);
   --nav:#1E1E22;--modal:var(--surface);--scrim:rgba(6,6,8,.66);--toast:#2A2A30;--shadow:rgba(0,0,0,.5);
   --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);   /* only the celebration glows (--glow-a) */
@@ -78,8 +80,8 @@
   --primary:#5B45F5;--primary-2:#8A7BFF;--primary-soft:#EFECFF;--primary-ink:#3D2BC2;
   --cta:#15132B;--on-cta:#FFFFFF;--on-mark:#FFFFFF;
   --mark-off:#878791;
-  --gold:#9A5A00;--gold-soft:#FFF3D9;              /* 3.10.0 reward and wrong get one colour each in light too (gold text 5.5:1, vermilion 5.7:1 on white) */
-  --wrong:#C2410C;--wrong-soft:#FDEEE7;--wrong-ink:#B93A0A;
+  --gold:#A06000;--gold-ink:#935800;--gold-soft:#FFF3D9;              /* 3.10.0 reward and wrong get one colour each in light too (gold text 5.5:1, vermilion 5.7:1 on white) */
+  --wrong:#C2410C;--wrong-soft:#FDEEE7;--wrong-ink:#8C2308;
   --good:#14A35A;--good-soft:#E6F7EE;--good-ink:#0A6536;
   --haze:#E7E2FF;--haze-2:#E2EFFF;--hero-1:#F1EDFF;--hero-2:#E4EDFF;--hero-3:#EAF8FF;
   --chart:#DCD6FF;--track:rgba(255,255,255,.75);--glow:rgba(255,255,255,.9);
@@ -91,7 +93,7 @@
   --shadow-sheet:0 -10px 40px rgba(21,19,43,.10);
   --purple-dark:#3D2BC2;
   --green:#11834A;--blue:#1F58CC;
-  --ok-line:#B5E5CA;--bad-line:#F5C2AD;--warn-line:#F2DA9C;--warn-ink:#6E4A00;--info-line:#BCD3FB;--info-ink:#1F4AA8;--pur-line:#D4CCFF;
+  --ok-line:#B5E5CA;--bad-line:#F5C2AD;--warn-bg:var(--surface-2);--warn-line:var(--line-2);--warn-ink:var(--ink);--info-bg:var(--surface-2);--info-line:var(--line-2);--info-ink:var(--ink2);--pur-line:#D4CCFF;
   --nav:#FFFFFF;--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
   --glow-a:rgba(91,69,245,.14);--glow-b:rgba(47,116,240,.12);--glow-c:rgba(255,122,26,.12);
   --bar:#E7E2FF;
@@ -203,8 +205,7 @@ sub,sup{font-size:.72em;line-height:0}
 .cp.g{background:var(--good-soft);border-color:transparent;color:var(--good-ink)}
 .cp.y{background:var(--gold-soft);border-color:transparent;color:var(--gold)}   /* 3.10.0 a reward (XP earned) is gold */
 /* the Mark of a card: a neutral chip (3.10.0) — white is only for the one button to press */
-.cp.lvl{background:var(--surface-3);border-color:transparent;color:var(--ink);font-weight:700;letter-spacing:.3px}
-[data-theme="light"] .cp.lvl{background:var(--cta);color:var(--on-cta)}
+.cp.lvl{background:var(--surface-3);border-color:transparent;color:var(--ink2);font-weight:700;letter-spacing:.3px}   /* 3.10.0 a label: grey, below the violet state chip; never the button's fill */
 /* a line icon (24px grid, 2px stroke) — every UI icon of the app is one of these, never a picture */
 .li{display:inline-block;flex:none;width:24px;height:24px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -260,7 +261,7 @@ input[type=date]{color-scheme:inherit}
 /* ── WELCOME ── */
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .success-circle{width:90px;height:90px;border-radius:50%;background:var(--good);color:var(--on-cta);display:flex;align-items:center;justify-content:center}   /* 3.10.0 the tick is dark: white on green was 2.3:1 */
-[data-theme="light"] .success-circle{background:#22c55e;background:linear-gradient(135deg,#4ade80,#22c55e);box-shadow:0 12px 40px rgba(74,222,128,.35)}
+[data-theme="light"] .success-circle{color:var(--on-mark)}
 .welcome .btn{max-width:280px;margin-top:26px}
 
 /* ── HOME (3.9.0): greeting, one hero card, two small cards ── */
@@ -296,17 +297,20 @@ input[type=date]{color-scheme:inherit}
 .hero-out{margin-top:14px}
 .hero .btn-cta{margin:18px 0 0}
 .mini-row{display:flex}
-.mini{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:18px}
+.mini{flex:1;min-width:0;background:transparent;border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:18px}   /* 3.10.0 dark: outlined — the hero card above is the one filled box */
+[data-theme="light"] .mini{background:var(--surface)}
 .mini+.mini{margin-left:12px}
 .mini .chi,.mini .ring{display:block}
 .mini-n{font-size:28px;line-height:1.1;margin-top:10px}
 .mini-l{font-size:14px;font-weight:600}
 .mini-s{font-size:13px;color:var(--ink2);margin-top:2px}
-.mini-s.warn{color:var(--gold);font-weight:600}
+.mini-s.warn{color:var(--ink);font-weight:700}
 .mini .chi.off{filter:grayscale(1);opacity:.55}   /* 3.10.0 the streak flame is lit (gold) only once today's practice is done */
+[data-theme="light"] .mini .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
 .mini-s.ok{color:var(--green);font-weight:600}
 .ring{fill:none;stroke-width:5}
 .ring-t{stroke:var(--mark-off)}
+[data-theme="light"] .ring-t{stroke:var(--fill-2)}
 .ring-v{stroke:var(--primary);stroke-linecap:round}
 .ring.done .ring-v{stroke:var(--good)}
 .ring-k{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
@@ -345,8 +349,8 @@ input[type=date]{color-scheme:inherit}
 .opt-btn:active{transform:translateY(2px)}
 .opt-btn[disabled]{cursor:default;transform:none}
 /* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
-.opt-btn.correct{background:var(--good-soft);border-color:var(--good)}
-.opt-btn.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
+.opt-btn.correct{background:var(--good-soft);border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}   /* 3.10.0 the right answer is filled, */
+.opt-btn.wrong{background:var(--surface);border-color:var(--wrong);box-shadow:inset 0 0 0 1px var(--wrong)}   /* the wrong pick only outlined */
 .opt-btn.dim{opacity:.55;box-shadow:none}
 .opt-key{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink2);margin-right:12px}
 .opt-key .li{stroke-width:3}
@@ -369,7 +373,6 @@ input[type=date]{color-scheme:inherit}
 .fb-text{font-size:15px;color:var(--ink);line-height:1.7;margin-top:10px}
 .practice .btn-primary{margin-top:20px}
 .practice .link{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}   /* 3.10.0 skip / report: grey, underlined, not violet */
-[data-theme="light"] .practice .link{color:var(--purple);text-decoration:none}
 .btn-check{margin-top:20px !important}
 .btn-check[disabled]{opacity:1;background:var(--fill-2);color:var(--ink3);box-shadow:none}
 
@@ -407,6 +410,8 @@ input[type=date]{color-scheme:inherit}
 .rv-line .li{margin:2px 6px 0 0;stroke-width:3}
 .rv-line.ok{color:var(--green)}
 .rv-line.bad{color:var(--wrong-ink)}
+.rv-item.bad{border-left:4px solid var(--wrong)}   /* 3.10.0 found at a glance */
+.rv-item.skip{border-left:4px solid var(--mark-off)}
 .rv-x{font-size:14px;color:var(--ink2);line-height:1.6;margin-top:8px}
 
 /* ── PROGRESS ── */
@@ -428,6 +433,7 @@ input[type=date]{color-scheme:inherit}
 .bar-track{height:78px;display:flex;align-items:flex-end}
 .bar{width:100%;min-height:4px;border-radius:8px 8px 3px 3px;background:var(--mark-off)}   /* 3.10.0 other days grey (3.4:1), today violet */
 .bar-col.today .bar{background:var(--primary)}
+[data-theme="light"] .bar{background:var(--chart)}
 .bar-lbl{font-size:13px;font-weight:600;color:var(--ink3);margin-top:6px}
 .bar-col.today .bar-lbl{color:var(--ink)}
 .mrow{display:flex;align-items:center}
@@ -438,14 +444,13 @@ input[type=date]{color-scheme:inherit}
 
 /* ── PROFILE + SUB-SCREENS ── */
 .prof-header{text-align:center;padding:4px 0 0}
-.prof-ring{width:104px;height:104px;margin:0 auto 12px;border-radius:50%;padding:6px;background:var(--fill-2);background:conic-gradient(var(--primary) calc(var(--p) * 1%),var(--fill-2) 0)}
-.prof-avatar{width:92px;height:92px;line-height:92px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:36px;font-weight:700;box-shadow:0 0 0 4px var(--bg)}
+.prof-ring{width:108px;height:108px;margin:0 auto 12px;border-radius:50%;padding:8px;background:var(--fill-2);background:conic-gradient(var(--primary) calc(var(--p) * 1%),var(--fill-2) 0)}
+.prof-avatar{width:92px;height:92px;line-height:92px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:36px;font-weight:700;box-shadow:0 0 0 2px var(--bg)}
 [data-theme="light"] .prof-avatar{background:var(--primary);background:linear-gradient(150deg,var(--primary-2),var(--primary));color:#fff}
 .prof-name{font-size:26px;font-weight:700;line-height:1.25;word-wrap:break-word;overflow-wrap:break-word}
 .prof-email{font-size:14px;color:var(--ink2);margin-top:2px;word-break:break-all}
 .prof-rank{display:inline-flex;align-items:center;background:var(--primary-soft);border-radius:var(--r-pill);padding:5px 14px;font-size:14px;font-weight:700;color:var(--ink);margin-top:12px}
 .prof-rank .li{margin:0 6px 0 -2px;color:var(--gold)}   /* 3.10.0 the level: a neutral pill, its star gold (a reward) */
-[data-theme="light"] .prof-rank{color:var(--primary)}
 .prof-next{font-size:14px;color:var(--ink2);margin-top:8px}
 .prof-next b{color:var(--ink);font-weight:700}
 .ach-strip{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px;text-align:left}
@@ -476,6 +481,7 @@ input[type=date]{color-scheme:inherit}
 .toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--mark-off);transition:background-color .15s}   /* off: a grey track that can be seen (3.10.0) */
 .toggle:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .15s}
 .toggle:before{content:'';position:absolute;top:-11px;right:-10px;bottom:-11px;left:-10px}   /* 66x48 tap area around the 46x26 switch */
+[data-theme="light"] .toggle{background:var(--fill-2);box-shadow:inset 0 0 0 1px var(--line-2)}
 .toggle.on{background:var(--primary)}
 .toggle.on:after{transform:translateX(20px)}
 .seg{display:flex;background:var(--fill);border-radius:var(--r-md);padding:3px}
@@ -497,8 +503,10 @@ input[type=date]{color-scheme:inherit}
 .ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 10px;text-align:center}
 .ach-card:active{transform:translateY(3px);box-shadow:none}
 .ach-card.earned{background:var(--surface)}   /* 3.10.0 earned: the icon in full colour and an ink name; no violet frame */
-[data-theme="light"] .ach-card.earned{border-color:var(--primary)}
-.ach-card.locked .ach-name{color:var(--ink3)}
+.ach-card.locked .ach-name{color:var(--ink3);font-weight:400}
+.ach-card.locked .ach-desc{color:var(--ink3)}
+[data-theme="light"] .ach-card.locked .ach-desc{color:var(--cream60)}
+.ach-card.locked .pbar{height:5px}
 [data-theme="light"] .ach-card.locked .ach-name{color:inherit}
 .ach-card>span{display:block}
 .ach-emoji{font-size:30px;line-height:1.2}
@@ -525,11 +533,11 @@ input[type=date]{color-scheme:inherit}
 .co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;transition:transform .07s}
 .co-row:active{transform:translateY(3px);box-shadow:none}
 .co-row.big{padding:17px 15px;margin-top:12px !important}
-.co-row.current{border-color:var(--primary)}   /* 3.10.0 your course is the selected one: violet, like every selection */
-[data-theme="light"] .co-row.current{border-color:var(--ok-line);background:var(--ok-bg)}
+.co-row.current{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary),var(--shadow-1)}   /* 3.10.0 your course is the selected one: violet, like every selection */
 .co-row.locked:active{transform:none;box-shadow:var(--shadow-1)}
-.co-row.locked .co-ico{opacity:.55}
-.co-row.locked .co-name,.co-row.locked .co-sub{color:var(--ink3)}   /* dimmed by its ink, not by opacity: 5.1:1 (3.10.0; it was 3.3:1) */
+.co-row.locked .co-ico{opacity:.55;filter:grayscale(1)}
+.co-row.locked .co-name,.co-row.locked .co-sub{color:var(--ink3)}
+.co-row.locked .co-name{font-weight:400}   /* dimmed by its ink, not by opacity: 5.1:1 (3.10.0; it was 3.3:1) */
 [data-theme="light"] .co-row.locked .co-info{opacity:.55}
 [data-theme="light"] .co-row.locked .co-name{color:inherit}
 [data-theme="light"] .co-row.locked .co-sub{color:var(--cream60)}
@@ -542,13 +550,11 @@ input[type=date]{color-scheme:inherit}
 .co-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px;line-height:1.45}
 .co-state{display:block;font-size:13px;font-weight:700;color:var(--cream60);margin-top:5px}
 .co-state.on{color:var(--primary-ink)}
-[data-theme="light"] .co-state.on{color:var(--green)}
 .co-state:before{content:'';display:inline-block;width:7px;height:7px;border:1.5px solid currentColor;border-radius:50%;margin-right:6px}   /* the dot and the arrow below are drawn, not letters: no phone can lack them */
 .co-state.on:before{background:currentColor}
 .co-right{flex:none;display:flex;align-items:center;margin-left:10px}
-.co-soon{font-size:13px;font-weight:700;letter-spacing:.3px;background:var(--fill);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
+.co-soon{font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
 .co-cur{font-size:13px;font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
-[data-theme="light"] .co-cur{color:var(--green)}
 .course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-pill);padding:7px 12px;font-size:13px;font-weight:700;white-space:nowrap}
 .course-pill:before{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}   /* a taller tap area for the small pill */
 .course-pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;margin-right:6px}
@@ -578,9 +584,12 @@ input[type=date]{color-scheme:inherit}
 .nav-pill{display:flex;align-items:center;padding:6px;border-radius:var(--r-pill);background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow-nav);pointer-events:auto}
 .nav-item{display:block;min-width:64px;padding:7px 12px 6px;margin:0 1px;border-radius:var(--r-pill);text-align:center;color:var(--ink3)}
 .nav-item svg{display:block;width:24px;height:24px;margin:0 auto 1px}
-.nav-item.active{background:var(--primary-soft);color:var(--primary-ink)}
-[data-theme="light"] .nav-item.active{color:var(--primary)}
-.nav-lbl{display:block;font-size:13px;font-weight:600;line-height:1.2}
+.nav-item.active{background:transparent;color:var(--ink)}   /* 3.10.0 the tab you are on: white and bold, its icon on a grey pill */
+.nav-item.active svg{background:var(--surface-3);border-radius:var(--r-pill);box-sizing:content-box;padding:3px 12px;margin:-3px auto -2px}
+[data-theme="light"] .nav-item.active{background:var(--primary-soft);color:var(--primary)}
+[data-theme="light"] .nav-item.active svg{background:none;padding:0;margin:0 auto 1px}
+.nav-lbl{display:block;font-size:13px;font-weight:400;line-height:1.2}
+.nav-item.active .nav-lbl{font-weight:700}
 /* what scrolls under the floating bar fades into the page instead of being cut by it */
 .bottom-nav:before{content:'';position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(rgba(0,0,0,0),var(--bg) 72%);pointer-events:none;z-index:-1}
 
@@ -712,14 +721,21 @@ input[type=date]{color-scheme:inherit}
 .ch-flag{flex:none;display:flex;color:var(--ink3);margin:0 5px 0 6px}
 .ch-n{flex:none;font-size:13px;font-weight:700;color:var(--ink)}
 .ch-st{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;color:var(--ink3)}
-.ch-st.play{background:var(--primary);color:var(--on-mark)}   /* 3.10.0 on the go: violet (state), not white — white is the one button to press */
-[data-theme="light"] .ch-st.play{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
+.ch-st.play{background:transparent;color:var(--primary-ink);box-shadow:inset 0 0 0 2px var(--primary)}   /* 3.10.0 on the go: a violet ring (state) */
+.ch-card.k-next{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary),var(--shadow-1)}   /* the chapter Home calls "Next up" leads Topics, */
+.ch-card.k-next .ch-st.play{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}   /* its play disc the one white thing there */
+.ch-next{color:var(--primary-ink);font-weight:700}
 .ch-st.play .li{margin-left:2px}
 .ch-st.done{background:var(--good-soft);color:var(--good-ink)}
 [data-theme="light"] .ch-st.done{color:var(--green)}
 .ch-st.lock{color:var(--ink3)}
-.ch-card.k-locked{opacity:1;background:var(--surface-2);box-shadow:none}
-.ch-card.k-locked .ch-tile,.ch-card.k-locked .ch-name{opacity:.6}
+.ch-card.k-locked{opacity:1;background:var(--surface);box-shadow:none}   /* 3.10.0 not raised: a locked row says so by grey ink and regular weight */
+[data-theme="light"] .ch-card.k-locked{background:var(--surface-2)}
+.ch-card.k-locked .ch-tile{opacity:.6}
+.ch-card.k-locked .ch-name,.ch-card.k-soon .ch-name{color:var(--ink3);font-weight:400}
+.ch-card.k-locked .topic-row-meta{color:var(--ink3)}
+[data-theme="light"] .ch-card.k-locked .ch-name{opacity:.6;color:inherit}
+[data-theme="light"] .ch-card.k-soon .ch-name,[data-theme="light"] .ch-card.k-locked .topic-row-meta{color:inherit}
 .ch-card.k-locked .ch-tile .chi{filter:saturate(.5)}
 .ch-card.k-soon{background:transparent;box-shadow:none;border-style:dashed}
 .ch-card.k-soon .ch-tile{opacity:.55}
@@ -737,8 +753,6 @@ input[type=date]{color-scheme:inherit}
 /* the exam weight is information (3.10.0): a plain card, a grey icon, the number in bold ink — no violet, which means "current" */
 .chp-why{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;font-size:14px;color:var(--ink)}
 .chp-why .li{margin-right:10px;color:var(--ink2)}
-[data-theme="light"] .chp-why{background:var(--primary-soft);border:0}
-[data-theme="light"] .chp-why .li{color:var(--primary)}
 .chp-why b{font-weight:700}
 .steps-list{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:6px 0}
 .step{position:relative;display:flex;align-items:flex-start;width:100%;padding:14px 18px;text-align:left}
@@ -756,13 +770,13 @@ input[type=date]{color-scheme:inherit}
 .step-l{display:block;font-size:13px;color:var(--ink2);margin-top:1px}
 .step-x{display:flex;align-items:center;font-size:13px;color:var(--ink2);margin-top:6px}
 .step-x .li{margin-right:6px}
-.step-x.ok{color:var(--green);font-weight:600}
+.step-x.ok{color:var(--good-ink);font-weight:600}
 .step .ch-prog{margin-top:8px}
 .step-badge{margin-top:8px}
 .step.locked .step-t,.step.locked .step-l{color:var(--ink3)}
+.step.locked .step-t{font-weight:400}
 .cp.v.step-badge{color:var(--ink2)}   /* a badge still to earn has no hue (3.10.0: shade = state) */
 .step.soon .step-badge{color:var(--ink3)}
-[data-theme="light"] .cp.v.step-badge{color:var(--primary-ink)}
 [data-theme="light"] .step.soon .step-badge{opacity:.6;color:var(--primary-ink)}
 .chp-out{margin-top:24px}
 .chapter .btn-cta{margin-top:16px}
@@ -787,7 +801,7 @@ input[type=date]{color-scheme:inherit}
 .spark i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;opacity:0;animation:spark .6s ease-out forwards}
 /* 3.10.0 the sparks are gold (a reward) and violet, nothing else */
 .spark i:nth-child(odd){background:var(--gold,#FFB020)}
-.spark i:nth-child(even){background:var(--primary)}
+.spark i:nth-child(even){background:var(--good)}
 .spark i:nth-child(1){--x:-26px;--y:-24px}
 .spark i:nth-child(2){--x:0;--y:-34px}
 .spark i:nth-child(3){--x:26px;--y:-24px}
@@ -881,6 +895,7 @@ input[type=date]{color-scheme:inherit}
 .pack-card.own{border-style:solid;border-color:var(--line)}
 .pack-card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--lip)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
+.pack-card:not(.own) .pack-ico{color:var(--ink3)}
 .pack-name{display:block;font-size:14px;font-weight:700}
 .pack-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px}
 .pack-price{flex:none;margin-left:10px;font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--primary-ink)}
@@ -2115,31 +2130,31 @@ var STAT_ICONS = {
     var d = 'M32 6l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 44.8l-15.2 8 2.9-16.9-12.3-12 17-2.5z';
     return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="20" rx="3" ry="6" transform="rotate(30 27 20)" fill="#fff" opacity=".5"/>';
   },
-  /* time: a clock — neutral (3.10.0): a paper face in a grey rim, violet hands */
+  /* time: a clock — neutral (3.10.0): a paper face in a grey rim, dark hands */
   clock: function () {
     return icDisc(32, 30, 23, 'paper', 4) + icC(32, 30, 19.5, 'none', ' class="pe-s" stroke-width="3"') +
-      icP('M32 17v13l8.5 5.5', 'none', ' stroke="' + IC.violet.d + '" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"') + icC(32, 30, 3, IC.violet.d);
+      icP('M32 17v13l8.5 5.5', 'none', ' stroke="' + IC_INK + '" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"') + icC(32, 30, 3, IC_INK);
   },
   /* a run of right answers: a lightning bolt */
   bolt: function () {
     var d = 'M37 4L14 36h15l-4 24 25-34H35z';
     return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="19" rx="2.6" ry="6" transform="rotate(35 27 19)" fill="#fff" opacity=".5"/>';
   },
-  /* a hit: a violet target, its centre gold */
+  /* a hit: a gold target (3.10.0: an achievement is a reward), a dark bull's-eye */
   target: function () {
-    return icDisc(32, 30, 24, IC.violet, 4) + icC(32, 30, 17, '.p') + icC(32, 30, 11, IC.violet.f) + icDisc(32, 30, 5.5, IC.yellow, 1.5) +
+    return icDisc(32, 30, 24, IC.yellow, 4) + icC(32, 30, 17, '.p') + icC(32, 30, 11, IC.yellow.f) + icC(32, 30, 5.5, IC_INK) +
       '<ellipse cx="20" cy="17" rx="3" ry="5.5" transform="rotate(40 20 17)" fill="#fff" opacity=".5"/>';
   },
-  /* a gold medal on its violet ribbon */
+  /* a gold medal on its paper ribbon */
   medal: function () {
-    return icP('M20 4h9l6 18h-9z', IC.violet.f) + icP('M44 4h-9l-6 18h9z', IC.violet.s) + icDisc(32, 38, 18, IC.yellow, 4) + icC(32, 38, 11, IC.yellow.s) +
+    return icP('M20 4h9l6 18h-9z', '.pe-f') + icP('M44 4h-9l-6 18h9z', '.ps') + icDisc(32, 38, 18, IC.yellow, 4) + icC(32, 38, 11, IC.yellow.s) +
       icP('M32 31l2.4 4.8 5.3.8-3.9 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.9-3.7 5.3-.8z', '#fff', ' opacity=".9"') + '<ellipse cx="22" cy="29" rx="2.6" ry="5" transform="rotate(40 22 29)" fill="#fff" opacity=".5"/>';
   },
-  /* the night: a violet moon and one gold star */
+  /* the night: a gold moon and one paper star */
   moon: function () {
     var d = 'M40 6a24 24 0 1 0 18 34A20 20 0 0 1 40 6z', s = 'M50 9l2.2 5.3 5.3 2.2-5.3 2.2L50 24l-2.2-5.3-5.3-2.2 5.3-2.2z';
-    return icP(d, IC.violet.d, ' transform="translate(0 3)"') + icP(d, IC.violet.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>' +
-      icP(s, IC.yellow.s, ' transform="translate(0 1.5)"') + icP(s, IC.yellow.f);
+    return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>' +
+      icP(s, '.ps', ' transform="translate(0 1.5)"') + icP(s, '.p');
   },
   /* right answers: a green disc with a dark tick (3.10.0: a white tick on green is too faint) */
   tick: function () {
@@ -2149,14 +2164,14 @@ var STAT_ICONS = {
   /* 3.10.0 for achievements, which are all rewards (gold): a milestone flag on its pole (questions answered) */
   flag: function () {
     var f = 'M24 9c8-4 14 4 23 0v20c-9 4-15-4-23 0z';
-    return icR(17, 6, 6, 51, 3, IC.violet.s) + icR(17, 5, 4.5, 51, 2.25, IC.violet.f) +
-      icP(f, IC.yellow.s, ' transform="translate(0 3.5)"') + icP(f, IC.yellow.f) + icBlk(10, 53, 20, 6, 3, IC.violet, 2.5);
+    return icR(17, 6, 6, 51, 3, '.ps') + icR(17, 5, 4.5, 51, 2.25, '.pe-f') +
+      icP(f, IC.yellow.s, ' transform="translate(0 3.5)"') + icP(f, IC.yellow.f) + icBlk(10, 53, 20, 6, 3, 'paper', 2.5);
   },
   /* ... and the sun coming up over the hills (an answer before 7 in the morning) */
   sun: function () {
     var hill = 'M2 54c6-8 14-12 22-12 7 0 11 3 15 3s9-5 15-5c4 0 7 2 8 4v10a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z';
     return icP('M32 6v6M13.6 13.6l4.3 4.3M50.4 13.6l-4.3 4.3M6 32h6M52 32h6', 'none', ' stroke="' + IC.yellow.s + '" stroke-width="4" stroke-linecap="round"') +
-      icDisc(32, 34, 15, IC.yellow, 3) + icP(hill, IC.violet.s, ' transform="translate(0 3)"') + icP(hill, IC.violet.f);
+      icDisc(32, 34, 15, IC.yellow, 3) + icP(hill, '.ps', ' transform="translate(0 3)"') + icP(hill, '.pe-f');
   }
 };
 function statIcon(id, size, cls) {
@@ -4076,7 +4091,7 @@ SCREENS.home = function () {
     : '<div class="hero"><div class="hero-name">Choose a topic</div><div class="hero-note">Your course has no questions to practise yet.</div>' +
       '<button class="btn btn-primary btn-cta" data-act="tab" data-tab="topics">Open Topics</button></div>';
 
-  /* the streak: the one warning that matters (it ends tonight) is said here, in its own card, in gold (3.10.0). The flame is lit
+  /* the streak: the one warning that matters (it ends tonight) is said here, in its own card, in bold ink (3.10.0). The flame is lit
      (gold) once today's practice is done and grey until then — shade says the state, as on every other card */
   warn = u.notif.streak && st > 0 && u.lastDay !== tk;
   sub = st === 0 ? (u.bestStreak ? 'Best ' + u.bestStreak + ' · start again' : 'Answer 1 to start') : u.lastDay === tk ? 'Done today' : 'Practice today';
@@ -4101,7 +4116,7 @@ SCREENS.topics = function () {
     if (lk) { rt = topicById(t.req.topic); meta = 'Master ' + t.req.pct + '% of ' + rt.short + ' to unlock'; }
     else meta = st.attempted ? st.mastered + ' of ' + st.total + ' mastered' : plural(st.total, 'question') + ' · not started';
     html += '<button class="topic-row' + (lk ? ' locked' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + t.id + '">' +
-      '<span class="topic-emoji-big" style="background:' + t.tint + '">' + t.emoji + '</span><span class="topic-info">' +
+      '<span class="topic-emoji-big" style="background:var(--t-violet)">' + t.emoji + '</span><span class="topic-info">' +
       '<span class="topic-row-name">' + t.name + '</span><span class="topic-row-meta">' + meta + '</span>' +
       (lk ? '' : '<span class="pbar thin"><i style="width:' + st.pct + '%"></i></span>') + '</span>' +
       '<span class="topic-right">' + (lk ? li('lock', 20) : st.pct + '%') + '</span></button>';
@@ -4192,21 +4207,22 @@ function chWeight(c) {
   return c.per < 1.5 ? 'about 1 question per paper' : 'about ' + Math.round(c.per) + ' questions per paper';
 }
 /* one chapter row (3.9.0): the icon on its tint, the name, ONE line, and where it stands at the right */
-function chCard(u, v) {
+function chCard(u, v, rec) {
   var c = v.c, t = v.t, k = v.k, meta = '', right, act, bar = '';
+  var next = !!(rec && t && t.id === rec.id && (k === 'ready' || k === 'active' || k === 'revise'));   // 3.10.0 the one Home calls Next up: it leads Topics
   if (k === 'soon') { meta = 'Coming soon'; right = ''; }
   else if (k === 'locked') { meta = 'M' + t.mark + ' · ' + (v.lk.kind === 'slots' ? 'finish one on the go first' : markLockText(v.lk, t)); right = '<span class="ch-st lock">' + li('lock', 20) + '</span>'; }
   else if (k === 'done') {
     meta = (t.mark >= 3 ? 'Mastered' : 'M' + t.mark + ' passed') + (v.next ? ' · M' + v.next.mark + (v.lk.kind === 'gap' ? ' after ' + plural(v.lk.need, 'more chapter') : ' soon') : '');
     right = '<span class="ch-st done" aria-label="Passed">' + li('check', 18) + '</span>';
   } else if (k === 'ready') {
-    meta = 'M' + t.mark + ' · ' + (chWeight(c) || plural(setSize(u, t), 'question'));
-    right = '<span class="ch-st">' + li('chev', 22) + '</span>';
+    meta = (next ? '<b class="ch-next">Next up</b> · ' : '') + 'M' + t.mark + ' · ' + (chWeight(c) || plural(setSize(u, t), 'question'));
+    right = next ? '<span class="ch-st play">' + li('play', 16) + '</span>' : '<span class="ch-st">' + li('chev', 22) + '</span>';
   } else {
     bar = passBar(u, t); right = '<span class="ch-st play">' + li('play', 16) + '</span>';
   }
   act = k === 'soon' ? 'ch-soon' : k === 'locked' ? 'locked' : 'chapter';
-  return '<button type="button" class="topic-row ch-card k-' + k + (k === 'locked' ? ' locked' : '') + '" data-act="' + act + '" data-ch="' + esc(c.id) + '"' + (t ? ' data-topic="' + t.id + '"' : '') +
+  return '<button type="button" class="topic-row ch-card k-' + k + (k === 'locked' ? ' locked' : '') + (next ? ' k-next' : '') + '" data-act="' + act + '" data-ch="' + esc(c.id) + '"' + (t ? ' data-topic="' + t.id + '"' : '') +
     ' aria-label="' + esc(c.name) + (t && k !== 'soon' ? ', Mark ' + t.mark : '') + (k === 'soon' ? ', coming soon' : k === 'done' ? ', passed' : k === 'locked' ? ', locked' : '') + '">' +
     chTile(c.id, 40) + '<span class="topic-info">' +
     '<span class="topic-row-name ch-name" lang="hi">' + esc(c.hi) + '</span>' +
@@ -4219,7 +4235,7 @@ var TROPHY_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="t
 /* the subjects of the NMMS course: MAT has its chapters; the SAT parts come later */
 var SUBJECTS = [{ id: 'mat', name: 'MAT', open: true }, { id: 'sci', name: 'विज्ञान', en: 'Science' }, { id: 'sst', name: 'सामाजिक', en: 'Social science' }, { id: 'math', name: 'गणित', en: 'Maths' }];
 function markTopics(u, plan) {
-  var mine = topicsOf(u), views, by = {}, act = markActive(u), html, ready, passed;
+  var mine = topicsOf(u), views, by = {}, act = markActive(u), html, ready, passed, rec = recommendTopic(u);
   views = plan.chapters.map(function (c) { return chapterView(u, mine, c); });
   views.forEach(function (v) { (by[v.k] = by[v.k] || []).push(v); });
   ready = views.filter(function (v) { return v.t; }).length;
@@ -4241,7 +4257,7 @@ function markTopics(u, plan) {
    ['done', 'Passed'], ['soon', 'Coming soon · picture questions']].forEach(function (s) {
     if (!by[s[0]]) return;
     html += '<div class="tier-label">' + s[1] + '</div><div class="ch-list">';
-    by[s[0]].forEach(function (v) { html += chCard(u, v); });
+    by[s[0]].forEach(function (v) { html += chCard(u, v, rec); });
     html += '</div>';
   });
   return html;
@@ -4317,7 +4333,7 @@ ACTIONS['subj-soon'] = function (el) {
      [[cross:top,right,bottom,left,centre]]                         five numbers joined like a plus sign
      [[venn:nest3]] … (see VENN)                                    three circles in one arrangement, for "which diagram shows …"
      [[venn3:Tea,Coffee,Milk;a,b,c,ab,bc,ca,abc]]                   three overlapping circles with a number in each part
-   Several tokens in a row stand together on a line of their own. A "?" is drawn in amber. Everything is drawn here, in the
+   Several tokens in a row stand together on a line of their own. A "?" is drawn in violet (3.10.0). Everything is drawn here, in the
    colours of the text: nothing to download, nothing that can fail to load, and it is the same on every phone. */
 var FIG_RUN = /\[\[[a-z0-9]+:[^\[\]]*\]\](?:\s*\[\[[a-z0-9]+:[^\[\]]*\]\])*/g, FIG_ONE = /\[\[([a-z0-9]+):([^\[\]]*)\]\]/g;
 function figNum(v, x, y, size) {
@@ -4417,7 +4433,7 @@ FIGS.fig = function (arg) {
     var v = c.trim(), a, k, pts;
     if (!FV_CMD.test(v)) { ok = false; return; }
     a = v.split(' '); k = a.shift();
-    if (k === 'T') {                                        /* a "?" is the box to fill: big and amber, like everywhere else */
+    if (k === 'T') {                                        /* a "?" is the box to fill: big and violet (3.10.0) */
       body += '<text x="' + a[0] + '" y="' + a[1] + '" dy=".35em" text-anchor="middle" font-size="' + (a[2] === '?' ? 30 : 13) + '" class="' + (a[2] === '?' ? 'fig-q' : 'fv-lbl') + '">' + esc(a[2]) + '</text>'; return;
     }
     a = a.map(Number);
@@ -4532,7 +4548,7 @@ SCREENS.review = function () {
     var q = it.q, ok = it.pick === q.a, line;
     line = it.pick === -1 || it.pick === null ? '<div class="rv-line muted">You skipped this question</div>'
       : '<div class="rv-line ' + (ok ? 'ok' : 'bad') + '">' + li(ok ? 'check' : 'close', 16) + ' Your answer: ' + figHtml(q.o[it.pick]) + '</div>';
-    html += '<div class="rv-item"><div class="rv-head">Question ' + (i + 1) + '</div><div class="rv-q">' + figHtml(q.q) + '</div>' + line +
+    html += '<div class="rv-item' + (it.pick === -1 || it.pick === null ? ' skip' : ok ? '' : ' bad') + '"><div class="rv-head">Question ' + (i + 1) + '</div><div class="rv-q">' + figHtml(q.q) + '</div>' + line +
       (ok ? '' : '<div class="rv-line ok">Correct answer: ' + figHtml(q.o[q.a]) + '</div>') + '<div class="rv-x">' + figHtml(explainOf(q)) + '</div></div>';
   });
   return html + '<button class="btn btn-primary" data-act="back">Back to results</button></div>';
@@ -6191,7 +6207,7 @@ function packCard(u, p) {
 function packRows(u, p) {
   return packTopics(p.id).filter(function (t) { return t.courses.indexOf(courseOf(u)) >= 0; }).map(function (t) {
     var st = topicStats(u, t), meta = st.attempted ? st.mastered + ' of ' + st.total + ' right' : plural(st.total, 'question') + ' · not started';
-    return '<button class="topic-row" data-act="start" data-topic="' + t.id + '"><span class="topic-emoji-big" style="background:' + t.tint + '">' + t.emoji + '</span><span class="topic-info">' +
+    return '<button class="topic-row" data-act="start" data-topic="' + t.id + '"><span class="topic-emoji-big" style="background:var(--t-violet)">' + t.emoji + '</span><span class="topic-info">' +
       '<span class="topic-row-name">' + t.name + '</span><span class="topic-row-meta">' + meta + '</span><span class="pbar thin"><i style="width:' + st.pct + '%"></i></span></span>' +
       '<span class="topic-right">' + st.pct + '%</span></button>';
   }).join('');
