@@ -97,7 +97,7 @@
   --nav:#FFFFFF;--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
   --glow-a:rgba(91,69,245,.14);--glow-b:rgba(47,116,240,.12);--glow-c:rgba(255,122,26,.12);
   --bar:#E7E2FF;
-  --ic-p:#FFFFFF;--ic-ps:#CFCADF;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pedge:rgba(40,30,80,.12);
+  --ic-p:#FFFFFF;--ic-ps:#BDB6D3;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pedge:#B2ABCA;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -675,6 +675,7 @@ input[type=date]{color-scheme:inherit}
 /* ── CHAPTER ICONS (icons.js) ── paper-white parts follow the theme */
 .chi{display:block;flex:none;overflow:visible}
 .chi .p{fill:var(--ic-p);stroke:var(--ic-pedge);stroke-width:1}
+[data-theme="light"] .chi .p{stroke-width:1.6}   /* 3.10.0 a paper part must not melt into the light plate */
 .chi .ps{fill:var(--ic-ps)}
 .chi .pe-s{stroke:var(--ic-pes)}
 .chi .pe-f{fill:var(--ic-pef)}
@@ -836,8 +837,8 @@ input[type=date]{color-scheme:inherit}
   background:repeating-conic-gradient(from 0deg,var(--hl) 0deg 9deg,transparent 9deg 30deg,var(--gold,#FFB020) 30deg 39deg,transparent 39deg 60deg);
   -webkit-mask:radial-gradient(circle,#000 22%,transparent 68%);mask:radial-gradient(circle,#000 22%,transparent 68%);animation:rays 4.5s cubic-bezier(.2,.6,.35,1) both}
 .cele-icon{position:relative;transform-style:preserve-3d;animation:flip3d 1.15s cubic-bezier(.2,.9,.25,1.12) both;will-change:transform}
-.cele-icon .chi{filter:drop-shadow(0 10px 0 rgba(0,0,0,.18))}
-.cele-badge{position:absolute;right:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:var(--good);color:#15132B;display:flex;align-items:center;justify-content:center;
+.cele-icon .chi{filter:drop-shadow(0 12px 14px rgba(0,0,0,.35))}   /* soft: the icon has its own sides (3.10.0) */
+.cele-badge{position:absolute;left:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:var(--good);color:#15132B;display:flex;align-items:center;justify-content:center;
   border:4px solid var(--bg);box-shadow:0 4px 0 #1E8A40;animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}   /* 3.10.0 a dark tick on green: white was 2.3:1 */
 .cele-badge svg{width:24px;height:24px}
 .cele-t{font-size:28px;font-weight:900;line-height:1.2;margin-top:26px;animation:rise .45s ease-out .55s both}
@@ -1837,18 +1838,14 @@ var IC = {
   coral:  { f: '#FF5F5F', s: '#C23535', l: '#FFB0B0', d: '#962828' },
   sky:    { f: '#33B5F0', s: '#0A7DB3', l: '#A6DDF7', d: '#075E87' }
 };
-/* GLOSS (3.9.0): every coloured face is lit from the top — a vertical gradient from the hue's light tone to its base tone. The
-   gradients are defined ONCE for the whole page (ICON_DEFS, put in by the app at start), so a hundred icons cost nothing more. */
-var IC_FACE = {};
-(function () { for (var k in IC) if (Object.prototype.hasOwnProperty.call(IC, k)) IC_FACE[IC[k].f] = k; })();
+/* FLAT (3.10.0): a face is one flat colour over its darker side, as in Brilliant's drawings. The 3.9.0 gloss (a gradient from
+   the light tone down, and a shine bar on every block) read as plastic, and its light top fell under 3:1 on the light plate.
+   Only the soft ground an icon stands on is defined once for the page (ICON_DEFS, put in by the app at start). */
 function icFill(fill) {
-  if (fill.charAt(0) === '.') return ' class="' + fill.slice(1) + '"';
-  return ' fill="' + (Object.prototype.hasOwnProperty.call(IC_FACE, fill) ? 'url(#icg-' + IC_FACE[fill] + ')' : fill) + '"';
+  return fill.charAt(0) === '.' ? ' class="' + fill.slice(1) + '"' : ' fill="' + fill + '"';
 }
 var ICON_DEFS = (function () {
-  var g = '', k;
-  for (k in IC) if (Object.prototype.hasOwnProperty.call(IC, k))
-    g += '<linearGradient id="icg-' + k + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + IC[k].l + '"/><stop offset=".62" stop-color="' + IC[k].f + '"/></linearGradient>';
+  var g = '';
   g += '<radialGradient id="icg-ground"><stop offset="0" stop-color="#15132B" stop-opacity=".22"/><stop offset="1" stop-color="#15132B" stop-opacity="0"/></radialGradient>';
   return '<svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"><defs>' + g + '</defs></svg>';
 })();
@@ -1857,10 +1854,10 @@ function icC(cx, cy, r, fill, extra) { return '<circle cx="' + cx + '" cy="' + c
 function icP(d, fill, extra) { return '<path d="' + d + '"' + icFill(fill) + (extra || '') + '/>'; }
 /* the soft shadow an icon stands on */
 var IC_GROUND = '<ellipse cx="32" cy="61.5" rx="22" ry="3" fill="url(#icg-ground)"/>';
-/* a block: its side (the darker copy, d lower), its face, and a soft shine along the top edge */
-function icBlk(x, y, w, h, r, c, d, shine) {
+/* a block: its side (the darker copy, d lower) and its flat face (3.10.0: no shine bar) */
+function icBlk(x, y, w, h, r, c, d) {
   var s = c === 'paper' ? '.ps' : c.s, f = c === 'paper' ? '.p' : c.f;
-  return icR(x, y + d, w, h, r, s) + icR(x, y, w, h, r, f) + (shine === false || c === 'paper' ? '' : icR(x + r * 0.6, y + 2.2, Math.max(2, w - r * 1.2), 2.6, 1.3, '#fff', ' opacity=".28"'));
+  return icR(x, y + d, w, h, r, s) + icR(x, y, w, h, r, f);
 }
 function icDisc(cx, cy, r, c, d) { return icC(cx, cy + d, r, c === 'paper' ? '.ps' : c.s) + icC(cx, cy, r, c === 'paper' ? '.p' : c.f); }
 function icT(x, y, t, size, fill, weight) {
@@ -1868,8 +1865,8 @@ function icT(x, y, t, size, fill, weight) {
     (fill.charAt(0) === '.' ? ' class="' + fill.slice(1) + '"' : ' fill="' + fill + '"') + '>' + t + '</text>';
 }
 function icPerson(cx, top, c) {        /* a person seen from the front: head and shoulders */
-  return icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.s, ' transform="translate(0 2.5)"') +
-    icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.f) + icDisc(cx, top + 6.5, 6, c, 2);
+  return icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.s, ' transform="translate(0 3)"') +
+    icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.f) + icDisc(cx, top + 6.5, 6, c, 3);
 }
 /* 3.10.0 the chapter icons, redrawn to one palette (built and measured in the icon audit): V = the course violet is the body,
    G = gold marks the ONE thing the chapter asks about (the answer, the odd one, the missing term), paper does the rest.
@@ -1882,24 +1879,20 @@ var ICONS = (function () {
   function arrowR(x, y, len, cls) {
     return icP('M' + x + ' ' + y + 'h' + len + 'm-3.5-3.8 3.8 3.8-3.8 3.8', 'none', ' class="' + (cls || 'pe-s') + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"');
   }
-  /* a ring of the Venn diagram: its side, then its face */
-  function ring(cx, cy) {
-    return icC(cx, cy + 3, 16.5, 'none', ' stroke="' + V.s + '" stroke-width="5"') + icC(cx, cy, 16.5, 'none', ' stroke="' + V.f + '" stroke-width="5"');
-  }
   return {
     /* English alphabet — the toy blocks A B C: A and B violet, the C on top gold */
     ab: function () {
       return icBlk(5, 31, 24, 24, 5, V, 5) + icT(17, 43, 'A', 16, '#fff') +
         icBlk(35, 31, 24, 24, 5, V, 5) + icT(47, 43, 'B', 16, '#fff') +
-        '<g transform="rotate(-8 32 19)">' + icBlk(20, 6, 24, 24, 5, G, 5) + icT(32, 18, 'C', 16, GI) + '</g>';
+        '<g transform="translate(0 5)"><g transform="rotate(-8 32 19)">' + icR(20, 6, 24, 24, 5, G.s) + '</g></g>' +
+        '<g transform="rotate(-8 32 19)">' + icR(20, 6, 24, 24, 5, G.f) + icT(32, 18, 'C', 16, GI) + '</g>';
     },
     /* Classification — three alike, the odd one gold */
     cl: function () {
       return icDisc(17, 18, 10, V, 3.5) + icDisc(45, 18, 10, V, 3.5) + icDisc(17, 45, 10, V, 3.5) +
-        '<ellipse cx="45" cy="57" rx="11" ry="2.6" fill="#000" opacity=".16"/>' +
         icP('M45 30.5L57.5 51.5H32.5Z', G.s, ' transform="translate(0 3.5)" stroke="' + G.s + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M45 30.5L57.5 51.5H32.5Z', G.f, ' stroke="' + G.f + '" stroke-width="3" stroke-linejoin="round"') +
-        icP('M56 27l3-3M59.5 33h4M51 24.5l.5-4', 'none', ' class="pe-s" stroke-width="2.6" stroke-linecap="round"');
+        icP('M56 27l3-3M58.5 33h3.5M51 24.5l.5-4', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"');
     },
     /* Missing number — the 3 x 3 number table of the paper (2 3 5 / 4 1 5 / 6 2 ?), the missing cell gold */
     mn: function () {
@@ -1907,33 +1900,32 @@ var ICONS = (function () {
       for (r = 0; r < 3; r++) for (c = 0; c < 3; c++) {
         x = 6 + c * 18; y = 5 + r * 18;
         if (r === 2 && c === 2) continue;
-        o += icBlk(x, y, 15, 15, 4, V, 3) + icT(x + 7.5, y + 7.5, d[r][c], 9.5, '#fff');
+        o += icBlk(x, y, 15, 15, 4, V, 3) + icT(x + 7.5, y + 7.5, d[r][c], 11, '#fff');
       }
       return o + icBlk(40, 39, 19, 19, 5, G, 3.5) + icT(49.5, 48.5, '?', 14, GI);
     },
-    /* Analogy (6 : 36 :: 9 : ?) — a balanced scale, one pair on each pan; the answer cube gold */
+    /* Analogy — a balanced scale, small : big on one pan, small : ? on the other ("the same relation on both sides", for
+       number, letter and word analogies alike); the answer gold. No digits: they were 5 px at 40 px */
     an: function () {
-      var pan = function (x) { var d = 'M' + x + ' 33h28c0 5-6 8.5-14 8.5S' + x + ' 38 ' + x + ' 33z'; return icP(d, V.s, ' transform="translate(0 2.5)"') + icP(d, V.f); };
+      var pan = function (x) { var d = 'M' + x + ' 33h28c0 5-6 8.5-14 8.5S' + x + ' 38 ' + x + ' 33z'; return icP(d, V.s, ' transform="translate(0 3)"') + icP(d, V.f); };
       return icR(29, 42, 6, 12, 2, V.s) + icBlk(19, 53, 26, 5, 2.5, V, 3) +
-        icBlk(10, 39, 44, 5.5, 2.75, V, 2.5) + icDisc(32, 41.7, 3.6, 'paper', 1.5) +
+        icBlk(10, 39, 44, 5.5, 2.75, V, 3) + icDisc(32, 41.7, 3.6, 'paper', 1.5) +
         pan(2) + pan(34) +
-        icBlk(4, 19, 11, 12, 2.5, 'paper', 2) + icT(9.5, 25, '3', 9, V.s) +
-        icBlk(16, 14, 13, 17, 3, 'paper', 2) + icT(22.5, 22.5, '9', 11, V.s) +
-        icBlk(36, 19, 11, 12, 2.5, 'paper', 2) + icT(41.5, 25, '4', 9, V.s) +
-        icBlk(48, 14, 13, 17, 3, G, 2) + icT(54.5, 22.5, '?', 12, GI);
+        icBlk(5, 20, 10, 10, 2.5, 'paper', 3) + icBlk(17, 10, 13, 20, 3, 'paper', 3) +
+        icBlk(37, 20, 10, 10, 2.5, 'paper', 3) + icBlk(49, 10, 13, 20, 3, G, 3) + icT(55.5, 20, '?', 15, GI);
     },
     /* Series — steps that grow; the arrow is theme grey, so gold marks only the next term */
     se: function () {
       return icBlk(4, 41, 12, 13, 3.5, V, 4) + icBlk(18.5, 32, 12, 22, 3.5, V, 4) + icBlk(33, 23, 12, 31, 3.5, V, 4) +
-        icR(48.5, 13.5, 11, 43.5, 3.5, 'none', ' stroke="' + V.l + '" stroke-width="3" stroke-dasharray="4.5 3.5"') +
-        icDisc(54, 33, 7, G, 2.5) + icT(54, 33, '?', 10.5, GI) +
+        icR(48.5, 13.5, 11, 43.5, 3.5, 'none', ' class="pe-s" stroke-width="3" stroke-dasharray="4.5 3.5"') +
+        icDisc(54, 33, 7, G, 3) + icT(54, 33, '?', 10.5, GI) +
         icP('M7 30L36 9', 'none', ' class="pe-s" stroke-width="3.2" stroke-linecap="round"') + icP('M29.5 8.5L36.5 8.5L34 15', 'none', ' class="pe-s" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"');
     },
     /* Coding-decoding — A (paper) turns into its code D (gold), with the key */
     cd: function () {
       return icBlk(4, 5, 21, 21, 5, 'paper', 4) + icT(14.5, 15.5, 'A', 14, V.s) + arrowR(28, 15.5, 7) +
         icBlk(39, 5, 21, 21, 5, G, 4) + icT(49.5, 15.5, 'D', 14, GI) +
-        icC(17, 46.5, 10.5, V.s) + icR(24, 43, 34, 9, 3, V.s) + icR(46, 47, 5, 10, 1.5, V.s) + icR(53, 47, 5, 8, 1.5, V.s) +
+        icC(17, 47, 10.5, V.s) + icR(24, 43.5, 34, 9, 3, V.s) + icR(46, 48, 5, 9.5, 1.5, V.s) + icR(53, 48, 5, 7.5, 1.5, V.s) +
         icC(17, 44, 10.5, V.f) + icR(24, 40.5, 34, 9, 3, V.f) + icR(46, 45, 5, 9.5, 1.5, V.f) + icR(53, 45, 5, 7.5, 1.5, V.f) +
         icC(16, 44, 4, V.d);
     },
@@ -1963,7 +1955,7 @@ var ICONS = (function () {
       o += icR(6, 9, 7, 38, 2, V.s) + icR(51, 9, 7, 38, 2, V.s) + icR(7.5, 9, 5.5, 38, 2, V.f) + icR(51, 9, 5.5, 38, 2, V.f) +
         icBlk(4, 5, 56, 7, 3, V, 3.5) + icBlk(4, 44, 56, 7, 3, V, 3.5);
       for (i = 0; i < 3; i++) for (k = 0; k < 4; k++)
-        o += icC(rows[i][k], ry[i] + 1.5, 3.7, i === 1 ? G.s : V.s) + icC(rows[i][k], ry[i], 3.7, i === 1 ? G.f : V.l);
+        o += icC(rows[i][k], ry[i] + 1.5, 3.7, i === 1 ? G.s : V.s) + icC(rows[i][k], ry[i], 3.7, i === 1 ? G.f : V.f);
       return o;
     },
     /* Direction sense — the compass on a four-point rose (so its outline is not a plain disc); the north needle gold */
@@ -1971,8 +1963,7 @@ var ICONS = (function () {
       var rose = 'M32 1L38.5 23.5L61 30L38.5 36.5L32 59L25.5 36.5L3 30L25.5 23.5Z';
       return icP(rose, V.d, ' transform="translate(0 3)"') + icP(rose, V.s) +
         icDisc(32, 30, 21, V, 3.5) + icC(32, 30, 15.5, '.p') +
-        icP('M32 16.5l5 13.5h-10z', G.s, ' transform="translate(0 1.5)"') + icP('M32 16.5l5 13.5h-10z', G.f) + icP('M32 43.5l5-13.5h-10z', '.ps') + icC(32, 30, 3, V.s) +
-        icT(32, 12.2, 'N', 6.5, '#fff');
+        icP('M32 16.5l5 13.5h-10z', G.s, ' transform="translate(0 1.5)"') + icP('M32 16.5l5 13.5h-10z', G.f) + icP('M32 43.5l5-13.5h-10z', '.ps') + icC(32, 30, 3, V.s);
     },
     /* Dictionary order — an open book from A to Z; the bookmark gold */
     dc: function () {
@@ -1980,7 +1971,7 @@ var ICONS = (function () {
         icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.f) +
         icP('M8 15q12-3 22 2v31q-10-4-22-1z', '.p') + icP('M56 15q-12-3-22 2v31q10-4 22-1z', '.p') +
         icT(18.5, 29, 'A', 14, V.s) + icT(45.5, 29, 'Z', 14, V.s) +
-        icP('M23 41h5M36 41h5', 'none', ' stroke="' + V.l + '" stroke-width="2.4" stroke-linecap="round"') +
+        icP('M23 41h5M36 41h5', 'none', ' stroke="' + V.s + '" stroke-width="3" stroke-linecap="round"') +
         icP('M39 8h7v17l-3.5-3-3.5 3z', G.f, ' stroke="' + G.s + '" stroke-width="1.2" stroke-linejoin="round"') + icR(39, 8, 7, 2, .5, G.s);
     },
     /* Logical word sequence — seed, sprout, tree on one bank, numbered 1 2 3 (the answers are orders like 2, 5, 4, 1, 3);
@@ -1989,10 +1980,11 @@ var ICONS = (function () {
       var bank = 'M3 45h58v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z', arc = 'M6 27C9 13 22 6 36 8', head = 'M30 2.5L36.5 8L30 13.5';
       return icP(bank, V.s, ' transform="translate(0 3)"') + icP(bank, V.f) +
         '<ellipse cx="12" cy="42.4" rx="5.2" ry="3.8" class="ps"/><ellipse cx="12" cy="41" rx="5.2" ry="3.8" class="p"/>' +
-        icP('M31 45V34', 'none', ' stroke="' + V.l + '" stroke-width="3.6" stroke-linecap="round"') +
-        icP('M31 37c-1-5-5-8-10-7 0 5 4 8 10 7z', V.l) + icP('M31 35c1-5 5-8 10-7 0 5-4 8-10 7z', V.l) +
-        icR(48, 29, 6, 16, 3, V.l) + icDisc(51, 23, 11, V, 3) +
-        icT(12, 51.5, '1', 10.5, '#fff') + icT(31, 51.5, '2', 10.5, '#fff') + icT(51, 51.5, '3', 10.5, '#fff') +
+        icP('M31 45V34', 'none', ' stroke="' + V.f + '" stroke-width="3.6" stroke-linecap="round"') +
+        icP('M31 37c-1-5-5-8-10-7 0 5 4 8 10 7z', V.f) + icP('M31 35c1-5 5-8 10-7 0 5-4 8-10 7z', V.f) +
+        icR(49, 28, 6, 17, 3, V.f) + icC(47.5, 27.5, 6.5, V.s) + icC(56.5, 27.5, 6.5, V.s) + icC(52, 19.5, 8, V.s) +
+        icC(47.5, 25, 6.5, V.f) + icC(56.5, 25, 6.5, V.f) + icC(52, 17, 8, V.f) +
+        icT(12, 51.5, '1', 10.5, '#fff') + icT(31, 51.5, '2', 10.5, '#fff') + icT(52, 51.5, '3', 10.5, '#fff') +
         icP(arc, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" transform="translate(0 1.8)"') +
         icP(head, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.8)"') +
         icP(arc, 'none', ' stroke="' + G.f + '" stroke-width="4.4" stroke-linecap="round"') +
@@ -2007,32 +1999,44 @@ var ICONS = (function () {
       return o + icC(36.5, 40.8, 6.4, 'none', ' stroke="' + G.s + '" stroke-width="3.2"') + icC(36.5, 39.3, 6.4, 'none', ' stroke="' + G.f + '" stroke-width="3.2"') + icC(36.5, 39.3, 2.6, G.s) +
         icR(18, 4, 5, 11, 2.5, '.pe-s') + icR(41, 4, 5, 11, 2.5, '.pe-s');
     },
-    /* Venn diagram — three thick violet rings; the part common to all three is gold, drawn over them so it shows even at 40 px */
+    /* Venn diagram — three thick violet rings; the part common to all three is gold. It is drawn between the rings' sides and
+       their faces, so the rings run round it (3.10.0: drawn on top it read as a shield); the rings overlap a lot to keep it big */
     vn: function () {
-      var g = 'M40.5 20.72A16.5 16.5 0 0 1 32 35.43A16.5 16.5 0 0 1 23.5 20.72A16.5 16.5 0 0 1 40.5 20.72Z';
-      return ring(24, 21) + ring(40, 21) + ring(32, 34.86) +
-        icP(g, G.s, ' transform="translate(0 2)"') + icP(g, G.f, ' stroke="' + G.f + '" stroke-width="1.5" stroke-linejoin="round"');
+      var cs = [[26, 22], [38, 22], [32, 32.39]], o = '', i;
+      var g = 'M21.23 19.24A17 17 0 0 1 42.77 19.24A17 17 0 0 1 32 37.91A17 17 0 0 1 21.23 19.24Z';
+      for (i = 0; i < 3; i++) o += icC(cs[i][0], cs[i][1] + 3, 17, 'none', ' stroke="' + V.s + '" stroke-width="4.5"');
+      o += icP(g, G.s, ' transform="translate(0 2)"') + icP(g, G.f);
+      for (i = 0; i < 3; i++) o += icC(cs[i][0], cs[i][1], 17, 'none', ' stroke="' + V.f + '" stroke-width="4.5"');
+      return o;
     },
     /* Word formation — letter tiles coming together; the one still flying in gold */
     wf: function () {
       return icBlk(3, 38, 17, 17, 4, V, 3.5) + icT(11.5, 46.5, 'W', 11, '#fff') +
         icBlk(23.5, 38, 17, 17, 4, V, 3.5) + icT(32, 46.5, 'O', 11, '#fff') +
         icBlk(44, 38, 17, 17, 4, V, 3.5) + icT(52.5, 46.5, 'R', 11, '#fff') +
-        '<g transform="rotate(14 44 15)">' + icBlk(35, 6, 18, 18, 4.5, G, 3.5) + icT(44, 15, 'D', 12, GI) + '</g>' +
-        icP('M16 22h10M12 28h8', 'none', ' class="pe-s" stroke-width="2.8" stroke-linecap="round"');
+        '<g transform="translate(0 3.5)"><g transform="rotate(14 44 15)">' + icR(35, 6, 18, 18, 4.5, G.s) + '</g></g>' +
+        '<g transform="rotate(14 44 15)">' + icR(35, 6, 18, 18, 4.5, G.f) + icT(44, 15, 'D', 12, GI) + '</g>' +
+        icP('M16 22h10M12 28h8', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"');
     },
-    /* Statements and conclusions — what is said (a paper bubble, two statement lines) and what follows (a gold disc, "therefore") */
+    /* Statements and conclusions — what is said (a violet bubble, two statement lines) and what follows: the "therefore" sign,
+       three gold dots */
     sc: function () {
-      var b = 'M10 5h36a7 7 0 0 1 7 7v20a7 7 0 0 1-7 7H25l-9 8v-8h-6a7 7 0 0 1-7-7V12a7 7 0 0 1 7-7z';
-      return icP(b, '.ps', ' transform="translate(0 3.5)"') + icP(b, '.p') +
-        icR(11, 13, 34, 5, 2.5, V.f) + icR(11, 24, 24, 5, 2.5, V.f) +
-        icDisc(47, 46, 13, G, 3.5) + icC(47, 40, 3.3, V.d) + icC(41.5, 50, 3.3, V.d) + icC(52.5, 50, 3.3, V.d);
+      var b = 'M10 3h34a7 7 0 0 1 7 7v19a7 7 0 0 1-7 7H25l-9 8v-8h-6a7 7 0 0 1-7-7V10a7 7 0 0 1 7-7z';
+      return icP(b, V.s, ' transform="translate(0 3.5)"') + icP(b, V.f) +
+        icR(10.5, 11, 33, 5, 2.5, '.p') + icR(10.5, 21.5, 22, 5, 2.5, '.p') +
+        icDisc(48.5, 42.5, 5.2, G, 3) + icDisc(41.5, 54, 5.2, G, 3) + icDisc(55.5, 54, 5.2, G, 3);
     },
-    /* Seating arrangement — a violet table with six seats ("six friends A-F round a table"); the seat asked about gold */
+    /* Seating arrangement — four friends in a row on a bench, seen from behind (most of its questions are "in a row, facing
+       north"); the one asked about gold */
     st: function () {
-      var o = '', i, seats = [[26.5, 2.5], [45.6, 13.5], [45.6, 35.5], [26.5, 46.5], [7.4, 35.5], [7.4, 13.5]];
-      for (i = 0; i < 6; i++) o += icBlk(seats[i][0], seats[i][1], 11, 11, 3.5, i === 1 ? G : 'paper', 3);
-      return o + icDisc(32, 30, 14.5, V, 4) + icC(32, 30, 9, V.l, ' opacity=".35"');
+      var o = '', i, x, c, b, xs = [9.5, 24.5, 39.5, 54.5];
+      o += icR(8, 49, 4.5, 10, 1.5, V.s) + icR(51.5, 49, 4.5, 10, 1.5, V.s) + icBlk(3, 43, 58, 7, 3, 'paper', 3.5);
+      for (i = 0; i < 4; i++) {
+        x = xs[i]; c = i === 2 ? G : V;
+        b = 'M' + (x - 6.5) + ' 44v-8a6.5 6.5 0 0 1 13 0v8z';
+        o += icP(b, c.s, ' transform="translate(0 3)"') + icP(b, c.f) + icDisc(x, 21, 5.5, c, 3);
+      }
+      return o;
     },
     /* Figure series — three figure cards down a staircase, the arrow turning 45 degrees each step; the next card gold */
     fs: function () {
@@ -2040,21 +2044,22 @@ var ICONS = (function () {
       var card = function (x, y, rot, c) {
         return icBlk(x, y, 21, 21, 5, c, 3.5) + '<g transform="translate(' + (x + 10.5) + ' ' + (y + 10.5) + ') rotate(' + rot + ')">' + icP(arrow, c === G ? V.s : V.f) + '</g>';
       };
-      return card(2, 3, 0, 'paper') + card(21.5, 19.5, 45, 'paper') + card(41, 36, 90, G) +
-        icP('M26 11h3.5M45.5 27.5h3.5', 'none', ' class="pe-s" stroke-width="2.6" stroke-linecap="round" stroke-dasharray=".1 4.5"');
+      return card(2, 3, 0, 'paper') + card(21.5, 19.5, 45, 'paper') + card(41, 36, 90, G);
     },
-    /* Figure analogy — A -> B on top, C -> ? below, on two staggered rails; the answer figure gold */
+    /* Figure analogy — A : B on the top rail, C : ? below; each rail is a pair, the answer figure gold. Big figures, no arrows:
+       they must read at 40 px */
     fa: function () {
-      return icBlk(3, 6, 44, 20, 7, V, 4) + icP('M7.5 21a7 7 0 0 1 14 0z', '#fff') + arrowR(23.5, 16.5, 7, 'pe-f') + icP('M33 11a7 7 0 0 0 14 0z', '#fff', ' transform="translate(-1.5 2)"') +
-        icBlk(17, 34, 44, 20, 7, V, 4) + icP('M22 49.5l6.5-11 6.5 11z', '#fff', ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round"') + arrowR(37.5, 44, 7, 'pe-f') +
-        icP('M47.5 38.5h13l-6.5 11z', G.s, ' transform="translate(0 2)" stroke="' + G.s + '" stroke-width="1.5" stroke-linejoin="round"') + icP('M47.5 38.5h13l-6.5 11z', G.f, ' stroke="' + G.f + '" stroke-width="1.5" stroke-linejoin="round"');
+      return icBlk(2, 4, 46, 24, 7, V, 4) +
+        icP('M6.5 23L14.5 9.5 22.5 23z', '#fff', ' stroke="#fff" stroke-width="2" stroke-linejoin="round"') +
+        icP('M27.5 9.5h16l-8 13.5z', '#fff', ' stroke="#fff" stroke-width="2" stroke-linejoin="round"') +
+        icBlk(16, 34, 46, 24, 7, V, 4) + icP('M20.5 50.5a8.5 8.5 0 0 1 17 0z', '#fff') +
+        icP('M41.5 41.5a8.5 8.5 0 0 0 17 0z', G.s, ' transform="translate(0 2)"') + icP('M41.5 41.5a8.5 8.5 0 0 0 17 0z', G.f);
     },
     /* Counting figures — how many triangles hide in one? The hidden one gold */
     cf: function () {
       return icP('M32 6L60 54H4z', V.s, ' transform="translate(0 4)" stroke="' + V.s + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M32 6L60 54H4z', V.f, ' stroke="' + V.f + '" stroke-width="3" stroke-linejoin="round"') +
-        icP('M18 30h28L32 54z', G.f) + icP('M18 30h28L32 54z', 'none', ' stroke="#fff" stroke-width="2.4" stroke-linejoin="round"') +
-        icP('M18 30L4 54M46 30l14 24', 'none', ' stroke="#fff" stroke-width="2.4" opacity=".7"');
+        icP('M18 30h28L32 54z', G.f) + icP('M18 30h28L32 54z', 'none', ' stroke="#fff" stroke-width="3.2" stroke-linejoin="round"');
     },
     /* Mirror and water image — a bold F, a silver mirror, and its reflection in gold (the image is the answer) */
     mi: function () {
@@ -2068,7 +2073,8 @@ var ICONS = (function () {
       var base = 'M5 18h20v5.5a4.5 4.5 0 0 0 0 9V38h5.5a4.5 4.5 0 0 1 9 0H45v20H11a6 6 0 0 1-6-6z';
       var piece = 'M25 18h14a6 6 0 0 1 6 6v14h-5.5a4.5 4.5 0 0 0-9 0H25v-5.5a4.5 4.5 0 0 1 0-9z';
       return icP(base, V.s, ' transform="translate(0 4)"') + icP(base, V.f) +
-        '<g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.s, ' transform="translate(0 3.5)"') + icP(piece, G.f) + '</g>';
+        '<g transform="translate(0 3.5)"><g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.s) + '</g></g>' +
+        '<g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.f) + '</g>';
     }
   };
 })();
@@ -2093,7 +2099,10 @@ var SUBJ_ICONS = {
   sst: function () {
     return icDisc(32, 26, 20, IC.violet, 4) +
       icP('M19 17c5-5 12-4 14 1s-3 6-1 10-4 8-8 5-7-9-5-16z', '.p') + icP('M40 30c4-2 9 0 9 5s-5 9-8 8-4-10-1-13z', '.p') +
-      icC(25, 16, 4, '#fff', ' opacity=".35"') + icR(29, 49, 6, 6, 1, IC.yellow.s) + icBlk(18, 54, 28, 6, 3, IC.yellow, 2.5);
+      icC(25, 16, 4, '#fff', ' opacity=".35"') +
+      icP('M26 29s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z', IC.yellow.s, ' transform="translate(0 1.5)"') +
+      icP('M26 29s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z', IC.yellow.f) + icC(26, 18.8, 2.3, '#7A4A00') +
+      icR(29, 49, 6, 6, 1, IC.violet.s) + icBlk(18, 54, 28, 6, 3, IC.violet, 2.5);
   },
   /* Maths — the four signs: three violet tiles, the + gold */
   math: function () {
@@ -6424,7 +6433,7 @@ ACTIONS['adm-meta'] = function () {
 
 function boot() {
   elPhone = $('phone'); elScreens = $('screens'); elNav = $('nav'); elModal = $('modal'); elToast = $('toast'); elBusy = $('busy');
-  elPhone.insertAdjacentHTML('afterbegin', ICON_DEFS);         // 3.9.0 the colours every icon is lit with, once for the page
+  elPhone.insertAdjacentHTML('afterbegin', ICON_DEFS);         // 3.9.0 the soft ground every icon stands on, once for the page
   elPhone.setAttribute('data-net', '0');
   try { if (window.history.state && window.history.state.iopetTrap) hist.armed = true; } catch (e) { hist.ok = false; }
   document.addEventListener('click', armBack, true);
