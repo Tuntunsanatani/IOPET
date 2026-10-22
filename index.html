@@ -26,7 +26,7 @@
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.9.0: calm neutrals; colour only where it means something (violet = progress, selection, the active tab; green = right / done;
      orange = streak and wrong — never red). The old names (--cream60, --pur-bg …) stay as aliases, so every rule keeps working. */
-  --bg:#0F0E1A;--bg-deep:#0A0913;--surface:#1A1830;--surface-2:#24213F;--surface-3:#2E2B4A;
+  --bg:#000000;--bg-deep:#000000;--surface:#1A1830;--surface-2:#24213F;--surface-3:#2E2B4A;
   --line:#2E2B4A;--line-2:#3B3760;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.12);
   --ink:#F3F2FA;--ink2:#AEABC6;--ink3:#9693B3;--ink-deco:#6C6987;
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -34,7 +34,7 @@
   --cta:#FFFFFF;--on-cta:#15132B;
   --flame:#FF8A33;--flame-soft:#3A2516;--flame-ink:#FFD2A8;--warn:#F5A04A;
   --good:#3BD07F;--good-soft:#13301F;--good-ink:#B9F0CF;
-  --haze:#2B2357;--haze-2:#142441;--hero-1:#2A2456;--hero-2:#1D2A52;--hero-3:#19324A;
+  --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:#2A2456;--hero-2:#1D2A52;--hero-3:#19324A;
   --chart:#3B3573;--track:rgba(255,255,255,.14);--glow:rgba(142,128,255,.28);
   --t-violet:#262150;--t-blue:#172744;--t-teal:#123432;--t-green:#14301F;--t-pink:#3A1A2B;--t-yellow:#362C14;--t-orange:#3A2516;
   --shadow-1:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3);
@@ -50,9 +50,9 @@
   --warn-bg:var(--t-yellow);--warn-line:#5C4A1F;--warn-ink:#FFE0A0;
   --info-bg:var(--t-blue);--info-line:#2A4470;--info-ink:#BCD7FF;
   --pur-bg:var(--primary-soft);--pur-line:#463F8A;
-  --nav:#1E1C36;--modal:var(--surface);--scrim:rgba(5,4,14,.66);--toast:#2A2556;--shadow:rgba(0,0,0,.5);
+  --nav:#000000;--nav-0:rgba(0,0,0,0);--flash:#FFFFFF;--flash-glow:rgba(255,255,255,.65);--lock:#B9B4D6;--lock-hi:#FFFFFF;--navsel:#2C2C2E;--pn:#1C1C1E;--pn-line:#2C2C2E;--pn-on:#211C47;--pn-on-line:#3B3478;--ripple:rgba(255,255,255,.16);--tap-line:#12A550;--tap-tint:rgba(18,165,80,.16);--tap-ring:rgba(18,165,80,.38);--modal:var(--surface);--scrim:rgba(5,4,14,.66);--toast:#2A2556;--shadow:rgba(0,0,0,.5);
   --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);
-  --bar:#2B2357;                    /* the phone's top bar (BAR in app.js, the same value) = the haze at the top of every screen */
+  --bar:#000000;                    /* the phone's top bar (BAR in app.js, the same value): 3.9.1 the dark look is pure black, bar included */
   --ic-p:#FFFFFF;--ic-ps:#C9C5DA;--ic-pes:#B3AECB;--ic-pef:#D8D4E6;--ic-pw:#3B2C24;--ic-pedge:transparent;
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;
   --font-display:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
@@ -78,7 +78,7 @@
   --purple-dark:#3D2BC2;
   --green:#11834A;--red:#B84A00;--blue:#1F58CC;--orange:#C25400;
   --ok-line:#B5E5CA;--bad-line:#FFCFA6;--warn-line:#F2DA9C;--warn-ink:#6E4A00;--info-line:#BCD3FB;--info-ink:#1F4AA8;--pur-line:#D4CCFF;
-  --nav:#FFFFFF;--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
+  --nav:#F7F7FB;--nav-0:rgba(247,247,251,0);--flash:#15132B;--flash-glow:rgba(21,19,43,.18);--lock:#15132B;--lock-hi:#8A7BFF;--navsel:#E5E5EA;--pn:#FFFFFF;--pn-line:#E6E5EC;--pn-on:#F2EFFF;--pn-on-line:#D6CEFF;--ripple:rgba(21,19,43,.09);--tap-line:#12A550;--tap-tint:rgba(18,165,80,.08);--tap-ring:rgba(18,165,80,.24);--scrim:rgba(21,19,43,.40);--toast:#15132B;--shadow:rgba(21,19,43,.14);
   --glow-a:rgba(91,69,245,.14);--glow-b:rgba(47,116,240,.12);--glow-c:rgba(255,122,26,.12);
   --bar:#E7E2FF;
   --ic-p:#FFFFFF;--ic-ps:#CFCADF;--ic-pes:#8F89A8;--ic-pef:#DAD6E7;--ic-pw:#FFF1E4;--ic-pedge:rgba(40,30,80,.12);
@@ -136,7 +136,7 @@ sub,sup{font-size:.72em;line-height:0}
 /* CHANGE #9: top padding 24px (28px on auth screens) — the fake status bar is gone (CHANGE #1) */
 .page{min-height:100%;padding:24px 24px 32px}
 .page.auth{padding-top:28px}
-.page.nav-pad{padding-bottom:124px}
+.page.nav-pad{padding-bottom:148px;padding-bottom:calc(148px + env(safe-area-inset-bottom))}
 .page>*+*{margin-top:12px}
 /* 3.9.0 every screen has the same ground: a soft lavender haze at the top that fades into the page colour */
 .bg-auth,.bg-dash,.bg-topics,.bg-progress,.bg-profile{background:var(--bg);background:radial-gradient(120% 48% at 50% -6%,var(--haze),transparent 62%),var(--bg)}
@@ -208,6 +208,7 @@ input[type=date]{color-scheme:inherit}
 .splash-foot{flex:none;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:11px;color:var(--cream60);letter-spacing:.6px}
 /* The opening screen always wears the diya's own dark colours, whatever the theme (3.7.1): the installed app opens on the same
    dark ground the phone shows while it starts it, and a light phone never flashes white before the diya */
+.phone.on-splash{--bg:#0F0E1A;--bar:#221C3E}                   /* 3.9.1 the splash's own ground and bar (SPLASH_BAR in app.js), round it too */
 .splash{--bg:#0F0E1A;--glow-a:rgba(124,92,255,.30);--ink:#FFF8E7;--ink2:rgba(255,248,231,.74);--cream60:rgba(255,248,231,.74);color:#FFF8E7;color-scheme:dark}
 
 /* ── AUTH ── */
@@ -534,16 +535,20 @@ input[type=date]{color-scheme:inherit}
 .policy .card-title{margin-bottom:2px}
 
 /* ── BOTTOM NAV (CHANGE #6: solid background, no backdrop-filter) ── */
-.bottom-nav{position:absolute;left:0;right:0;bottom:0;display:none;justify-content:center;padding-bottom:14px;z-index:40;pointer-events:none}
-.bottom-nav.show{display:flex}
-.nav-pill{display:flex;align-items:center;padding:6px;border-radius:var(--r-pill);background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow-nav);pointer-events:auto}
-.nav-item{display:block;min-width:64px;padding:7px 12px 6px;margin:0 1px;border-radius:var(--r-pill);text-align:center;color:var(--ink3)}
-.nav-item svg{display:block;width:24px;height:24px;margin:0 auto 1px}
-.nav-item.active{background:var(--primary-soft);color:var(--primary-ink)}
-[data-theme="light"] .nav-item.active{color:var(--primary)}
-.nav-lbl{display:block;font-size:13px;font-weight:600;line-height:1.2}
-/* what scrolls under the floating bar fades into the page instead of being cut by it */
-.bottom-nav:before{content:'';position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(rgba(0,0,0,0),var(--bg) 72%);pointer-events:none;z-index:-1}
+.bottom-nav{position:absolute;left:0;right:0;bottom:0;display:none;z-index:40;pointer-events:none}
+.bottom-nav.show{display:block}
+/* 3.9.1 the bar sits on the bottom edge, full width. No hard line on top: what scrolls under it fades into the bar over 28px —
+   soft, yet the bar still reads as its own strip. A fade, not a blur: a blur behind the bar would make cheap phones stutter while scrolling. */
+.bottom-nav:before{content:'';position:absolute;left:0;right:0;bottom:100%;height:28px;background:linear-gradient(var(--nav-0),var(--nav));pointer-events:none}
+.nav-pill{display:flex;align-items:stretch;width:100%;padding:12px 0 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--nav);pointer-events:auto}
+.nav-item{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;padding:2px 0 0;text-align:center;color:var(--ink3);border-radius:16px}
+.nav-ic{display:flex;align-items:center;justify-content:center;width:70px;height:40px;border-radius:20px;transition:background-color .15s}
+.nav-item svg{display:block;width:35px;height:35px}
+.nav-lbl{display:block;font-size:24px;font-weight:400;line-height:1.2;margin-top:8px}
+.nav-item.active{color:var(--ink)}
+.nav-item.active .nav-ic{background:var(--navsel);color:var(--ink)}
+.nav-item.active .nav-lbl{font-weight:700}
+.nav-item:active .nav-ic{background:var(--fill-2)}
 
 /* ── MODAL + TOAST (in-app, no browser confirm()/alert()) ── */
 .modal{position:absolute;top:0;right:0;bottom:0;left:0;display:none;align-items:flex-end;justify-content:center;background:var(--scrim);z-index:60}
@@ -565,7 +570,7 @@ input[type=date]{color-scheme:inherit}
 .m-list-item{font-size:13px;line-height:1.5;padding:9px 0;border-top:1px solid var(--line)}
 .m-list-item:first-child{border-top:0}
 .m-list-item b{display:block;font-size:13px}
-.toast{position:absolute;left:0;right:0;bottom:112px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
+.toast{position:absolute;left:0;right:0;bottom:132px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
 .toast.show{opacity:1;visibility:visible}
 .toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:14px;font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
 
@@ -578,7 +583,6 @@ input[type=date]{color-scheme:inherit}
 
 @media (max-width:340px){
   .page{padding-left:16px;padding-right:16px}
-  .nav-item{padding:7px 11px}
   .stat-grid{grid-template-columns:1fr 1fr}
   }
 /* ── FIGURES in questions (drawn by figHtml) ── lines and numbers take the colour of the text around them; a "?" is amber */
@@ -615,9 +619,6 @@ input[type=date]{color-scheme:inherit}
 .seg-btn:active{background:var(--fill-2)}
 .seg-btn.on:active{background:var(--surface)}
 .avatar-circle:active{transform:scale(.95)}
-.nav-item{transition:background-color .15s,color .15s}
-.nav-item:active{background:var(--fill)}
-.nav-item.active:active{background:var(--pur-line)}
 [data-theme="light"] .lg-t,[data-theme="light"] .lg-f{fill:#E08A00}
 
 /* ── CHAPTER ICONS (icons.js) ── paper-white parts follow the theme */
@@ -631,29 +632,33 @@ input[type=date]{color-scheme:inherit}
 .chi.dim{opacity:.5;filter:saturate(.35)}
 
 /* ── TOPICS of an exam in Marks (3.9.0): subject tiles, the course card, one row per chapter ── */
-.mat-hero{border-radius:var(--r-xl);padding:22px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--line)}
-[data-theme="light"] .mat-hero{border-color:rgba(255,255,255,.8)}
-.mh-kick{display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--ink2)}
-.mh-info{flex:none;width:28px;height:28px;margin:-6px 0 -6px 6px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink2);font-family:Georgia,serif;font-style:italic;font-size:13px;font-weight:700;line-height:25px;text-align:center;padding:0;position:relative}
-.mh-info:before{content:'';position:absolute;top:-8px;right:-8px;bottom:-8px;left:-8px}
+/* 3.9.1 the subject's own header: no panel — its name big, one faint line, the thin progress line with three medals */
+.mat-hero{position:relative;z-index:0;padding:4px 0 4px;transform-origin:50% 0}
+.mat-hero~*{position:relative;z-index:1}
+.mh-row{display:flex;align-items:center}
+.mh-art{flex:none;margin:0 -6px 0 12px}
+.mh-art .chi{width:96px;height:96px}
+.mh-kick{display:flex;align-items:center;font-size:14px;font-weight:600;color:var(--ink3);letter-spacing:.3px}
+.mh-title{font-size:34px;font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:2px}
+.mh-desc{font-size:15px;color:var(--ink2);line-height:1.45;margin-top:4px}
+.mh-info{flex:none;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink3);font-family:Georgia,serif;font-style:italic;font-size:12px;font-weight:700;line-height:21px;text-align:center;padding:0;position:relative}
+.mh-info:before{content:'';position:absolute;top:-10px;right:-10px;bottom:-10px;left:-10px}
 .mh-info:active{background:var(--fill-2)}
-.mh-title{font-size:28px;font-weight:700;line-height:1.3;margin-top:4px}
-.mh-sub{font-size:14px;color:var(--ink2);margin-top:2px}
-.mh-prog{display:flex;align-items:center;margin-top:16px}
-.mh-n{flex:none;font-size:14px;font-weight:600;color:var(--ink2);margin-left:12px}
-.mh-n b{font-size:16px;color:var(--ink)}
-.mh-bar{flex:1;min-width:24px;height:10px;border-radius:10px;background:var(--track);overflow:hidden}
-.mh-bar>i{display:block;height:100%;border-radius:10px;background:var(--primary)}
-.mh-steps{display:flex;align-items:center;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink2)}
-[data-theme="light"] .mh-steps{border-top-color:rgba(255,255,255,.9)}
-.mh-steps b{font-weight:600;color:var(--ink);margin-left:4px}
-.mh-steps .li{margin:0 2px 0 4px;color:var(--ink3)}
-.subj-row{display:flex;overflow-x:auto;margin:0 -24px 24px;padding:4px 24px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.lvl{margin-top:22px;padding:0 17px 0 0}
+.lvl-wrap{position:relative;height:40px}
+.lvl-track{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px;background:var(--fill-2);overflow:hidden}
+.lvl-track>i{display:block;height:100%;border-radius:4px;min-width:0;transition:width .4s ease-out}
+.lvl-medal{position:absolute;top:50%;width:30px;height:30px;margin:-18px 0 0 -15px;transition:transform .25s ease-out,filter .25s,opacity .25s}
+.lvl-medal .chi{display:block}
+.lvl-medal:not(.on){filter:grayscale(1);opacity:.45}
+.lvl-medal.on{transform:scale(1.2)}
+.calm .lvl-track>i,.calm .lvl-medal{transition:none}
+.subj-row{display:flex;overflow-x:auto;margin:0 -24px;padding:6px 24px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subj-row::-webkit-scrollbar{display:none}
-.subj{flex:none;width:76px;margin-right:12px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
-.subj-ico{position:relative;width:76px;height:76px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
+.subj{flex:none;width:112px;margin-right:16px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
+.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
 .subj.on .subj-ico{border:2px solid var(--primary);background:var(--primary-soft)}
-.subj-t{font-size:13px;font-weight:600;margin-top:8px;line-height:1.2;white-space:nowrap}
+.subj-t{font-size:14px;font-weight:600;margin-top:10px;line-height:1.2;white-space:nowrap}
 .subj.on .subj-t{color:var(--primary-ink);font-weight:700}
 [data-theme="light"] .subj.on .subj-t{color:var(--primary)}
 .subj.soon .subj-ico .chi{opacity:.45;filter:grayscale(.85)}
@@ -858,6 +863,79 @@ a.link{text-decoration:none}
 .pay-app svg{margin-right:6px}
 /* narrow phones (340 px wide or less): the side margin is 16px, so the full-width rows pull back by 16px only (last in the file: it must win) */
 @media (max-width:340px){.subj-row{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}}
+/* 3.9.1 HOME: before today's set the stats are quiet; after it, the practice card goes quiet and the stats are the reward */
+.home .stats{opacity:.55;transition:opacity .2s}
+.home.is-done .stats{opacity:1}
+.home.is-done .stats .mini{border-color:var(--primary);box-shadow:var(--shadow-2)}
+.done-card{text-align:center;background:var(--surface);box-shadow:none;border:1px dashed var(--line-2)}
+.done-tick{width:64px;height:64px;margin:0 auto;border-radius:50%;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center}
+.done-tick .li{stroke-width:3}
+.done-t{font-size:22px;font-weight:700;margin-top:12px}
+.done-s{font-size:14px;color:var(--ink2);margin-top:4px}
+.done-card .link{margin-top:6px}
+/* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
+.path{margin-top:26px}
+.path .ch-panel{position:relative;display:flex;align-items:center;min-height:116px;padding:20px 22px;margin-top:22px !important;border-radius:var(--r-lg);
+  background:var(--surface);border:1.5px solid var(--line);border-bottom-width:5px;box-shadow:none}
+.path .ch-panel:first-child{margin-top:0 !important}
+.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-25px;width:2px;height:22px;margin-left:-1px;background:var(--line-2)}
+.path .ch-panel{transition:transform .08s ease-out,border-color .08s,background-color .08s}
+.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(3px);border-bottom-width:2px;margin-bottom:3px;border-color:var(--tap-line);
+  background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
+.chp-ic{flex:none;width:80px;height:80px;margin-right:20px}
+.chp-ic .chi{display:block}
+.ch-en{display:block;font-size:15px;font-weight:600;color:var(--ink3);letter-spacing:.2px;line-height:1.3}
+.path .ch-name{font-size:21px;font-weight:700;line-height:1.35;margin-top:2px}
+.path .ch-prog{margin-top:10px}
+.path .ch-bar{height:6px}
+.path .k-active,.path .k-revise{border-color:var(--primary);border-width:2px;border-bottom-width:5px}
+.ch-badge{position:absolute;right:14px;bottom:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+.ch-badge .li{stroke-width:2.6}
+.ch-badge.done{background:var(--good);color:#fff}
+.path .k-locked,.path .k-soon{border-style:solid}
+.path .k-locked .chp-ic,.path .k-locked .topic-info,.path .k-soon .chp-ic,.path .k-soon .topic-info{opacity:.45}
+.path .k-locked .chp-ic .chi,.path .k-soon .chp-ic .chi{filter:grayscale(.7)}
+@media (max-width:370px){.chp-ic{width:68px;height:68px;margin-right:16px}.chp-ic .chi{width:68px;height:68px}.path .ch-panel{padding:20px}.path .ch-name{font-size:19px}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:30px}}
+/* 3.9.1 room to breathe: the subject tiles on top, then a wide gap — the subject's name and its line sit just above the middle of
+   the screen — then another gap, then the chapters, each with space around it */
+.subj-row:after{content:'';flex:none;width:8px}
+.page>.mat-hero{margin-top:72px}
+.mat-hero .lvl{margin-top:30px}
+.page>.path{margin-top:60px}
+.path .ch-panel{min-height:136px;padding:24px;margin-top:28px !important;background:var(--pn);border-color:var(--pn-line)}
+.path .ch-panel+.ch-panel:before{top:-31px;height:28px}
+.ch-badge.done{width:34px;height:34px;right:12px;bottom:10px;background:none;color:#12A550}
+.ch-badge .seal{display:block;width:34px;height:34px}
+/* 3.9.1 a tap on the bottom bar: the icon and the name brighten at once, then settle (not with "Reduce animations") */
+.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash .5s ease-out}
+@keyframes navflash{0%{color:var(--flash);filter:drop-shadow(0 0 6px var(--flash-glow))}100%{filter:drop-shadow(0 0 0 transparent)}}
+/* a locked chapter (3.9.1): the panel a little dimmer but fully readable; in its middle a flat, see-through lock (no ring, no 3D).
+   Every 2 s a light runs across the lock and it turns a little less see-through for that moment — the words behind stay readable.
+   A tap makes it shine at once. Only the lock moves; the panel stays still. */
+.path .k-locked .chp-ic,.path .k-locked .topic-info{opacity:.55}
+.path .k-locked .chp-ic .chi{filter:grayscale(.5)}
+.lock-mid{position:absolute;left:50%;top:50%;width:36px;height:40px;margin:-20px 0 0 -18px;pointer-events:none;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
+  background:var(--lock);background:linear-gradient(110deg,var(--lock) 38%,var(--lock-hi) 50%,var(--lock) 62%);background-size:320% 100%;background-position:100% 0;
+  opacity:.3;animation:lockshine 2s ease-in-out infinite}
+@keyframes lockshine{0%{background-position:100% 0;opacity:.3}18%{opacity:.55}36%{background-position:0 0;opacity:.3}100%{background-position:0 0;opacity:.3}}
+.ch-panel.tap .lock-mid{animation:lockshine .65s ease-in-out 1}
+.calm .nav-item.flash .nav-ic,.calm .nav-item.flash .nav-lbl,.calm .lock-mid,.calm .ch-panel.tap .lock-mid{animation:none}
+@media (prefers-reduced-motion:reduce){.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl,.lock-mid,.ch-panel.tap .lock-mid{animation:none}}
+/* 3.9.1 the mark of a touch: a soft ring that spreads and fades (grey on the bar, green on a chapter) */
+.rip-clip{position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.ripple{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ripple);transform:scale(0);animation:ripple .5s ease-out forwards}
+.ripple.go{width:120px;height:120px;margin:-60px 0 0 -60px;background:var(--tap-ring);animation-duration:.55s}
+@keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(2.6);opacity:0}}
+/* 3.9.1 purple belongs to the syllabus: only a chapter passed or on the go has a light purple ground (the one on the go also its
+   strong edge); a chapter not started and a locked one stay neutral */
+.path .k-done,.path .k-active,.path .k-revise{background:var(--pn-on)}
+.path .k-done{border-color:var(--pn-on-line)}
+.path .k-active,.path .k-revise{border-color:var(--primary)}
+/* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
+@media (max-width:370px){.nav-lbl{font-size:22px}}
+@media (max-width:340px){.nav-ic{width:60px;height:36px;border-radius:18px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:20px}}
 </style>
 </head>
 <body>
@@ -869,20 +947,20 @@ a.link{text-decoration:none}
     <nav class="bottom-nav" id="nav" aria-label="Main">
       <div class="nav-pill">
         <button class="nav-item" data-act="tab" data-tab="home">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
           <span class="nav-lbl">Home</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="topics">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></span>
           <span class="nav-lbl">Topics</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="progress">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></span>
           <span class="nav-lbl">Progress</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-          <span class="nav-lbl">Profile</span>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></span>
+          <span class="nav-lbl">You</span>
         </button>
       </div>
     </nav>
@@ -2040,6 +2118,14 @@ var STAT_ICONS = {
       '<ellipse cx="21" cy="17" rx="3" ry="5.5" transform="rotate(40 21 17)" fill="#fff" opacity=".5"/>';
   }
 };
+/* LEVEL MEDALS (3.9.1) — the three steps of a subject on its progress line: a gold medal on two ribbons (orange and green, the
+   colours of the line itself), its number in the middle. One that is not reached yet is shown grey by the style sheet. */
+function medalIcon(n, size, cls) {
+  var body = icP('M21 3h9l5.5 17h-9z', IC.orange.f) + icP('M43 3h-9l-5.5 17h9z', IC.green.f) +
+    icDisc(32, 38, 20, IC.yellow, 3) + icC(32, 38, 14.5, IC.yellow.s) + icC(32, 37.2, 13.6, IC.yellow.f) +
+    icT(32, 37.4, String(n), 19, '#7A4A00', 900) + '<ellipse cx="22.5" cy="28" rx="2.6" ry="5.2" transform="rotate(40 22.5 28)" fill="#fff" opacity=".55"/>';
+  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + body + '</svg>';
+}
 function statIcon(id, size, cls) {
   if (!has(STAT_ICONS, id)) return '';
   return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + STAT_ICONS[id]() + '</svg>';
@@ -2059,7 +2145,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.9.0',
+  VERSION: '3.9.1',
   SPLASH_MS: 800,                              // CHANGE #7 (was 2200)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
@@ -2087,17 +2173,17 @@ var CONFIG = {
    The stored positions u.quote / u.tip are still kept as they are, so older versions of the app read the same backup.) */
 var FAQ = [
   { q: 'Where is my data stored?', a: 'On this phone, so the app works without internet. If you have an account and have confirmed your email, a copy is also kept in the cloud (Google Firebase, Mumbai region) and only you can open it. Guest progress stays on this phone only.' },
-  { q: 'How do I move to a new phone?', a: 'Sign in on the new phone with the same email and password. Your XP, streak, topic progress and settings come back by themselves. This needs a confirmed email on the old phone first: see Profile → Account & backup.' },
+  { q: 'How do I move to a new phone?', a: 'Sign in on the new phone with the same email and password. Your XP, streak, topic progress and settings come back by themselves. This needs a confirmed email on the old phone first: see the You tab → Account & backup.' },
   { q: 'How does the streak work?', a: 'Answer at least one question on a day and that day counts. Practice on consecutive days and the streak grows. If you miss a full day, it starts again from 1 the next time you practice.' },
   { q: 'How are questions chosen?', a: 'Every session first brings back questions you got wrong, then questions you have not seen, and finally ones you have already mastered for revision.' },
   { q: 'What does “mastered” mean?', a: 'A question is mastered when your most recent answer to it was correct. Topic progress is mastered questions divided by total questions.' },
   { q: 'How is XP calculated?', a: 'A correct answer gives 10 XP (easy), 15 XP (medium) or 20 XP (hard). Re-answering a question you have already mastered gives 2 XP. Every 200 XP is one level.' },
-  { q: 'How do I change my course?', a: 'Open Profile → Course, or tap the course name at the top of Topics. Choose another exam or class: the topics change at once. Everything you did in the old course is kept and is there again if you switch back.' },
+  { q: 'How do I change my course?', a: 'Open the You tab → Course, or tap the course name at the top of Topics. Choose another exam or class: the topics change at once. Everything you did in the old course is kept and is there again if you switch back.' },
   { q: 'Why does a course say “Coming soon”?', a: 'Its questions are still being written and checked. A course opens by itself, with an app update, as soon as its first chapter is ready.' },
   { q: 'Why is a topic locked?', a: 'Some topics open only after you master a set share of an earlier topic. Tap the locked topic to see exactly what is needed.' },
   { q: 'Does the app work offline?', a: 'Yes. Practice, progress and settings all work without internet. You need internet only to sign in, to create an account and to back up. Anything you do offline is backed up the next time you are online.' },
   { q: 'I forgot my password', a: 'Tap “Forgot password?” on the sign-in screen and enter your email. A link is sent to that inbox; open it and choose a new password. Only someone who can open your email can do this, so keep your email account safe. Nobody, including the IOPET team, can read your password.' },
-  { q: 'How do I delete my account?', a: 'Profile → Account & backup → Delete account. You are asked for your password, then your login, your cloud backup and the data on this phone are removed for ever.' }
+  { q: 'How do I delete my account?', a: 'You tab → Account & backup → Delete account. You are asked for your password, then your login, your cloud backup and the data on this phone are removed for ever.' }
 ];
 
 /* Achievements — each unlocks from real stats. val(u) is the current value, goal is the target. */
@@ -2763,6 +2849,10 @@ function applyTheme(s) {
     meta = document.querySelector('meta[name="theme-color"]'), bar = on ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th];
   if (root.getAttribute('data-theme') !== th) root.setAttribute('data-theme', th);
   if (meta && meta.getAttribute('content') !== bar) meta.setAttribute('content', bar);      // the colour of the phone's top bar
+  /* 3.9.1 the dark look is pure black, the splash keeps its own ground: while it shows, the phone takes the splash's ground and bar
+     colour, so the top fade comes out of the splash's bar (no black band under it) and nothing black shows round it */
+  var ph = document.getElementById('phone');
+  if (ph && ph.classList.contains('on-splash') !== on) { if (on) ph.classList.add('on-splash'); else ph.classList.remove('on-splash'); }
 }
 var SPLASH_BAR = '#221C3E';                                        // the top edge of the splash
 /* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
@@ -2772,7 +2862,7 @@ var SPLASH_BAR = '#221C3E';                                        // the top ed
    colour, its top bar included: the manifest's theme_color is its background_color (3.7.3).
    On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
    the frame, not the app: there it keeps the plain ground colours it always had. */
-var BAR = { dark: '#2B2357', light: '#E7E2FF' }, BAR_FRAMED = { dark: '#0A0913', light: '#EDEDF4' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
+var BAR = { dark: '#000000', light: '#E7E2FF' }, BAR_FRAMED = { dark: '#000000', light: '#EDEDF4' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
 function framed() {
   try { if (!frameMq && window.matchMedia) frameMq = window.matchMedia(FRAME_MQ); } catch (e) { frameMq = null; }
   return !!(frameMq && frameMq.matches);
@@ -2946,6 +3036,7 @@ var HAPTIC = {
   tap: 10,
   ok: [16, 70, 28],
   bad: [45, 55, 45],
+  no: [28, 40, 28],                 // 3.9.1 a locked chapter: two light knocks — it is there, it does not open
   done: [16, 70, 24, 70, 40],
   win: [22, 110, 14, 110, 14, 110, 14, 300, 75, 210, 40]
 };
@@ -3834,7 +3925,7 @@ SCREENS.welcome = function () {
 };
 
 /* ── COURSE — "what are you studying for?" Shown once after the first sign-in (p.must: there is no way round it),
-   and from Profile or Topics whenever the student wants to change. One screen for every step: p.at says which.
+   and from the You tab or Topics whenever the student wants to change. One screen for every step: p.at says which.
    A choice without content is shown with "Coming soon" and cannot be opened. ── */
 function courseRow(c, cur, big) {
   var open = c.group || courseOpen(c.id), mine = !c.group && cur && (cur === c.id || cur.indexOf(c.id + '-') === 0), right, sub = esc(c.sub);
@@ -3848,7 +3939,7 @@ function courseRow(c, cur, big) {
 SCREENS.course = function (p) {
   var u = user, at = p.at && courseStep(p.at) ? p.at : '', list = courseChoices(at), must = !!p.must, cur = courseOf(u), t, html, on, off;
   if (!at) {
-    html = must ? '<div class="page bg-auth auth">' + authHead('Choose your course', 'What are you studying for? You can change it later in Profile.')
+    html = must ? '<div class="page bg-auth auth">' + authHead('Choose your course', 'What are you studying for? You can change it later in the You tab.')
                 : '<div class="page bg-profile">' + subHead('Course') + '<div class="sub">' + (cur ? 'Now: <b class="em">' + esc(courseName(cur)) + '</b>. ' : '') + 'Your progress in every course is kept when you switch.</div>';
     if (must && u.course && !cur) html += '<div class="alert">' + (courseName(u.course) ? 'Your course, ' + esc(courseName(u.course)) + ', is' : 'Your course is') +
       ' not in this version of the app. Update the app to go on with it. ' +
@@ -3906,29 +3997,23 @@ function markOpens(u, t) {
   done = plan.chapters.filter(function (x) { var m = x.id !== t.ch && markTopic(mine, x.id, t.mark); return m && markPassed(u, m); }).length;
   return done >= SPACING ? 'Unlocks M' + nx.mark : 'M' + nx.mark + ' after ' + plural(SPACING - done, 'more chapter');
 }
+/* 3.9.1 "today's practice" is ONE whole set: done once a set was finished today (the sessions log keeps only finished sets) */
+function setsToday(u) { var tk = todayKey(); return u.sessions.filter(function (r) { return dayKey(new Date(r.t)) === tk; }).length; }
 function heroCard(u, t) {
-  var st = topicStats(u, t), n = setSize(u, t), c = t.mark ? chapterOf(t) : null, need, done, opens, html, art;
+  var st = topicStats(u, t), n = setSize(u, t), c = t.mark ? chapterOf(t) : null, art;
   art = t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 104) : '<span class="hero-emoji">' + esc(t.emoji || '') + '</span>';
-  html = '<div class="hero"><div class="hero-top"><div class="hero-txt">' +
-    '<div class="chips">' + (t.mark ? '<span class="cp lvl">M' + t.mark + '</span>' : '') + '<span class="cp hero-kick">' + (st.attempted ? 'Continue' : 'Next up') + '</span></div>' +
-    (c && c.hi ? '<div class="hero-name" lang="hi">' + esc(c.hi) + '</div><div class="hero-en">' + esc(c.name) + '</div>'
-               : '<div class="hero-name">' + esc(c ? c.name : t.name) + '</div>' + (t.subject ? '<div class="hero-en">' + esc(t.subject) + '</div>' : '')) +
+  return '<div class="hero"><div class="hero-top"><div class="hero-txt"><div class="chips"><span class="cp hero-kick">Today’s practice</span></div>' +
+    (c && c.hi ? '<div class="hero-name" lang="hi">' + esc(c.hi) + '</div><div class="hero-en">' + esc(c.name) + (t.mark ? ' · M' + t.mark : '') + '</div>'
+               : '<div class="hero-name">' + esc(c ? c.name : t.name) + '</div>') +
     '</div><div class="hero-art">' + art + '</div></div>' +
-    '<div class="hero-meta">' + li('clock', 18) + '<span>' + plural(n, 'question') + ' · about ' + aboutMin(u, n) + ' min</span></div>';
-  if (t.mark) {
-    done = markPassed(u, t); need = passNeed(t);
-    html += '<div class="hero-prog"><div class="pbar"><i style="width:' + (done ? 100 : pct(Math.min(st.mastered, need), need)) + '%"></i></div>' +
-      '<span class="num">' + (done ? st.mastered + '/' + st.total : st.mastered + '/' + need) + '</span></div>' +
-      '<div class="hero-note">' + (done ? 'Passed · keep it fresh' : 'Right answers to pass (' + passPct(t) + '%)') + '</div>';
-  } else {
-    html += '<div class="hero-prog"><div class="pbar"><i style="width:' + st.pct + '%"></i></div><span class="num">' + st.mastered + '/' + st.total + '</span></div>' +
-      '<div class="hero-note">Questions mastered</div>';
-  }
-  opens = markOpens(u, t);
-  html += '<div class="chips hero-out">' + (opens ? '<span class="cp v">' + li('unlock', 15) + esc(opens) + '</span>' : '') +
-    '<span class="cp">' + li('star', 15) + 'Up to +' + xpUpTo(u, t, n) + ' XP</span></div>' +
+    '<div class="hero-meta">' + li('clock', 18) + '<span>' + plural(n, 'question') + ' · about ' + aboutMin(u, n) + ' min</span></div>' +
     '<button class="btn btn-primary btn-cta" data-act="start-smart" data-topic="' + t.id + '">' + (st.attempted ? 'Continue' : 'Start') + '</button></div>';
-  return html;
+}
+/* the card once today's set is finished: quiet, ticked, nothing to start by mistake — only a small link for more */
+function doneCard(u, st) {
+  return '<div class="hero done-card"><div class="done-tick">' + li('check', 34) + '</div><div class="done-t">Today’s practice done</div>' +
+    '<div class="done-s">' + (st > 0 ? 'Come back tomorrow for a ' + (st + 1) + '-day streak.' : 'Come back tomorrow.') + '</div>' +
+    '<button class="link" data-act="start-smart">Practice more</button></div>';
 }
 /* today's goal as a ring: violet while on the way, green when done */
 function goalRing(n, goal) {
@@ -3938,38 +4023,27 @@ function goalRing(n, goal) {
     (f >= 1 ? '<path d="M15.5 22.5l4.5 4.5 8.5-9" class="ring-k"/>' : '') + '</svg>';
 }
 SCREENS.home = function () {
-  var u = user, tk = todayKey(), st = liveStreak(u), td = dayRec(u, tk), goal = u.goal.daily, left = examDaysLeft(u), html, t, warn, sub;
-
-  html = '<div class="page bg-dash nav-pad home"><div class="dash-header"><div class="dash-hello">' +
-    '<div class="greeting-badge">' + greeting().t + '</div><div class="greeting-name">Hi, ' + esc(firstName(u.name)) + '</div>' +
-    (left > 0 ? '<div class="exam-pill greeting-meta">' + li('target', 16) + plural(left, 'day') + ' to ' + esc(goalOf(u).exam) + '</div>'
-     : left === 0 ? '<div class="exam-pill greeting-meta">' + li('target', 16) + esc(goalOf(u).exam) + ' is today. All the best!</div>' : '') +
-    '</div><button class="avatar-circle" data-act="tab" data-tab="profile" aria-label="Open profile">' + esc(initialOf(u.name)) + '</button></div>';
-
+  var u = user, tk = todayKey(), st = liveStreak(u), done = setsToday(u) > 0, html, t, week = weekTotals(u, 0, 6), wxp = 0, i;
+  for (i = 0; i < 7; i++) wxp += dayRec(u, dayKey(addDays(now(), -i))).xp;
+  html = '<div class="page bg-dash nav-pad home' + (done ? ' is-done' : '') + '"><div class="dash-hello"><div class="greeting-badge">' + greeting().t + '</div>' +
+    '<div class="greeting-name">Hi, ' + esc(firstName(u.name)) + '</div></div>';
   if (!Store.persistent()) html += '<div class="alert warn">Storage is blocked in this browser, so your progress will be lost when the app closes.</div>';
   if (db.auth && !db.auth.verified) html += '<button class="nudge" data-act="go" data-to="verify">' + li('mail', 18) + '<span>Confirm your email to switch on cloud backup. Tap here.</span></button>';
   else if (u.guest && u.answered >= 20) html += '<button class="nudge" data-act="go" data-to="account">' + li('cloud', 18) + '<span>Your progress is only on this phone. Create a free account to back it up. Tap here.</span></button>';
-
   t = recommendTopic(u);
-  html += t ? heroCard(u, t)
-    : '<div class="hero"><div class="hero-name">Choose a topic</div><div class="hero-note">Your course has no questions to practise yet.</div>' +
-      '<button class="btn btn-primary btn-cta" data-act="tab" data-tab="topics">Open Topics</button></div>';
-
-  /* the streak: the one warning that matters (it ends tonight) is said here, in its own card, in orange */
-  warn = u.notif.streak && st > 0 && u.lastDay !== tk;
-  sub = st === 0 ? (u.bestStreak ? 'Best ' + u.bestStreak + ' · start again' : 'Answer 1 to start') : u.lastDay === tk ? 'Done today' : 'Practice today';
-  html += '<div class="mini-row' + (u.notif.daily ? '' : ' one') + '"><div class="mini streak-card">' + statIcon('flame', 44) +
-    '<div class="mini-n num streak-count">' + st + '</div><div class="mini-l">day streak</div>' +
-    '<div class="mini-s' + (warn ? ' warn' : '') + '">' + (warn ? 'Ends at midnight' : sub) + '</div></div>';
-  if (u.notif.daily)
-    html += '<div class="mini goal-today">' + goalRing(td.n, goal) + '<div class="mini-n num">' + td.n + '/' + goal + '</div><div class="mini-l">today’s goal</div>' +
-      '<div class="mini-s' + (td.n >= goal ? ' ok' : '') + '">' + (td.n >= goal ? 'Goal done' : plural(goal - td.n, 'question') + ' to go') + '</div></div>';
-  return html + '</div></div>';
+  html += done ? doneCard(u, st) : t ? heroCard(u, t)
+    : '<div class="hero"><div class="hero-name">Choose a topic</div><button class="btn btn-primary btn-cta" data-act="tab" data-tab="topics">Open Topics</button></div>';
+  /* what the student has earned: quiet until today's set is done, then it is the reward */
+  html += '<div class="mini-row stats"><div class="mini streak-card">' + statIcon('flame', 40) + '<div class="mini-n num streak-count">' + st + '</div><div class="mini-l">day streak</div>' +
+    (u.notif.streak && st > 0 && u.lastDay !== tk ? '<div class="mini-s warn">Ends at midnight</div>' : '') + '</div>' +
+    '<div class="mini">' + statIcon('star', 40) + '<div class="mini-n num">' + wxp + '</div><div class="mini-l">XP this week</div>' +
+    (week.n ? '<div class="mini-s">' + plural(week.n, 'question') + ' · ' + pct(week.c, week.n) + '% right</div>' : '') + '</div></div>';
+  return html + '</div>';
 };
 
 SCREENS.topics = function () {
   var u = user, html, lastSubject = null, plan = planOf(courseOf(u));
-  if (plan) return '<div class="page bg-topics nav-pad">' + markTopics(u, plan) + '</div>';     // (the course is changed in Profile)
+  if (plan) return '<div class="page bg-topics nav-pad">' + markTopics(u, plan) + '</div>';     // (the course is changed in the You tab)
   html = '<div class="page bg-topics nav-pad"><div class="h1">Topics</div>' +
     '<div><button class="course-pill" data-act="go" data-to="course" aria-label="Change course, now ' + esc(courseName(courseOf(u))) + '"><span>' + esc(courseShort(courseOf(u))) + '</span></button></div>';
   html += '<div class="sub">Pick a chapter. Each session is ' + plural(u.settings.size, 'question') + '.</div>' + packSection(u);
@@ -4068,61 +4142,105 @@ function chWeight(c) {
   if (!c.per) return '';
   return c.per < 1.5 ? 'about 1 question per paper' : 'about ' + Math.round(c.per) + ' questions per paper';
 }
-/* one chapter row (3.9.0): the icon on its tint, the name, ONE line, and where it stands at the right */
-function chCard(u, v) {
-  var c = v.c, t = v.t, k = v.k, meta = '', right, act, bar = '';
-  if (k === 'soon') { meta = 'Coming soon'; right = ''; }
-  else if (k === 'locked') { meta = 'M' + t.mark + ' · ' + (v.lk.kind === 'slots' ? 'finish one on the go first' : markLockText(v.lk, t)); right = '<span class="ch-st lock">' + li('lock', 20) + '</span>'; }
-  else if (k === 'done') {
-    meta = (t.mark >= 3 ? 'Mastered' : 'M' + t.mark + ' passed') + (v.next ? ' · M' + v.next.mark + (v.lk.kind === 'gap' ? ' after ' + plural(v.lk.need, 'more chapter') : ' soon') : '');
-    right = '<span class="ch-st done" aria-label="Passed">' + li('check', 18) + '</span>';
-  } else if (k === 'ready') {
-    meta = 'M' + t.mark + ' · ' + (chWeight(c) || plural(setSize(u, t), 'question'));
-    right = '<span class="ch-st">' + li('chev', 22) + '</span>';
-  } else {
-    bar = passBar(u, t); right = '<span class="ch-st play">' + li('play', 16) + '</span>';
+/* the "passed" seal (3.9.1): flat, one deep green, a ring of small triangular teeth like a gear, a white tick — no shine, no 3D */
+var SEAL_TICK = (function () {
+  var n = 16, R = 16.6, r = 13.9, pts = [], i, a, d;
+  for (i = 0; i < 2 * n; i++) {
+    a = Math.PI * i / n - Math.PI / 2; d = i % 2 ? r : R;
+    pts.push((17 + d * Math.cos(a)).toFixed(2) + ',' + (17 + d * Math.sin(a)).toFixed(2));
   }
+  return '<svg class="seal" viewBox="0 0 34 34" width="34" height="34" aria-hidden="true" focusable="false"><polygon points="' + pts.join(' ') + '" fill="currentColor"/>' +
+    '<path d="M10.6 17.4l4.3 4.3 8.6-8.9" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+})();
+/* one chapter panel (3.9.1): a big icon with room around it, the English name small and grey, the Hindi name — and nothing else.
+   Where it stands is shown, not written: a thin bar while it is on the go, a green tick when it is passed, a lock or a clock. */
+function chCard(u, v) {
+  var c = v.c, t = v.t, k = v.k, act, badge = '', bar = '', st, need;
+  if (k === 'active' || k === 'revise') {
+    st = topicStats(u, t); need = passNeed(t);
+    bar = '<span class="ch-prog"><span class="ch-bar"><i style="width:' + Math.min(100, pct(st.mastered, need)) + '%"></i></span></span>';
+  }
+  if (k === 'done') badge = '<span class="ch-badge ch-st done" aria-hidden="true">' + SEAL_TICK + '</span>';
+  else if (k === 'locked') badge = '<span class="lock-mid" aria-hidden="true"></span>';     // a see-through lock in the middle; the names stay readable behind it
+  else if (k === 'soon') badge = '<span class="ch-badge soon" aria-hidden="true">' + li('clock', 16) + '</span>';
   act = k === 'soon' ? 'ch-soon' : k === 'locked' ? 'locked' : 'chapter';
-  return '<button type="button" class="topic-row ch-card k-' + k + (k === 'locked' ? ' locked' : '') + '" data-act="' + act + '" data-ch="' + esc(c.id) + '"' + (t ? ' data-topic="' + t.id + '"' : '') +
+  return '<button type="button" class="topic-row ch-card ch-panel k-' + k + (k === 'locked' ? ' locked' : '') + '" data-act="' + act + '" data-ch="' + esc(c.id) + '"' + (t ? ' data-topic="' + t.id + '"' : '') +
     ' aria-label="' + esc(c.name) + (t && k !== 'soon' ? ', Mark ' + t.mark : '') + (k === 'soon' ? ', coming soon' : k === 'done' ? ', passed' : k === 'locked' ? ', locked' : '') + '">' +
-    chTile(c.id, 40) + '<span class="topic-info">' +
-    '<span class="topic-row-name ch-name" lang="hi">' + esc(c.hi) + '</span>' +
-    (bar ? '<span class="ch-kick">M' + t.mark + (k === 'revise' ? ' · revise' : '') + '</span>' + bar : '<span class="topic-row-meta">' + meta + '</span>') + '</span>' +
-    (right ? '<span class="topic-right">' + right + '</span>' : '') + '</button>';
+    '<span class="chp-ic">' + chIcon(c.id, 80) + '</span><span class="topic-info"><span class="ch-en">' + esc(c.name) + '</span>' +
+    '<span class="topic-row-name ch-name" lang="hi">' + esc(c.hi) + '</span>' + bar + '</span>' + badge + '</button>';
 }
 var PLAY_SVG = '<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M3 1.6v8.8L10.4 6z" fill="currentColor"/></svg>';
 var TROPHY_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3h10v6a5 5 0 0 1-10 0z" fill="#FFC233"/><path d="M7 5H3.5v1.5A3.5 3.5 0 0 0 7 10M17 5h3.5v1.5A3.5 3.5 0 0 1 17 10" fill="none" stroke="#CF8E00" stroke-width="1.8"/>' +
   '<path d="M10.5 13.5h3v3.5h-3z" fill="#CF8E00"/><rect x="7" y="17" width="10" height="3.6" rx="1.4" fill="#9E6C00"/></svg>';
 /* the subjects of the NMMS course: MAT has its chapters; the SAT parts come later */
 var SUBJECTS = [{ id: 'mat', name: 'MAT', open: true }, { id: 'sci', name: 'विज्ञान', en: 'Science' }, { id: 'sst', name: 'सामाजिक', en: 'Social science' }, { id: 'math', name: 'गणित', en: 'Maths' }];
+/* How far the student is through the whole subject, 0..1: every chapter has three steps (M1, M2, M3), and each step counts from
+   nothing to one — a passed step is one, a step on the way counts its right answers out of those its pass needs. Steps that have no
+   questions yet count as nothing, so the line never claims more than was done. */
+function subjectProgress(u, plan) {
+  var mine = topicsOf(u), n = 0, sum = 0;
+  plan.chapters.forEach(function (c) {
+    if (!markTopic(mine, c.id, 1)) return;                  // a chapter still to come is not part of the way yet
+    n++;
+    for (var m = 1; m <= 3; m++) {
+      var t = markTopic(mine, c.id, m), st;
+      if (!t) continue;
+      if (markPassed(u, t)) { sum += 1; continue; }
+      st = topicStats(u, t);
+      sum += Math.min(1, st.mastered / Math.max(1, passNeed(t)));
+    }
+  });
+  return n ? Math.min(1, sum / (3 * n)) : 0;
+}
+/* the progress line (3.9.1): very thin, orange at the start and green by the end, with the three medals sitting on it at a third,
+   two thirds and the end. A medal is grey until the line reaches it, then it is a little bigger and in colour. No numbers to read. */
+function levelLine(f) {
+  var w = Math.round(f * 1000) / 10, hue = Math.round(25 + 120 * f), got = 0, html = '', k;
+  for (k = 1; k <= 3; k++) {
+    var on = f >= k / 3 - 1e-9;
+    if (on) got++;
+    html += '<span class="lvl-medal' + (on ? ' on' : '') + '" style="left:' + (k === 3 ? 100 : Math.round(k * 10000 / 3) / 100) + '%">' + medalIcon(k, 30) + '</span>';
+  }
+  return '<div class="lvl" role="img" aria-label="Progress through the subject: ' + Math.round(f * 100) + ' percent, ' + got + ' of 3 medals">' +
+    '<div class="lvl-wrap"><div class="lvl-track"><i style="width:' + w + '%;background:hsl(' + hue + ',85%,50%)"></i></div>' + html + '</div></div>';
+}
 function markTopics(u, plan) {
-  var mine = topicsOf(u), views, by = {}, act = markActive(u), html, ready, passed;
+  var mine = topicsOf(u), views, html;
   views = plan.chapters.map(function (c) { return chapterView(u, mine, c); });
-  views.forEach(function (v) { (by[v.k] = by[v.k] || []).push(v); });
-  ready = views.filter(function (v) { return v.t; }).length;
-  passed = views.filter(function (v) { return v.k === 'done'; }).length;
   /* the subjects, as tiles: shown by their pictures, the ones still to come greyed with a small clock */
   html = '<div class="subj-row">' + SUBJECTS.map(function (sj) {
-    return sj.open ? '<div class="subj on" aria-current="true"><span class="subj-ico">' + subjIcon(sj.id, 48) + '</span><span class="subj-t">' + sj.name + '</span></div>'
-      : '<button type="button" class="subj soon" data-act="subj-soon" data-id="' + sj.id + '" aria-label="' + sj.en + ', coming soon"><span class="subj-ico">' + subjIcon(sj.id, 48) +
+    return sj.open ? '<div class="subj on" aria-current="true"><span class="subj-ico">' + subjIcon(sj.id, 50) + '</span><span class="subj-t">' + sj.name + '</span></div>'
+      : '<button type="button" class="subj soon" data-act="subj-soon" data-id="' + sj.id + '" aria-label="' + sj.en + ', coming soon"><span class="subj-ico">' + subjIcon(sj.id, 50) +
         '<span class="subj-clock">' + li('clock', 14) + '</span></span><span class="subj-t" lang="hi">' + sj.name + '</span></button>';
   }).join('') + '</div>';
-  html += '<div class="mat-hero"><div class="row"><div class="grow"><div class="mh-kick">NMMS · Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">i</button></div>' +
+  /* 3.9.1 the subject's own header, like a book's cover: a small label, its name big, one line of what it is, its picture —
+     then the thin progress line with the three medals. No panel around it, no counts to read. */
+  html += '<div class="mat-hero"><div class="mh-row"><div class="grow">' +
+    '<div class="mh-kick">NMMS · Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">i</button></div>' +
     '<div class="mh-title" lang="hi" role="heading" aria-level="1">मानसिक योग्यता</div>' +
-    (plan.paper ? '<div class="mh-sub">' + esc(plan.paper) + '</div>' : '') + '</div></div>' +
-    '<div class="mh-prog" role="img" aria-label="' + passed + ' of ' + ready + ' chapters passed"><span class="mh-bar"><i style="width:' + pct(passed, ready) + '%"></i></span>' +
-    '<span class="mh-n"><b class="num">' + passed + '</b>/' + ready + ' passed</span></div>' +
-    '<div class="mh-steps">Each chapter: <b>M1 Learn</b>' + li('chev', 14) + '<b>M2 Revise</b>' + li('chev', 14) + '<b>M3 Master</b></div></div>';
+    '<div class="mh-desc">Mental Ability · reasoning with letters, numbers and figures</div></div>' +
+    '<span class="mh-art">' + subjIcon('mat', 96) + '</span></div>' + levelLine(subjectProgress(u, plan)) + '</div>';
   html += packSection(u);                                            // 3.8.0 the full papers (or the locked pack), right under the course
-  [['active', 'On the go · ' + act.length + ' of ' + SLOTS], ['revise', 'Tried twice · revise them'], ['ready', 'Start any chapter'], ['locked', 'Opens when one on the go is passed'],
-   ['done', 'Passed'], ['soon', 'Coming soon · picture questions']].forEach(function (s) {
-    if (!by[s[0]]) return;
-    html += '<div class="tier-label">' + s[1] + '</div><div class="ch-list">';
-    by[s[0]].forEach(function (v) { html += chCard(u, v); });
-    html += '</div>';
-  });
+  /* one path, in the order of study — a chapter keeps its place; where it stands is shown on its own panel */
+  html += '<div class="ch-list path">' + views.map(function (v) { return chCard(u, v); }).join('') + '</div>';
   return html;
 }
+/* 3.9.1 as the chapters scroll up, the name and the line above them fade, soften and stay a little behind: the chapters rise over
+   them. Only opacity, a small blur and a move — and not at all with "Reduce animations" or a phone set to reduce motion. */
+AFTER.topics = function (sc) {
+  var hd = sc.querySelector('.mat-hero'), queued = false;
+  if (!hd || calmMotion()) return;
+  function draw() {
+    queued = false;
+    var h = hd.offsetHeight || 1, t = Math.max(0, Math.min(1, (sc.scrollTop - hd.offsetTop + 24) / (h * 0.8)));   // from the moment it reaches the top
+    hd.style.opacity = String(1 - t);
+    hd.style.transform = t ? 'translateY(' + (t * h * 0.35).toFixed(1) + 'px) scale(' + (1 - 0.04 * t).toFixed(3) + ')' : '';
+    hd.style.filter = t > 0.05 ? 'blur(' + (t * 3).toFixed(1) + 'px)' : '';
+  }
+  sc.addEventListener('scroll', function () { if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(draw); } }, { passive: true });
+  draw();
+};
+
 /* ── THE CHAPTER PAGE (3.9.0): what the chapter is worth in the exam, its three steps, and one button for the step that is due ── */
 ACTIONS.chapter = function (el) {
   var ch = el.getAttribute('data-ch') || '', plan = planOf(courseOf(user)), c = plan && /^[a-z0-9]{1,8}$/.test(ch) ? byId(plan.chapters, ch) : null;
@@ -4491,7 +4609,7 @@ function xpPerSet(u) {
 }
 SCREENS.profile = function () {
   var u = user, lv = levelOf(u.xp), left = examDaysLeft(u), got = achCount(u), need = CONFIG.LEVEL_XP - lv.into, per = xpPerSet(u), ring = pct(lv.into, CONFIG.LEVEL_XP), n = u.notif, on;
-  on = ['daily', 'streak', 'weekly'].filter(function (k) { return n[k]; }).length;
+  on = ['streak', 'weekly'].filter(function (k) { return n[k]; }).length;      // (3.9.1 the daily-goal card left Home, and its switch with it)
   return '<div class="page bg-profile nav-pad profile"><div class="prof-header"><div class="prof-ring" style="--p:' + ring + '"><div class="prof-avatar">' + esc(initialOf(u.name)) + '</div></div>' +
     '<div class="prof-name">' + esc(u.name) + '</div><div class="prof-email">' + (u.guest ? 'Guest · saved on this device only' : esc(u.email)) + '</div>' +
     '<div class="prof-rank">Level ' + lv.n + ' · ' + lv.title + '</div>' +
@@ -4502,7 +4620,7 @@ SCREENS.profile = function () {
     menuRow('data-act="go" data-to="course"', '📚', 'Course', esc(courseName(courseOf(u))), ' wrap') +
     menuRow('data-act="go" data-to="goals"', '🎯', 'My goal', left > 0 ? plural(left, 'day') + ' left' : u.goal.daily + ' a day') +
     menuRow('data-act="go" data-to="account"', '☁️', 'Account & backup', u.guest ? 'Not backed up' : !(db.auth && db.auth.verified) ? 'Confirm email' : sync.err ? 'Check' : 'On') +
-    menuRow('data-act="go" data-to="notifications"', '🔔', 'Notifications', on + ' of 3 on') +
+    menuRow('data-act="go" data-to="notifications"', '🔔', 'Notifications', on + ' of 2 on') +
     menuRow('data-act="go" data-to="settings"', '⚙️', 'Settings', { system: 'System look', light: 'Light', dark: 'Dark' }[u.settings.theme] || '') + '</div>' +
     '<div class="menu-group">' +
     menuRow('data-act="go" data-to="redeem"', '🎫', 'Redeem a code', '') +
@@ -4576,7 +4694,6 @@ SCREENS.notifications = function () {
   var n = user.notif;
   return '<div class="page bg-profile">' + subHead('Notifications') +
     '<div class="alert info">These control the alerts and cards inside the app. Push notifications on the phone need a server and are not part of this build.</div>' +
-    toggleRow('notif', 'daily', n.daily, 'Daily goal card', 'Show today’s target and progress on Home') +
     toggleRow('notif', 'streak', n.streak, 'Streak alert', 'Warn on Home when your streak is about to end') +
     toggleRow('notif', 'weekly', n.weekly, 'Weekly summary', 'Show the week-on-week card on Progress') + '</div>';
 };
@@ -4615,7 +4732,7 @@ SCREENS.privacy = function () {
     '<div class="card"><div class="card-title">Where it is kept</div><div class="small muted">On this phone, and, once you confirm your email, in Google Cloud Firestore in Mumbai, India. Sign-in is handled by Google Firebase Authentication, which may process your email on Google servers outside India. In guest mode nothing leaves the phone.</div></div>' +
     '<div class="card"><div class="card-title">Who can see it</div><div class="small muted">Only you, after signing in: the database refuses everyone else. The IOPET developer can open stored records when it is needed to fix a problem or answer your request. Your data is never sold, never shared with advertisers and never used for ads.</div></div>' +
     '<div class="card"><div class="card-title">Other services</div><div class="small muted">The app’s font (Mukta) comes with the app itself, from the same address; no font service is asked for anything. There are no ad networks and no tracking tools in the app.</div></div>' +
-    '<div class="card"><div class="card-title">Deleting your data</div><div class="small muted">Profile → Account &amp; backup → Delete account removes your login, your cloud backup and the data on this phone, at once and for ever. “Reset progress” in Settings removes only the practice record.</div></div>' +
+    '<div class="card"><div class="card-title">Deleting your data</div><div class="small muted">You tab → Account &amp; backup → Delete account removes your login, your cloud backup and the data on this phone, at once and for ever. “Reset progress” in Settings removes only the practice record.</div></div>' +
     '<div class="card"><div class="card-title">Children</div><div class="small muted">If you are under 18, use IOPET with the permission of a parent or guardian.</div></div>' +
     '<div class="card"><div class="card-title">Contact</div><div class="small muted">' + (mail ? 'Write to ' + esc(mail) + '.' : 'Use Help &amp; Support → Send feedback.') + '</div></div></div>';
 };
@@ -5168,6 +5285,12 @@ ACTIONS['ch-soon'] = function (el) {
 ACTIONS.locked = function (el) {
   var t = topicById(el.getAttribute('data-topic'));
   if (!t) return;
+  if (el.classList && el.classList.contains('ch-panel') && isLocked(user, t)) {      // 3.9.1 a locked chapter panel: touchable, not openable
+    feel('no');                                                                       // two light knocks …
+    el.classList.remove('tap'); void el.offsetWidth; el.classList.add('tap');        // … and its lock shines at once (again on every tap)
+    setTimeout(function () { el.classList.remove('tap'); }, 700);
+    return;
+  }
   if (isLocked(user, t)) showLocked(t); else startSession(t.id);
 };
 /* a tap on an option only chooses it (and may change the choice); CHECK gives the answer */
@@ -5518,6 +5641,25 @@ function run(name, el, ev) {
     toast('Something went wrong. Please try again.');
   }
 }
+/* 3.9.1 the finger leaves a mark: a soft ring spreads from where it touched — grey on the bottom bar, green on a chapter.
+   Nothing of it with "Reduce animations" or a phone set to reduce motion. */
+function splash(el, ev, cls) {
+  if (calmMotion() || !el.getBoundingClientRect) return;
+  var r = el.getBoundingClientRect(), clip = document.createElement('span'), dot = document.createElement('span');
+  var x = ev && ev.clientX ? ev.clientX - r.left : r.width / 2, y = ev && ev.clientY ? ev.clientY - r.top : r.height / 2;
+  clip.className = 'rip-clip'; dot.className = 'ripple' + (cls ? ' ' + cls : '');
+  dot.style.left = Math.round(x) + 'px'; dot.style.top = Math.round(y) + 'px';
+  clip.appendChild(dot); el.appendChild(clip);
+  setTimeout(function () { if (clip.parentNode) clip.parentNode.removeChild(clip); }, 700);
+}
+/* 3.9.1 a tab of the bottom bar answers the finger at once: its icon and name brighten, then settle back (one timer for all of them) */
+var navFlashEl = null, navFlashT = 0;
+function flashNav(el) {
+  if (navFlashEl) navFlashEl.classList.remove('flash');
+  clearTimeout(navFlashT);
+  navFlashEl = el; el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  navFlashT = setTimeout(function () { if (navFlashEl) navFlashEl.classList.remove('flash'); navFlashEl = null; }, 520);
+}
 function onClick(ev) {
   var t = ev.target, el;
   if (t && t.nodeType === 3) t = t.parentNode;
@@ -5529,8 +5671,14 @@ function onClick(ev) {
   }
   el = upTo(t, 'data-act');
   if (!el || el.disabled) return;
+  if (el.classList && el.classList.contains('nav-item')) { splash(el, ev); flashNav(el); }
   if (locked() || busyOn) return;                                   // CHANGE #5: navigation lock; nothing is tappable during a network step
   if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) feel('tap');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
+  if (el.classList && el.classList.contains('ch-panel') && !/(^| )k-(locked|soon)( |$)/.test(el.className) && !calmMotion()) {
+    el.classList.add('press'); splash(el, ev, 'go'); lock(260);
+    setTimeout(function () { run(el.getAttribute('data-act'), el, ev); }, 170);     // the press is seen first (a sixth of a second)
+    return;
+  }
   run(el.getAttribute('data-act'), el, ev);
 }
 function onInput(ev) {
@@ -5921,7 +6069,7 @@ var REDEEM_MSG = {
   shape: 'A code has 12 letters and numbers, like NMK7-Q2ZP-4D9W.',
   pack: 'This code is not for this app version. Update the app, or check the code.',
   guest: 'Create an account first: a code unlocks a pack for your account, on every phone you sign in on.',
-  verify: 'Confirm your email first (Profile → Account & backup).',
+  verify: 'Confirm your email first (You tab → Account & backup).',
   have: 'You already have this pack.',
   bad: 'This code does not work. Check it — or it has already been used.',
   offline: 'No internet connection. Connect and try again.',
@@ -6144,7 +6292,7 @@ function codeForm(p) {
     '<div class="input-wrap"><span class="input-icon">' + li('ticket', 20) + '</span><input id="f-code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="NMK7-Q2ZP-4D9W" aria-label="Unlock code"></div>' +
     '<button type="button" class="btn btn-primary" data-act="redeem">Unlock</button></div>';
 }
-/* "Redeem a code" in Profile: the same, for any pack */
+/* "Redeem a code" in the You tab: the same, for any pack */
 SCREENS.redeem = function (p) {
   var html = '<div class="page bg-profile">' + subHead('Redeem a code');
   if (!signedUser(user)) return html + '<div class="alert info">' + REDEEM_MSG.guest + '</div><button class="btn btn-primary" data-act="adopt" data-to="signup">Create account</button></div>';
@@ -6203,7 +6351,7 @@ SCREENS.admin = function (p) {
   return html + '</div>';
 };
 function codeRow(c, k) {
-  var msg = 'Your IOPET code for ' + k.name + ': ' + showCode(c) + '\nOpen the IOPET app → Profile → Redeem a code (or tap the pack on the Topics page) and type it in. It works once, for your account.';
+  var msg = 'Your IOPET code for ' + k.name + ': ' + showCode(c) + '\nOpen the IOPET app → You tab → Redeem a code (or tap the pack on the Topics page) and type it in. It works once, for your account.';
   return '<div class="adm-row"><div class="grow adm-code sel">' + showCode(c) + '</div>' +
     '<a class="link" href="https://wa.me/?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">WhatsApp</a>' +
     '<button class="link" data-act="copy" data-text="' + showCode(c) + '">Copy</button></div>';
