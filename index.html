@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; font-src 'self'; img-src data: 'self'; connect-src https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'"/>
 <title>IOPET — Padho. Samjho. Aage badho.</title>
 <link rel="manifest" href="manifest.webmanifest"/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23A383FF'/%3E%3Cstop offset='1' stop-color='%235528E0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='21' fill='url(%23g)'/%3E%3Cg transform='translate(21 19.1) scale(.675)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='%23FFB020'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='f' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD84D'/%3E%3Cstop offset='1' stop-color='%23FF8C00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='21' fill='%23100F1C'/%3E%3Cg transform='translate(19.2 17.87) scale(.72)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='url(%23f)'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
 
 <style>
 /* ── FONT: Mukta, kept next to the app (3.9.0) — no request to anyone else, works offline. Hindi and English letters are two
@@ -189,33 +189,48 @@ textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var
 textarea.ta:focus{border-color:var(--purple)}
 input[type=date]{color-scheme:inherit}
 
-/* ── SPLASH (3.9.2) ── One colour from the phone's own start screen into the app: the manifest, the page, the splash and the phone's
-   top bar are all #100F1C, whatever the theme. The diya in the middle, about a third of the screen wide; "IOPET" under it, cream and
-   clearly smaller; the footer grey and still. Only opacity and transform move, once: no loop, no pulse, no flicker. */
+/* ── SPLASH (3.9.2; 3.9.5 one lamp, from the phone's start screen into the app) ── One colour from the phone's own start screen into
+   the app: the manifest, the icon's tile, the page, the splash and the phone's top bar are all #100F1C, whatever the theme. The first
+   frame is the start screen's own picture: the lit lamp, the same size and place (app.js, SCREENS.splash), so the hand-over shows
+   nothing. Then, once, the flame catches — it grows a little from the wick and a warm glow opens round it — and its light opens the
+   app (below). Only opacity and transform move, on Material's standard curve, cubic-bezier(.4,0,.2,1): it starts gently and lands
+   softly, so nothing pops. No loop, no pulse, no bounce, no flicker; no name, no text: nothing else on the screen. */
 html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very first paint (the page starts with this class) until the splash leaves: body, frame and phone */
-.splash{--bg:#100F1C;--ink:#FFF8E7;color:#FFF8E7;color-scheme:dark;background:#100F1C;display:flex;flex-direction:column;align-items:center;text-align:center}
-.screen[data-screen="splash"]{animation:none}            /* the page itself does not come in: only the diya and the name move */
-.splash-mid{margin:auto 0;display:flex;flex-direction:column;align-items:center}
-.splash .lg-f,[data-theme] .splash .lg-f{fill:#FFB020}    /* the flame keeps its colour even when a light look arrives under the fading splash */
-.splash-foot{flex:none;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:11px;color:#8E8E93;letter-spacing:.6px}
-.sp-dy{transform-origin:50% 50%;animation:sp-fade .3s cubic-bezier(0,0,0,1) both,sp-grow .5s cubic-bezier(.05,.7,.1,1) both}
-/* 3.9.3 the diya is lit: the bowl comes first, then the flame rises from the wick (its foot, 68.35 % down the box) — once, no overshoot */
-.sp-dy .lg-f{transform-origin:50% 68.35%;animation:sp-fade .2s cubic-bezier(0,0,0,1) .15s both,sp-lit .4s cubic-bezier(.05,.7,.1,1) .15s both}
-.sp-nm{animation:sp-rise .35s cubic-bezier(0,0,0,1) .2s both}
-.sp-done .sp-dy,.sp-done .sp-dy .lg-f,.sp-done .sp-nm{animation:none}          /* lit: from here they stand still, so lifting the page out replays nothing */
-.screen.sp-out{z-index:66;pointer-events:none;animation:sp-out .2s cubic-bezier(.3,0,.8,.15) both}   /* the exit: over the first screen, drawn underneath (whose 300 ms tap lock covers the fade); under messages */
-.screen.still{animation:none}                            /* that first screen does not come in by itself: the splash fades off it */
-@keyframes sp-fade{from{opacity:0}to{opacity:1}}
-@keyframes sp-grow{from{transform:scale(.92)}to{transform:none}}
-@keyframes sp-lit{from{transform:scale(.2)}to{transform:none}}
-@keyframes sp-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.screen[data-screen="splash"]{animation:none;overflow:hidden}   /* the page itself does not come in; the light may be wider than the screen */
+.splash{position:absolute;top:0;right:0;bottom:0;left:0;min-height:0;padding:0;background:#100F1C;color-scheme:dark}
+.splash>*{margin:0}                                           /* (not the gap between a page's blocks: here everything has its own place) */
+.sp-tile{position:absolute}                                   /* the icon's design box, where the start screen drew it */
+.sp-tile>svg,.sp-kin{position:absolute;top:0;left:0;display:block;overflow:visible}
+.sp-kin{border-radius:50%;background:radial-gradient(closest-side,rgba(255,181,71,.30),rgba(255,181,71,.12) 45%,rgba(255,181,71,0));animation:sp-glow .34s cubic-bezier(.4,0,.2,1) .16s both}
+.sp-fl{transform:scale(1.06);animation:sp-catch .34s cubic-bezier(.4,0,.2,1) .16s both}   /* the flame catches: from the wick (transform-origin, set in app.js) */
+.sp-kin,.sp-fl{will-change:transform,opacity}                 /* their layers are ready from the first frame: no hitch as they start */
+.sp-sun{position:absolute;border-radius:50%;background:radial-gradient(closest-side,#FFF8E7 58%,rgba(255,248,231,0));transform:scale(0);opacity:0;pointer-events:none}   /* the lamp's own warm light (the bowl's cream), soft as light: full colour to 58 % of its radius, then it thins out */
+.sp-done .sp-kin,.sp-done .sp-fl{animation:none}              /* caught: from here they stand still, so lifting the page out replays nothing */
+/* The exit (app.js, splashOff): laid over the first screen, drawn underneath (whose tap lock lasts as long); under messages.
+   Light look: the light spreads from the flame over the whole screen, then the splash fades off into the page. Dark look: the lamp
+   comes towards you and is gone, its light widening and thinning out, and then the splash fades off into the page. */
+.screen.sp-out{z-index:66;pointer-events:none}
+.screen.sp-out.sp-lt{animation:sp-out .22s cubic-bezier(.4,0,.2,1) .26s both}
+.sp-lt .sp-sun{will-change:transform,opacity;animation:sp-sun .42s cubic-bezier(.4,0,.2,1) both,sp-show .12s linear both}
+.screen.sp-out.sp-dk{animation:sp-out .24s cubic-bezier(.4,0,.2,1) .12s both}
+.sp-dk .sp-tile{animation:sp-fwd .36s cubic-bezier(.05,.7,.1,1) both}   /* Material's emphasized decelerate: it moves at once, while it is still seen */
+.sp-dk .sp-tile>svg{animation:sp-out .16s cubic-bezier(.4,0,.2,1) both}   /* the lamp is gone first, so it never lies over the page */
+.sp-dk .sp-kin{animation:sp-wide .36s cubic-bezier(.4,0,.2,1) both}
+.screen.sp-out.sp-rm{animation:sp-out .15s cubic-bezier(.4,0,.2,1) .06s both}
+.sp-rm .sp-tile>svg{animation:sp-out .1s cubic-bezier(.4,0,.2,1) both}   /* no animations asked: only fades — the lamp's first, then the splash's */
+.screen.still{animation:none}                                 /* that first screen does not come in by itself: the splash opens onto it */
+@keyframes sp-glow{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes sp-catch{from{transform:none}to{transform:scale(1.06)}}
+@keyframes sp-sun{from{transform:scale(0)}to{transform:none}}
+@keyframes sp-show{from{opacity:0}to{opacity:1}}
+@keyframes sp-fwd{from{transform:none}to{transform:scale(1.15)}}
+@keyframes sp-wide{from{transform:none;opacity:1}to{transform:scale(2.2);opacity:0}}
 @keyframes sp-out{from{opacity:1}to{opacity:0}}
-/* The phone asks for no animations: nothing grows or moves; the diya and the name only fade in, and the splash out, in 150 ms.
-   (The app's own "Reduce animations" leaves this splash as it is: it is that subtle.) */
+/* The phone asks for no animations: nothing grows or moves. The lamp stays as the start screen showed it; after 300 ms (app.js) it
+   fades off in 100 ms and the splash in 150 ms, from 60 ms. (The app's own "Reduce animations" leaves this splash as it is.) */
 @media (prefers-reduced-motion:reduce){
-  .sp-dy,.sp-nm{animation:sp-fade .15s cubic-bezier(0,0,0,1) both}
-  .sp-dy .lg-f{animation:none}                         /* the flame simply comes with the bowl */
-  .screen.sp-out{animation-duration:.15s}
+  .sp-kin{animation:none;opacity:0}
+  .sp-fl{animation:none;transform:none}
 }
 
 /* ── AUTH ── */
@@ -2152,8 +2167,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.9.3',
-  SPLASH_MS: 800,                              // CHANGE #7 (was 2200); 3.9.2 the least the splash shows — it never waits longer for show
+  VERSION: '3.9.5',
+  SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
+  SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
@@ -3614,7 +3630,7 @@ function guard() {
 /* CHANGE #5: one screen in the DOM at a time. The old screen is replaced in the same
    tick, so screens can never stack up, however fast the user taps. */
 function paint(quiet) {
-  var keep = quiet ? curScroll() : 0, was = stack.length ? top() : null, e, html, sc, old = elScreens.firstChild, off;
+  var keep = quiet ? curScroll() : 0, was = stack.length ? top() : null, e, html, sc, old = elScreens.firstChild, off, offMs = 0;
   refreshDue = false;                               // this paint shows everything as it is now
   stopTimer();
   if (celeEl && !quiet) closeCelebration();         // a new page ends a celebration that is still showing
@@ -3623,7 +3639,7 @@ function paint(quiet) {
   toldCourse = courseOf(user);
   if (e !== was) quiet = false;                     // the guard put another screen there: it comes in like any new screen (and taps wait a moment)
   off = !!old && old.getAttribute('data-screen') === 'splash' && e.s !== 'splash';
-  if (off) splashOff(old);                          // 3.9.2 leaving the splash: it is laid over the new screen and fades off it
+  if (off) offMs = splashOff(old);                  // 3.9.2 leaving the splash: it is laid over the new screen and opens onto it (3.9.5)
   applyTheme(e.s);                                  // (leaving the splash: the chosen light or dark comes now)
   try { html = SCREENS[e.s](e.p || {}); }
   catch (err) {
@@ -3636,21 +3652,40 @@ function paint(quiet) {
   sc = elScreens.firstChild;
   if (quiet) sc.scrollTop = keep; else if (e.scroll) sc.scrollTop = e.scroll;
   paintNav(e.s);
-  if (!quiet) lock(CONFIG.NAV_LOCK_MS);
+  if (!quiet) lock(Math.max(CONFIG.NAV_LOCK_MS, offMs));   // (3.9.5 after the splash: until its light has opened onto the screen)
   if (AFTER[e.s]) { try { AFTER[e.s](sc); } catch (err2) { if (window.console) console.error(err2); } }
 }
 function repaint() { paint(true); }
-/* The splash leaves (3.9.2): it is lifted out of the screens — lit by now, so moving it replays nothing — and laid over the first
-   screen, which is drawn underneath at once and does not come in by itself. It fades out in 200 ms (150 ms when the phone asks for
-   no animations) and is gone. The phone's top bar takes the first screen's colour half-way through. */
+/* The splash leaves (3.9.2): it is lifted out of the screens — moving it replays nothing: what has caught stays lit — and laid over
+   the first screen, which is drawn underneath at once and does not come in by itself. 3.9.5 how it opens onto that screen:
+     light look  the flame's warm light spreads over the whole screen (a disc in the bowl's cream, from the middle of the flame,
+                 soft as light — full colour to 58 % of its radius —, fading in as it starts: it grows in 420 ms and the screen is
+                 covered from 94 % on, at about 300 ms); the splash fades off from 260 ms, in 220 ms, and the page appears in that
+                 light — cream into the page's own light colours, no grey on the way. The phone's top bar takes the page's colour as
+                 the full light reaches it.
+     dark look   the lamp comes towards you (to 115 %, 360 ms, Material's emphasized decelerate: it moves at once, while it is
+                 still seen) and is gone in 160 ms — so it never lies over the page —, its glow widening (to 220 %) and thinning out;
+                 then the splash fades off, 240 ms from 120 ms. The bar at 200 ms.
+     the phone asks for no animations   only fades: the lamp's (100 ms), then the splash's (150 ms from 60 ms); the bar half-way.
+   Only transform and opacity move. Returns how long it lasts (taps wait that long). */
 function splashOff(sp) {
-  var ms = motionOff() ? 150 : 200;
+  var rm = motionOff(), lt = !rm && themeOf(user || bootUser()) === 'light', ms = rm ? 210 : lt ? 480 : 360, sun = sp.querySelector('.sp-sun'),
+    bar = rm ? 135 : lt && sun ? sunAt(sun) : 200;
   sp.classList.add('sp-done');
   elPhone.appendChild(sp);
   sp.classList.add('sp-out');
+  sp.classList.add(rm ? 'sp-rm' : lt ? 'sp-lt' : 'sp-dk');
   barHold = true;
-  setTimeout(function () { barHold = false; applyTheme(); }, ms / 2);
+  setTimeout(function () { barHold = false; applyTheme(); }, bar);
   setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, ms + 50);
+  return ms;
+}
+/* When the light (its full colour, inside the soft edge) reaches the top of the page: the moment, in ms, the disc has grown that far
+   on its curve, cubic-bezier(.4,0,.2,1) over 420 ms. */
+function sunAt(sun) {
+  var r = +sun.getAttribute('data-r') || 1, cy = +sun.getAttribute('data-cy') || 0, p = Math.min(1, Math.max(0, cy / (SUN_FULL * r))), lo = 0, hi = 1, u = 0.5, i;
+  for (i = 0; i < 30; i++) { u = (lo + hi) / 2; if (3 * (1 - u) * u * u + u * u * u < p) lo = u; else hi = u; }
+  return Math.round((1.2 * (1 - u) * (1 - u) * u + 0.6 * (1 - u) * u * u + u * u * u) * 420);
 }
 function motionOff() { try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } }
 /* The splash is for a fresh start of the app only (3.9.2): a reload in the same session skips it (this tab's sessionStorage
@@ -3661,12 +3696,12 @@ function splashSeen() {
   try { seen = window.sessionStorage.getItem(SPLASH_KEY) === '1'; window.sessionStorage.setItem(SPLASH_KEY, '1'); } catch (e) { seen = false; }
   return seen;
 }
-/* It goes after 800 ms — or later, once the app is ready, if that takes longer. The app's own data is there at once; the letters of
+/* It goes after 500 ms (300 ms with no animations: 3.9.5) — or later, once the app is ready, if that takes longer. The app's own data is there at once; the letters of
    the first screen (Mukta, Latin and Hindi) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
    just for show. */
 function splashWait() {
   var t = false, r = false, leave = function () { if (t && r && stack.length && top().s === 'splash') enterApp(); };
-  setTimeout(function () { t = true; leave(); }, CONFIG.SPLASH_MS);
+  setTimeout(function () { t = true; leave(); }, motionOff() ? CONFIG.SPLASH_RM_MS : CONFIG.SPLASH_MS);
   appReady(function () { r = true; leave(); });
 }
 function appReady(cb) {
@@ -3878,13 +3913,51 @@ function passField(id, placeholder, auto, strength) {
     '<button type="button" class="eye" data-act="toggle-pass" data-for="' + id + '">Show</button></div>';
 }
 
-/* THE SPLASH (3.9.2): the diya in the middle, about a third of the screen wide (32 %); under it "IOPET", cream, its capitals 0.27 of
-   the diya's height — clearly smaller; at the foot who made it, grey and still. No line under the name. */
+/* THE SPLASH (3.9.5). The phone opens the installed app on its own start screen: the app's icon on #100F1C — and the icon's tile IS
+   #100F1C (brand/pwa_icons.py), so all that shows there is the lit lamp. The splash's first frame is that very picture: the same
+   lamp, drawn from the same numbers (LAMP: keep in step with brand/pwa_icons.py), at the same size and place (splashGeom). When the
+   phone hands over to the app, nothing changes — one lamp, never two, nothing pops in. Then, once, the flame catches: from 160 ms it
+   grows a little from the wick (to 106 %) and a warm glow opens round it (340 ms, cubic-bezier(.4,0,.2,1)); then its light opens
+   the app (splashOff). No name, no line of text: nothing else on the screen. */
+var LAMP = { part: 0.60, lift: 9 / 512, halo: 0.32, glow: '#FFC85A', glowA: 0.26, top: '#FFD84D', foot: '#FF8C00', cream: '#FFF8E7' };
+var TILE_FRAC = 0.748, SUN_FULL = 0.58 * 0.94;   // the start screen's tile: 74.8 % of the screen's width; the light: full colour to 58 % of its radius, covering from 94 %
+/* Where the phone's start screen draws the lamp, in the page's px: the tile (the icon's design box) is 74.8 % of the screen's width
+   (measured on the user's phone: 280 px of 374; here 200..300 px). Its middle is the middle of the WHOLE screen, the phone's top bar
+   included, while the page starts under that bar: so in the installed app on Android the lamp sits a little above the page's middle
+   (screen.height / 2 - the bar; the bar = what the page lacks of the screen's height but a 4 px sliver at the bottom, the gesture
+   line). On a computer or in a browser tab there is no start screen: there it is simply the middle. */
+function splashGeom() {
+  var pw = (elPhone && elPhone.clientWidth) || window.innerWidth || 390, ph = (elPhone && elPhone.clientHeight) || window.innerHeight || 844,
+    w = Math.round(Math.min(300, Math.max(200, pw * TILE_FRAC)) * 10) / 10, cy = ph / 2, sh, d;
+  try {
+    if (!framed() && /Android/.test(navigator.userAgent) && window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+      sh = window.screen.height; d = sh - window.innerHeight;
+      if (d > 0 && d < 100 && Math.abs(window.screen.width - window.innerWidth) < 2) cy = sh / 2 - Math.min(Math.max(d - 4, 0), 56);
+    }
+  } catch (e) { cy = ph / 2; }
+  return { w: w, x: Math.round((pw - w) / 2 * 10) / 10, y: Math.round((cy - w / 2) * 10) / 10, pw: pw, ph: ph };
+}
+function fx1(v) { return Math.round(v * 100) / 100; }
 SCREENS.splash = function () {
-  var pw = (elPhone && elPhone.clientWidth) || window.innerWidth || 390, d = Math.round(Math.min(160, Math.max(96, pw * 0.32))),
-    cap = Math.round(d * 0.9875 * 0.27 * 10) / 10;
-  return '<div class="page bg-auth splash"><div class="splash-mid">' + logoMark(d, 'sp-dy') + logoName(cap, Math.round(cap * 0.6), 'sp-nm') +
-    '</div><div class="splash-foot">Made in India · ek private pahal</div></div>';
+  var g = splashGeom(), w = g.w, L = LAMP, mw = w * L.part, s = mw / 80, x = (w - mw) / 2, y = (w - mw * 79 / 80) / 2 - L.lift * w,
+    fx = x + 40 * s, fy = y + 30 * s, r = w * L.halo, k = w * 0.5,             // the middle of the flame; the glow's radius; the glow that opens
+    cx = g.x + fx, cy = g.y + fy, R = Math.max(Math.max(cx, g.pw - cx), 1), Rv = Math.max(Math.max(cy, g.ph - cy), 1),
+    box = ' viewBox="0 0 ' + fx1(w) + ' ' + fx1(w) + '" width="' + fx1(w) + '" height="' + fx1(w) + '" aria-hidden="true" focusable="false"',
+    mark = ' transform="translate(' + fx1(x) + ' ' + fx1(y) + ') scale(' + fx1(s * 1000) / 1000 + ')"';
+  R = Math.sqrt(R * R + Rv * Rv) / SUN_FULL;                                     // the light covers the farthest corner from 94 % of its growth
+  return '<div class="page splash" role="img" aria-label="IOPET">' +
+    '<div class="sp-tile" style="left:' + fx1(g.x) + 'px;top:' + fx1(g.y) + 'px;width:' + fx1(w) + 'px;height:' + fx1(w) + 'px">' +
+      '<svg class="sp-gl"' + box + '><defs><radialGradient id="sp-g" gradientUnits="userSpaceOnUse" cx="' + fx1(fx) + '" cy="' + fx1(fy) + '" r="' + fx1(r) + '">' +
+        '<stop offset="0" stop-color="' + L.glow + '" stop-opacity="' + L.glowA + '"/><stop offset=".45" stop-color="' + L.glow + '" stop-opacity="' + fx1(L.glowA * 0.38) + '"/>' +
+        '<stop offset="1" stop-color="' + L.glow + '" stop-opacity="0"/></radialGradient></defs><circle cx="' + fx1(fx) + '" cy="' + fx1(fy) + '" r="' + fx1(r) + '" fill="url(#sp-g)"/></svg>' +
+      '<i class="sp-kin" style="left:' + fx1(fx - k) + 'px;top:' + fx1(fy - k) + 'px;width:' + fx1(2 * k) + 'px;height:' + fx1(2 * k) + 'px"></i>' +
+      '<svg class="sp-bw"' + box + '><path' + mark + ' d="M0 60Q40 98 80 60Z" fill="' + L.cream + '"/></svg>' +
+      '<svg class="sp-fl"' + box + ' style="transform-origin:' + fx1(fx) + 'px ' + fx1(y + 54 * s) + 'px"><defs><linearGradient id="sp-f" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0" stop-color="' + L.top + '"/><stop offset="1" stop-color="' + L.foot + '"/></linearGradient></defs>' +
+        '<path' + mark + ' d="M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z" fill="url(#sp-f)"/></svg>' +
+    '</div>' +
+    '<i class="sp-sun" data-r="' + fx1(R) + '" data-cy="' + fx1(cy) + '" style="left:' + fx1(cx - R) + 'px;top:' + fx1(cy - R) + 'px;width:' + fx1(2 * R) + 'px;height:' + fx1(2 * R) + 'px"></i>' +
+  '</div>';
 };
 
 function emailField(value, auto) {

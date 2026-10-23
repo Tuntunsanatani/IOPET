@@ -8,9 +8,9 @@
    time. So a new version reaches every phone the next time the app is opened, and nobody stays stuck on an old one.
    The pictures (icons), the font and the manifest: kept on the phone, renewed with every new version of this file. */
 'use strict';
-var VERSION = '3.9.3';
+var VERSION = '3.9.5';
 var CACHE = 'iopet-' + VERSION;
-var FILES = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'maskable-192.png', 'maskable-512.png',
+var FILES = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'maskable-192.png', 'maskable-512.png', 'monochrome-512.png',
   'mukta-400.woff2', 'mukta-600.woff2', 'mukta-700.woff2', 'mukta-hi-400.woff2', 'mukta-hi-600.woff2', 'mukta-hi-700.woff2'];   // 3.9.0 the font
 var WAIT_MS = 3000;
 
