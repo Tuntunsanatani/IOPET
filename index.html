@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="on-splash">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#221C3E"/>
+<meta name="theme-color" content="#100F1C"/>
 <meta name="referrer" content="no-referrer"/>
 <!-- The page may only talk to the three Google sign-in / database hosts. Its font (3.9.0) is a file next to it. No other script, frame, image or request is allowed.
      (3.7.1: and, from its own web address, read its manifest and start its helper sw.js — the files next to it.) -->
@@ -119,19 +119,7 @@ sub,sup{font-size:.72em;line-height:0}
 .lg svg{position:absolute;top:0;left:0;width:100%;height:100%}
 .lg-b,.lg-n{fill:var(--ink)}
 .lg-f{fill:#FFB020}
-.lg-n,.lg-t{display:block;flex:none;max-width:100%;height:auto}   /* on a very narrow screen the whole logo shrinks together */
-/* the phone's own font on purpose: it is there at once, so the words never jump when the web fonts arrive */
-.lg-t{overflow:visible;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:700;fill:#FFB020}
-/* The splash lights the diya once: the flame grows from the wick, the name brightens with it, then the line below appears.
-   Only transform and opacity change, so nothing is laid out again; it is over before the splash ends and never repeats. */
-.lg-lit .lg-f{transform-origin:50% 68.35%;animation:lg-light .42s cubic-bezier(.3,.7,.3,1) .06s both}
-.lg-lit+.lg-n{animation:lg-glow .42s ease-out .06s both}
-.lg-lit~.lg-t{animation:lg-in .26s ease-out .26s both}
-@keyframes lg-light{0%{opacity:0;transform:scale(.3)}35%{opacity:1}65%{transform:scale(1.03,1.09)}100%{opacity:1;transform:none}}
-@keyframes lg-glow{from{opacity:.4}to{opacity:1}}
-@keyframes lg-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-/* "Reduce animations" leaves the opening logo alone: it plays once, for under half a second, and costs nothing (see app.js boot). */
-@media (prefers-reduced-motion:reduce){.lg-f,.lg-n,.lg-t{animation:none !important}}
+.lg-n{display:block;flex:none;max-width:100%;height:auto}   /* on a very narrow screen the name shrinks with it */
 
 /* CHANGE #9: top padding 24px (28px on auth screens) — the fake status bar is gone (CHANGE #1) */
 .page{min-height:100%;padding:24px 24px 32px}
@@ -201,15 +189,34 @@ textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var
 textarea.ta:focus{border-color:var(--purple)}
 input[type=date]{color-scheme:inherit}
 
-/* ── SPLASH ── */
-.splash{display:flex;flex-direction:column;align-items:center;text-align:center}
+/* ── SPLASH (3.9.2) ── One colour from the phone's own start screen into the app: the manifest, the page, the splash and the phone's
+   top bar are all #100F1C, whatever the theme. The diya in the middle, about a third of the screen wide; "IOPET" under it, cream and
+   clearly smaller; the footer grey and still. Only opacity and transform move, once: no loop, no pulse, no flicker. */
+html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very first paint (the page starts with this class) until the splash leaves: body, frame and phone */
+.splash{--bg:#100F1C;--ink:#FFF8E7;color:#FFF8E7;color-scheme:dark;background:#100F1C;display:flex;flex-direction:column;align-items:center;text-align:center}
+.screen[data-screen="splash"]{animation:none}            /* the page itself does not come in: only the diya and the name move */
 .splash-mid{margin:auto 0;display:flex;flex-direction:column;align-items:center}
-.splash-mid .lg-t{margin-top:12px}
-.splash-foot{flex:none;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:11px;color:var(--cream60);letter-spacing:.6px}
-/* The opening screen always wears the diya's own dark colours, whatever the theme (3.7.1): the installed app opens on the same
-   dark ground the phone shows while it starts it, and a light phone never flashes white before the diya */
-.phone.on-splash{--bg:#0F0E1A;--bar:#221C3E}                   /* 3.9.1 the splash's own ground and bar (SPLASH_BAR in app.js), round it too */
-.splash{--bg:#0F0E1A;--glow-a:rgba(124,92,255,.30);--ink:#FFF8E7;--ink2:rgba(255,248,231,.74);--cream60:rgba(255,248,231,.74);color:#FFF8E7;color-scheme:dark}
+.splash .lg-f,[data-theme] .splash .lg-f{fill:#FFB020}    /* the flame keeps its colour even when a light look arrives under the fading splash */
+.splash-foot{flex:none;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:11px;color:#8E8E93;letter-spacing:.6px}
+.sp-dy{transform-origin:50% 50%;animation:sp-fade .3s cubic-bezier(0,0,0,1) both,sp-grow .5s cubic-bezier(.05,.7,.1,1) both}
+/* 3.9.3 the diya is lit: the bowl comes first, then the flame rises from the wick (its foot, 68.35 % down the box) — once, no overshoot */
+.sp-dy .lg-f{transform-origin:50% 68.35%;animation:sp-fade .2s cubic-bezier(0,0,0,1) .15s both,sp-lit .4s cubic-bezier(.05,.7,.1,1) .15s both}
+.sp-nm{animation:sp-rise .35s cubic-bezier(0,0,0,1) .2s both}
+.sp-done .sp-dy,.sp-done .sp-dy .lg-f,.sp-done .sp-nm{animation:none}          /* lit: from here they stand still, so lifting the page out replays nothing */
+.screen.sp-out{z-index:66;pointer-events:none;animation:sp-out .2s cubic-bezier(.3,0,.8,.15) both}   /* the exit: over the first screen, drawn underneath (whose 300 ms tap lock covers the fade); under messages */
+.screen.still{animation:none}                            /* that first screen does not come in by itself: the splash fades off it */
+@keyframes sp-fade{from{opacity:0}to{opacity:1}}
+@keyframes sp-grow{from{transform:scale(.92)}to{transform:none}}
+@keyframes sp-lit{from{transform:scale(.2)}to{transform:none}}
+@keyframes sp-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes sp-out{from{opacity:1}to{opacity:0}}
+/* The phone asks for no animations: nothing grows or moves; the diya and the name only fade in, and the splash out, in 150 ms.
+   (The app's own "Reduce animations" leaves this splash as it is: it is that subtle.) */
+@media (prefers-reduced-motion:reduce){
+  .sp-dy,.sp-nm{animation:sp-fade .15s cubic-bezier(0,0,0,1) both}
+  .sp-dy .lg-f{animation:none}                         /* the flame simply comes with the bowl */
+  .screen.sp-out{animation-duration:.15s}
+}
 
 /* ── AUTH ── */
 .auth-logo-row{display:flex;align-items:flex-end;margin-bottom:12px}   /* the diya stands on the same line as the letters */
@@ -619,7 +626,7 @@ input[type=date]{color-scheme:inherit}
 .seg-btn:active{background:var(--fill-2)}
 .seg-btn.on:active{background:var(--surface)}
 .avatar-circle:active{transform:scale(.95)}
-[data-theme="light"] .lg-t,[data-theme="light"] .lg-f{fill:#E08A00}
+[data-theme="light"] .lg-f{fill:#E08A00}
 
 /* ── CHAPTER ICONS (icons.js) ── paper-white parts follow the theme */
 .chi{display:block;flex:none;overflow:visible}
@@ -2145,8 +2152,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.9.1',
-  SPLASH_MS: 800,                              // CHANGE #7 (was 2200)
+  VERSION: '3.9.3',
+  SPLASH_MS: 800,                              // CHANGE #7 (was 2200); 3.9.2 the least the splash shows — it never waits longer for show
+  SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
   NAV_LOCK_MS: 300,                            // CHANGE #5: taps are ignored this long after a screen change
   STREAK_MILESTONES: [30, 60, 100, 200, 365],  // CHANGE #3: first milestone is 30 days
   XP: { easy: 10, medium: 15, hard: 20 },      // XP for a correct answer
@@ -2846,15 +2854,15 @@ function themeOf(u) {
    the first screen after it. */
 function applyTheme(s) {
   var on = (s || (stack.length ? top().s : 'splash')) === 'splash', th = on ? 'dark' : themeOf(user || bootUser()), root = document.documentElement,
-    meta = document.querySelector('meta[name="theme-color"]'), bar = on ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th];
+    meta = document.querySelector('meta[name="theme-color"]'), bar = on || barHold ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th];
   if (root.getAttribute('data-theme') !== th) root.setAttribute('data-theme', th);
   if (meta && meta.getAttribute('content') !== bar) meta.setAttribute('content', bar);      // the colour of the phone's top bar
-  /* 3.9.1 the dark look is pure black, the splash keeps its own ground: while it shows, the phone takes the splash's ground and bar
-     colour, so the top fade comes out of the splash's bar (no black band under it) and nothing black shows round it */
-  var ph = document.getElementById('phone');
-  if (ph && ph.classList.contains('on-splash') !== on) { if (on) ph.classList.add('on-splash'); else ph.classList.remove('on-splash'); }
+  /* 3.9.2 the page starts in the splash's colour (the class is written in the page, so even the very first paint has it) and keeps
+     it while the splash shows: body, the frame round the app and the phone are all #100F1C, and the top fade comes out of that */
+  if (root.classList.contains('on-splash') !== on) { if (on) root.classList.add('on-splash'); else root.classList.remove('on-splash'); }
 }
-var SPLASH_BAR = '#221C3E';                                        // the top edge of the splash
+var SPLASH_BAR = '#100F1C';               // 3.9.2 the splash, the page under it, the manifest and the phone's top bar: one colour
+var barHold = false;                      // the splash is fading out: the phone's top bar keeps the splash's colour until half-way
 /* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
    one colour. So the bar takes the app's purple, and the top of the app fades out of that very colour (--bar in the style sheet,
    the same two values): bar and page meet without a line, as in the phone's own apps. Dark is the splash's purple, so the bar
@@ -3606,7 +3614,7 @@ function guard() {
 /* CHANGE #5: one screen in the DOM at a time. The old screen is replaced in the same
    tick, so screens can never stack up, however fast the user taps. */
 function paint(quiet) {
-  var keep = quiet ? curScroll() : 0, was = stack.length ? top() : null, e, html, sc;
+  var keep = quiet ? curScroll() : 0, was = stack.length ? top() : null, e, html, sc, old = elScreens.firstChild, off;
   refreshDue = false;                               // this paint shows everything as it is now
   stopTimer();
   if (celeEl && !quiet) closeCelebration();         // a new page ends a celebration that is still showing
@@ -3614,6 +3622,8 @@ function paint(quiet) {
   e = guard();
   toldCourse = courseOf(user);
   if (e !== was) quiet = false;                     // the guard put another screen there: it comes in like any new screen (and taps wait a moment)
+  off = !!old && old.getAttribute('data-screen') === 'splash' && e.s !== 'splash';
+  if (off) splashOff(old);                          // 3.9.2 leaving the splash: it is laid over the new screen and fades off it
   applyTheme(e.s);                                  // (leaving the splash: the chosen light or dark comes now)
   try { html = SCREENS[e.s](e.p || {}); }
   catch (err) {
@@ -3622,7 +3632,7 @@ function paint(quiet) {
            '<div class="empty-d">Nothing is lost. Go back to the start and try again.</div></div>' +
            '<button class="btn btn-primary" data-act="recover">Go to start</button></div>';
   }
-  elScreens.innerHTML = '<div class="screen' + (quiet ? ' quiet' : '') + '" data-screen="' + e.s + '">' + html + '</div>';
+  elScreens.innerHTML = '<div class="screen' + (quiet ? ' quiet' : '') + (off ? ' still' : '') + '" data-screen="' + e.s + '">' + html + '</div>';
   sc = elScreens.firstChild;
   if (quiet) sc.scrollTop = keep; else if (e.scroll) sc.scrollTop = e.scroll;
   paintNav(e.s);
@@ -3630,6 +3640,46 @@ function paint(quiet) {
   if (AFTER[e.s]) { try { AFTER[e.s](sc); } catch (err2) { if (window.console) console.error(err2); } }
 }
 function repaint() { paint(true); }
+/* The splash leaves (3.9.2): it is lifted out of the screens — lit by now, so moving it replays nothing — and laid over the first
+   screen, which is drawn underneath at once and does not come in by itself. It fades out in 200 ms (150 ms when the phone asks for
+   no animations) and is gone. The phone's top bar takes the first screen's colour half-way through. */
+function splashOff(sp) {
+  var ms = motionOff() ? 150 : 200;
+  sp.classList.add('sp-done');
+  elPhone.appendChild(sp);
+  sp.classList.add('sp-out');
+  barHold = true;
+  setTimeout(function () { barHold = false; applyTheme(); }, ms / 2);
+  setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, ms + 50);
+}
+function motionOff() { try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } }
+/* The splash is for a fresh start of the app only (3.9.2): a reload in the same session skips it (this tab's sessionStorage
+   remembers it), and coming back from the background never shows it — that is no new start. Without sessionStorage it shows. */
+var SPLASH_KEY = 'iopet.splash';
+function splashSeen() {
+  var seen = false;
+  try { seen = window.sessionStorage.getItem(SPLASH_KEY) === '1'; window.sessionStorage.setItem(SPLASH_KEY, '1'); } catch (e) { seen = false; }
+  return seen;
+}
+/* It goes after 800 ms — or later, once the app is ready, if that takes longer. The app's own data is there at once; the letters of
+   the first screen (Mukta, Latin and Hindi) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
+   just for show. */
+function splashWait() {
+  var t = false, r = false, leave = function () { if (t && r && stack.length && top().s === 'splash') enterApp(); };
+  setTimeout(function () { t = true; leave(); }, CONFIG.SPLASH_MS);
+  appReady(function () { r = true; leave(); });
+}
+function appReady(cb) {
+  var done = false, left = 3, fin = function () { if (!done) { done = true; cb(); } }, one = function () { if (--left <= 0) fin(); };
+  setTimeout(fin, CONFIG.SPLASH_MAX_MS);
+  try {
+    if (document.fonts && document.fonts.load) {
+      ['400', '600', '700'].forEach(function (w) { document.fonts.load(w + ' 16px Mukta', 'a\u0905').then(one, one); });
+      return;
+    }
+  } catch (e) { /* no way to fetch the letters early here: ready now */ }
+  fin();
+}
 /* New data arrived in the background (cloud backup, another tab): redraw the page — but never under a dialog or a "please wait";
    then it is done as soon as that is gone. If the course is not the one the student last saw, he is told. */
 function softRefresh() {
@@ -3767,30 +3817,22 @@ function stopTimer() { if (timerId) { clearInterval(timerId); timerId = 0; } }
    from the network, and it looks the same on every phone. The letters are Lexend Bold (SIL Open Font License 1.1)
    turned into an outline; the capitals run from y = 0 to y = 100 and the word is 481.1 wide. */
 var LOGO_NAME = 'M0 100V79.6H16.9V20.4H0V0H58.1V20.4H41.1V79.6H58.1V100ZM130.4 101.4Q119 101.4 109.6 97.6Q100.1 93.7 93.1 86.7Q86.1 79.7 82.3 70.3Q78.4 60.9 78.4 49.6Q78.4 38.3 82.3 28.9Q86.1 19.4 93.1 12.4Q100.1 5.4 109.6 1.6Q119 -2.3 130.3 -2.3Q141.6 -2.3 151 1.6Q160.4 5.4 167.4 12.4Q174.4 19.4 178.2 28.9Q182 38.3 182 49.6Q182 60.7 178.2 70.2Q174.4 79.7 167.4 86.7Q160.4 93.7 151 97.6Q141.6 101.4 130.4 101.4ZM130.3 78.6Q136.1 78.6 141.1 76.4Q146 74.3 149.6 70.4Q153.3 66.4 155.3 61.1Q157.3 55.9 157.3 49.6Q157.3 43.3 155.3 38Q153.3 32.7 149.6 28.8Q146 24.9 141.1 22.7Q136.1 20.6 130.3 20.6Q124.4 20.6 119.5 22.7Q114.6 24.9 110.9 28.8Q107.1 32.7 105.2 38Q103.3 43.3 103.3 49.6Q103.3 55.9 105.2 61.2Q107.1 66.6 110.9 70.4Q114.6 74.3 119.5 76.4Q124.4 78.6 130.3 78.6ZM206.6 100V0H249.7Q259.1 0 266.5 4.3Q273.9 8.6 278.2 16Q282.6 23.4 282.6 32.7Q282.6 42.4 278.2 50.1Q273.9 57.7 266.5 62.1Q259.1 66.6 249.7 66.6H230.9V100ZM230.4 45.3H246.3Q249.4 45.3 252 43.7Q254.6 42.1 256.1 39.4Q257.7 36.7 257.7 33.1Q257.7 29.4 256.1 26.9Q254.6 24.3 252 22.9Q249.4 21.4 246.3 21.4H230.4ZM306.9 100V0H376.6V20.7H330.4V79.3H378V100ZM318.3 59V39.3H370.1V59ZM426.4 100V21.4H396.7V0H481.1V21.4H450.7V100Z';
-/* w: width in px. lit: play the lighting-up once (the splash); everywhere else the logo stands still. */
-function logoMark(w, lit) {
+/* w: width in px. cls: one more class (the splash moves its diya with it); everywhere else the logo stands still. */
+function logoMark(w, cls) {
   var box = ' viewBox="0 0 80 79" aria-hidden="true"';
-  return '<span class="lg' + (lit ? ' lg-lit' : '') + '" style="width:' + w + 'px;height:' + Math.round(w * 98.75) / 100 + 'px">' +
+  return '<span class="lg' + (cls ? ' ' + cls : '') + '" style="width:' + w + 'px;height:' + Math.round(w * 98.75) / 100 + 'px">' +
     '<svg class="lg-b"' + box + '><path d="M0 60Q40 98 80 60Z"/></svg>' +
     '<svg class="lg-f"' + box + '><path d="M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z"/></svg></span>';
 }
-/* cap: height of the capital letters in px. top: space above, in px. */
-function logoName(cap, top) {
-  return '<svg class="lg-n"' + (top ? ' style="margin-top:' + top + 'px"' : '') + ' width="' + Math.round(cap * 481.1) / 100 + '" height="' + Math.round(cap * 104.6) / 100 +
+/* cap: height of the capital letters in px. top: space above, in px. cls: one more class (the splash). */
+function logoName(cap, top, cls) {
+  return '<svg class="lg-n' + (cls ? ' ' + cls : '') + '"' + (top ? ' style="margin-top:' + top + 'px"' : '') + ' width="' + Math.round(cap * 481.1) / 100 + '" height="' + Math.round(cap * 104.6) / 100 +
     '" viewBox="0 -2.3 481.1 104.6" role="img" aria-label="IOPET"><path d="' + LOGO_NAME + '"/></svg>';
 }
 /* The diya above the name, in the proportions of the logo files: the diya is 2.23 capital heights wide
    and its bowl ends 0.49 of a capital height above the letters. */
-function logoStack(cap, lit) {
-  return logoMark(Math.round(cap * 223) / 100, lit) + logoName(cap, Math.round(cap * 46.3) / 100);
-}
-/* The line under the name. It is ordinary text in the phone's own font, stretched or squeezed by a hair so that it is
-   always exactly as wide as the name above it, whatever font the phone uses. */
-var LOGO_LINE = 'Padho. Samjho. Aage badho.';
-function logoLine(cap) {
-  var w = Math.round(cap * 481.1) / 100, h = Math.round(cap * 50) / 100;
-  return '<svg class="lg-t" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '"><text x="0" y="' + Math.round(cap * 37.5) / 100 + '" font-size="' + Math.round(cap * 35.4) / 100 +
-    '" textLength="' + w + '" lengthAdjust="spacing">' + LOGO_LINE + '</text></svg>';
+function logoStack(cap) {
+  return logoMark(Math.round(cap * 223) / 100) + logoName(cap, Math.round(cap * 46.3) / 100);
 }
 /* Beside the name the diya is 1.55 capital heights wide and stands on the letters' line. */
 function authHead(title, sub) {
@@ -3836,8 +3878,12 @@ function passField(id, placeholder, auto, strength) {
     '<button type="button" class="eye" data-act="toggle-pass" data-for="' + id + '">Show</button></div>';
 }
 
+/* THE SPLASH (3.9.2): the diya in the middle, about a third of the screen wide (32 %); under it "IOPET", cream, its capitals 0.27 of
+   the diya's height — clearly smaller; at the foot who made it, grey and still. No line under the name. */
 SCREENS.splash = function () {
-  return '<div class="page bg-auth splash"><div class="splash-mid">' + logoStack(48, true) + logoLine(48) +
+  var pw = (elPhone && elPhone.clientWidth) || window.innerWidth || 390, d = Math.round(Math.min(160, Math.max(96, pw * 0.32))),
+    cap = Math.round(d * 0.9875 * 0.27 * 10) / 10;
+  return '<div class="page bg-auth splash"><div class="splash-mid">' + logoMark(d, 'sp-dy') + logoName(cap, Math.round(cap * 0.6), 'sp-nm') +
     '</div><div class="splash-foot">Made in India · ek private pahal</div></div>';
 };
 
@@ -6463,12 +6509,10 @@ function boot() {
   applyTheme(); watchTheme();                                       // light or dark before anything is drawn
   setTimeout(registerHelper, CONFIG.SPLASH_MS + 1500);              // (after the first screens: they come first)
   if (db.session && has(db.users, db.session) && db.users[db.session].settings.calm) elPhone.classList.add('calm');   // "Reduce animations": no screen fades (the logo itself still lights up)
+  if (splashSeen()) { enterApp(); return; }         // 3.9.2 a reload in the same session: straight in, no splash
   stack = [{ s: 'splash' }];
   paint();
-  setTimeout(function () {
-    if (!stack.length || top().s !== 'splash') return;
-    enterApp();
-  }, CONFIG.SPLASH_MS);
+  splashWait();
 }
 boot();
 
