@@ -36,7 +36,8 @@
      Shade ranks the rest: the state you are in is white and bold, the next or locked one grey and regular; a warning that
      matters (the streak ends tonight) is said by weight and words, not by a hue. A card is lifted by a lighter grey, not a shadow.
      One exception: the coloured patches inside a question's figure (.fv-h1..h4) are part of the question, not of the UI.
-     Orange is no longer a colour of its own: --flame and --warn follow gold, --red and --bad-* follow vermilion.
+     Orange is no longer a colour of its own: --flame follows gold (the streak), --red and --bad-* follow vermilion, --warn is grey.
+     The weights of these state rules apply in both looks; only the dark chrome changed colour.
      The old names (--cream60, --pur-bg …) stay as aliases, so every rule keeps working. */
   --bg:#121214;--bg-deep:#0C0C0E;--surface:#1E1E22;--surface-2:#27272C;--surface-3:#313137;
   --line:#323238;--line-2:#45454D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.12);
@@ -45,9 +46,9 @@
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#8E80FF;--primary-2:#B4AAFF;--primary-soft:#26262B;--primary-ink:#B4AAFF;   /* a selected thing: violet ring + ink, on a neutral fill */
   --cta:#FFFFFF;--on-cta:#15132B;--on-mark:#15132B;                    /* --on-mark: a glyph on a violet, green, gold or vermilion fill */
-  --gold:#FFB020;--gold-ink:var(--gold);--gold-soft:#3B3122;
+  --gold:#FFB020;--gold-ink:var(--gold);--gold-fill:#FFB020;--gold-soft:#3B3122;
   --wrong:#E66022;--wrong-soft:#302422;--wrong-ink:#F6712F;           /* the wrong option is mostly its outline; the right one is filled */
-  --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--gold);
+  --flame:var(--gold);--warn:var(--ink2);
   --good:#4ADE8B;--good-soft:#243931;--good-ink:var(--good);
   --haze:var(--bg);--haze-2:var(--bg);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#27272C;--track:rgba(255,255,255,.10);--glow:rgba(255,255,255,.06);
@@ -58,11 +59,11 @@
   --shadow-sheet:0 -10px 40px rgba(0,0,0,.5);
   --purple:var(--primary);--purple-dark:#4330D6;--brand:var(--primary);--brand-lip:transparent;--brand-ink:#FFFFFF;
   --go:var(--cta);--go-ink:var(--on-cta);--go-lip:transparent;
-  --green:var(--good);--amber:var(--warn);--red:var(--wrong-ink);--blue:#8CC4FF;--orange:var(--flame);
+  --green:var(--good);--red:var(--wrong-ink);--blue:#8CC4FF;
   --ok-bg:var(--good-soft);--ok-line:#306B4C;--ok-ink:var(--good-ink);--ok-lip:transparent;
   --bad-bg:var(--wrong-soft);--bad-line:#6E3822;--bad-ink:var(--wrong-ink);--bad-lip:transparent;
   --warn-bg:var(--t-yellow);--warn-line:var(--line-2);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own */
-  --info-bg:transparent;--info-line:var(--line-2);--info-ink:var(--ink2);
+  --info-bg:transparent;--info-line:var(--line);--info-ink:var(--ink2);
   --pur-bg:var(--primary-soft);--pur-line:var(--line-2);
   --nav:#1E1E22;--modal:var(--surface);--scrim:rgba(6,6,8,.66);--toast:#2A2A30;--shadow:rgba(0,0,0,.5);
   --glow-a:rgba(142,128,255,.26);--glow-b:rgba(47,116,240,.16);--glow-c:rgba(255,138,51,.16);   /* only the celebration glows (--glow-a) */
@@ -80,8 +81,8 @@
   --primary:#5B45F5;--primary-2:#8A7BFF;--primary-soft:#EFECFF;--primary-ink:#3D2BC2;
   --cta:#15132B;--on-cta:#FFFFFF;--on-mark:#FFFFFF;
   --mark-off:#878791;
-  --gold:#A06000;--gold-ink:#935800;--gold-soft:#FFF3D9;              /* 3.10.0 reward and wrong get one colour each in light too (gold text 5.5:1, vermilion 5.7:1 on white) */
-  --wrong:#C2410C;--wrong-soft:#FDEEE7;--wrong-ink:#8C2308;
+  --gold:#A06000;--gold-ink:#935800;--gold-soft:#FFF3D9;              /* 3.10.0 reward and wrong get one colour each in light too (gold text 5.0:1, vermilion text 8.9:1 on white) */
+  --wrong:#9A3412;--wrong-soft:#FDEEE7;--wrong-ink:#8C2308;
   --good:#14A35A;--good-soft:#E6F7EE;--good-ink:#0A6536;
   --haze:#E7E2FF;--haze-2:#E2EFFF;--hero-1:#F1EDFF;--hero-2:#E4EDFF;--hero-3:#EAF8FF;
   --chart:#DCD6FF;--track:rgba(255,255,255,.75);--glow:rgba(255,255,255,.9);
@@ -205,7 +206,7 @@ sub,sup{font-size:.72em;line-height:0}
 .cp.g{background:var(--good-soft);border-color:transparent;color:var(--good-ink)}
 .cp.y{background:var(--gold-soft);border-color:transparent;color:var(--gold)}   /* 3.10.0 a reward (XP earned) is gold */
 /* the Mark of a card: a neutral chip (3.10.0) — white is only for the one button to press */
-.cp.lvl{background:var(--surface-3);border-color:transparent;color:var(--ink2);font-weight:700;letter-spacing:.3px}   /* 3.10.0 a label: grey, below the violet state chip; never the button's fill */
+.cp.lvl{background:transparent;border-color:var(--line);color:var(--ink2);font-weight:600;letter-spacing:.3px}   /* 3.10.0 a label: outlined grey, below the violet state chip */
 /* a line icon (24px grid, 2px stroke) — every UI icon of the app is one of these, never a picture */
 .li{display:inline-block;flex:none;width:24px;height:24px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -255,13 +256,13 @@ input[type=date]{color-scheme:inherit}
 .em{color:var(--cream);word-break:break-all}
 .steps{font-size:13px;color:var(--cream60);line-height:1.75}
 .steps b{color:var(--cream);margin-right:4px}
-.note{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:var(--r-md);padding:10px 12px;font-size:13px;font-weight:700;color:var(--ok-ink);line-height:1.45}
+.note{background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:10px 12px;font-size:13px;font-weight:600;color:var(--info-ink);line-height:1.45}   /* 3.10.0 information: no hue */
 .hint.center{text-align:center;line-height:1.5}
 
 /* ── WELCOME ── */
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .success-circle{width:90px;height:90px;border-radius:50%;background:var(--good);color:var(--on-cta);display:flex;align-items:center;justify-content:center}   /* 3.10.0 the tick is dark: white on green was 2.3:1 */
-[data-theme="light"] .success-circle{color:var(--on-mark)}
+[data-theme="light"] .success-circle,[data-theme="light"] .opt-btn.correct .opt-key{color:var(--ink)}   /* 5.5:1 (white was 3.3:1) */
 .welcome .btn{max-width:280px;margin-top:26px}
 
 /* ── HOME (3.9.0): greeting, one hero card, two small cards ── */
@@ -270,7 +271,7 @@ input[type=date]{color-scheme:inherit}
 .dash-header{display:flex;align-items:flex-start;justify-content:space-between}
 .dash-hello{flex:1;min-width:0;padding-right:12px}
 .greeting-badge{font-size:14px;font-weight:600;color:var(--ink2)}
-.greeting-name{font-size:30px;font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.greeting-name{font-size:22px;font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exam-pill{display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:5px 12px 5px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:13px;font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exam-pill .li{margin-right:6px;color:var(--ink2)}
 [data-theme="light"] .exam-pill .li{color:var(--primary)}
@@ -282,12 +283,13 @@ input[type=date]{color-scheme:inherit}
 .hero-top{display:flex;align-items:flex-start}
 .hero-txt{flex:1;min-width:0}
 .hero-kick{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}   /* "Next up" / "Continue": a state, in violet text */
-[data-theme="light"] .hero-kick{background:var(--glow);color:var(--ink2)}
+[data-theme="light"] .hero-kick{background:var(--glow);color:var(--primary-ink)}
 .hero-name{font-size:24px;font-weight:700;line-height:1.3;margin-top:12px;word-wrap:break-word}
 .hero-en{font-size:14px;color:var(--ink2);margin-top:2px}
 .hero-art{flex:none;margin:-6px -6px 0 8px}
 .hero-art .chi{width:104px;height:104px}
 .hero-emoji{display:block;font-size:56px;line-height:1}
+.hero-emoji,.topic-emoji-big,.pack-hero-ico{filter:grayscale(1);opacity:.85}   /* 3.10.0 a picture without a meaning carries no hue */
 .hero-meta{display:flex;align-items:center;margin-top:16px;font-size:14px;font-weight:600;color:var(--ink2)}
 .hero-meta .li{margin-right:6px}
 .hero-prog{display:flex;align-items:center;margin-top:14px}
@@ -301,7 +303,7 @@ input[type=date]{color-scheme:inherit}
 [data-theme="light"] .mini{background:var(--surface)}
 .mini+.mini{margin-left:12px}
 .mini .chi,.mini .ring{display:block}
-.mini-n{font-size:28px;line-height:1.1;margin-top:10px}
+.mini-n{font-size:22px;line-height:1.1;margin-top:10px}
 .mini-l{font-size:14px;font-weight:600}
 .mini-s{font-size:13px;color:var(--ink2);margin-top:2px}
 .mini-s.warn{color:var(--ink);font-weight:700}
@@ -314,7 +316,7 @@ input[type=date]{color-scheme:inherit}
 .ring-v{stroke:var(--primary);stroke-linecap:round}
 .ring.done .ring-v{stroke:var(--good)}
 .ring-k{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:22px}.greeting-name{font-size:28px}}
+@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:22px}.greeting-name{font-size:20px}}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-top:16px !important}
 .section-head-title{font-size:13px;font-weight:700;letter-spacing:1px}
 
@@ -363,8 +365,8 @@ input[type=date]{color-scheme:inherit}
 .fb-head{display:flex;align-items:center}
 .fb-ico{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:10px;background:var(--fill-2);color:var(--ink2)}
 .fb-ico .li{stroke-width:3}
-.correct-fb .fb-ico{background:var(--good);color:var(--on-mark)}
-.wrong-fb .fb-ico{background:var(--wrong);color:var(--on-mark)}
+.correct-fb .fb-ico{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* 3.10.0 a ring: the white Next leads */
+.wrong-fb .fb-ico{background:var(--wrong-soft);color:var(--wrong-ink);box-shadow:inset 0 0 0 2px var(--wrong)}
 .fb-title{flex:1;font-size:20px;font-weight:700}
 .correct-fb .fb-title{color:var(--green)}
 .wrong-fb .fb-title{color:var(--wrong-ink)}
@@ -409,7 +411,8 @@ input[type=date]{color-scheme:inherit}
 .rv-line{display:flex;align-items:flex-start;font-size:14px;line-height:1.5;margin-top:8px}
 .rv-line .li{margin:2px 6px 0 0;stroke-width:3}
 .rv-line.ok{color:var(--green)}
-.rv-line.bad{color:var(--wrong-ink)}
+.rv-line.bad{color:#FF8F5E}   /* body text in Hindi: the lighter vermilion, 7.4:1 */
+[data-theme="light"] .rv-line.bad{color:var(--wrong-ink)}
 .rv-item.bad{border-left:4px solid var(--wrong)}   /* 3.10.0 found at a glance */
 .rv-item.skip{border-left:4px solid var(--mark-off)}
 .rv-x{font-size:14px;color:var(--ink2);line-height:1.6;margin-top:8px}
@@ -429,15 +432,17 @@ input[type=date]{color-scheme:inherit}
 .card-title{font-size:16px;font-weight:700}
 .bars-row{display:flex;align-items:flex-end}
 .bar-col{flex:1;min-width:0;text-align:center;padding:0 4px}
-.bar-num{font-size:13px;font-weight:700;color:var(--primary);height:18px;line-height:18px}
+.bar-num{font-size:13px;font-weight:700;color:var(--primary-ink);height:18px;line-height:18px}
 .bar-track{height:78px;display:flex;align-items:flex-end}
 .bar{width:100%;min-height:4px;border-radius:8px 8px 3px 3px;background:var(--mark-off)}   /* 3.10.0 other days grey (3.4:1), today violet */
 .bar-col.today .bar{background:var(--primary)}
+[data-theme="light"] .bar-num{color:var(--primary)}
 [data-theme="light"] .bar{background:var(--chart)}
 .bar-lbl{font-size:13px;font-weight:600;color:var(--ink3);margin-top:6px}
 .bar-col.today .bar-lbl{color:var(--ink)}
 .mrow{display:flex;align-items:center}
 .mrow-name{flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow.locked .mrow-name{color:var(--ink3);font-weight:400}   /* 3.10.0 shade = state, as on Topics */
 .mrow-val{flex:none;font-size:13px;font-weight:700;color:var(--ink2);margin-left:8px;display:flex}
 .srow{display:flex;align-items:center;justify-content:space-between;font-size:14px;padding-top:10px;border-top:1px solid var(--line)}
 .srow b{font-family:var(--font-display);font-weight:700}
@@ -513,6 +518,7 @@ input[type=date]{color-scheme:inherit}
 .ach-card.locked .ach-emoji{opacity:.4;filter:grayscale(.9)}
 .ach-emoji .chi{margin:0 auto}
 .ach-big .chi{margin:0 auto}
+.ach-big.off .chi{opacity:.4;filter:grayscale(.9)}
 .ach-name{font-size:13px;font-weight:700;margin-top:6px}
 .ach-desc{font-size:13px;color:var(--cream60);margin-top:3px;line-height:1.35}
 .ach-card .pbar{margin-top:9px}
@@ -537,10 +543,9 @@ input[type=date]{color-scheme:inherit}
 .co-row.locked:active{transform:none;box-shadow:var(--shadow-1)}
 .co-row.locked .co-ico{opacity:.55;filter:grayscale(1)}
 .co-row.locked .co-name,.co-row.locked .co-sub{color:var(--ink3)}
-.co-row.locked .co-name{font-weight:400}   /* dimmed by its ink, not by opacity: 5.1:1 (3.10.0; it was 3.3:1) */
-[data-theme="light"] .co-row.locked .co-info{opacity:.55}
-[data-theme="light"] .co-row.locked .co-name{color:inherit}
-[data-theme="light"] .co-row.locked .co-sub{color:var(--cream60)}
+.co-row.locked .co-name,.co-row.soon .co-name{font-weight:400}
+.co-row.soon .co-name,.co-row.soon .co-sub{color:var(--ink3)}
+.co-row.soon .co-ico{opacity:.55;filter:grayscale(1)}   /* dimmed by its ink, not by opacity: 5.1:1 (3.10.0; it was 3.3:1) */
 .co-ico{flex:none;width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:21px;margin-right:13px}
 .co-ico b{font-family:var(--font-display);font-size:18px;font-weight:700}
 .co-row.big .co-ico{width:50px;height:50px;border-radius:14px;font-size:25px}
@@ -582,9 +587,10 @@ input[type=date]{color-scheme:inherit}
 .bottom-nav{position:absolute;left:0;right:0;bottom:0;display:none;justify-content:center;padding-bottom:14px;z-index:40;pointer-events:none}
 .bottom-nav.show{display:flex}
 .nav-pill{display:flex;align-items:center;padding:6px;border-radius:var(--r-pill);background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow-nav);pointer-events:auto}
-.nav-item{display:block;min-width:64px;padding:7px 12px 6px;margin:0 1px;border-radius:var(--r-pill);text-align:center;color:var(--ink3)}
+.nav-item{display:block;min-width:64px;padding:7px 12px 6px;margin:0 1px;border-radius:var(--r-pill);text-align:center;color:#85858F}   /* 4.55:1; the tab you are on is white (16.6:1) */
+[data-theme="light"] .nav-item{color:var(--ink3)}
 .nav-item svg{display:block;width:24px;height:24px;margin:0 auto 1px}
-.nav-item.active{background:transparent;color:var(--ink)}   /* 3.10.0 the tab you are on: white and bold, its icon on a grey pill */
+.nav-item.active{background:transparent;color:#FFFFFF}   /* 3.10.0 the tab you are on: white and bold, its icon on a grey pill */
 .nav-item.active svg{background:var(--surface-3);border-radius:var(--r-pill);box-sizing:content-box;padding:3px 12px;margin:-3px auto -2px}
 [data-theme="light"] .nav-item.active{background:var(--primary-soft);color:var(--primary)}
 [data-theme="light"] .nav-item.active svg{background:none;padding:0;margin:0 auto 1px}
@@ -724,7 +730,8 @@ input[type=date]{color-scheme:inherit}
 .ch-st{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;color:var(--ink3)}
 .ch-st.play{background:transparent;color:var(--primary-ink);box-shadow:inset 0 0 0 2px var(--primary)}   /* 3.10.0 on the go: a violet ring (state) */
 .ch-card.k-next{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary),var(--shadow-1)}   /* the chapter Home calls "Next up" leads Topics, */
-.ch-card.k-next .ch-st.play{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}   /* its play disc the one white thing there */
+.ch-card.k-next .ch-st.play{width:72px;height:40px;border-radius:var(--r-pill);background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}   /* its play button the one white thing there */
+html:not([data-theme="light"]) .ch-list .ch-card:not(.k-next){background:transparent;border-color:transparent;border-bottom-color:var(--line);border-radius:0;box-shadow:none;margin-top:0 !important}   /* dark: the other chapters are a plain list, one box per screen */
 .ch-next{color:var(--primary-ink);font-weight:700}
 .ch-st.play .li{margin-left:2px}
 .ch-st.done{background:var(--good-soft);color:var(--good-ink)}
@@ -736,7 +743,8 @@ input[type=date]{color-scheme:inherit}
 .ch-card.k-locked .ch-name,.ch-card.k-soon .ch-name{color:var(--ink3);font-weight:400}
 .ch-card.k-locked .topic-row-meta{color:var(--ink3)}
 [data-theme="light"] .ch-card.k-locked .ch-name{opacity:.6;color:inherit}
-[data-theme="light"] .ch-card.k-soon .ch-name,[data-theme="light"] .ch-card.k-locked .topic-row-meta{color:inherit}
+[data-theme="light"] .ch-card.k-soon .ch-name{color:inherit}
+[data-theme="light"] .ch-card.k-locked .topic-row-meta{color:var(--ink2)}
 .ch-card.k-locked .ch-tile .chi{filter:saturate(.5)}
 .ch-card.k-soon{background:transparent;box-shadow:none;border-style:dashed}
 .ch-card.k-soon .ch-tile{opacity:.55}
@@ -762,7 +770,7 @@ input[type=date]{color-scheme:inherit}
 .step-dot{flex:none;width:32px;height:32px;margin-right:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;background:var(--fill-2);color:var(--ink2)}
 /* 3.10.0 the step to do is its violet dot (a dark number on it, 5.8:1) and its bold title — the row itself is not filled */
 .step.now .step-dot{background:var(--primary);color:var(--on-mark)}
-.step.done .step-dot{background:var(--good);color:var(--on-mark)}
+.step.done .step-dot{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* done: a green ring; only the current step is filled */
 .step.locked .step-dot{background:var(--surface-2);color:var(--ink3)}
 [data-theme="light"] .step.due{background:var(--primary-soft)}
 [data-theme="light"] .step.locked .step-dot{background:var(--fill-2);color:var(--ink2)}
@@ -778,7 +786,8 @@ input[type=date]{color-scheme:inherit}
 .step.locked .step-t{font-weight:400}
 .cp.v.step-badge{color:var(--ink2)}   /* a badge still to earn has no hue (3.10.0: shade = state) */
 .step.soon .step-badge{color:var(--ink3)}
-[data-theme="light"] .step.soon .step-badge{opacity:.6;color:var(--primary-ink)}
+[data-theme="light"] .cp.v.step-badge{background:var(--surface-2)}
+[data-theme="light"] .step.soon .step-badge{color:var(--ink2)}
 .chp-out{margin-top:24px}
 .chapter .btn-cta{margin-top:16px}
 .sheet-list .topic-row{box-shadow:none}
@@ -800,8 +809,8 @@ input[type=date]{color-scheme:inherit}
 @keyframes opt-no{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
 .spark{position:absolute;left:26px;top:50%;width:0;height:0;pointer-events:none}
 .spark i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;opacity:0;animation:spark .6s ease-out forwards}
-/* 3.10.0 the sparks are gold (a reward) and violet, nothing else */
-.spark i:nth-child(odd){background:var(--gold,#FFB020)}
+/* 3.10.0 the sparks are gold (the XP) and green (right), nothing else */
+.spark i:nth-child(odd){background:var(--gold-fill)}
 .spark i:nth-child(even){background:var(--good)}
 .spark i:nth-child(1){--x:-26px;--y:-24px}
 .spark i:nth-child(2){--x:0;--y:-34px}
@@ -834,7 +843,7 @@ input[type=date]{color-scheme:inherit}
 .cele canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .cele-stage{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;perspective:600px}
 .cele-rays{position:absolute;top:-30px;left:-30px;width:240px;height:240px;border-radius:50%;opacity:.55;
-  background:repeating-conic-gradient(from 0deg,var(--hl) 0deg 9deg,transparent 9deg 30deg,var(--gold,#FFB020) 30deg 39deg,transparent 39deg 60deg);
+  background:repeating-conic-gradient(from 0deg,var(--hl) 0deg 9deg,transparent 9deg 30deg,var(--gold-fill) 30deg 39deg,transparent 39deg 60deg);
   -webkit-mask:radial-gradient(circle,#000 22%,transparent 68%);mask:radial-gradient(circle,#000 22%,transparent 68%);animation:rays 4.5s cubic-bezier(.2,.6,.35,1) both}
 .cele-icon{position:relative;transform-style:preserve-3d;animation:flip3d 1.15s cubic-bezier(.2,.9,.25,1.12) both;will-change:transform}
 .cele-icon .chi{filter:drop-shadow(0 12px 14px rgba(0,0,0,.35))}   /* soft: the icon has its own sides (3.10.0) */
@@ -3753,8 +3762,8 @@ function confirmModal(o) {
   showModal(
     (o.emoji ? '<div class="m-emoji">' + o.emoji + '</div>' : '') +
     '<div class="m-title">' + o.title + '</div><div class="m-text">' + o.text + '</div>' +
-    '<div class="m-actions"><button class="btn btn-sec" data-act="modal-close">' + (o.no || 'Cancel') + '</button>' +
-    '<button class="btn ' + (o.danger ? 'btn-danger' : 'btn-primary') + '" data-act="' + o.act + '">' + o.yes + '</button></div>');
+    '<div class="m-actions"><button class="btn ' + (o.danger || o.stay ? 'btn-primary' : 'btn-sec') + '" data-act="modal-close">' + (o.no || 'Cancel') + '</button>' +
+    '<button class="btn ' + (o.danger ? 'btn-danger' : o.stay ? 'btn-sec' : 'btn-primary') + '" data-act="' + o.act + '">' + o.yes + '</button></div>');   // 3.10.0 the safe choice is the white one
 }
 function modalErr(msg) { var el = $('m-err'); if (el) { el.textContent = msg; el.classList.add('show'); } else toast(msg); }
 /* A message inside the form of the page. On a page that is redrawn when data arrives ("Confirm your email") it is also kept
@@ -3985,7 +3994,7 @@ function courseRow(c, cur, big) {
   var open = c.group || courseOpen(c.id), mine = !c.group && cur && (cur === c.id || cur.indexOf(c.id + '-') === 0), right, sub = esc(c.sub);
   if (c.group) sub += '<span class="co-state' + (c.n ? ' on' : '') + '">' + (c.n ? c.n + ' ' + c.unit[c.n === 1 ? 0 : 1] + ' available now' : 'Opening soon') + '</span>';
   right = !open ? '<span class="co-soon">Coming soon</span>' : (mine ? '<span class="co-cur">Current</span>' : '') + '<span class="menu-arrow">' + li('chev', 20) + '</span>';
-  return '<button type="button" class="co-row' + (big ? ' big' : '') + (open ? '' : ' locked') + (mine ? ' current' : '') + '" data-act="course-open" data-id="' + c.id + '"' +
+  return '<button type="button" class="co-row' + (big ? ' big' : '') + (open ? '' : ' locked') + (c.group && !c.n ? ' soon' : '') + (mine ? ' current' : '') + '" data-act="course-open" data-id="' + c.id + '"' +
     (open ? '' : ' aria-disabled="true"') + (mine ? ' aria-current="true"' : '') + '><span class="co-ico" aria-hidden="true">' + (c.num ? '<b>' + c.num + '</b>' : li(has(EMOJI_LI, c.emoji) ? EMOJI_LI[c.emoji] : 'book', 22)) + '</span>' +
     '<span class="co-info"><span class="co-name">' + esc(c.name) + '</span>' + (sub ? '<span class="co-sub">' + sub + '</span>' : '') + '</span>' +
     '<span class="co-right">' + right + '</span></button>';
@@ -4528,7 +4537,7 @@ SCREENS.summary = function () {
     '<div class="stat-box">' + statIcon('star', 40) + '<div class="stat-val num xp-val">+' + S.xp + '</div><div class="stat-lbl">XP</div></div></div>' +
     (S.wrong || S.skipped ? '<div class="sum-mini">' + (S.wrong ? plural(S.wrong, 'mistake') : '') + (S.wrong && S.skipped ? ' · ' : '') + (S.skipped ? S.skipped + ' skipped' : '') + ' · they come back first next time</div>' : '');
   if (t.mark) {
-    if (!S.passed0 && markPassed(u, t)) got.push([li('medal'), esc(chapterOf(t).name) + ' · Mark ' + t.mark + ' passed!', 'g']);
+    if (!S.passed0 && markPassed(u, t)) got.push([li('check'), esc(chapterOf(t).name) + ' · Mark ' + t.mark + ' passed!', 'g']);
     else got.push([li('target'), markLine(u, t), '']);
   }
   S.unlocked.forEach(function (name) { got.push([li('unlock'), /^You can/.test(name) ? name : 'New topic unlocked: ' + name, 'v']); });
@@ -4614,7 +4623,7 @@ SCREENS.progress = function () {
   html += '<div class="card"><div class="row between"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="small muted course-tag">' + esc(courseName(courseOf(u))) + '</div></div>';
   topicsOf(u).forEach(function (t) {
     var s2 = topicStats(u, t), lk = isLocked(u, t);
-    html += '<div><div class="mrow"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) + ' · M' + t.mark : t.name) + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
+    html += '<div><div class="mrow' + (lk ? ' locked' : '') + '"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) + ' · M' + t.mark : t.name) + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
       '<div class="pbar thin"><i style="width:' + s2.pct + '%"></i></div></div>';
   });
   html += '</div>';
@@ -4790,16 +4799,17 @@ SCREENS.help = function () {
    PRACTICE SESSION
    ════════════════════════════════════════════════════════════════════ */
 function showLocked(t) {
-  var lk = t.mark ? markLock(user, t) : null, bs;
+  var lk = t.mark ? markLock(user, t) : null, bs, rec, w;
   if (lk && lk.kind === 'slots') {
+    rec = recommendTopic(user); w = lk.wait.slice().sort(function (a, b) { return (b === rec) - (a === rec); });   // 3.10.0 the same "next" as Topics
     /* the lock sheet (3.9.0): why, in one line, and the two chapters on the go, each one tap from going on */
     showModal('<div class="m-title">Finish one first</div><div class="m-text">You can have ' + SLOTS + ' chapters on the go at a time. Pass one of these and ' +
-      esc(chapterOf(t).name) + ' opens.</div><div class="sheet-list">' + lk.wait.map(function (x) {
+      esc(chapterOf(t).name) + ' opens.</div><div class="sheet-list">' + w.map(function (x) {
         return '<button type="button" class="topic-row ch-card k-active" data-act="start" data-topic="' + x.id + '">' + chTile(x.ch, 40) +
           '<span class="topic-info"><span class="topic-row-name ch-name" lang="hi">' + esc(chapterOf(x).hi || chapterOf(x).name) + '</span><span class="ch-kick">M' + x.mark + '</span>' + passBar(user, x) + '</span>' +
           '<span class="topic-right"><span class="ch-st play">' + li('play', 16) + '</span></span></button>';
       }).join('') + '</div>' +
-      '<div class="m-actions col"><button class="btn btn-primary" data-act="start" data-topic="' + lk.wait[0].id + '">Continue ' + esc(chapterOf(lk.wait[0]).name) + '</button>' +
+      '<div class="m-actions col"><button class="btn btn-primary" data-act="start" data-topic="' + w[0].id + '">Continue ' + esc(chapterOf(w[0]).name) + '</button>' +
       '<button class="link block" data-act="modal-close">Close</button></div>');
     return;
   }
@@ -4965,7 +4975,7 @@ function quitNow() {
 function askQuit() {
   if (!S || S.done) { quitNow(); return; }
   if (S.correct + S.wrong === 0) { quitNow(); return; }
-  confirmModal({ title: 'Quit this session?', text: 'The answers you have given are already saved, but you will not get the result summary.', no: 'Keep going', yes: 'Quit', act: 'quit-yes', danger: true });
+  confirmModal({ title: 'Quit this session?', text: 'The answers you have given are already saved, but you will not get the result summary.', no: 'Keep going', yes: 'Quit', act: 'quit-yes', stay: true });   // nothing is lost: not a red button (3.10.0)
 }
 function scrollToEnd() { var sc = elScreens.firstChild; if (sc) sc.scrollTop = sc.scrollHeight; }
 /* no gliding for "Reduce animations", for a phone set to reduce motion, or where the browser cannot glide */
@@ -5430,7 +5440,7 @@ ACTIONS.ach = function (el) {
   var id = el.getAttribute('data-id'), a = ACH.filter(function (x) { return x.id === id; })[0], when, v;
   if (!a) return;
   when = user.ach[a.id]; v = Math.min(a.val(user), a.goal);
-  showModal('<div class="m-emoji ach-big">' + achIcon(a, 72) + '</div><div class="m-title center">' + a.n + '</div><div class="m-text center">' + a.d + '.</div>' +
+  showModal('<div class="m-emoji ach-big' + (when ? '' : ' off') + '">' + achIcon(a, 72) + '</div><div class="m-title center">' + a.n + '</div><div class="m-text center">' + a.d + '.</div>' +
     (when ? '<div class="badge-line center">Unlocked on ' + fmtDate(new Date(when)) + '</div>'
           : '<div><div class="row between small"><span class="muted">Progress</span><b class="num">' + v + '/' + a.goal + '</b></div><div class="pbar thin"><i style="width:' + pct(v, a.goal) + '%"></i></div></div>') +
     '<div class="m-actions"><button class="btn btn-primary" data-act="modal-close">OK</button></div>');
