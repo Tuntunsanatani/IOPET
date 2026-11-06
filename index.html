@@ -893,6 +893,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fig-wide svg,.fb-text .fig-wide svg,.rv-x .fig-wide svg{width:100%;max-width:420px;max-height:none;height:auto;margin:0 auto}
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
+.pay-or{margin:10px 2px 0}.adm-sub{margin-top:16px}
 .pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px dashed var(--pur-line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
 .pack-card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--lip)}
@@ -1236,6 +1237,7 @@ var TOPICS = [
   { id: 'nmmi1', name: 'Mirror and water image · Mark 1', short: 'Mirror · M1', emoji: '🔄', subject: 'MAT', courses: ['x-nmms-hi'], ch: 'mi', mark: 1, size: 12, tint: 'rgba(244,114,182,.18)' },
   { id: 'nmfs1', name: 'Figure series · Mark 1', short: 'Fig. series · M1', emoji: '📈', subject: 'MAT', courses: ['x-nmms-hi'], ch: 'fs', mark: 1, size: 12, tint: 'rgba(167,139,250,.20)' },
   { id: 'nmfa1', name: 'Figure analogy · Mark 1', short: 'Fig. analogy · M1', emoji: '🔍', subject: 'MAT', courses: ['x-nmms-hi'], ch: 'fa', mark: 1, size: 12, tint: 'rgba(56,189,248,.20)' },
+  { id: 'nmfp1', name: 'Figure from pieces · Mark 1', short: 'Pieces · M1', emoji: '🧩', subject: 'MAT', courses: ['x-nmms-hi'], ch: 'fp', mark: 1, size: 10, tint: 'rgba(52,211,153,.18)' },      // 3.9.8
   /* NMMS-POOLS-TOPICS: end */
 ];
 
@@ -1887,6 +1889,24 @@ var BANK = {
     { id: 'nmfa1_19', d: 'hard', q: 'जिस प्रकार आकृति A से आकृति B बनती है, उसी प्रकार आकृति C से <b>?</b> की जगह कौन-सी आकृति बनेगी? [[fig:342,82;P 2 2 80 2 80 80 2 80;P 80 2 158 2 158 80 80 80;P 184 2 262 2 262 80 184 80;P 262 2 340 2 340 80 262 80;D 41 67 5;L 29 41 44 41;F 53 41 43 35 43 47;D 137.38 22.62 5;L 127.49 49.49 116.88 38.88;F 110.51 32.51 113.34 43.83 121.83 35.34;P 223 60 229.06 70.5 216.94 70.5;L 214 53 214 29;F 214 29 233 35 214 41;D 167 36 2.2;D 167 46 2.2;D 175 36 2.2;D 175 46 2.2;T 301 41 ?]]', o: ['[[fig:82,82;P 2 2 80 2 80 80 2 80;P 41 60 47.06 70.5 34.94 70.5;L 32 53 32 29;F 32 29 51 35 32 41]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;P 41 22 34.94 11.5 47.06 11.5;L 50 29 50 53;F 50 53 31 47 50 41]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;P 54.44 27.56 57.57 15.85 66.15 24.43;L 55.85 38.88 38.88 55.85;F 38.88 55.85 29.69 38.17 47.36 47.36]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;P 27.56 27.56 15.85 24.43 24.43 15.85;L 38.88 26.15 55.85 43.12;F 55.85 43.12 38.17 52.31 47.36 34.64]]'], a: 2, x: '<b>नियम (A → B):</b> पूरी आकृति <b>135° घड़ी की उल्टी दिशा में</b> घूमती है। यही C पर करो: [[fig:342,82;H1 286.69 12.85 329.15 12.85 329.15 58.85 286.69 58.85;P 2 2 80 2 80 80 2 80;P 80 2 158 2 158 80 80 80;P 184 2 262 2 262 80 184 80;P 262 2 340 2 340 80 262 80;D 41 67 5;L 29 41 44 41;F 53 41 43 35 43 47;D 137.38 22.62 5;L 127.49 49.49 116.88 38.88;F 110.51 32.51 113.34 43.83 121.83 35.34;P 223 60 229.06 70.5 216.94 70.5;L 214 53 214 29;F 214 29 233 35 214 41;P 314.44 27.56 317.57 15.85 326.15 24.43;L 315.85 38.88 298.88 55.85;F 298.88 55.85 289.69 38.17 307.36 47.36;D 167 36 2.2;D 167 46 2.2;D 175 36 2.2;D 175 46 2.2]] <b>जाल:</b> दिशा जाँचो — उल्टी दिशा में घुमाना या गलत ओर उलटना सबसे आम गलती है।' },
     { id: 'nmfa1_20', d: 'hard', q: 'जिस प्रकार आकृति A से आकृति B बनती है, उसी प्रकार आकृति C से <b>?</b> की जगह कौन-सी आकृति बनेगी? [[fig:342,82;P 2 2 80 2 80 80 2 80;P 80 2 158 2 158 80 80 80;P 184 2 262 2 262 80 184 80;P 262 2 340 2 340 80 262 80;L 31 31 51 31;L 41 31 41 53;D 15 15 3;D 67 15 3;L 109 51 129 51;L 119 51 119 29;D 93 67 3;D 145 67 3;D 145 15 3;L 215 29 215 49;L 215 49 234 49;F 234 49 228 45 228 53;D 197 15 3;D 249 15 3;D 249 67 3;D 167 36 2.2;D 167 46 2.2;D 175 36 2.2;D 175 46 2.2;T 301 41 ?]]', o: ['[[fig:82,82;P 2 2 80 2 80 80 2 80;L 49 29 49 49;L 49 49 30 49;F 30 49 36 45 36 53;D 67 15 3;D 15 15 3;D 15 67 3;D 67 67 3]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;L 33 29 33 49;L 33 49 52 49;F 52 49 46 45 46 53;D 15 15 3;D 67 15 3;D 67 67 3;D 15 67 3]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;L 33 53 33 33;L 33 33 52 33;F 52 33 46 37 46 29;D 15 67 3;D 67 67 3;D 67 15 3;D 15 15 3]]', '[[fig:82,82;P 2 2 80 2 80 80 2 80;L 33 53 33 33;L 33 33 52 33;F 52 33 46 37 46 29;D 15 67 3;D 67 67 3;D 67 15 3]]'], a: 2, x: '<b>नियम (A → B):</b> बिंदु <b>1 बढ़ता</b> है, और पूरी आकृति <b>ऊपर-नीचे उलट</b> जाती है (पानी की तरह)। यही C पर करो: [[fig:342,82;H1 269 9 333 9 333 73 269 73;P 2 2 80 2 80 80 2 80;P 80 2 158 2 158 80 80 80;P 184 2 262 2 262 80 184 80;P 262 2 340 2 340 80 262 80;L 31 31 51 31;L 41 31 41 53;D 15 15 3;D 67 15 3;L 109 51 129 51;L 119 51 119 29;D 93 67 3;D 145 67 3;D 145 15 3;L 215 29 215 49;L 215 49 234 49;F 234 49 228 45 228 53;D 197 15 3;D 249 15 3;D 249 67 3;L 293 53 293 33;L 293 33 312 33;F 312 33 306 37 306 29;D 275 67 3;D 327 67 3;D 327 15 3;D 275 15 3;D 167 36 2.2;D 167 46 2.2;D 175 36 2.2;D 175 46 2.2]] <b>जाल:</b> दिशा जाँचो — उल्टी दिशा में घुमाना या गलत ओर उलटना सबसे आम गलती है।' }
   ],
+  /* 3.9.8 Figure from pieces · Mark 1 — drawn on a grid, every answer checked by computer (a piece may be turned, not flipped) */
+  nmfp1: [
+    { id: "nmfp1_01", d: "easy", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 5 61 5 61 33 33 33 33 47 47 47 47 61 5 61;K 61 33 61 47;K 47 61 61 61;K 61 47 61 61]]", o: ["[[fig:64,64;P 11 25 53 25 53 39 11 39]]", "[[fig:64,64;P 18 18 46 18 46 46 18 46]]", "[[fig:64,64;P 18 18 46 18 46 46 32 46 32 32 18 32]]", "[[fig:64,64;P 11 18 39 18 39 32 53 32 53 46 25 46 25 32 11 32]]"], a: 2, x: "[[hl:H2 33 33 61 33 61 61 47 61 47 47 33 47;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>कटा हुआ भाग (रंगीन) <b>3 खानों</b> का है: ऊपर 2 खाने और उनके दाएँ खाने के नीचे 1 खाना। सही टुकड़ा यही है, बिना घुमाए ठीक बैठता है: [[fig:64,64;P 18 18 46 18 46 46 32 46 32 32 18 32]]<br>बाक़ी विकल्प — सीधी पट्टी, 2 × 2 का वर्ग (4 खाने) और सीढ़ी जैसा टुकड़ा (4 खाने) — कोई नहीं बैठता।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_02", d: "easy", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 5 19 5 19 33 47 33 47 5 61 5 61 61 5 61;K 19 5 33 5;K 33 5 47 5]]", o: ["[[fig:64,64;P 18 25 46 25 46 39 18 39]]", "[[fig:64,64;P 18 18 46 18 46 46 18 46]]", "[[fig:64,64;P 11 18 53 18 53 46 11 46]]", "[[fig:64,64;P 18 18 46 18 46 32 32 32 32 46 18 46]]"], a: 1, x: "[[hl:H2 19 5 47 5 47 33 19 33;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>ऊपर बीच में <b>2 × 2</b> का खाली भाग है — 4 खानों का एक छोटा वर्ग। सही टुकड़ा: [[fig:64,64;P 18 18 46 18 46 46 18 46]]<br>बाक़ी विकल्पों के खाने ही नहीं मिलते: 2 खानों की पट्टी, 6 खानों की आयत, 3 खानों का L।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_03", d: "easy", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 5 61 5 61 33 19 33 19 47 61 47 61 61 5 61;K 61 33 61 47]]", o: ["[[fig:64,64;P 18 25 46 25 46 39 18 39]]", "[[fig:64,64;P 11 25 53 25 53 39 11 39]]", "[[fig:64,64;P 4 25 60 25 60 39 4 39]]", "[[fig:64,64;P 11 18 53 18 53 32 25 32 25 46 11 46]]"], a: 1, x: "[[hl:H2 19 33 61 33 61 47 19 47;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>कटा भाग एक <b>सीधी पट्टी</b> है, <b>3 खाने</b> लंबी (बाईं ओर 1 खाना बचा है)। सही टुकड़ा: [[fig:64,64;P 11 25 53 25 53 39 11 39]]<br>छोटी पट्टी (2 खाने), लंबी पट्टी (4 खाने) और मुड़ा हुआ टुकड़ा नहीं बैठते।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_04", d: "medium", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 5 61 5 61 19 19 19 19 47 33 47 33 33 61 33 61 61 5 61;K 61 19 61 33]]", o: ["[[fig:64,64;P 11 18 25 18 25 32 53 32 53 46 11 46]]", "[[fig:64,64;P 11 18 53 18 53 46 39 46 39 32 11 32]]", "[[fig:64,64;P 11 18 53 18 53 32 39 32 39 46 25 46 25 32 11 32]]", "[[fig:64,64;P 18 11 46 11 46 53 32 53 32 25 18 25]]"], a: 3, x: "[[hl:H2 19 19 61 19 61 33 33 33 33 47 19 47;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>कटा भाग <b>4 खानों</b> का है: 3 खानों की पट्टी और उसके <b>बाएँ सिरे</b> के नीचे 1 खाना (L जैसा)। सही टुकड़ा यही है, एक चौथाई (90°) घुमाने पर: [[fig:64,64;P 18 11 46 11 46 53 32 53 32 25 18 25]] — पट्टी खड़ी हो जाती है और अतिरिक्त खाना ऊपर बाईं ओर आ जाता है।<br>दो विकल्प इसी टुकड़े की <b>दर्पण-प्रति</b> हैं (पलटे हुए) — किसी भी तरह घुमाओ, कटे भाग में नहीं बैठेंगे। T जैसा टुकड़ा तो आकार में ही अलग है।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_05", d: "medium", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 5 61 5 61 19 33 19 33 33 19 33 19 47 47 47 47 33 61 33 61 61 5 61;K 61 19 61 33]]", o: ["[[fig:64,64;P 11 18 39 18 39 32 53 32 53 46 25 46 25 32 11 32]]", "[[fig:64,64;P 18 25 32 25 32 11 46 11 46 39 32 39 32 53 18 53]]", "[[fig:64,64;P 18 11 32 11 32 25 46 25 46 53 32 53 32 39 18 39]]", "[[fig:64,64;P 18 18 46 18 46 46 18 46]]"], a: 2, x: "[[hl:H2 19 33 33 33 33 19 61 19 61 33 47 33 47 47 19 47;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>कटा भाग <b>4 खानों</b> का <b>सीढ़ीनुमा</b> टुकड़ा है: ऊपर की जोड़ी दाईं ओर, नीचे की जोड़ी एक खाना बाईं ओर खिसकी हुई। सही टुकड़ा, एक चौथाई (90°) घुमाने पर: [[fig:64,64;P 18 11 32 11 32 25 46 25 46 53 32 53 32 39 18 39]]<br>दो विकल्प <b>उलटी सीढ़ी</b> हैं — यानी पलटा हुआ टुकड़ा। एक में चारों खाने एक छोटे वर्ग में हैं।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_06", d: "medium", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:66,66;P 5 19 33 19 33 33 47 33 47 19 61 19 61 61 5 61;K 19 5 33 5;K 5 5 19 5;K 5 5 5 19;K 47 5 61 5;K 61 5 61 19;K 33 5 47 5]]", o: ["[[fig:64,64;P 4 32 18 32 18 18 32 18 32 32 60 32 60 46 4 46]]", "[[fig:64,64;P 4 18 60 18 60 32 32 32 32 46 18 46 18 32 4 32]]", "[[fig:64,64;P 4 18 60 18 60 32 18 32 18 46 4 46]]", "[[fig:64,64;P 11 18 53 18 53 32 39 32 39 46 25 46 25 32 11 32]]"], a: 0, x: "[[hl:H2 5 5 61 5 61 19 47 19 47 33 33 33 33 19 5 19;K 19 5 19 61;K 5 19 61 19;K 33 5 33 61;K 5 33 61 33;K 47 5 47 61;K 5 47 61 47]]<br>कटा भाग <b>5 खानों</b> का है: ऊपर पूरी पंक्ति (4 खाने) और उसके <b>तीसरे</b> खाने के नीचे 1 खाना। सही टुकड़ा, आधा चक्कर (180°) घुमाने पर: [[fig:64,64;P 4 32 18 32 18 18 32 18 32 32 60 32 60 46 4 46]] — पट्टी नीचे और उभरा खाना ऊपर आ जाता है। बाएँ से गिनो तो उभार अब <b>दूसरे</b> स्थान पर है, दाएँ से <b>तीसरे</b> — आधा चक्कर घुमाने पर यही होता है।<br>जिस विकल्प में पट्टी ऊपर और उभार नीचे <b>दूसरे</b> स्थान पर है, वह पलटा हुआ टुकड़ा है। जिसमें उभार किनारे पर है वह अलग आकार है, और T में खाने ही 4 हैं।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_07", d: "hard", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:65,65;P 5 5 27 5 27 16 16 16 16 27 27 27 27 38 38 38 38 16 49 16 49 5 60 5 60 60 5 60;K 38 5 49 5;K 27 5 38 5]]", o: ["[[fig:64,64;P 15.5 15.5 37.5 15.5 37.5 26.5 48.5 26.5 48.5 37.5 37.5 37.5 37.5 48.5 26.5 48.5 26.5 26.5 15.5 26.5]]", "[[fig:64,64;P 15.5 15.5 26.5 15.5 26.5 26.5 48.5 26.5 48.5 37.5 37.5 37.5 37.5 48.5 26.5 48.5 26.5 37.5 15.5 37.5]]", "[[fig:64,64;P 15.5 26.5 37.5 26.5 37.5 15.5 48.5 15.5 48.5 37.5 37.5 37.5 37.5 48.5 26.5 48.5 26.5 37.5 15.5 37.5]]", "[[fig:64,64;P 21 15.5 43 15.5 43 37.5 32 37.5 32 48.5 21 48.5]]"], a: 1, x: "[[hl:H2 16 16 27 16 27 5 49 5 49 16 38 16 38 38 27 38 27 27 16 27;K 16 5 16 60;K 5 16 60 16;K 27 5 27 60;K 5 27 60 27;K 38 5 38 60;K 5 38 60 38;K 49 5 49 60;K 5 49 60 49]]<br>कटा भाग <b>5 खानों</b> का है: बीच में खड़ी 3 खानों की पट्टी, उसके ऊपर वाले खाने के <b>दाईं</b> ओर 1 खाना और बीच वाले के <b>बाईं</b> ओर 1 खाना। सही टुकड़ा, एक चौथाई (90°) उलटी दिशा में घुमाने पर: [[fig:64,64;P 15.5 15.5 26.5 15.5 26.5 26.5 48.5 26.5 48.5 37.5 37.5 37.5 37.5 48.5 26.5 48.5 26.5 37.5 15.5 37.5]]<br>एक विकल्प देखने में बिल्कुल वैसा लगता है, पर उसके दोनों उभार <b>उलटी</b> ओर हैं — वह पलटा हुआ टुकड़ा है। एक और विकल्प वही पलटा टुकड़ा है, बस घुमाया हुआ। जिस टुकड़े में 2 × 2 का ठोस भाग है, वैसा भाग कटे हिस्से में है ही नहीं।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_08", d: "medium", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:65,65;P 5 5 60 5 60 27 38 27 38 38 27 38 27 60 5 60;K 49 60 60 60;K 60 49 60 60;K 60 27 60 38;K 60 38 60 49;K 38 60 49 60;K 27 60 38 60]]", o: ["[[fig:64,64;P 15.5 15.5 26.5 15.5 26.5 26.5 37.5 26.5 37.5 15.5 48.5 15.5 48.5 48.5 15.5 48.5]]", "[[fig:64,64;P 10 21 54 21 54 43 10 43]]", "[[fig:64,64;P 15.5 15.5 48.5 15.5 48.5 48.5 15.5 48.5]]", "[[fig:64,64;P 15.5 15.5 37.5 15.5 37.5 26.5 48.5 26.5 48.5 48.5 15.5 48.5]]"], a: 3, x: "[[hl:H2 27 38 38 38 38 27 60 27 60 60 27 60;K 16 5 16 60;K 5 16 60 16;K 27 5 27 60;K 5 27 60 27;K 38 5 38 60;K 5 38 60 38;K 49 5 49 60;K 5 49 60 49]]<br>कटा भाग <b>8 खानों</b> का है: नीचे-दाएँ कोने में 3 × 3 का भाग, जिसका <b>एक कोने</b> का खाना कटा नहीं है (वह वर्ग में बचा है)। सही टुकड़ा, एक चौथाई (90°) घुमाने पर: [[fig:64,64;P 15.5 15.5 37.5 15.5 37.5 26.5 48.5 26.5 48.5 48.5 15.5 48.5]] — खाली कोना अब ऊपर-दाएँ है।<br>एक विकल्प में भी 8 खाने हैं, पर खाली खाना <b>कोने में नहीं, किनारे के बीच</b> में है। 2 × 4 की आयत में भी 8 खाने हैं, पर आकार अलग। पूरे 3 × 3 में 9 खाने हैं। सीख: सिर्फ़ खाने गिनना काफ़ी नहीं, <b>आकार</b> भी मिलाओ।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_09", d: "hard", q: "नीचे दिए गए वर्ग का एक टुकड़ा कट गया है। उत्तर आकृतियों में से कौन-सा टुकड़ा इसे पूरा करके फिर से <b>पूरा वर्ग</b> बना देगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:65,65;P 5 5 16 5 16 16 27 16 27 38 49 38 49 27 38 27 38 5 60 5 60 60 5 60;K 16 5 27 5;K 27 5 38 5]]", o: ["[[fig:64,64;P 15.5 26.5 37.5 26.5 37.5 15.5 48.5 15.5 48.5 37.5 26.5 37.5 26.5 48.5 15.5 48.5]]", "[[fig:64,64;P 15.5 37.5 26.5 37.5 26.5 15.5 48.5 15.5 48.5 26.5 37.5 26.5 37.5 48.5 15.5 48.5]]", "[[fig:64,64;P 15.5 15.5 26.5 15.5 26.5 26.5 48.5 26.5 48.5 48.5 37.5 48.5 37.5 37.5 15.5 37.5]]", "[[fig:64,64;P 15.5 21 26.5 21 26.5 32 37.5 32 37.5 21 48.5 21 48.5 43 15.5 43]]"], a: 0, x: "[[hl:H2 16 5 38 5 38 27 49 27 49 38 27 38 27 16 16 16;K 16 5 16 60;K 5 16 60 16;K 27 5 27 60;K 5 27 60 27;K 38 5 38 60;K 5 38 60 38;K 49 5 49 60;K 5 49 60 49]]<br>कटा भाग <b>5 खानों</b> का <b>Z जैसा</b> टुकड़ा है: ऊपर बाएँ 2 खाने, बीच में 1, नीचे दाएँ 2 खाने। सही टुकड़ा, एक चौथाई (90°) घुमाने पर: [[fig:64,64;P 15.5 26.5 37.5 26.5 37.5 15.5 48.5 15.5 48.5 37.5 26.5 37.5 26.5 48.5 15.5 48.5]]<br>S जैसे दिखने वाले दोनों विकल्प <b>उलटे Z</b> हैं — यानी पलटा हुआ टुकड़ा। U जैसा टुकड़ा अलग आकार है।<br><b>तरकीब:</b> पहले <b>खाने गिनो</b> (कितने छोटे वर्ग), फिर <b>कोने और सीढ़ियाँ</b> मिलाओ। जो टुकड़ा उलटे दर्पण जैसा दिखे, वह पलटा हुआ है — वही सबसे बड़ा जाल होता है।" },
+    { id: "nmfp1_10", d: "easy", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:102,64;P 6 8 30 8 30 56 6 56;P 48 20 96 20 96 44 48 44]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 4 16 52]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 28 52 28;L 16 28 16 40;L 4 40 16 40]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 28 4 28 52]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 28;L 16 40 28 40;L 16 40 16 52;L 28 28 28 40;L 28 28 40 28]]"], a: 2, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 32 4 32 60]]<br>दोनों टुकड़े <b>एक जैसी आयतें</b> हैं, हर एक 2 × 4 (8 खाने)। दो बराबर आयतें मिलकर वर्ग को <b>ठीक आधा-आधा</b> बाँटती हैं — ऊपर दिखाया वर्ग।<br>बाक़ी विकल्पों में या तो एक पतली पट्टी (4 खाने) और एक बड़ा भाग (12 खाने) है, या टुकड़े टेढ़े हैं।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" },
+    { id: "nmfp1_11", d: "easy", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:102,64;P 6 8 42 8 42 20 30 20 30 32 18 32 18 56 6 56;P 60 8 96 8 96 32 84 32 84 44 72 44 72 56 60 56]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 16;L 16 28 16 52;L 28 16 28 28;L 28 16 40 16;L 16 28 28 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 28;L 16 28 16 40;L 4 40 16 40;L 16 28 40 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 28 16 52;L 28 4 28 28;L 16 28 28 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 4 40 28 40;L 28 16 28 40;L 28 16 52 16]]"], a: 0, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 46 4 46 18;L 18 32 18 60;L 32 18 32 32;L 32 18 46 18;L 18 32 32 32]]<br>पहला टुकड़ा <b>सीढ़ी</b> जैसा है (3, 2, 1, 1 खाने — कुल 7) और दूसरा उसका बाक़ी भाग (9 खाने); दूसरा आधा चक्कर घुमाकर दिखाया गया है।<br>ऊपर दिखाए वर्ग में कटी रेखा ठीक ऐसी ही सीढ़ी बनाती है। बाक़ी विकल्पों में सीढ़ी के क़दम अलग हैं — जैसे एक में 3, 3, 1 (खाने 7 ही, पर आकार अलग)।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" },
+    { id: "nmfp1_12", d: "medium", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:114,64;P 6 8 54 8 54 56 42 56 42 20 6 20;P 72 14 108 14 108 50 72 50]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 28 16 40;L 4 40 16 40;L 40 16 40 28;L 40 16 52 16;L 16 28 40 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 28;L 4 40 28 40;L 28 28 28 40;L 28 28 40 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 28 16;L 16 16 16 52;L 28 4 28 16]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 52 16;L 16 16 16 52]]"], a: 3, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 18 18 60 18;L 18 18 18 60]]<br>एक टुकड़ा <b>बड़ा L</b> है (ऊपर 4 खाने और नीचे की ओर 3 — कुल 7), दूसरा <b>3 × 3 का वर्ग</b> (9 खाने); L घुमाकर दिखाया गया है।<br>ऊपर दिखाए वर्ग में ठीक यही दो भाग हैं: दो किनारों पर L और कोने में 3 × 3। बाक़ी किसी विकल्प में 3 × 3 का पूरा वर्ग नहीं बनता।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" },
+    { id: "nmfp1_13", d: "medium", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:168,64;P 6 14 42 14 42 26 30 26 30 38 18 38 18 50 6 50;P 60 32 72 32 72 20 96 20 96 32 108 32 108 44 60 44;P 126 20 162 20 162 32 150 32 150 44 138 44 138 32 126 32]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 40 16;L 40 4 40 16;L 16 16 16 40;L 4 40 16 40;L 28 40 40 40;L 40 40 40 52;L 28 16 28 40]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 16;L 40 40 40 52;L 16 28 16 40;L 4 40 16 40;L 28 40 40 40;L 28 16 28 40;L 28 16 40 16;L 16 28 28 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 28 40 52 40;L 28 4 28 40;L 4 28 28 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 16;L 40 40 40 52;L 16 28 16 40;L 16 40 40 40;L 28 16 28 40;L 4 28 16 28;L 28 16 40 16]]"], a: 1, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 46 4 46 18;L 46 46 46 60;L 18 32 18 46;L 4 46 18 46;L 32 46 46 46;L 32 18 32 46;L 32 18 46 18;L 18 32 32 32]]<br>यहाँ <b>तीन</b> टुकड़े हैं: 6 खानों की सीढ़ी, 6 खानों का खड़ा टुकड़ा और 4 खानों का T (6 + 6 + 4 = 16)।<br>ऊपर दिखाए वर्ग में तीनों टुकड़े ठीक ऐसे ही कटे हैं (कुछ को घुमाकर देखो)। बाक़ी विकल्पों में: एक में सीढ़ी की जगह L है और T लंबा है; एक में न सीढ़ी है न T; एक में सीढ़ी और T दोनों बदल गए हैं।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" },
+    { id: "nmfp1_14", d: "hard", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:126,64;P 6 14 54 14 54 50 42 50 42 26 30 26 30 50 18 50 18 26 6 26;P 72 14 120 14 120 50 108 50 108 26 96 26 96 50 84 50 84 26 72 26]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 16;L 40 40 40 52;L 16 28 16 40;L 16 40 40 40;L 28 16 28 28;L 28 16 40 16;L 16 28 28 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 4 40 16;L 28 16 28 40;L 28 16 40 16;L 16 40 28 40;L 16 40 16 52]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 40 16;L 40 4 40 16;L 16 40 40 40;L 40 28 40 40;L 16 40 16 52;L 16 28 40 28;L 16 16 16 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 28 16;L 40 40 40 52;L 28 40 40 40;L 16 4 16 16;L 28 16 28 40]]"], a: 2, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 18 18 46 18;L 46 4 46 18;L 18 46 46 46;L 46 32 46 46;L 18 46 18 60;L 18 32 46 32;L 18 18 18 32]]<br>दोनों टुकड़े <b>कंघी</b> जैसे हैं — हर एक में 8 खाने और दो दाँत; एक के दाँत दूसरे के खाँचों में बैठते हैं।<br>ऊपर दिखाए वर्ग में कटी रेखा ठीक ऐसे ही दाँते बनाती है। एक विकल्प में भी कटाव है, पर टुकड़े <b>9 और 7</b> खानों के बनते हैं। दो विकल्पों में रेखा <b>सीढ़ी</b> जैसी है — <b>जाल:</b> वहाँ भी 8 + 8 खाने हैं, इसलिए सिर्फ़ गिनती से नहीं, आकार से पहचानो।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" },
+    { id: "nmfp1_15", d: "medium", q: "नीचे दिए गए <b>टुकड़ों को जोड़ने</b> पर उत्तर आकृतियों में से कौन-सा वर्ग बनेगा? (टुकड़े को <b>घुमाया</b> जा सकता है, <b>पलटा</b> नहीं।)<br>[[fig:126,64;P 6 32 18 32 18 20 42 20 42 32 54 32 54 44 6 44;P 72 14 84 14 84 26 108 26 108 14 120 14 120 50 72 50]]", o: ["[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 16 40 16;L 40 28 52 28;L 4 28 16 28;L 40 16 40 28;L 16 16 16 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 4 16 28 16;L 28 16 28 28;L 40 16 52 16;L 40 16 40 28;L 28 28 40 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 16 28 52 28;L 4 16 16 16;L 16 16 16 28]]", "[[fig:56,56;P 4 4 52 4 52 52 4 52;L 40 16 40 28;L 40 16 52 16;L 16 28 40 28;L 4 16 16 16;L 16 16 16 28]]"], a: 3, x: "[[fig:64,64;P 4 4 60 4 60 60 4 60;K 18 4 18 60;K 4 18 60 18;K 32 4 32 60;K 4 32 60 32;K 46 4 46 60;K 4 46 60 46;L 46 18 46 32;L 46 18 60 18;L 18 32 46 32;L 4 18 18 18;L 18 18 18 32]]<br>छोटा टुकड़ा <b>6 खानों</b> का है: ऊपर 4 खाने और उनके नीचे बीच के 2 खाने (चौड़े T जैसा)। प्रश्न में यह आधा चक्कर घूमा हुआ है, इसलिए उलटे T जैसा दिखता है। बड़ा टुकड़ा बाक़ी 10 खानों का है।<br>ऊपर दिखाए वर्ग में ऊपर की कटी रेखा ठीक यही आकार बनाती है। बाक़ी विकल्पों में: एक में नीचे के 2 खाने किनारों पर हैं, एक में नीचे सिर्फ़ 1 खाना है, एक में 3।<br><b>तरकीब:</b> हर टुकड़े के <b>खाने गिनो</b> — सबका जोड़ 16 (4 × 4) होना चाहिए; फिर हर विकल्प में देखो कि कटी रेखा वैसे ही टुकड़े बनाती है या नहीं।" }
+  ],
   /* NMMS-POOLS-BANK: end */
 };
 
@@ -2218,7 +2238,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.9.6',
+  VERSION: '3.9.8',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -2243,6 +2263,17 @@ var CONFIG = {
   PASS_MIN: 8,                                 // shortest password the app accepts
   KEEP_CHOSEN: 12                              // signed-out profiles that only hold a chosen course (no practice yet): the latest 12 are kept on a phone
 };
+/* 3.9.7 PLAY MODE — the same app, opened as the Google Play app: that app opens this page as …/?src=play.
+   Google Play allows no payment inside an app other than its own, and no way to one: so in the Play app nothing is sold —
+   no price, no UPI, no WhatsApp for a payment, no code box. A pack the account already has (unlocked on the website, or given
+   by the teacher to its email address) opens there as everywhere else. Remembered for this tab (sessionStorage), so a reload
+   keeps it. Only the address decides — not where the page was opened from (WhatsApp opens the website too, and must sell). */
+var PLAY = (function () {
+  var on = false;
+  try { on = /(?:^|[?&])src=play(?:&|$)/.test(window.location.search); } catch (e) { on = false; }
+  try { if (on) window.sessionStorage.setItem('iopet-play', '1'); else on = window.sessionStorage.getItem('iopet-play') === '1'; } catch (e) { /* no sessionStorage: the address alone decides */ }
+  return on;
+})();
 
 /* (3.9.0: the quotes and study tips that Home used to show are gone — every line on Home now serves the next step.
    The stored positions u.quote / u.tip are still kept as they are, so older versions of the app read the same backup.) */
@@ -3450,14 +3481,25 @@ function fsRead(tok, uid, cb, extra) {
 /* 3.8.0 The backup's own read also asks, in the SAME request, whether this account is an admin and which packs it has: no extra
    request, no extra data on a slow connection. If the database refuses that (its rules are older than this app), the backup is
    read alone and the question is not asked again until the app restarts — the backup never suffers for the packs. */
-var packsAsk = true, packsAsked = false;
+var packsAsk = true, packsAsked = false, grantsAsk = true;       // 3.9.7 grantsAsk: false once the database refused the grants
+/* the documents that say what an account has: admin?, the packs unlocked with a code, (3.9.7) the packs given to its email */
+function packPaths(uid) {
+  var e = grantsAsk ? myEmail() : '', out = ['admins/' + uid].concat(PACKS.map(function (p) { return 'owns/' + uid + '_' + p.id; }));
+  return e ? out.concat(PACKS.map(function (p) { return grantPath(p.id, e); })) : out;
+}
+function withGrants(paths) { return paths.length > 1 + PACKS.length; }
 function fsReadSync(tok, uid, cb) {
+  var paths;
   if (!packsAsk || !packsReady() || uid !== db.auth.uid) return fsRead(tok, uid, cb);
+  paths = packPaths(uid);
   fsRead(tok, uid, function (st, doc, detail, got) {
-    if (st === 'denied' && !packsAsked) { packsAsk = false; return fsRead(tok, uid, cb); }
+    if (st === 'denied' && !packsAsked) {
+      if (withGrants(paths)) { grantsAsk = false; return fsReadSync(tok, uid, cb); }     // 3.9.7 rules older than the grants: without them
+      packsAsk = false; return fsRead(tok, uid, cb);
+    }
     if (st === 'ok' || st === 'missing') { packsAsked = true; notePacks(uid, got); }
     cb(st, doc, detail);
-  }, ['admins/' + uid].concat(PACKS.map(function (p) { return 'owns/' + uid + '_' + p.id; })));
+  }, paths);
 }
 /* cb(state, updateTime, detail) — state: ok | conflict | offline | auth | denied | quota | server | bad */
 function fsCommit(tok, write, cb) {
@@ -5056,7 +5098,7 @@ SCREENS.profile = function () {
     menuRow('data-act="go" data-to="notifications"', '🔔', 'Notifications', on + ' of 2 on') +
     menuRow('data-act="go" data-to="settings"', '⚙️', 'Settings', { system: 'System look', light: 'Light', dark: 'Dark' }[u.settings.theme] || '') + '</div>' +
     '<div class="menu-group">' +
-    menuRow('data-act="go" data-to="redeem"', '🎫', 'Redeem a code', '') +
+    (PLAY ? '' : menuRow('data-act="go" data-to="redeem"', '🎫', 'Redeem a code', '')) +       /* 3.9.7 nothing is sold in the Play app */
     (isAdminUser() ? menuRow('data-act="go" data-to="admin"', '🔑', 'Admin', 'codes · content') : '') +
     menuRow('data-act="go" data-to="help"', '❓', 'Help & Support', '') + '</div>' +
     '<button class="sign-out" data-act="signout-ask">' + li('logout', 20) + 'Sign out</button></div>';   /* CHANGE #4: sign-out lives here only */
@@ -5152,7 +5194,7 @@ SCREENS.settings = function () {
     menuRow('data-act="go" data-to="account"', '☁️', 'Account & backup', u.guest ? 'Guest' : esc(firstName(u.name))) +
     '<div class="tier-label">Data</div>' +
     menuRow('data-act="reset-ask"', '🔄', 'Reset progress', '', ' danger') +
-    '<div class="foot-note">IOPET v' + CONFIG.VERSION + '<br>' + (!Store.persistent() ? 'Storage is blocked — data will not be saved.' :
+    '<div class="foot-note">IOPET v' + CONFIG.VERSION + (PLAY ? ' · Play' : '') + '<br>' + (!Store.persistent() ? 'Storage is blocked — data will not be saved.' :
       u.guest ? 'Data is saved on this phone only.' : 'Data is saved on this phone and backed up to your account.') + '</div></div>';
 };
 
@@ -5160,7 +5202,7 @@ SCREENS.privacy = function () {
   var mail = CONFIG.SUPPORT_EMAIL;
   return '<div class="page bg-profile policy">' + subHead('Privacy policy') +
     '<div class="small muted">IOPET · last updated 21 October 2026</div>' +
-    '<div class="card"><div class="card-title">What the app keeps</div><div class="small muted">Your name and email address. The course you choose: the exam, or the class with its board and stream. Your practice record: answers, XP, streak, goals and settings. Feedback and question reports you choose to write. If you unlock a paid pack with a code: which pack your account has, the code and the date — kept so that a code works only once; it holds no name or email. Nothing else: no contacts, no location, no photos, no phone number.</div></div>' +
+    '<div class="card"><div class="card-title">What the app keeps</div><div class="small muted">Your name and email address. The course you choose: the exam, or the class with its board and stream. Your practice record: answers, XP, streak, goals and settings. Feedback and question reports you choose to write. If your account has a pack: which pack and the date, with the code that unlocked it (kept so that a code works only once; it holds no name or email) — or, when the teacher unlocks it for your email address, that email address with the pack. Deleting your account removes that email address too. Nothing else: no contacts, no location, no photos, no phone number.</div></div>' +
     '<div class="card"><div class="card-title">Your password</div><div class="small muted">It is sent over an encrypted connection to Google Firebase Authentication, which checks it. IOPET never stores it on the phone and nobody on the IOPET team can read it.</div></div>' +
     '<div class="card"><div class="card-title">Where it is kept</div><div class="small muted">On this phone, and, once you confirm your email, in Google Cloud Firestore in Mumbai, India. Sign-in is handled by Google Firebase Authentication, which may process your email on Google servers outside India. In guest mode nothing leaves the phone.</div></div>' +
     '<div class="card"><div class="card-title">Who can see it</div><div class="small muted">Only you, after signing in: the database refuses everyone else. The IOPET developer can open stored records when it is needed to fix a problem or answer your request. Your data is never sold, never shared with advertisers and never used for ads.</div></div>' +
@@ -5994,7 +6036,7 @@ ACTIONS['delete-yes'] = function () {
       if (st !== 'ok') return fail(st === 'offline' ? AUTH_MSG.NETWORK              // So forget what the cloud copy looked like: the next
         : 'Your cloud backup could not be deleted (' + st + '), so the account was not deleted. Try again.');   // backup looks first, and repairs it
       delTried = uid;
-      idp('delete', { idToken: j.idToken }, function (e2) {
+      dropMyGrants(j.idToken, function () { idp('delete', { idToken: j.idToken }, function (e2) {
         if (gen !== authGen) { idle(); return; }
         if (e2 && e2 !== 'USER_NOT_FOUND') {                   // the login is probably still there. The marker stays all the same: the server may
           syncUnknown(uid);                                    // have removed the login and only failed to say so. An account that is still
@@ -6004,11 +6046,19 @@ ACTIONS['delete-yes'] = function () {
           return;
         }
         gone();                                                // the empty marker stays (see above)
-      });
+      }); });
     }
     if (marker) fsPut(j.idToken, uid, fsTomb(), null, step2); else fsDelete(j.idToken, uid, step2);
   });
 };
+
+/* 3.9.7 the packs given to this account's email address are removed with the account (they hold the address). Best effort:
+   with older database rules this is refused, and the account is deleted all the same. cb() always, once. */
+function dropMyGrants(tok, cb) {
+  var e = myEmail();
+  if (!e) return cb();
+  fsWrites(tok, PACKS.map(function (p) { return { 'delete': fsName(grantPath(p.id, e)) }; }), function () { cb(); });
+}
 
 /* ── help ── */
 ACTIONS.faq = function (el) {
@@ -6029,7 +6079,7 @@ ACTIONS['feedback-send'] = function () {
   user.feedback.push({ t: Date.now(), text: text });
   if (user.feedback.length > 20) user.feedback = user.feedback.slice(-20);
   save(); repaint();
-  msg = 'IOPET feedback (v' + CONFIG.VERSION + ')\n\n' + text;
+  msg = 'IOPET feedback (v' + CONFIG.VERSION + (PLAY ? ' Play' : '') + ')\n\n' + text;
   if (CONFIG.SUPPORT_EMAIL) {
     toast('Opening your mail app…');
     window.location.href = 'mailto:' + CONFIG.SUPPORT_EMAIL + '?subject=' + encodeURIComponent('IOPET feedback') + '&body=' + encodeURIComponent(msg);
@@ -6275,6 +6325,12 @@ function fixOwns(o) {
   return out;
 }
 function ownsOf(uid) { return db.owns && isUid(uid) && has(db.owns, uid) ? db.owns[uid] : null; }
+/* 3.9.7 A pack the admin gives to an email address: grants/<pack>/to/<email> (small letters). The student signs in with that
+   email, confirmed, and the pack is his — no code. It can be given before he even has an account. */
+var GRANT_EMAIL_RE = /^[a-z0-9._%+\-]{1,64}@[a-z0-9\-]+(?:\.[a-z0-9\-]+)+$/;
+function grantKey(email) { var e = String(email || '').trim().toLowerCase(); return e.length <= 120 && GRANT_EMAIL_RE.test(e) ? e : ''; }
+function grantPath(id, email) { return 'grants/' + id + '/to/' + email; }
+function myEmail() { return db.auth ? grantKey(db.auth.email) : ''; }
 function signedUser(u) { return !!(u && !u.guest && db.auth && u.id === db.auth.uid); }
 function isAdminUser() { var o = signedUser(user) ? ownsOf(user.id) : null; return !!(o && o.admin); }
 function ownsPack(u, id) { var o = signedUser(u) ? ownsOf(u.id) : null; return !!(o && o.packs[id]); }
@@ -6416,8 +6472,8 @@ function fsWrites(tok, writes, cb) {
 function packsReady() { var a = db.auth; return !!(a && a.verified && signedUser(user)); }
 /* what the server says about an account (from the backup's read, or from packsRefresh): kept, and the page follows */
 function ownsFrom(uid, docs) {
-  var o = { admin: !!docs['admins/' + uid], packs: {}, at: Date.now() };
-  PACKS.forEach(function (p) { if (docs['owns/' + uid + '_' + p.id]) o.packs[p.id] = 1; });
+  var o = { admin: !!docs['admins/' + uid], packs: {}, at: Date.now() }, e = myEmail();
+  PACKS.forEach(function (p) { if (docs['owns/' + uid + '_' + p.id] || (e && docs[grantPath(p.id, e)])) o.packs[p.id] = 1; });
   return o;
 }
 function notePacks(uid, docs) {
@@ -6466,14 +6522,20 @@ function packsRefresh(force, cb) {
     packWait = null;
     list.forEach(function (f) { f(state); });
   }
-  fsAuthed(function (tok, done) {
-    fsGetMany(tok, ['admins/' + uid].concat(PACKS.map(function (p) { return 'owns/' + uid + '_' + p.id; })), done);
-  }, function (state, docs) {
-    if (gen !== authGen) return finish('stale');
+  function ask() {
+    var paths = packPaths(uid);
+    fsAuthed(function (tok, done) { fsGetMany(tok, paths, done); }, function (state, docs) {
+      if (gen !== authGen) return finish('stale');
+      if (state === 'denied' && withGrants(paths)) { grantsAsk = false; return ask(); }     // 3.9.7 rules older than the grants
+      got(state, docs);
+    });
+  }
+  ask();
+  function got(state, docs) {
     if (state !== 'ok') return finish(state);
     db.owns[uid] = ownsFrom(uid, docs); saveLocal();
     packsContent(force, finish);
-  });
+  }
 }
 /* brings each pack in `ids` up to date: its small "version" document first, the pieces only when the version is new */
 function packsFetch(ids, gen, cb) {
@@ -6579,6 +6641,26 @@ function listCodes(cb) {
     }) : null);
   });
 }
+/* 3.9.7 cb(state): ok | conflict (that email has it already) | … */
+function giveGrant(p, email, note, cb) {
+  var uid = db.auth && db.auth.uid;
+  if (!isAdminUser() || !uid || !grantKey(email)) return cb('denied');
+  fsAuthed(function (tok, done) {
+    fsWrites(tok, [{ update: { name: fsName(grantPath(p.id, email)), fields: { pack: fsS(p.id), email: fsS(email), note: fsS(note), by: fsS(uid) } },
+                     updateTransforms: [{ fieldPath: 'at', setToServerValue: 'REQUEST_TIME' }], currentDocument: { exists: false } }], done);
+  }, cb);
+}
+/* the newest grants of one pack: cb(state, [{ email, note, at }]) */
+function listGrants(p, cb) {
+  fsAuthed(function (tok, done) { fsQuery(tok, 'grants/' + p.id, 'to', 'at', true, 100, done); }, function (state, list) {
+    cb(state, state === 'ok' ? list.map(function (d) {
+      return { email: grantKey(d.path.split('/')[3]) || str(fGet(d.fields, 'email'), 120), note: str(fGet(d.fields, 'note'), 60), at: fGet(d.fields, 'at') || 0 };
+    }) : null);
+  });
+}
+function dropGrant(p, email, cb) {
+  fsAuthed(function (tok, done) { fsWrites(tok, [{ 'delete': fsName(grantPath(p.id, email)), currentDocument: { exists: true } }], done); }, cb);
+}
 function dropCode(code, cb) {
   fsAuthed(function (tok, done) { fsWrites(tok, [{ 'delete': fsName('codes/' + code), currentDocument: { exists: true } }], done); }, cb);
 }
@@ -6648,7 +6730,7 @@ function packCard(u, p) {
   var own = canSeePack(u, p.id), n = packTopics(p.id).length;
   return '<button type="button" class="pack-card' + (own ? ' own' : '') + '" data-act="pack" data-id="' + p.id + '" aria-label="' + esc(p.name) + (own ? ', unlocked' : ', locked, ' + p.price + ' rupees') + '">' +
     '<span class="pack-ico">' + (own ? p.emoji : LOCK_SVG) + '</span><span class="grow"><span class="pack-name">' + esc(p.name) + '</span>' +
-    '<span class="pack-sub">' + (own ? (n ? plural(n, 'paper') + ' below' : 'Downloading…') : esc(p.sub)) + (p.live ? '' : ' · not for sale yet') + '</span></span>' +
+    '<span class="pack-sub">' + (own ? (n ? plural(n, 'paper') + ' below' : 'Downloading…') : esc(p.sub)) + (p.live || PLAY ? '' : ' · not for sale yet') + '</span></span>' +
     (own ? '<span class="chip ok">Unlocked</span>' : '<span class="pack-price">' + rupees(p.price) + '</span>') + '</button>';
 }
 /* the topics of the packs he has, on the Topics page */
@@ -6666,7 +6748,7 @@ function packRows(u, p) {
   }).join('');
 }
 function packSection(u) {
-  return packsOfCourse(u).map(function (p) {
+  return packsOfCourse(u).filter(function (p) { return !PLAY || canSeePack(u, p.id); }).map(function (p) {      // 3.9.7 Play: nothing for sale
     var own = canSeePack(u, p.id);
     return own && packTopics(p.id).length ? '<div class="tier-label">' + esc(p.name) + '</div>' + packRows(u, p) : packCard(u, p);
   }).join('');
@@ -6678,13 +6760,14 @@ ACTIONS.pack = function (el) {
     if (!packTopics(p.id).length) { toast('Downloading the pack…'); packsRefresh(true); }
     return;
   }
+  if (PLAY) return;                                                 // 3.9.7 (never shown there)
   go('pack', { id: p.id });
 };
 
 /* the unlock page of one pack */
 SCREENS.pack = function (p) {
   var k = packById(p.id), u = user, pay = CONFIG.PAY, html, link;
-  if (!k) return '<div class="page bg-profile">' + subHead('Unlock') + '<div class="empty"><div class="empty-t">This pack is not available.</div></div></div>';
+  if (!k || (PLAY && !canSeePack(u, k.id))) return '<div class="page bg-profile">' + subHead('Unlock') + '<div class="empty"><div class="empty-t">This pack is not available.</div></div></div>';
   html = '<div class="page bg-profile">' + subHead('Unlock') + '<div class="pack-hero"><div class="pack-hero-ico">' + k.emoji + '</div>' +
     '<div class="pack-hero-name">' + esc(k.name) + '</div><div class="small muted">' + esc(k.sub) + '</div><div class="pack-hero-price">' + rupees(k.price) + '</div></div>' +
     '<div class="card"><div class="card-title">What you get</div><ul class="pack-list">' + k.items.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
@@ -6707,7 +6790,8 @@ SCREENS.pack = function (p) {
     html += '<div class="pay-step"><span class="pay-n">2</span><span class="grow">Send the payment screenshot on WhatsApp' +
       '<span class="pay-row"><a class="btn btn-sec pay-btn" href="' + esc(link) + '" target="_blank" rel="noopener">Open WhatsApp</a></span></span></div>';
   } else html += '<div class="pay-step"><span class="pay-n">2</span><span class="grow">Show your teacher the payment.</span></div>';
-  html += '<div class="pay-step"><span class="pay-n">3</span><span class="grow">You get a code. Type it here:</span></div>' + codeForm(p) + '</div>';
+  html += '<div class="pay-step"><span class="pay-n">3</span><span class="grow">You get a code. Type it here:</span></div>' + codeForm(p) +
+    '<div class="small muted pay-or">Or your teacher unlocks it for your email, <b>' + esc(db.auth ? db.auth.email : '') + '</b>: then it opens by itself the next time you open the app.</div></div>';      // 3.9.7
   if (!db.auth.verified) html += '<div class="alert">' + REDEEM_MSG.verify + '</div>';
   return html + '</div>';
 };
@@ -6741,6 +6825,7 @@ function codeForm(p) {
 /* "Redeem a code" in the You tab: the same, for any pack */
 SCREENS.redeem = function (p) {
   var html = '<div class="page bg-profile">' + subHead('Redeem a code');
+  if (PLAY) return html + '<div class="empty"><div class="empty-t">Not available in this app.</div></div></div>';     // 3.9.7
   if (!signedUser(user)) return html + '<div class="alert info">' + REDEEM_MSG.guest + '</div><button class="btn btn-primary" data-act="adopt" data-to="signup">Create account</button></div>';
   return html + '<div class="sub">Type the code your teacher sent you. It unlocks its pack for this account.</div><div class="card">' + codeForm(p) + '</div>' +
     (db.auth.verified ? '' : '<div class="alert">' + REDEEM_MSG.verify + '</div>') + '</div>';
@@ -6767,7 +6852,7 @@ SCREENS.admin = function (p) {
   if (!isAdminUser()) return html + '<div class="alert warn">This account is not an admin.</div></div>';
   html += '<div class="card"><div class="card-title">Make unlock codes</div><div class="small muted">One code unlocks one pack for one account, once.</div>' +
     '<div class="lbl adm-lbl">Pack</div><div class="seg wrap">' + PACKS.map(function (k) {
-      return '<button class="seg-btn' + (k === pk ? ' on' : '') + '" data-act="adm-pack" data-id="' + k.id + '">' + esc(k.name) + ' · ' + rupees(k.price) + '</button>';
+      return '<button class="seg-btn' + (k === pk ? ' on' : '') + '" data-act="adm-pack" data-id="' + k.id + '">' + esc(k.name) + (PLAY ? '' : ' · ' + rupees(k.price)) + '</button>';
     }).join('') + '</div><div class="lbl adm-lbl">How many</div><div class="seg">' + [1, 5, 10].map(function (k) {
       return '<button class="seg-btn' + (k === n ? ' on' : '') + '" data-act="adm-n" data-n="' + k + '">' + k + '</button>';
     }).join('') + '</div><div class="lbl adm-lbl">Note (who it is for)</div><div class="input-wrap"><span class="input-icon">' + li('edit', 20) + '</span><input id="adm-note" type="text" maxlength="60" placeholder="e.g. Rahul, 98xxxxxx12" value="' + esc(p.note || '') + '"></div>' +
@@ -6775,7 +6860,7 @@ SCREENS.admin = function (p) {
   if (p.made && p.made.length) {
     html += '<div class="adm-made">' + p.made.map(function (c) { return codeRow(c, pk); }).join('') + '</div>';
   }
-  html += '</div><div class="card"><div class="row between"><div class="card-title">Recent codes</div><button class="link" data-act="adm-list">' + (p.list ? 'Refresh' : 'Show') + '</button></div>';
+  html += '</div>' + grantCard(p, pk) + '<div class="card"><div class="row between"><div class="card-title">Recent codes</div><button class="link" data-act="adm-list">' + (p.list ? 'Refresh' : 'Show') + '</button></div>';
   if (p.list) {
     html += p.list.length ? p.list.map(function (r) {
       var k = packById(r.pack);
@@ -6822,19 +6907,41 @@ AFTER.admin = function (sc) {
     rd.readAsText(f);
   });
 };
+/* 3.9.7 the card "Give a pack to an email": the pack of the codes card above, an email address, a note */
+function grantCard(p, pk) {
+  var html = '<div class="card"><div class="card-title">Give it to an email</div><div class="small muted">No code: the student signs in with this email (confirmed) and ' +
+    esc(pk.name) + ' opens by itself. It can be given before he makes his account. This is the way for the Play Store app, where codes cannot be typed.</div>' +
+    '<div class="lbl adm-lbl">Student’s email</div><div class="input-wrap"><span class="input-icon">' + li('mail', 20) + '</span><input id="adm-email" type="email" inputmode="email" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="120" placeholder="student@gmail.com" value="' + esc(p.email || '') + '"></div>' +
+    '<div class="lbl adm-lbl">Note (who it is for)</div><div class="input-wrap"><span class="input-icon">' + li('edit', 20) + '</span><input id="adm-gnote" type="text" maxlength="60" placeholder="e.g. Rahul, paid 05-11" value="' + esc(p.gnote || '') + '"></div>' +
+    '<button class="btn btn-primary" data-act="adm-give">GIVE ' + esc(pk.name.toUpperCase()) + '</button>';
+  if (p.given) html += '<div class="alert info">Given: <b class="sel">' + esc(p.given.email) + '</b> has ' + esc(pk.name) + '. ' +
+    '<a class="link" href="https://wa.me/?text=' + encodeURIComponent(grantMsg(pk, p.given.email)) + '" target="_blank" rel="noopener">Tell the student on WhatsApp</a></div>';
+  html += '<div class="row between adm-sub"><div class="card-title">Given to</div><button class="link" data-act="adm-glist">' + (p.glist ? 'Refresh' : 'Show') + '</button></div>';
+  if (p.glist) {
+    html += p.glist.length ? p.glist.map(function (r) {
+      return '<div class="adm-row"><div class="grow"><div class="adm-code sel">' + esc(r.email) + '</div><div class="small muted">' + (r.at ? fmtShort(r.at) : '') + (r.note ? ' · ' + esc(r.note) : '') + '</div></div>' +
+        '<button class="link" data-act="adm-gdrop" data-email="' + esc(r.email) + '">Remove</button></div>';
+    }).join('') : '<div class="small muted">Not given to anybody yet.</div>';
+  }
+  return html + '</div>';
+}
+function grantMsg(k, email) {
+  return 'Your ' + k.name + ' is ready on IOPET.\nOpen the IOPET app and sign in with ' + email + ' (confirm the email if the app asks). The papers are on the Topics page.';
+}
 /* the admin page's own state lives with the page (it survives a redraw) */
 function admTop() { var e = top(); if (e) e.p = e.p || {}; return e; }
+function admKeep(e) { e.p.note = val('adm-note'); e.p.email = val('adm-email'); e.p.gnote = val('adm-gnote'); }      // 3.9.7 what is typed survives a redraw
 function admUp(ok, text) { var e = admTop(); if (e && e.s === 'admin') { e.p.up = { ok: ok, text: text }; e.p.meta = null; repaint(); } }
 function admState(err) { return err === 'offline' ? 'No internet connection.' : err === 'denied' ? 'The database refused (is this account an admin? are the new rules published?).' : 'Something went wrong (' + err + ').'; }
-ACTIONS['adm-pack'] = function (el) { var e = admTop(); e.p.pack = el.getAttribute('data-id'); e.p.note = val('adm-note'); e.p.made = null; repaint(); };
-ACTIONS['adm-n'] = function (el) { var e = admTop(); e.p.n = parseInt(el.getAttribute('data-n'), 10) || 1; e.p.note = val('adm-note'); repaint(); };
+ACTIONS['adm-pack'] = function (el) { var e = admTop(); e.p.pack = el.getAttribute('data-id'); admKeep(e); e.p.made = null; e.p.given = null; e.p.glist = null; repaint(); };
+ACTIONS['adm-n'] = function (el) { var e = admTop(); e.p.n = parseInt(el.getAttribute('data-n'), 10) || 1; admKeep(e); repaint(); };
 ACTIONS['adm-make'] = function () {
   var e = admTop(), k = packById(e.p.pack) || PACKS[0], n = clamp(e.p.n || 1, 1, PACK_CODES_MAX), note = val('adm-note').replace(/\s+/g, ' ').slice(0, 60);
   busy('Making ' + (n === 1 ? 'a code' : n + ' codes') + '…');
   makeCodes(k, n, note, function (state, codes) {
     idle();
     if (state !== 'ok') return toast(admState(state));
-    e.p.pack = k.id; e.p.note = note; e.p.made = codes; e.p.list = null;
+    admKeep(e); e.p.pack = k.id; e.p.note = note; e.p.made = codes; e.p.list = null;
     repaint(); toast(n === 1 ? 'Code ready.' : n + ' codes ready.');
   });
 };
@@ -6844,7 +6951,7 @@ ACTIONS['adm-list'] = function () {
   listCodes(function (state, list) {
     idle();
     if (state !== 'ok') return toast(admState(state));
-    e.p.note = val('adm-note'); e.p.list = list; repaint();
+    admKeep(e); e.p.list = list; repaint();
   });
 };
 ACTIONS['adm-drop'] = function (el) {
@@ -6862,7 +6969,7 @@ ACTIONS['adm-drop-yes'] = function (el) {
     idle();
     if (state !== 'ok') return toast(state === 'denied' ? 'It cannot be withdrawn: it was already used.' : admState(state));
     if (e.p.list) e.p.list = e.p.list.filter(function (r) { return r.code !== code; });
-    e.p.note = val('adm-note'); repaint(); toast('Withdrawn.');
+    admKeep(e); repaint(); toast('Withdrawn.');
   });
 };
 ACTIONS['adm-meta'] = function () {
@@ -6871,7 +6978,48 @@ ACTIONS['adm-meta'] = function () {
   packMetas(function (state, metas) {
     idle();
     if (state !== 'ok') return toast(admState(state));
-    e.p.note = val('adm-note'); e.p.meta = metas; e.p.up = null; repaint();
+    admKeep(e); e.p.meta = metas; e.p.up = null; repaint();
+  });
+};
+/* 3.9.7 give / list / remove the packs given to an email */
+ACTIONS['adm-give'] = function () {
+  var e = admTop(), k = packById(e.p.pack) || PACKS[0], raw = val('adm-email'), email = grantKey(raw), note = val('adm-gnote').replace(/\s+/g, ' ').slice(0, 60);
+  if (!email) return toast(raw ? 'That does not look like an email address.' : 'Type the student’s email first.');
+  busy('Giving ' + k.name + '…');
+  giveGrant(k, email, note, function (state) {
+    idle();
+    if (state === 'conflict') return toast(email + ' already has ' + k.name + '.');
+    if (state !== 'ok') return toast(admState(state));
+    admKeep(e); e.p.pack = k.id; e.p.email = ''; e.p.gnote = ''; e.p.given = { email: email }; e.p.glist = null;
+    repaint(); feel('ok'); toast('Given to ' + email + '.');
+  });
+};
+ACTIONS['adm-glist'] = function () {
+  var e = admTop(), k = packById(e.p.pack) || PACKS[0];
+  busy('Loading…');
+  listGrants(k, function (state, list) {
+    idle();
+    if (state !== 'ok') return toast(admState(state));
+    admKeep(e); e.p.glist = list; repaint();
+  });
+};
+ACTIONS['adm-gdrop'] = function (el) {
+  var email = grantKey(el.getAttribute('data-email')), k = packById(admTop().p.pack) || PACKS[0];
+  if (!email) return;
+  showModal('<div class="m-title">Remove ' + esc(k.name) + '?</div><div class="m-text"><b>' + esc(email) + '</b> will no longer have it (the next time the app checks).</div>' +
+    '<div class="m-actions"><button class="btn btn-sec" data-act="modal-close">Cancel</button><button class="btn btn-danger" data-act="adm-gdrop-yes" data-email="' + esc(email) + '">Remove</button></div>');
+};
+ACTIONS['adm-gdrop-yes'] = function (el) {
+  var email = grantKey(el.getAttribute('data-email')), e = top(), k = packById(e.p && e.p.pack) || PACKS[0];
+  hideModal();
+  if (!email) return;
+  busy('Removing…');
+  dropGrant(k, email, function (state) {
+    idle();
+    if (state !== 'ok') return toast(admState(state));
+    if (e.p.glist) e.p.glist = e.p.glist.filter(function (r) { return r.email !== email; });
+    if (e.p.given && e.p.given.email === email) e.p.given = null;
+    admKeep(e); repaint(); toast('Removed.');
   });
 };
 
