@@ -1,4 +1,8 @@
-Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic) NotoSans-Italic[wdth,wght].ttf: Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
+The fonts of IOPET (pjs-*.woff2: Plus Jakarta Sans, Latin; noto-hi-*.woff2: Noto Sans Devanagari) are both under the
+SIL Open Font License 1.1, below.
+
+Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/devanagari)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

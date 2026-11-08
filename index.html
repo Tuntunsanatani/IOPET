@@ -13,20 +13,25 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='f' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD84D'/%3E%3Cstop offset='1' stop-color='%23FF8C00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='21' fill='%23100F1C'/%3E%3Cg transform='translate(19.2 17.87) scale(.72)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='url(%23f)'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
 
 <style>
-/* ── FONT: Noto Sans, kept next to the app (3.11.0; Mukta before) — no request to anyone else, works offline. One family for
-   Hindi and English, drawn to sit together: a large x-height for small phones, and the Hindi the phone itself shows. Two
-   small files per weight (174 KB for all six, Mukta's were 370 KB); a phone downloads only the ones a page uses. Until they arrive the phone's own font shows (swap). ── */
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-400.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:600;font-display:swap;src:url(noto-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(noto-700.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-hi-400.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:600;font-display:swap;src:url(noto-hi-600.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
-@font-face{font-family:'Noto Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(noto-hi-700.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+/* ── FONT: "IOPET Sans", kept next to the app — no request to anyone else, works offline. One family name, two drawings:
+   English and numbers in Plus Jakarta Sans (3.14.0; Noto Sans before, whose Latin is the Open Sans family that half the web
+   uses, so buttons read as "default"), Hindi in Noto Sans Devanagari (3.11.0), which sits well beside it. Both are OFL.
+   Plus Jakarta Sans: geometric, a tall x-height for small phones, tabular figures for the timer and the counts. Its English
+   is drawn one step heavier than asked (regular = its 500, bold = its 800): its own 400 is thin on a cheap screen in the
+   sun, and its 700 looked light beside the Hindi. Two small files per weight (166 KB for all six); a phone downloads only
+   the ones a page uses. Until they arrive the phone's own font shows (swap). ── */
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:400;font-display:swap;src:url(pjs-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:600;font-display:swap;src:url(pjs-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(pjs-800.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-hi-400.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:600;font-display:swap;src:url(noto-hi-600.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(noto-hi-700.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
 
 :root{
-  /* TYPE SCALE (3.11.0) — every text size of the app is one of these eight; nothing in between. Noto Sans. 11 is only for
-     small CAPS labels (letter-spaced); 16 px stays on text inputs (smaller makes iPhones zoom in). Icons keep their own sizes. */
-  --fs-cap:11px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;
+  /* TYPE SCALE (3.11.0) — every text size of the app is one of these eight; nothing in between. The cap size is only for
+     small CAPS labels (letter-spaced; 12 px since 3.14.0, 11 was too small on cheap screens); 16 px stays on text inputs
+     (smaller makes iPhones zoom in). Icons keep their own sizes. */
+  --fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.10.0 the brand: matte charcoal and the diya's flame. The chrome is plain grey (no tint, no haze, no gloss); a hue appears
      only where it means something, and each hue means one thing in both looks:
@@ -77,8 +82,8 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
-  --font-display:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
-  --font-body:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
+  --font-display:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
+  --font-body:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   color-scheme:dark;
 }
 [data-theme="light"]{
@@ -331,19 +336,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-e .li{width:20px;height:20px}
 .au-g:active,.au-e:active{transform:scale(.98)}
 .au-ghost{display:block;width:100%;min-height:48px;text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
-.au-foot{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:4px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.4px;color:var(--ink3)}
-.au-foot button{font:inherit;letter-spacing:inherit;color:var(--ink2);min-height:40px;padding:0 4px}
-.au-foot i{width:3px;height:3px;border-radius:50%;background:var(--ink3);display:block}
+.au-foot{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:4px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink3)}
+/* privacy as a small tag: its shield, the word, a hairline pill (pills are for tags); the touch area reaches 44 px */
+.au-priv{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px 0 8px;border:1px solid var(--line-2);border-radius:var(--r-pill);background:var(--surface);font:inherit;letter-spacing:inherit;color:var(--ink2)}
+.au-priv:after{content:'';position:absolute;top:-5px;right:-4px;bottom:-5px;left:-4px}
+.au-priv .chi{width:18px;height:18px;flex:none;margin-top:-1px}
+.au-priv:active{transform:scale(.97)}
 .au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
 .au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:8px 20px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s linear .3s}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
 .au.open .au-sheet{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
-.au-grab{width:36px;height:4px;border-radius:2px;background:var(--line-2);margin:0 auto 10px}
-.au-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.au-head h2,.au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
-.au-x{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--ink2);background:var(--surface-2)}
-.au-x .li{width:18px;height:18px}
+/* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
+   "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
+   and the sheet goes down. */
+.au-grab{display:block;position:relative;width:calc(100% + 40px);height:36px;margin:-8px -20px 6px;background:none;touch-action:none;-webkit-tap-highlight-color:transparent}
+.au-grab:before{content:'';position:absolute;left:50%;top:11px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}   /* ≥ 3:1 in both looks */
+.au-grab:active:before{transform:scaleX(1.15)}
+.au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
 .au-form>.auth-error{margin-bottom:12px}
 .au-fld+.au-fld{margin-top:8px}
 .au-iw{display:flex;align-items:center;min-height:54px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 6px 0 14px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
@@ -928,8 +938,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .modal.open{display:flex}
 /* every dialog is a bottom sheet (3.9.0): it rises from the bottom, where the thumb is */
 .m-card{width:100%;max-width:480px;max-height:92%;overflow-y:auto;background:var(--modal);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:12px 24px 28px;box-shadow:var(--shadow-sheet)}
-.m-card:before{content:'';display:block;width:40px;height:5px;border-radius:5px;background:var(--line-2);margin:0 auto 14px}
 .m-card>*+*{margin-top:12px}
+/* 3.14.0 every sheet's grab line is a real strip that follows the finger (as on the sign-in sheet); it stays on top when the
+   sheet scrolls */
+.m-grab{display:block;position:sticky;top:-12px;z-index:1;width:calc(100% + 48px);height:28px;margin:-12px -24px 0;background:var(--modal);touch-action:none;-webkit-tap-highlight-color:transparent}
+.m-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}
+.m-grab:active:before{transform:scaleX(1.15)}
+.m-card>.m-grab+*{margin-top:4px}
 .m-emoji{font-size:40px;text-align:center;line-height:1.2;color:var(--ink2)}
 .m-emoji .li{width:40px;height:40px}
 .m-title{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
@@ -2580,6 +2595,13 @@ var STAT_ICONS = {
     var d = 'M40 6a24 24 0 1 0 18 34A20 20 0 0 1 40 6z', s = 'M50 9l2.2 5.3 5.3 2.2-5.3 2.2L50 24l-2.2-5.3-5.3-2.2 5.3-2.2z';
     return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>' +
       icP(s, '.ps', ' transform="translate(0 1.5)"') + icP(s, '.p');
+  },
+  /* 3.14.0 privacy: a green shield with a dark tick (safe), drawn like the icons around it */
+  shield: function () {
+    var d = 'M32 5l20 7.5V28c0 13.5-8.5 24-20 29-11.5-5-20-15.5-20-29V12.5z';
+    return icP(d, IC.green.d, ' transform="translate(0 3)"') + icP(d, IC.green.f) +
+      icP('M22.5 30.5l6.5 6.5 12.5-13', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"') +
+      '<ellipse cx="21.5" cy="17" rx="2.8" ry="6" transform="rotate(35 21.5 17)" fill="#fff" opacity=".5"/>';
   },
   /* right answers: a green disc with a dark tick (3.10.0: a white tick on green is too faint) */
   tick: function () {
@@ -4267,9 +4289,10 @@ function appBack() {
   return false;
 }
 
+var M_GRAB = '<button type="button" class="m-grab" data-act="modal-close" aria-label="Close"></button>';   // 3.14.0
 function showModal(html, enterAct) {
   html = html.replace(/<div class="m-emoji">([^<]{1,4})<\/div>/, function (m, e) { return has(EMOJI_LI, e) ? '<div class="m-emoji">' + li(EMOJI_LI[e], 40) + '</div>' : m; });   // 3.9.0 a line icon, not a picture
-  elModal.innerHTML = '<div class="m-card" role="dialog" aria-modal="true"' + (enterAct ? ' data-enter="' + enterAct + '"' : '') + '>' + html + '</div>';
+  elModal.innerHTML = '<div class="m-card" role="dialog" aria-modal="true"' + (enterAct ? ' data-enter="' + enterAct + '"' : '') + '>' + M_GRAB + html + '</div>';
   elModal.classList.add('open');
   modalOpen = true;
   lock(220);
@@ -4638,6 +4661,8 @@ function onAuFocus(ev) {
   if (String(ev.target.value) && !fldOk(f)) fldBad(f);                        // left wrong: say so (never while typing)
 }
 var AU_ERR = '<div class="au-err" id="err" role="alert"></div>';
+/* 3.14.0 the foot of the sign-in and registration pages: where it is made, and privacy as a tag with its shield */
+function auFoot() { return '<div class="au-foot"><span>MADE IN INDIA</span><button type="button" class="au-priv" data-act="go" data-to="privacy">' + statIcon('shield', 18) + 'PRIVACY</button></div>'; }
 /* on the sign-in page the message is seen above the sheet and heard from inside it (the sheet is a modal dialog) */
 var AU_ERR_SHEET = '<div class="au-err" id="err" aria-hidden="true"></div>';
 SCREENS.login = function (p) {
@@ -4648,10 +4673,9 @@ SCREENS.login = function (p) {
     '<div class="au-dock"><button type="button" class="btn au-g" data-act="google">' + G_LOGO + 'Continue with Google</button>' +
       '<button type="button" class="btn au-e" data-act="au-open">' + li('mail') + 'Continue with email</button>' +
       (mv ? '' : '<button type="button" class="au-ghost" data-act="guest">Continue as guest</button>') +
-      '<div class="au-foot"><span>MADE IN INDIA</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div></div>' +
+      auFoot() + '</div>' +
     '<div class="au-scrim" data-act="au-close"></div>' +
-    '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><div class="au-grab"></div>' +
-      '<div class="au-head"><h2>Sign in</h2><button type="button" class="au-x" data-act="au-close" aria-label="Close">' + li('close') + '</button></div>' +
+    '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><button type="button" class="au-grab" data-act="au-close" aria-label="Close"></button>' +
       '<div class="au-sr" id="err-sr" role="alert"></div><div class="au-form" data-enter="login">' +
         auEmail(p.email, 'username') + auPass('f-pass', 'Password', 'current-password', false) +
         '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
@@ -4671,8 +4695,7 @@ SCREENS.signup = function (p) {
       auGo('signup', 'Create account') + '</div>' +
     (rs ? '<div class="au-alt">The unconfirmed sign-up for ' + esc(db.auth.email) + ' is removed once the new account exists.</div>'
         : '<div class="au-alt">Already have an account? <button type="button" data-act="' + (mv ? 'adopt' : 'back') + '" data-to="login">Sign in</button></div>') +
-    '<div class="au-foot"><span>MADE IN INDIA</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div>' +
-    '</div>' + AU_ERR + '</div>';
+    auFoot() + '</div>' + AU_ERR + '</div>';
 };
 SCREENS.forgot = function (p) {
   return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
@@ -4688,7 +4711,79 @@ ACTIONS['au-open'] = function () {
   pg.classList.remove('still'); pg.classList.add('open');
   setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { try { i.focus(); } catch (x) { /* */ } } }, 320);
 };
-ACTIONS['au-close'] = function () { auClose(); };
+ACTIONS['au-close'] = function (el) { if (!grabClickAfterDrag(el)) auClose(); };
+/* the click a browser may send when a drag on a grab strip ends is not a tap (other buttons are never ignored) */
+function grabClickAfterDrag(el) { return !!(el && el.classList && (el.classList.contains('au-grab') || el.classList.contains('m-grab')) && Date.now() - auDragEnd < 350); }
+/* 3.14.0 A SHEET FOLLOWS THE FINGER, from its grab strip: the sign-in sheet and every other sheet (#modal). Down: the sheet
+   goes with the finger and the page behind gets lighter as it goes. Let go past a third of its height, or with a flick, and it
+   goes down (140–280 ms, faster after a faster flick); any less and it settles back (260 ms, no bounce). Up: it gives a little
+   and comes back. A tap on the strip, on the dimmed page, or Back closes it too. With "Reduce animations" it still follows the
+   finger, then goes or comes back at once. */
+var auDrag = null, auDragEnd = 0;
+function rgbaOf(c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''), v = m ? m[1].split(',') : []; return v.length >= 3 ? { r: +v[0], g: +v[1], b: +v[2], a: v.length > 3 ? +v[3] : 1 } : null; }
+function onAuDown(ev) {
+  var g = auUp(ev.target, 'au-grab') || auUp(ev.target, 'm-grab'), pg, sh, er, d;
+  if (!g || ev.button > 0) return;
+  if (g.classList.contains('au-grab')) {
+    pg = auUp(g, 'au'); sh = pg && pg.querySelector('.au-sheet'); er = $('err');
+    if (!sh || !pg.classList.contains('open')) return;
+    d = { sh: sh, sc: pg.querySelector('.au-scrim'), er: er && er.classList.contains('show') ? er : null };
+  } else {
+    sh = auUp(g, 'm-card');
+    if (!sh || !modalOpen) return;
+    d = { sh: sh, modal: true, bg: rgbaOf(getComputedStyle(elModal).backgroundColor) };
+  }
+  d.g = g; d.id = ev.pointerId; d.y0 = d.y = ev.clientY; d.t = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
+  auDrag = d;
+  try { g.setPointerCapture(ev.pointerId); } catch (x) { /* (an old browser: the tap still closes) */ }
+}
+function auDragSet(d, ty, ms, ease, dim) {                            // ty null: back to the style sheet; ms 0: at once
+  var t = ms ? 'transform ' + ms + 'ms ' + ease : 'none', o = dim === undefined ? (ty === null ? null : Math.max(0, 1 - Math.max(0, ty) / d.h)) : dim;
+  d.sh.style.transition = t; d.sh.style.transform = ty === null ? '' : 'translateY(' + ty + 'px)';
+  if (d.er) { d.er.style.transition = t; d.er.style.transform = ty === null ? '' : 'translateY(' + ty + 'px)'; }
+  if (d.sc) { d.sc.style.transition = ms ? 'opacity ' + ms + 'ms ease-out' : 'none'; d.sc.style.opacity = o === null ? '' : String(o); }
+  if (d.bg) {
+    elModal.style.transition = ms ? 'background-color ' + ms + 'ms ease-out' : 'none';
+    elModal.style.backgroundColor = o === null ? '' : 'rgba(' + d.bg.r + ',' + d.bg.g + ',' + d.bg.b + ',' + (d.bg.a * o).toFixed(3) + ')';
+  }
+}
+function onAuMove(ev) {
+  var d = auDrag, now = Date.now(), ty;
+  if (!d || ev.pointerId !== d.id) return;
+  if (!d.moved) {
+    if (Math.abs(ev.clientY - d.y0) < 5) return;                     // not yet a drag: maybe a tap
+    d.moved = true;                                                  // from here the sheet stays under the finger
+  }
+  ty = ev.clientY - d.y0; if (ty < 0) ty = ty / 5;                   // pulled up, it gives only a little
+  if (now > d.t) d.v = 0.7 * (ev.clientY - d.y) / (now - d.t) + 0.3 * d.v;   // px per ms, smoothed
+  d.y = ev.clientY; d.t = now; d.dy = ty;
+  auDragSet(d, ty, 0);
+}
+function onAuUp(ev) {
+  var d = auDrag, ms, go, ease = 'cubic-bezier(.2,.7,.2,1)';
+  if (!d || ev.pointerId !== d.id) return;
+  auDrag = null;
+  if (!d.moved) return;                                              // a tap: the strip's own click closes the sheet
+  auDragEnd = Date.now();
+  go = ev.type === 'pointerup' && (d.dy > d.h / 3 || (d.v > 0.5 && d.dy > 20));
+  if (go) {
+    ms = calmMotion() ? 0 : Math.round(Math.max(140, Math.min(280, (d.h * 1.05 - d.dy) / Math.max(d.v, 1.1))));
+    if (d.modal) {                                                   // #modal closes at once, so it goes down first
+      auDragSet(d, Math.round(d.h * 1.05), ms, ease, 0);
+      setTimeout(function () { hideModal(); elModal.style.transition = ''; elModal.style.backgroundColor = ''; }, ms);
+      return;
+    }
+    auDragSet(d, null, ms, ease);
+    d.sh.style.transition = ms ? 'transform ' + ms + 'ms ' + ease + ',visibility 0s linear ' + ms + 'ms' : 'none';
+    auClose();
+  } else {
+    ms = calmMotion() ? 0 : 260;
+    auDragSet(d, null, ms, 'cubic-bezier(.2,.9,.3,1)');
+  }
+  setTimeout(function () {
+    d.sh.style.transition = ''; if (d.sc) d.sc.style.transition = ''; if (d.er) d.er.style.transition = ''; if (d.modal) elModal.style.transition = '';
+  }, ms + 40);
+}
 function auClose() {
   var e = top(), pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au');
   if (!e || e.s !== 'login' || !e.p || !e.p.sheet) return false;
@@ -5492,7 +5587,7 @@ ACTIONS['rv-open'] = function (el) {
 ACTIONS['rv-nav'] = function (el) {
   var i = (S && typeof S.rv === 'number' ? S.rv : 0) + (parseInt(el.getAttribute('data-d'), 10) || 0), card = elModal.querySelector('.m-card');
   if (!S || !S.items[i] || !card) return;
-  S.rv = i; card.innerHTML = rvSheet(i); card.scrollTop = 0;
+  S.rv = i; card.innerHTML = M_GRAB + rvSheet(i); card.scrollTop = 0;
 };
 
 /* ════════════════════════════════════════════════════════════════════
@@ -6153,7 +6248,7 @@ function revealEnd() {
    ════════════════════════════════════════════════════════════════════ */
 ACTIONS.go = function (el) { var to = el.getAttribute('data-to'); if (has(SCREENS, to) && to !== 'splash') go(to); };
 ACTIONS.back = function () { appBack(); };
-ACTIONS['modal-close'] = function () { hideModal(); };
+ACTIONS['modal-close'] = function (el) { if (!grabClickAfterDrag(el)) hideModal(); };
 ACTIONS.recover = function () { S = null; reset(user ? 'home' : 'login'); };
 ACTIONS.home = function () { reset('home'); };
 ACTIONS.tab = function (el) {
@@ -7774,6 +7869,10 @@ function boot() {
   elPhone.addEventListener('focusin', onAuFocus);                    // 3.11.0 sign-in fields: light up, and say when left wrong
   elPhone.addEventListener('focusout', onAuFocus);
   elPhone.addEventListener('keydown', onKeyDown);
+  elPhone.addEventListener('pointerdown', onAuDown);                 // 3.14.0 the sign-in sheet follows the finger
+  document.addEventListener('pointermove', onAuMove);
+  document.addEventListener('pointerup', onAuUp);
+  document.addEventListener('pointercancel', onAuUp);
   document.addEventListener('keydown', function (ev) {
     if (ev.key === 'Escape' || ev.key === 'Esc' || ev.keyCode === 27) { if (appBack()) ev.preventDefault(); }
   });
