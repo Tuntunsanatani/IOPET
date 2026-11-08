@@ -475,7 +475,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-level{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:600;color:var(--ink2);margin-bottom:10px}
 .q-level .chi{margin-right:8px}
 .q-text{font-size:var(--fs-xl);font-weight:700;line-height:1.6}
-.q-help{font-size:var(--fs-xs);color:var(--ink2);margin-top:10px}
 .opts>.opt-btn+.opt-btn{margin-top:10px}
 .opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:13px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform .12s,border-color .12s,background-color .12s}
 .opt-btn:active{transform:translateY(2px)}
@@ -505,6 +504,53 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fb-text{font-size:var(--fs-md);color:var(--ink);line-height:1.7;margin-top:10px}
 .practice .btn-primary{margin-top:20px}
 .practice .link{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}   /* 3.10.0 skip / report: grey, underlined, not violet */
+/* ── QUIZ, 3.12.0 (DESIGN.md §6) ── The question sits on the page (no card, no "tap Check" line). Every action lives in one
+   dock at the bottom, in the thumb's reach: Skip (outlined, a third) + Check (grey until an option is chosen). After the
+   answer the dock becomes the RESULT PANEL: it rises from the bottom (300 ms), tinted by the result — green for right,
+   red for wrong, grey for skipped — with the title, the XP, "Why?" (right answers: the way to it, on request; wrong and
+   skipped: shown at once), a flag to report the question, and one button: green Continue after a right answer, a plain
+   one after a wrong answer (a red button would read as "delete"). */
+.page.practice.qz{display:flex;flex-direction:column}
+.qz>.q-body{margin-top:24px}
+.qz .q-level{margin-bottom:10px}
+.qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
+.qz .q-dock .btn{margin:0 !important}
+.qz .q-skip{flex:0 0 32%;margin-right:12px !important;min-height:58px;background:transparent;border:1.5px solid var(--line-2);color:var(--ink);font-size:var(--fs-lg);font-weight:700;box-shadow:none}
+.qz .q-skip:active{transform:scale(.97)}
+.qz .q-dock .btn-check{flex:1;min-width:0}
+.qz .q-dock .btn-check[disabled]{opacity:1;background:var(--surface-3);color:var(--ink3);box-shadow:none}   /* inactive, still readable (as the sign-in button) */
+:root:not([data-theme="light"]) .qz .q-dock .btn-check[disabled]{color:#A0A0A0}
+.qz>.q-dock.res{display:block;padding:0;background:transparent}
+.q-result{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--surface-2)}
+.q-result.ok{background:var(--good-soft)}
+.q-result.bad{background:var(--wrong-soft)}
+.q-result.fresh{animation:qr-in .3s cubic-bezier(.05,.7,.1,1)}
+@keyframes qr-in{from{transform:translateY(100%)}to{transform:none}}
+.qr-head{display:flex;align-items:center;min-height:40px}
+.qr-head .fb-ico{margin-right:10px}
+.q-result.ok .fb-ico{background:var(--good);color:var(--on-mark)}
+.q-result.bad .fb-ico{background:var(--wrong);color:var(--on-mark)}
+.qr-head .fb-title{flex:none;font-size:var(--fs-xl);font-weight:700}
+.qr-head .fb-xp{margin-left:10px}
+.qr-sp{flex:1}
+.qr-why{flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
+[data-theme="light"] .qr-why{background:rgba(20,20,20,.07)}
+.qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.qr-flag .li{width:20px;height:20px}
+.qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
+.q-result.open .qr-text{display:block}
+.qr-go{display:block;width:100%;margin-top:14px !important;min-height:58px;border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:700;transition:transform .12s ease-out,box-shadow .12s ease-out}
+.qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 #1F8C66}
+.qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 #1F8C66}
+.qr-go.plain{background:#E6E6E6;color:#141414;box-shadow:0 4px 0 #8F8F8F}
+.qr-go.plain:active{transform:translateY(3px);box-shadow:0 1px 0 #8F8F8F}
+[data-theme="light"] .qr-go.ok{box-shadow:0 4px 0 #087553}
+[data-theme="light"] .qr-go.ok:active{box-shadow:0 1px 0 #087553}
+[data-theme="light"] .qr-go.plain{background:#141414;color:#FFFFFF;box-shadow:0 4px 0 #000}
+[data-theme="light"] .qr-go.plain:active{box-shadow:0 1px 0 #000}
+.calm .q-result.fresh{animation:none}
+@media (prefers-reduced-motion:reduce){.q-result.fresh{animation:qr-fade .2s ease-out}}
+@keyframes qr-fade{from{opacity:0}to{opacity:1}}
 .btn-check{margin-top:20px !important}
 .btn-check[disabled]{opacity:1;background:var(--fill-2);color:var(--ink3);box-shadow:none}
 
@@ -766,7 +812,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .nav-item{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;padding:2px 0 0;text-align:center;color:var(--ink3);border-radius:16px}
 .nav-ic{display:flex;align-items:center;justify-content:center;width:70px;height:40px;border-radius:20px;transition:background-color .15s}
 .nav-item svg{display:block;width:35px;height:35px}
-.nav-lbl{display:block;font-size:24px;font-weight:400;line-height:1.2;margin-top:8px}
+.nav-lbl{display:block;font-size:var(--fs-lg);font-weight:400;line-height:1.2;margin-top:6px}   /* 3.12.0 (was 24px: bigger than the page titles) */
 .nav-item.active{color:var(--ink)}
 .nav-item.active .nav-ic{background:var(--navsel);color:var(--ink)}
 .nav-item.active .nav-lbl{font-weight:700}
@@ -794,6 +840,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .m-list-item b{display:block;font-size:var(--fs-xs)}
 .toast{position:absolute;left:0;right:0;bottom:132px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
 .toast.show{opacity:1;visibility:visible}
+.toast.at-top{bottom:auto;top:76px;top:calc(76px + env(safe-area-inset-top))}   /* 3.12.0 in a quiz the bottom is the result panel: messages come under the header */
 .toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:var(--fs-sm);font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
 .toast .li{margin:-3px 7px 0 -4px;color:#FFD84D}   /* 3.10.0 "Achievement unlocked": its star is gold (the toast is dark in both looks) */
 
@@ -1172,8 +1219,8 @@ a.link{text-decoration:none}
 .path .k-done{border-color:var(--pn-on-line)}
 .path .k-active,.path .k-revise{border-color:var(--primary)}
 /* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
-@media (max-width:370px){.nav-lbl{font-size:22px}}
-@media (max-width:340px){.nav-ic{width:60px;height:36px;border-radius:18px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:20px}}
+@media (max-width:370px){.nav-lbl{font-size:var(--fs-lg)}}
+@media (max-width:340px){.nav-ic{width:60px;height:36px;border-radius:18px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:var(--fs-md)}}
 </style>
 </head>
 <body>
@@ -2476,7 +2523,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.11.0',
+  VERSION: '3.12.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4154,6 +4201,7 @@ function formNote(msg) {
 }
 function toast(msg, ico) {                                         // ico: a line icon (li()) before the words, or nothing
   elToast.innerHTML = '<span>' + (ico || '') + esc(msg) + '</span>';
+  elToast.classList.toggle('at-top', !!(stack.length && top().s === 'practice'));
   elToast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function () { elToast.classList.remove('show'); }, 2400);
@@ -4237,7 +4285,7 @@ function subHead(title) {
   return '<div class="sub-header"><button class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button>' + (title ? '<div class="sub-title">' + title + '</div>' : '') + '</div>';
 }
 function toggleRow(group, key, on, label, desc) {
-  return '<div class="toggle-row"><div class="toggle-info"><div class="toggle-label">' + label + '</div><div class="toggle-desc">' + desc + '</div></div>' +
+  return '<div class="toggle-row"><div class="toggle-info"><div class="toggle-label">' + label + '</div>' + (desc ? '<div class="toggle-desc">' + desc + '</div>' : '') + '</div>' +
     '<button class="toggle' + (on ? ' on' : '') + '" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" aria-label="' + label +
     '" data-act="toggle" data-group="' + group + '" data-key="' + key + '"></button></div>';
 }
@@ -5140,12 +5188,12 @@ SCREENS.practice = function () {
   var it = S.items[S.i], q = it.q, t = topicById(S.topic), total = S.items.length;
   var answered = it.pick !== null, last = S.i === total - 1, fresh = !!S.fresh, html, ok, skipped;
   S.fresh = false;
-  html = '<div class="page bg-practice practice"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+  html = '<div class="page bg-practice practice qz"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + (pct(S.i, total) - 100) + '%;' : ' style="') + 'transform:translateX(' + (pct(S.i + (answered ? 1 : 0), total) - 100) + '%)"></i></div>' +
     '<div class="q-counter num">' + (S.i + 1) + '/' + total + '</div>' +
     (user.settings.timer ? '<div class="q-timer num" id="timer">' + fmtTime(sessionMs()) + '</div>' : '') + '</div>' +
-    '<div class="q-card"><div class="q-level">' + (t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 22) : '') + '<span>' + esc(t.short) + '</span></div><div class="q-text">' + figHtml(q.q) + '</div>' +
-    (answered ? '' : '<div class="q-help">Choose one option, then tap Check.</div>') + '</div><div class="opts">';
+    '<div class="q-body"><div class="q-level">' + (t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 22) : '') + '<span>' + esc(t.short) + '</span></div><div class="q-text">' + figHtml(q.q) + '</div>' +
+    '</div><div class="opts">';
   var sel = !answered && typeof it.sel === 'number' ? it.sel : -1;
   if (q.o.every(function (o) { return /^\[\[[a-z0-9]+:[^\[\]]*\]\]$/.test(o); })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid">';   /* four drawings: a 2 x 2 grid */
   else if (q.o.length === 4 && q.o.every(function (o) { return o.indexOf('[[') < 0 && o.indexOf('<') < 0 && o.length <= 8; })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid short">';   /* 3.9.0 four short answers: 2 x 2 too */
@@ -5161,17 +5209,19 @@ SCREENS.practice = function () {
   html += '</div>';
   if (answered) {
     ok = it.pick === q.a; skipped = it.pick === -1;
-    /* the answer sheet: green for right, vermilion for wrong (never danger-red, 3.10.0); a mistake costs nothing, and the way to the answer is shown */
-    html += '<div class="feedback-box ' + (ok ? 'correct-fb' : skipped ? 'skip-fb' : 'wrong-fb') + (fresh ? ' fresh' : '') + '" id="fb"><div class="fb-head"><span class="fb-ico">' +
-      (ok ? li('check', 20) : skipped ? li('chev', 20) : li('close', 18)) + '</span><span class="fb-title">' + (ok ? 'Correct!' : skipped ? 'Skipped' : 'Not quite') + '</span>' +
-      (ok && it.xp ? '<span class="cp y fb-xp">+' + it.xp + ' XP</span>' : '') + '</div>' +
-      (ok ? '' : '<div class="fb-sub">' + (skipped ? 'Here is the answer.' : 'No XP is lost for a mistake. See how it is solved:') + '</div>') +
-      '<div class="fb-text">' + figHtml(explainOf(q)) + '</div></div>' +
-      '<button class="btn btn-primary" data-act="next">' + (last ? 'See results' : 'Next') + '</button>' +
-      '<div class="center"><button class="link" data-act="report">Report a problem with this question</button></div>';
+    /* 3.12.0 the result panel (DESIGN.md §6): green for right, red for wrong, grey for skipped; a mistake costs nothing.
+       The way to the answer is open after a wrong answer or a skip, and one tap away ("Why?") after a right one. */
+    html += '<div class="q-dock res"><div class="q-result ' + (ok ? 'ok' : skipped ? 'skip' : 'bad') + (ok && !it.why ? '' : ' open') + (fresh ? ' fresh' : '') +
+      '" id="fb" role="status"><div class="qr-head"><span class="fb-ico">' + (ok ? li('check', 20) : skipped ? li('chev', 20) : li('close', 18)) + '</span>' +
+      '<span class="fb-title">' + (ok ? 'Correct!' : skipped ? 'Skipped' : 'Not quite') + '</span>' +
+      (ok && it.xp ? '<span class="cp y fb-xp">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
+      (ok ? '<button type="button" class="qr-why" data-act="why" aria-expanded="' + (it.why ? 'true' : 'false') + '">Why?</button>' : '') +
+      '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
+      '<div class="qr-text">' + figHtml(explainOf(q)) + '</div>' +
+      '<button type="button" class="btn qr-go ' + (ok ? 'ok' : 'plain') + '" data-act="next">' + (last ? 'See results' : 'Continue') + '</button></div></div>';
   } else {                                        /* choose first, then check: a slip of the finger is not an answer yet */
-    html += '<button class="btn btn-primary btn-check" data-act="check"' + (sel < 0 ? ' disabled' : '') + '>Check</button>' +
-      '<div class="center"><button class="link" data-act="skip">Skip this question</button></div>';
+    html += '<div class="q-dock"><button type="button" class="btn q-skip" data-act="skip">Skip</button>' +
+      '<button type="button" class="btn btn-primary btn-check" data-act="check"' + (sel < 0 ? ' disabled' : '') + '>Check</button></div>';
   }
   return html + '</div>';
 };
@@ -5639,14 +5689,14 @@ SCREENS.settings = function () {
   return '<div class="page bg-profile">' + subHead('Settings') +
     '<div class="tier-label">Practice</div>' +
     '<div class="card" style="margin-top:8px"><div class="toggle-label">Questions per session</div><div class="seg">' + seg + '</div></div>' +
-    toggleRow('settings', 'shuffle', s.shuffle, 'Shuffle options', 'Change the order of A–D every time') +
-    toggleRow('settings', 'timer', s.timer, 'Show timer', 'Show the session clock while practicing') +
+    toggleRow('settings', 'shuffle', s.shuffle, 'Shuffle options', '') +
+    toggleRow('settings', 'timer', s.timer, 'Show timer', '') +
     '<div class="tier-label">Feedback</div>' +
-    toggleRow('settings', 'sound', s.sound, 'Sound effects', 'Play a tone for right and wrong answers') +
-    toggleRow('settings', 'haptic', s.haptic, 'Vibration', 'Vibrate on answers (Android phones)') +
-    toggleRow('settings', 'calm', s.calm, 'Reduce animations', 'Turn off screen fades and celebrations for older phones. The opening logo still plays.') +
+    toggleRow('settings', 'sound', s.sound, 'Sound effects', '') +
+    toggleRow('settings', 'haptic', s.haptic, 'Vibration', '') +
+    toggleRow('settings', 'calm', s.calm, 'Reduce animations', 'For older phones. The opening logo still plays.') +
     '<div class="tier-label">Appearance</div>' +
-    '<div class="card" style="margin-top:8px"><div class="toggle-label">Theme</div><div class="toggle-desc">“Same as phone” switches with the phone’s dark mode.</div><div class="seg">' +
+    '<div class="card" style="margin-top:8px"><div class="toggle-label">Theme</div><div class="seg">' +
     [['system', 'Same as phone'], ['light', 'Light'], ['dark', 'Dark']].map(function (o) {
       return '<button class="seg-btn' + (s.theme === o[0] ? ' on' : '') + '" data-act="theme" data-v="' + o[0] + '" aria-pressed="' + (s.theme === o[0]) + '">' + o[1] + '</button>';
     }).join('') + '</div></div>' +
@@ -6295,6 +6345,13 @@ ACTIONS.next = function () {
     finishSession(); stack[stack.length - 1] = { s: 'summary' }; paint();
     if (S.cele) { celebrateMark(); } else { sfx('done'); feel('done'); }
   }
+};
+ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
+  var it = S && S.items[S.i], box = $('fb');
+  if (!it || it.pick === null || !box) return;
+  it.why = !it.why;
+  box.classList.toggle('open', !!it.why);
+  el.setAttribute('aria-expanded', it.why ? 'true' : 'false');
 };
 ACTIONS.quit = function () { askQuit(); };
 ACTIONS['quit-yes'] = function () { quitNow(); };
