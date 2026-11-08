@@ -1,0 +1,31 @@
+# IOPET checks: ES5 code, matching versions, and the app opening and working in a real browser (dark and light).
+# What is checked: .github/scripts/check.js. On a failure the screenshots of the failing step are kept as "ci-shots".
+name: Check
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04          # pinned: Playwright 1.56.1 installs no Chromium on ubuntu-latest (26.04)
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install the checkers
+        run: npm install --no-save --no-package-lock acorn@8.18.0 playwright@1.56.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Check
+        run: node .github/scripts/check.js
+      - name: Keep the screenshots of a failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-shots
+          path: ci-shots/
+          if-no-files-found: ignore
