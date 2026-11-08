@@ -1,4 +1,4 @@
-# IOPET design rules (v1, 3.12.0)
+# IOPET design rules (v2, 3.13.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -29,13 +29,17 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#D96C00` text, `#FF9F0A` fill | main button, current item, progress bars, selected option ring |
 | Reward | `--gold` | `#FFD84D` | `#8A5A00` (fill `#FFC400`) | XP, streak (lit), badges |
 | Correct / done | `--good` | `#2FD39A` | `#0B9468` | right answer, passed, "done" ticks |
-| Wrong / destructive | `--wrong` | `#FF453A` | `#D92D20` | wrong answer, delete, errors |
+| Not quite (a wrong answer) | `--miss` | `#C9961A` | `#A87A0F` | the wrong option, the result panel after a wrong answer, review marks |
+| Error / destructive | `--wrong` | `#FF453A` | `#D92D20` | form errors, delete, reset (never for a learning mistake) |
 | Everything else | neutral greys | `--ink` `--ink2` `--ink3` on `--surface*` | | |
 
 - Text in three levels only: `--ink` (main), `--ink2` (secondary), `--ink3` (hint, locked).
   Coloured text is only for links (`--primary-ink`) and the meanings above.
 - Glyphs on a coloured fill use dark ink `#141414`, never white (contrast).
-- The selection colour (orange ring) is never the correctness colour (green/red).
+- A chosen option (before Check) is a neutral ring: white in dark, black in light. It is never orange. Amber (a wrong
+  answer) is measured at OKLab ΔE 9.5 from the brand orange, which is too close for the two to mean different things
+  side by side. The ✕ / ✓ marks carry the meaning for colour-blind students.
+- A learning mistake is amber, never red. Red is kept for real errors and for actions that delete.
 - Gradients are not used, except the splash light.
 - Contrast: normal text ≥ 4.5 : 1, large text and icons ≥ 3 : 1, in both themes.
 
@@ -70,7 +74,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | Kind | Look | Examples |
 |---|---|---|
 | Primary | orange pill, dark text, lip | Start, Check, Next set, Create account |
-| Result (after an answer) | green pill after right, neutral pill after wrong (light grey in dark, near-black in light) | Continue, See results |
+| Result / acknowledge | green pill after right; neutral pill (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | outlined pill | Skip, Review answers, Quit |
 | Inactive | grey fill, grey text, still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
 | Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
@@ -81,10 +85,16 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 ## 6. Components
 
 - **Bottom dock**: the main action area of a screen. It is anchored to the bottom (sticky), on the page colour.
-- **Result panel** (quiz): slides up from the bottom and is tinted by the result (green-soft / red-soft /
+- **Result panel** (quiz): slides up from the bottom and is tinted by the result (green-soft / amber-soft /
   neutral). Row 1: icon + "Correct!" / "Not quite" / "Skipped" + "+10 XP" + flag. Row 2: the
   explanation (open after a wrong answer or a skip, behind "Why?" after a right one). Row 3: one
   result button.
+- **Reward moment** (end of a set): the chapter art in a soft glow, one word (Perfect! / Well done! / Set complete),
+  two big numbers in tinted tiles (XP EARNED in gold-soft, which counts up once from 0; RIGHT in green-soft when ≥ 60 %),
+  what the set earned as small chips, UP NEXT, then the dock: Review (outlined) + the next set (orange). ✕ means later.
+- **Daily streak moment**: after the day's first set, full screen: the flame, the count, one line, this week's days
+  (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
+  there is one.
 - **Sheet**: for choices and short info over a page. It is dimmed behind, has a grab handle and rises 300 ms.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
   tint. A done item gets a green tick, and its label stays at full ink. A locked item is dimmed with a lock.
