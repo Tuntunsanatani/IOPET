@@ -66,7 +66,7 @@ const server = http.createServer((req, res) => {
       && await step('a chapter and one question checked', async () => {
         await click('[data-act=tab][data-tab=topics]'); await click('[data-act=chapter][data-ch=cl]'); await click('.chapter [data-act=start].btn', 1200);
         await click('[data-act=pick][data-i="0"]', 400); await click('[data-act=check]', 900);
-        await page.locator('.feedback-box').first().waitFor({ state: 'visible', timeout: 5000 });
+        await page.locator('#fb').first().waitFor({ state: 'visible', timeout: 5000 });   // the answer's result (3.12.0: the result panel)
       });
     if (errs.length) bad(theme + ': errors in the page:\n      ' + errs.join('\n      ')); else if (go) ok(theme + ': no script errors');
     await ctx.close();
