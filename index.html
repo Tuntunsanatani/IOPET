@@ -7,22 +7,26 @@
 <meta name="referrer" content="no-referrer"/>
 <!-- The page may only talk to the three Google sign-in / database hosts. Its font (3.9.0) is a file next to it. No other script, frame, image or request is allowed.
      (3.7.1: and, from its own web address, read its manifest and start its helper sw.js — the files next to it.) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; font-src 'self'; img-src data: 'self'; connect-src https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://accounts.google.com/gsi/client; style-src 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src data: 'self'; connect-src https://accounts.google.com/gsi/ https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'"/>
 <title>IOPET — Padho. Samjho. Aage badho.</title>
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='f' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD84D'/%3E%3Cstop offset='1' stop-color='%23FF8C00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='21' fill='%23100F1C'/%3E%3Cg transform='translate(19.2 17.87) scale(.72)'%3E%3Cpath d='M40 0C54 22 60 34 40 54C20 34 26 22 40 0Z' fill='url(%23f)'/%3E%3Cpath d='M0 60Q40 98 80 60Z' fill='%23FFF8E7'/%3E%3C/g%3E%3C/svg%3E"/>
 
 <style>
-/* ── FONT: Mukta, kept next to the app (3.9.0) — no request to anyone else, works offline. Hindi and English letters are two
-   small files per weight; a phone downloads only the ones a page uses. Until they arrive the phone's own font shows (swap). ── */
-@font-face{font-family:'Mukta';font-style:normal;font-weight:400;font-display:swap;src:url(mukta-400.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Mukta';font-style:normal;font-weight:600;font-display:swap;src:url(mukta-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Mukta';font-style:normal;font-weight:700 900;font-display:swap;src:url(mukta-700.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Mukta';font-style:normal;font-weight:400;font-display:swap;src:url(mukta-hi-400.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
-@font-face{font-family:'Mukta';font-style:normal;font-weight:600;font-display:swap;src:url(mukta-hi-600.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
-@font-face{font-family:'Mukta';font-style:normal;font-weight:700 900;font-display:swap;src:url(mukta-hi-700.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+/* ── FONT: Noto Sans, kept next to the app (3.11.0; Mukta before) — no request to anyone else, works offline. One family for
+   Hindi and English, drawn to sit together: a large x-height for small phones, and the Hindi the phone itself shows. Two
+   small files per weight (174 KB for all six, Mukta's were 370 KB); a phone downloads only the ones a page uses. Until they arrive the phone's own font shows (swap). ── */
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-400.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:600;font-display:swap;src:url(noto-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(noto-700.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-hi-400.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:600;font-display:swap;src:url(noto-hi-600.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(noto-hi-700.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
 
 :root{
+  /* TYPE SCALE (3.11.0) — every text size of the app is one of these eight; nothing in between. Noto Sans. 11 is only for
+     small CAPS labels (letter-spaced); 16 px stays on text inputs (smaller makes iPhones zoom in). Icons keep their own sizes. */
+  --fs-cap:11px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.10.0 the brand: matte charcoal and the diya's flame. The chrome is plain grey (no tint, no haze, no gloss); a hue appears
      only where it means something, and each hue means one thing in both looks:
@@ -73,8 +77,8 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;
-  --font-display:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
-  --font-body:'Mukta',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
+  --font-display:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
+  --font-body:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   color-scheme:dark;
 }
 [data-theme="light"]{
@@ -110,7 +114,7 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none}
-body{overflow:hidden;background:var(--bg-deep);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+body{overflow:hidden;background:var(--bg-deep);color:var(--ink);font-family:var(--font-body);font-size:var(--fs-md);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
 button{font-family:inherit;font-size:inherit;line-height:inherit;color:inherit;background:none;border:0;outline:0;cursor:pointer;text-align:inherit;-webkit-user-select:none;user-select:none}
 button:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
 input,textarea{font-family:inherit;color:inherit;outline:0;border:0;background:none;border-radius:0}
@@ -159,22 +163,22 @@ sub,sup{font-size:.72em;line-height:0}
 .between{justify-content:space-between}
 .grow{flex:1;min-width:0}
 .center{text-align:center}
-.h1{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.2px}
-.sub{font-size:14px;color:var(--ink2);margin-top:2px !important}
-.lbl{font-size:13px;font-weight:600;color:var(--ink2)}
+.h1{font-size:var(--fs-3xl);font-weight:700;line-height:1.2;letter-spacing:-.2px}
+.sub{font-size:var(--fs-sm);color:var(--ink2);margin-top:2px !important}
+.lbl{font-size:var(--fs-xs);font-weight:600;color:var(--ink2)}
 .num{font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums}
 .muted{color:var(--ink2)}
-.small{font-size:13px;line-height:1.5}
+.small{font-size:var(--fs-xs);line-height:1.5}
 .card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .card>*+*{margin-top:12px}
 /* BUTTONS: one primary per screen — the ink pill (white in dark); others are a white pill or a text link. A press sinks 2px, no bounce. */
-.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-pill);font-size:16px;font-weight:700;line-height:1.5;text-align:center;transition:transform .12s ease-out,box-shadow .12s ease-out;margin-bottom:5px}
+.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform .12s ease-out,box-shadow .12s ease-out;margin-bottom:5px}
 .btn:active{transform:translateY(2px)}
-.btn-primary{min-height:58px;padding:16px 22px;font-size:18px;line-height:26px;background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
+.btn-primary{min-height:58px;padding:16px 22px;font-size:var(--fs-lg);line-height:26px;background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
 .btn-primary:active{box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
 .btn-sec{background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);color:var(--ink)}
 .btn-danger{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad-ink)}
-.link{display:inline-block;color:var(--primary-ink);font-size:14px;font-weight:600;padding:10px 6px}
+.link{display:inline-block;color:var(--primary-ink);font-size:var(--fs-sm);font-weight:600;padding:10px 6px}
 .link.block{display:block;width:100%;text-align:center}
 .pbar{height:8px;background:var(--fill-2);border-radius:8px;overflow:hidden}
 .pbar>i{display:block;height:100%;border-radius:8px;background:var(--primary)}
@@ -182,17 +186,17 @@ sub,sup{font-size:.72em;line-height:0}
 .icon-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .icon-btn svg{width:22px;height:22px}
 .icon-btn:active{background:var(--surface-2)}
-.alert{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r-md);padding:12px 14px;font-size:13px;font-weight:600;color:var(--warn-ink);line-height:1.5}
+.alert{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-xs);font-weight:600;color:var(--warn-ink);line-height:1.5}
 .alert.warn{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad-ink)}
 .alert.info{background:var(--info-bg);border-color:var(--info-line);color:var(--info-ink)}
 .empty{text-align:center;padding:22px 16px}
 .empty-ico{font-size:34px;color:var(--ink3)}
-.empty-t{font-size:17px;font-weight:700;margin-top:6px}
-.empty-d{font-size:14px;color:var(--ink2);margin-top:4px;line-height:1.5}
+.empty-t{font-size:var(--fs-lg);font-weight:700;margin-top:6px}
+.empty-d{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px;line-height:1.5}
 /* CHIPS: a fact in a few words (time, reward, what opens) */
 .chips{display:flex;flex-wrap:wrap;margin:-3px}
 .chips>.cp{margin:3px}
-.cp{display:inline-flex;align-items:center;min-height:28px;padding:3px 11px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;line-height:1.3;color:var(--ink2);white-space:nowrap}
+.cp{display:inline-flex;align-items:center;min-height:28px;padding:3px 11px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:var(--fs-xs);font-weight:600;line-height:1.3;color:var(--ink2);white-space:nowrap}
 .cp svg{flex:none;width:15px;height:15px;margin-right:5px}
 .cp b{color:var(--ink);font-weight:700;margin-right:3px}
 .cp.v{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}
@@ -207,9 +211,9 @@ sub,sup{font-size:.72em;line-height:0}
 .input-wrap{display:flex;align-items:center;min-height:52px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:var(--r-md);padding:0 14px}
 .input-wrap:focus-within{border-color:var(--purple);background:var(--pur-bg)}
 .input-wrap input{flex:1;min-width:0;width:100%;padding:13px 4px;font-size:16px;font-weight:600}
-.input-icon{flex:none;width:24px;display:flex;justify-content:center;color:var(--ink3);font-size:15px}
-.eye{flex:none;font-size:13px;font-weight:700;color:var(--primary-ink);padding:10px 4px}
-.field-lbl{display:block;font-size:13px;font-weight:700;color:var(--cream60);letter-spacing:.4px;margin-bottom:6px}
+.input-icon{flex:none;width:24px;display:flex;justify-content:center;color:var(--ink3);font-size:var(--fs-md)}
+.eye{flex:none;font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);padding:10px 4px}
+.field-lbl{display:block;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);letter-spacing:.4px;margin-bottom:6px}
 textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:12px;font-size:16px;line-height:1.45}
 textarea.ta:focus{border-color:var(--purple)}
 input[type=date]{color-scheme:inherit}
@@ -262,7 +266,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 }
 /* The name (3.10.0), placed in app.js (SCREENS.splash) from the lamp's own size: IOPET 1.12 x the bowl's width, 0.2 x it under the
    bowl; the line in the same width (as in the logo), half the name's height under it; the foot line 28 px over the bottom. Cream
-   like the bowl, the line in the flame's orange (10.6:1 on the ground), the foot line in the app's grey ink (9.2:1).
+   like the bowl, the line in the flame's orange (10.6:1 on the ground), the foot line in small grey CAPS (11 px, 6.1:1), as on the sign-in page.
    sp-day  the first open of the day: the letters rise into place one after another (60 ms apart, from 300 ms, 500 ms each, on
            Material's emphasized decelerate: they arrive at once and settle softly), the line from 640 ms, the foot line from 740 ms.
    sp-quick every other open: all of it at once, 240 ms from 80 ms — the name is there, and the app opens at 500 ms as before.
@@ -292,29 +296,103 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── AUTH ── */
 .auth-logo-row{display:flex;align-items:flex-end;margin-bottom:12px}   /* the diya stands on the same line as the letters */
 .auth-logo-row .lg-n{margin-left:11px}
-.auth-title{font-size:24px;font-weight:700;line-height:1.2}
-.auth-sub{font-size:13px;color:var(--cream60);margin-top:4px !important}
+.auth-title{font-size:var(--fs-2xl);font-weight:700;line-height:1.2}
+.auth-sub{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px !important}
 .auth-form{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2);border-radius:var(--r-xl);padding:22px;margin-top:18px !important}
 .auth-form>*+*{margin-top:10px}
-.auth-error{display:none;background:var(--bad-bg);border:1px solid var(--bad-line);border-radius:var(--r-md);padding:10px 12px;font-size:13px;font-weight:700;color:var(--bad-ink);line-height:1.45}
+.auth-error{display:none;background:var(--bad-bg);border:1px solid var(--bad-line);border-radius:var(--r-md);padding:10px 12px;font-size:var(--fs-xs);font-weight:700;color:var(--bad-ink);line-height:1.45}
 .auth-error.show{display:block}
-.auth-switch{text-align:center;font-size:13px;color:var(--cream40)}
-.divider{display:flex;align-items:center;font-size:13px;font-weight:700;color:var(--cream40);letter-spacing:.5px}
+.auth-switch{text-align:center;font-size:var(--fs-xs);color:var(--cream40)}
+.divider{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:700;color:var(--cream40);letter-spacing:.5px}
 .divider:before,.divider:after{content:'';flex:1;height:1px;background:var(--line-2)}
 .divider:before{margin-right:10px}
 .divider:after{margin-left:10px}
 .strength{height:4px;background:var(--fill-2);border-radius:4px;overflow:hidden;margin-top:6px !important}
 .strength>i{display:block;height:100%;width:0;border-radius:4px;transition:width .2s,background-color .2s}
-.hint{font-size:13px;color:var(--cream40);margin-top:5px !important;min-height:15px}
-.back-pill{display:inline-block;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:8px 14px;font-size:13px;font-weight:700;color:var(--cream60);margin-bottom:6px}
+.hint{font-size:var(--fs-xs);color:var(--cream40);margin-top:5px !important;min-height:15px}
+.back-pill{display:inline-block;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:8px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-bottom:6px}
 .back-pill:active{background:var(--surface-3)}
+/* ── SIGN-IN, 3.11.0 ── Thumb first: the brand sits up top, every action within the thumb's reach at the bottom. One field
+   style, one button behaviour on all three auth pages. The main button stays grey until what it needs is filled in right,
+   then turns orange (still tappable before: a tap shows what is missing). Motion: the sheet rises (300 ms, emphasized
+   decelerate), a field lights up on focus (150 ms), the button turns (220 ms). No motion with "Reduce animations". */
+.page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 20px calc(14px + env(safe-area-inset-bottom));overflow:hidden}
+.au .btn{margin-bottom:0;-webkit-tap-highlight-color:transparent}
+.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px}
+.au-hero .lg{margin-bottom:22px}
+.au-wm{display:block;width:150px;height:auto;color:var(--ink)}
+.au-tag{margin-top:14px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
+.au-tag.note{color:var(--ink2);font-weight:400}
+.au-dock>*+*{margin-top:12px}
+.au-g,.au-e{display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;font-size:var(--fs-lg);font-weight:600;box-shadow:none}
+.au-g{background:#fff;color:#1F1F1F;border:1px solid #DADCE0}
+.au-g svg{width:20px;height:20px;flex:none}
+.au-e{background:transparent;border:1.5px solid var(--line-2);color:var(--ink)}
+.au-e .li{width:20px;height:20px}
+.au-g:active,.au-e:active{transform:scale(.98)}
+.au-ghost{display:block;width:100%;min-height:48px;text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
+.au-foot{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:4px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.4px;color:var(--ink3)}
+.au-foot button{font:inherit;letter-spacing:inherit;color:var(--ink2);min-height:40px;padding:0 4px}
+.au-foot i{width:3px;height:3px;border-radius:50%;background:var(--ink3);display:block}
+.au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
+.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:8px 20px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s linear .3s}
+.au.open .au-scrim{opacity:1;pointer-events:auto}
+.au.open .au-sheet{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s}
+.au.still .au-sheet,.au.still .au-scrim{transition:none}
+.au-grab{width:36px;height:4px;border-radius:2px;background:var(--line-2);margin:0 auto 10px}
+.au-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.au-head h2,.au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
+.au-x{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--ink2);background:var(--surface-2)}
+.au-x .li{width:18px;height:18px}
+.au-form>.auth-error{margin-bottom:12px}
+.au-fld+.au-fld{margin-top:12px}
+.au-iw{display:flex;align-items:center;min-height:54px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 6px 0 14px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
+.au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .15s ease-out}
+.au-iw input{flex:1;min-width:0;height:52px;margin-left:10px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
+.au-iw input::placeholder{color:var(--ink3)}
+.au-fld.focus .au-iw{border-color:var(--primary);box-shadow:0 0 0 3px var(--tap-tint)}
+.au-fld.focus .au-iw>.li{color:var(--primary-ink)}
+.au-ok{width:22px;height:22px;display:grid;place-items:center;margin-right:8px;opacity:0;transform:scale(.6);transition:opacity .18s ease-out,transform .18s cubic-bezier(.2,0,0,1.4)}
+.au-ok .li{width:18px;height:18px;color:var(--good)}
+.au-fld.ok .au-ok{opacity:1;transform:none}
+.au-eye{width:44px;height:44px;display:grid;place-items:center;color:var(--ink3);border-radius:12px;flex:none}
+.au-eye svg{width:20px;height:20px}
+.au-eye[aria-pressed="true"]{color:var(--primary-ink)}
+.au-fld.bad .au-iw{border-color:var(--wrong);box-shadow:0 0 0 3px var(--wrong-soft)}
+.au-fld.bad .au-iw>.li{color:var(--wrong-ink)}
+.au-msg{display:grid;grid-template-rows:0fr;transition:grid-template-rows .18s ease-out}
+.au-msg>span{overflow:hidden;min-height:0;font-size:var(--fs-xs);font-weight:600;color:var(--wrong-ink);padding-left:4px;opacity:0;transition:opacity .18s ease-out}
+.au-fld.bad .au-msg{grid-template-rows:1fr}
+.au-fld.bad .au-msg>span{opacity:1;padding-top:6px}
+.au-fgt{display:flex;justify-content:flex-end;margin-top:2px}
+.au-fgt button{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:44px;padding:0 4px}
+.au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-pill);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
+.au-go.off{background:var(--surface-3);color:var(--ink3);box-shadow:none}
+:root:not([data-theme="light"]) .au-go.off{color:#A0A0A0}   /* (dark: 4.9:1 on the grey — inactive, still readable) */
+.au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
+.au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
+.au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
+.au-alt button{font:inherit;font-weight:700;color:var(--primary-ink);min-height:44px;padding:0 4px}
+.au-note{font-size:var(--fs-sm);color:var(--ink2);line-height:1.5}
+.au-top{display:flex;align-items:center;min-height:44px}
+.au-body{margin-top:auto;padding-top:24px}
+.au-body>.au-title{margin-bottom:6px}
+.au-body>.au-note{margin-bottom:18px}
+.au-body .strength{margin-top:10px}
+.au-body .hint{margin-top:6px}
+.au-shake{animation:au-shake .32s cubic-bezier(.36,.07,.19,.97)}
+@keyframes au-ready{0%{transform:scale(.97)}60%{transform:scale(1.015)}100%{transform:none}}
+@keyframes au-shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.calm .au-sheet,.calm .au-scrim{transition:none}
+.calm .au-go.on,.calm .au-shake{animation:none}
+@media (prefers-reduced-motion:reduce){.au-sheet,.au-scrim{transition:none}.au-go.on,.au-shake{animation:none}}
 
 /* ── CONFIRM EMAIL / RESET LINK ── */
 .otp-icon{display:flex;justify-content:center;margin:0 auto;width:84px;height:84px;align-items:center;border-radius:50%;background:var(--primary-soft);color:var(--primary)}
 .em{color:var(--cream);word-break:break-all}
-.steps{font-size:13px;color:var(--cream60);line-height:1.75}
+.steps{font-size:var(--fs-xs);color:var(--cream60);line-height:1.75}
 .steps b{color:var(--cream);margin-right:4px}
-.note{background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:10px 12px;font-size:13px;font-weight:600;color:var(--info-ink);line-height:1.45}   /* 3.10.0 information: no hue */
+.note{background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:10px 12px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.45}   /* 3.10.0 information: no hue */
 .hint.center{text-align:center;line-height:1.5}
 
 /* ── WELCOME ── */
@@ -327,9 +405,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .home>.alert,.home>.nudge{margin-top:16px}
 .dash-header{display:flex;align-items:flex-start;justify-content:space-between}
 .dash-hello{flex:1;min-width:0;padding-right:12px}
-.greeting-badge{font-size:14px;font-weight:600;color:var(--ink2)}
-.greeting-name{font-size:22px;font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}   /* 3.10.0 (was 30px) a greeting, not the focus: under the hero card's chapter name (24px) */
-.exam-pill{display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:5px 12px 5px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:13px;font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.greeting-badge{font-size:var(--fs-sm);font-weight:600;color:var(--ink2)}
+.greeting-name{font-size:var(--fs-xl);font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}   /* 3.10.0 (was 30px) a greeting, not the focus: under the hero card's chapter name (24px) */
+.exam-pill{display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:5px 12px 5px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:var(--fs-xs);font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exam-pill .li{margin-right:6px;color:var(--ink2)}
 /* 3.10.0 the avatar is a neutral disc with an ink letter (white on violet was 2.1-3.1:1); light keeps its violet disc */
 .avatar-circle{flex:none;width:48px;height:48px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:19px;font-weight:700;text-align:center;box-shadow:0 0 0 3px var(--surface),var(--shadow-1)}
@@ -337,18 +415,18 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .hero-top{display:flex;align-items:flex-start}
 .hero-txt{flex:1;min-width:0}
 .hero-kick{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}   /* "Next up" / "Continue": a state, in violet text */
-.hero-name{font-size:24px;font-weight:700;line-height:1.3;margin-top:12px;word-wrap:break-word}
-.hero-en{font-size:14px;color:var(--ink2);margin-top:2px}
+.hero-name{font-size:var(--fs-2xl);font-weight:700;line-height:1.3;margin-top:12px;word-wrap:break-word}
+.hero-en{font-size:var(--fs-sm);color:var(--ink2);margin-top:2px}
 .hero-art{flex:none;margin:-6px -6px 0 8px}
 .hero-art .chi{width:104px;height:104px}
 .hero-emoji{display:block;font-size:56px;line-height:1}
 .hero-emoji,.topic-emoji-big,.pack-hero-ico{filter:grayscale(1);opacity:.85}   /* 3.10.0 a picture without a meaning carries no hue */
-.hero-meta{display:flex;align-items:center;margin-top:16px;font-size:14px;font-weight:600;color:var(--ink2)}
+.hero-meta{display:flex;align-items:center;margin-top:16px;font-size:var(--fs-sm);font-weight:600;color:var(--ink2)}
 .hero-meta .li{margin-right:6px}
 .hero-prog{display:flex;align-items:center;margin-top:14px}
 .hero-prog .pbar{flex:1;min-width:0;height:10px;background:var(--track)}
-.hero-prog .num{flex:none;margin-left:12px;font-size:16px}
-.hero-note{font-size:13px;color:var(--ink2);margin-top:4px}
+.hero-prog .num{flex:none;margin-left:12px;font-size:var(--fs-lg)}
+.hero-note{font-size:var(--fs-xs);color:var(--ink2);margin-top:4px}
 .hero-out{margin-top:14px}
 .hero .btn-cta{margin:18px 0 0}
 .mini-row{display:flex}
@@ -356,9 +434,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 [data-theme="light"] .mini{background:var(--surface)}
 .mini+.mini{margin-left:12px}
 .mini .chi,.mini .ring{display:block}
-.mini-n{font-size:22px;line-height:1.1;margin-top:10px}
-.mini-l{font-size:14px;font-weight:600}
-.mini-s{font-size:13px;color:var(--ink2);margin-top:2px}
+.mini-n{font-size:var(--fs-2xl);line-height:1.1;margin-top:10px}
+.mini-l{font-size:var(--fs-sm);font-weight:600}
+.mini-s{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
 .mini-s.warn{color:var(--ink);font-weight:700}
 .mini .chi.off{filter:grayscale(1);opacity:.55}   /* 3.10.0 the streak flame is lit (gold) only once today's practice is done */
 [data-theme="light"] .mini .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
@@ -368,45 +446,45 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ring-v{stroke:var(--primary);stroke-linecap:round}
 .ring.done .ring-v{stroke:var(--good)}
 .ring-k{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:22px}.greeting-name{font-size:20px}}
+@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:var(--fs-xl)}.greeting-name{font-size:var(--fs-xl)}}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-top:16px !important}
-.section-head-title{font-size:13px;font-weight:700;letter-spacing:1px}
+.section-head-title{font-size:var(--fs-xs);font-weight:700;letter-spacing:1px}
 
 /* ── TOPICS ── */
-.tier-label{font-size:14px;font-weight:600;color:var(--ink2);margin-top:28px !important}
+.tier-label{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:28px !important}
 .topic-row{display:flex;align-items:center;width:100%;min-height:76px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 16px;margin-top:10px !important;text-align:left;transition:transform .12s}
 .topic-row:active{transform:translateY(2px)}
 .topic-row.locked{opacity:.6}
 .topic-emoji-big{flex:none;width:54px;height:54px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:24px;margin-right:14px}
 .topic-info{flex:1;min-width:0;display:block}
-.topic-row-name{display:block;font-size:16px;font-weight:700;line-height:1.35}
-.topic-row-meta{display:block;font-size:13px;color:var(--ink2);margin-top:2px}
+.topic-row-name{display:block;font-size:var(--fs-lg);font-weight:700;line-height:1.35}
+.topic-row-meta{display:block;font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
 .topic-info .pbar{display:block}
-.topic-right{flex:none;margin-left:10px;font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--ink2)}
+.topic-right{flex:none;margin-left:10px;font-family:var(--font-display);font-size:var(--fs-sm);font-weight:700;color:var(--ink2)}
 
 /* ── PRACTICE (3.9.0): close · progress · count; the question; big options; one button ── */
 .practice>*+*{margin-top:16px}
 .q-header{display:flex;align-items:center}
 .q-header .q-progress{flex:1;min-width:0;margin:0 14px}
-.q-counter{flex:none;font-size:15px;color:var(--ink2)}
-.q-timer{flex:none;min-width:44px;text-align:right;font-size:15px;color:var(--ink2)}   /* 3.10.0 the clock is information, not an alarm */
+.q-counter{flex:none;font-size:var(--fs-md);color:var(--ink2)}
+.q-timer{flex:none;min-width:44px;text-align:right;font-size:var(--fs-md);color:var(--ink2)}   /* 3.10.0 the clock is information, not an alarm */
 .q-progress{height:10px;background:var(--fill-2);border-radius:10px;overflow:hidden}
 .q-progress>i{display:block;height:100%;border-radius:10px;background:var(--primary)}   /* full width, slid in from the left (transform, 3.10.0) */
 .q-card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .practice .q-card{margin-top:20px}
-.q-level{display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:10px}
+.q-level{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:600;color:var(--ink2);margin-bottom:10px}
 .q-level .chi{margin-right:8px}
-.q-text{font-size:19px;font-weight:700;line-height:1.6}
-.q-help{font-size:13px;color:var(--ink2);margin-top:10px}
+.q-text{font-size:var(--fs-xl);font-weight:700;line-height:1.6}
+.q-help{font-size:var(--fs-xs);color:var(--ink2);margin-top:10px}
 .opts>.opt-btn+.opt-btn{margin-top:10px}
-.opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:13px 16px;font-size:17px;font-weight:600;line-height:1.4;text-align:left;transition:transform .12s,border-color .12s,background-color .12s}
+.opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:13px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform .12s,border-color .12s,background-color .12s}
 .opt-btn:active{transform:translateY(2px)}
 .opt-btn[disabled]{cursor:default;transform:none}
 /* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
 .opt-btn.correct{background:var(--good-soft);border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}   /* 3.10.0 the right answer is filled, */
 .opt-btn.wrong{background:var(--surface);border-color:var(--wrong);box-shadow:inset 0 0 0 1px var(--wrong)}   /* the wrong pick only outlined */
 .opt-btn.dim{opacity:.55;box-shadow:none}
-.opt-key{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink2);margin-right:12px}
+.opt-key{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:700;color:var(--ink2);margin-right:12px}
 .opt-key .li{stroke-width:3}
 .opt-btn.correct .opt-key{background:var(--good);border-color:var(--good);color:var(--on-mark)}
 .opt-btn.wrong .opt-key{background:var(--wrong);border-color:var(--wrong);color:var(--on-mark)}
@@ -419,21 +497,21 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fb-ico .li{stroke-width:3}
 .correct-fb .fb-ico{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* 3.10.0 a ring: the white Next leads */
 .wrong-fb .fb-ico{background:var(--wrong-soft);color:var(--wrong-ink);box-shadow:inset 0 0 0 2px var(--wrong)}
-.fb-title{flex:1;font-size:20px;font-weight:700}
+.fb-title{flex:1;font-size:var(--fs-xl);font-weight:700}
 .correct-fb .fb-title{color:var(--green)}
 .wrong-fb .fb-title{color:var(--wrong-ink)}
 .fb-xp{flex:none}
-.fb-sub{font-size:13px;color:var(--ink2);margin-top:8px}
-.fb-text{font-size:15px;color:var(--ink);line-height:1.7;margin-top:10px}
+.fb-sub{font-size:var(--fs-xs);color:var(--ink2);margin-top:8px}
+.fb-text{font-size:var(--fs-md);color:var(--ink);line-height:1.7;margin-top:10px}
 .practice .btn-primary{margin-top:20px}
 .practice .link{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}   /* 3.10.0 skip / report: grey, underlined, not violet */
 .btn-check{margin-top:20px !important}
 .btn-check[disabled]{opacity:1;background:var(--fill-2);color:var(--ink3);box-shadow:none}
 
 /* ── FULL PAPER (3.9.6): taken like the exam — the count opens the grid, the clock runs down, Previous / Next, then the marks ── */
-.paper .p-count{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--ink2);padding:8px 10px}
+.paper .p-count{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;color:var(--ink2);padding:8px 10px}
 .paper .p-count .li{margin-right:6px;stroke-width:2.2}
-.p-timer{min-width:58px;font-size:17px;font-weight:700;color:var(--ink)}
+.p-timer{min-width:58px;font-size:var(--fs-lg);font-weight:700;color:var(--ink)}
 .p-timer.low{color:var(--warn)}
 .paper .q-progress{height:6px}
 .paper .q-card{margin-top:16px}
@@ -450,52 +528,52 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pg-key:first-child{margin-left:0}
 .pg-key.done{background:var(--primary);border-color:var(--primary)}
 .pg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));grid-gap:8px;max-height:48vh;overflow-y:auto;padding:3px;margin:14px -3px 6px}
-.pg-cell{height:44px;border-radius:12px;border:1.5px solid var(--line-2);background:var(--surface);font-size:15px;font-weight:700;color:var(--ink2);text-align:center}
+.pg-cell{height:44px;border-radius:12px;border:1.5px solid var(--line-2);background:var(--surface);font-size:var(--fs-md);font-weight:700;color:var(--ink2);text-align:center}
 .pg-cell.done{background:var(--primary-soft);border-color:var(--primary);color:var(--primary)}
 .pg-cell.now{box-shadow:0 0 0 2px var(--ink)}
 .paper-intro>*+*{margin-top:16px}
 .pi-head{padding-top:4px}
-.pi-kick{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
-.pi-name{font-family:var(--font-display);font-size:26px;font-weight:700;line-height:1.25;margin-top:4px}
+.pi-kick{font-size:var(--fs-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
+.pi-name{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1.25;margin-top:4px}
 .pi-facts{display:flex}
 .pi-fact{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 6px;text-align:center}
 .pi-fact+.pi-fact{margin-left:10px}
-.pi-fact b{display:block;font-size:24px;line-height:1.2}
-.pi-fact span{font-size:13px;color:var(--ink2)}
-.pi-rule{display:flex;align-items:flex-start;font-size:15px;line-height:1.5}
+.pi-fact b{display:block;font-size:var(--fs-2xl);line-height:1.2}
+.pi-fact span{font-size:var(--fs-xs);color:var(--ink2)}
+.pi-rule{display:flex;align-items:flex-start;font-size:var(--fs-md);line-height:1.5}
 .pi-rule+.pi-rule{margin-top:10px}
 .pi-rule .li{flex:none;margin:3px 10px 0 0;color:var(--green);stroke-width:3}
 .pi-pass{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .paper-intro .btn-primary{margin-top:22px}
 .pr-score{text-align:center;margin-top:8px !important}
 .pr-big{font-size:64px;font-weight:700;line-height:1}
-.pr-of{font-size:24px;font-weight:700;color:var(--ink2);margin-left:4px}
-.pr-pass{display:flex;align-items:center;justify-content:center;text-align:center;font-size:15px;font-weight:700;color:var(--ink2);background:var(--fill);border-radius:var(--r-pill);padding:10px 16px;margin-top:12px !important}
+.pr-of{font-size:var(--fs-2xl);font-weight:700;color:var(--ink2);margin-left:4px}
+.pr-pass{display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--fs-md);font-weight:700;color:var(--ink2);background:var(--fill);border-radius:var(--r-pill);padding:10px 16px;margin-top:12px !important}
 .pr-pass.ok{background:var(--good-soft);color:var(--green)}
 .pr-pass .li{flex:none;margin-right:6px;stroke-width:3}
-.paper-res .stat-val{font-size:20px}
+.paper-res .stat-val{font-size:var(--fs-xl)}
 .pr-part+.pr-part{margin-top:12px}
 .paper-res .btn-sec{display:flex;align-items:center;justify-content:center}
 .paper-res .btn-sec .li,.sh-btn .li{margin-right:6px}
 .share-card{display:flex;align-items:center}
-.sh-btn{flex:none;width:auto;display:flex;align-items:center;min-height:44px;padding:10px 16px;margin:0 0 0 12px;font-size:15px}
+.sh-btn{flex:none;width:auto;display:flex;align-items:center;min-height:44px;padding:10px 16px;margin:0 0 0 12px;font-size:var(--fs-md)}
 
 /* ── SET COMPLETE / REVIEW ── */
 .summary>*+*{margin-top:20px}
 .sum-head{text-align:center;padding-top:8px}
 .sum-head .chi{margin:0 auto 6px}
-.sum-title{font-size:30px;font-weight:700;line-height:1.2}
-.summary-label{font-size:15px;color:var(--ink2);margin-top:4px}
+.sum-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.2}
+.summary-label{font-size:var(--fs-md);color:var(--ink2);margin-top:4px}
 .stat-grid{display:flex}
 .stat-box{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 6px 12px;text-align:center}
 .stat-box+.stat-box{margin-left:10px}
 .stat-box .chi{margin:0 auto}
-.stat-val{font-size:22px;line-height:1.2;margin-top:6px}
-.stat-lbl{font-size:13px;color:var(--ink2)}
-.sum-mini{font-size:13px;color:var(--ink2);text-align:center;margin-top:10px !important}
-.sum-sec{font-size:14px;font-weight:600;color:var(--ink2);margin-top:28px !important}
+.stat-val{font-size:var(--fs-2xl);line-height:1.2;margin-top:6px}
+.stat-lbl{font-size:var(--fs-xs);color:var(--ink2)}
+.sum-mini{font-size:var(--fs-xs);color:var(--ink2);text-align:center;margin-top:10px !important}
+.sum-sec{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:28px !important}
 .got-list,.summary .next-card{margin-top:10px !important}
-.badge-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;font-size:14px;font-weight:600;line-height:1.45}
+.badge-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-sm);font-weight:600;line-height:1.45}
 .badge-line+.badge-line{margin-top:8px}
 .bl-ico{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:12px;background:var(--fill);color:var(--ink2)}
 .bl-ico .li{width:20px;height:20px}
@@ -503,63 +581,63 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .badge-line.v .bl-ico{background:var(--primary-soft);color:var(--primary)}
 .badge-line.y .bl-ico{background:var(--gold-soft);color:var(--gold)}   /* 3.10.0 the streak and achievements: gold */
 .next-card{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 16px}
-.next-t{font-size:16px;font-weight:700}
-.next-l{font-size:13px;color:var(--ink2)}
+.next-t{font-size:var(--fs-lg);font-weight:700}
+.next-l{font-size:var(--fs-xs);color:var(--ink2)}
 .summary .btn-primary{margin-top:20px}
 .summary .btn-sec{margin-top:10px}
 .rv-item{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:18px}
-.rv-head{font-size:13px;font-weight:600;color:var(--ink2)}
-.rv-q{font-size:16px;font-weight:700;line-height:1.55;margin-top:6px}
-.rv-line{display:flex;align-items:flex-start;font-size:14px;line-height:1.5;margin-top:8px}
+.rv-head{font-size:var(--fs-xs);font-weight:600;color:var(--ink2)}
+.rv-q{font-size:var(--fs-lg);font-weight:700;line-height:1.55;margin-top:6px}
+.rv-line{display:flex;align-items:flex-start;font-size:var(--fs-sm);line-height:1.5;margin-top:8px}
 .rv-line .li{margin:2px 6px 0 0;stroke-width:3}
 .rv-line.ok{color:var(--green)}
 .rv-line.bad{color:#FF8A84}   /* body text in Hindi: the red's light tone, 7.3:1 */
 [data-theme="light"] .rv-line.bad{color:var(--wrong-ink)}
 .rv-item.bad{border-left:4px solid var(--wrong)}   /* 3.10.0 found at a glance */
 .rv-item.skip{border-left:4px solid var(--mark-off)}
-.rv-x{font-size:14px;color:var(--ink2);line-height:1.6;margin-top:8px}
+.rv-x{font-size:var(--fs-sm);color:var(--ink2);line-height:1.6;margin-top:8px}
 
 /* ── PROGRESS ── */
 .progress>*+*,.profile>*+*{margin-top:20px}
 .next-step .ns-row{margin-top:14px}
-.ns-name{font-size:19px;font-weight:700;line-height:1.3}
-.ns-l{font-size:13px;color:var(--ink2);margin-top:2px}
+.ns-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
+.ns-l{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
 .prog-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
 .prog-stat{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}
 .prog-stat .chi{display:block;margin-bottom:8px}
-.prog-stat-val{font-size:26px;line-height:1.1}
-.prog-stat-lbl{font-size:14px;font-weight:600;margin-top:2px}
-.prog-stat-note{font-size:13px;color:var(--ink2);margin-top:1px}
-.card-title{font-size:16px;font-weight:700}
+.prog-stat-val{font-size:var(--fs-3xl);line-height:1.1}
+.prog-stat-lbl{font-size:var(--fs-sm);font-weight:600;margin-top:2px}
+.prog-stat-note{font-size:var(--fs-xs);color:var(--ink2);margin-top:1px}
+.card-title{font-size:var(--fs-lg);font-weight:700}
 .bars-row{display:flex;align-items:flex-end}
 .bar-col{flex:1;min-width:0;text-align:center;padding:0 4px}
-.bar-num{font-size:13px;font-weight:700;color:var(--primary-ink);height:18px;line-height:18px}
+.bar-num{font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);height:18px;line-height:18px}
 .bar-track{height:78px;display:flex;align-items:flex-end}
 .bar{width:100%;min-height:4px;border-radius:8px 8px 3px 3px;background:var(--mark-off)}   /* 3.10.0 other days grey (3.4:1), today violet */
 .bar-col.today .bar{background:var(--primary)}
-.bar-lbl{font-size:13px;font-weight:600;color:var(--ink3);margin-top:6px}
+.bar-lbl{font-size:var(--fs-xs);font-weight:600;color:var(--ink3);margin-top:6px}
 .bar-col.today .bar-lbl{color:var(--ink)}
 .mrow{display:flex;align-items:center}
-.mrow-name{flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow-name{flex:1;min-width:0;font-size:var(--fs-sm);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mrow.locked .mrow-name{color:var(--ink3);font-weight:400}   /* 3.10.0 shade = state, as on Topics */
-.mrow-val{flex:none;font-size:13px;font-weight:700;color:var(--ink2);margin-left:8px;display:flex}
-.srow{display:flex;align-items:center;justify-content:space-between;font-size:14px;padding-top:10px;border-top:1px solid var(--line)}
+.mrow-val{flex:none;font-size:var(--fs-xs);font-weight:700;color:var(--ink2);margin-left:8px;display:flex}
+.srow{display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-sm);padding-top:10px;border-top:1px solid var(--line)}
 .srow b{font-family:var(--font-display);font-weight:700}
 
 /* ── PROFILE + SUB-SCREENS ── */
 .prof-header{text-align:center;padding:4px 0 0}
 .prof-ring{width:108px;height:108px;margin:0 auto 12px;border-radius:50%;padding:8px;background:var(--fill-2);background:conic-gradient(var(--primary) calc(var(--p) * 1%),var(--fill-2) 0)}
 .prof-avatar{width:92px;height:92px;line-height:92px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:36px;font-weight:700;box-shadow:0 0 0 2px var(--bg)}
-.prof-name{font-size:26px;font-weight:700;line-height:1.25;word-wrap:break-word;overflow-wrap:break-word}
-.prof-email{font-size:14px;color:var(--ink2);margin-top:2px;word-break:break-all}
-.prof-rank{display:inline-flex;align-items:center;background:var(--primary-soft);border-radius:var(--r-pill);padding:5px 14px;font-size:14px;font-weight:700;color:var(--ink);margin-top:12px}
+.prof-name{font-size:var(--fs-2xl);font-weight:700;line-height:1.25;word-wrap:break-word;overflow-wrap:break-word}
+.prof-email{font-size:var(--fs-sm);color:var(--ink2);margin-top:2px;word-break:break-all}
+.prof-rank{display:inline-flex;align-items:center;background:var(--primary-soft);border-radius:var(--r-pill);padding:5px 14px;font-size:var(--fs-sm);font-weight:700;color:var(--ink);margin-top:12px}
 .prof-rank .li{margin:0 6px 0 -2px;color:var(--gold)}   /* 3.10.0 the level: a neutral pill, its star gold (a reward) */
-.prof-next{font-size:14px;color:var(--ink2);margin-top:8px}
+.prof-next{font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
 .prof-next b{color:var(--ink);font-weight:700}
 .ach-strip{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px;text-align:left}
 .ach-strip .chi{margin-right:14px}
-.ach-strip-t{display:block;font-size:16px;font-weight:700}
-.ach-strip-l{display:block;font-size:13px;color:var(--ink2)}
+.ach-strip-t{display:block;font-size:var(--fs-lg);font-weight:700}
+.ach-strip-l{display:block;font-size:var(--fs-xs);color:var(--ink2)}
 .ach-strip .menu-arrow{margin-left:10px}
 .menu-group{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);overflow:hidden}
 .menu-group .menu-item{margin:0 !important;border:0;border-radius:0;box-shadow:none}
@@ -567,40 +645,40 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .menu-item{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:14px 16px;margin-top:8px !important;text-align:left}
 .menu-item:active{background:var(--surface-2)}
 .menu-ico{flex:none;width:36px;height:36px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:18px;margin-right:12px;color:var(--ink2)}
-.menu-lbl{flex:1;min-width:0;font-size:15px;font-weight:600}
-.menu-meta{flex:none;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;color:var(--ink2);margin-right:4px}
+.menu-lbl{flex:1;min-width:0;font-size:var(--fs-md);font-weight:600}
+.menu-meta{flex:none;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:var(--fs-sm);color:var(--ink2);margin-right:4px}
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
 .menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
-.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);font-size:16px;font-weight:600;color:var(--ink2);margin-top:24px !important}
+.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important}
 .sign-out .li{margin-right:8px}
 .sign-out:active{opacity:.75}
 .sub-header{display:flex;align-items:center}
-.sub-title{font-size:24px;font-weight:700;margin-left:14px}
+.sub-title{font-size:var(--fs-2xl);font-weight:700;margin-left:14px}
 .toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:14px 16px;margin-top:8px !important}
 .toggle-info{flex:1;min-width:0;padding-right:12px}
-.toggle-label{font-size:15px;font-weight:600}
-.toggle-desc{font-size:13px;color:var(--cream60);margin-top:2px;line-height:1.45}
+.toggle-label{font-size:var(--fs-md);font-weight:600}
+.toggle-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:2px;line-height:1.45}
 .toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--mark-off);transition:background-color .15s}   /* off: a grey track that can be seen (3.10.0) */
 .toggle:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .15s}
 .toggle:before{content:'';position:absolute;top:-11px;right:-10px;bottom:-11px;left:-10px}   /* 66x48 tap area around the 46x26 switch */
 .toggle.on{background:var(--primary)}
 .toggle.on:after{transform:translateX(20px)}
 .seg{display:flex;background:var(--fill);border-radius:var(--r-md);padding:3px}
-.seg-btn{flex:1;padding:9px 4px;border-radius:11px;font-size:13px;font-weight:700;text-align:center;color:var(--cream60)}
+.seg-btn{flex:1;padding:9px 4px;border-radius:11px;font-size:var(--fs-xs);font-weight:700;text-align:center;color:var(--cream60)}
 .seg-btn.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1)}
 .stepper{display:flex;align-items:center}
 .step-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);font-size:20px;font-weight:700;line-height:1;text-align:center}
 .step-btn:active{transform:translateY(3px);box-shadow:none}
-.step-val{flex:1;text-align:center;font-family:var(--font-display);font-size:24px;font-weight:700}
-.step-val small{display:block;font-family:var(--font-body);font-size:13px;font-weight:700;color:var(--cream60)}
+.step-val{flex:1;text-align:center;font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700}
+.step-val small{display:block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;color:var(--cream60)}
 .goal-card{background:var(--pur-bg);border:1px solid var(--pur-line);border-radius:var(--r-lg);padding:18px}
-.goal-exam{font-family:var(--font-display);font-size:21px;font-weight:700;word-break:break-word}
-.goal-date{font-size:13px;color:var(--cream60);margin-top:4px}
+.goal-exam{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;word-break:break-word}
+.goal-date{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px}
 .goal-countdown{display:flex;background:var(--surface);border-radius:var(--r-md);padding:14px 6px;margin-top:14px}
 .cd-cell{flex:1;text-align:center}
-.cd-num{font-family:var(--font-display);font-size:23px;font-weight:700;line-height:1}
-.cd-lbl{font-size:13px;font-weight:700;color:var(--cream60);margin-top:5px;letter-spacing:.6px}
+.cd-num{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1}
+.cd-lbl{font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-top:5px;letter-spacing:.6px}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:10px;gap:10px}
 .ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 10px;text-align:center}
 .ach-card:active{transform:translateY(3px);box-shadow:none}
@@ -614,20 +692,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ach-emoji .chi{margin:0 auto}
 .ach-big .chi{margin:0 auto}
 .ach-big.off .chi{opacity:.4;filter:grayscale(.9)}
-.ach-name{font-size:13px;font-weight:700;margin-top:6px}
-.ach-desc{font-size:13px;color:var(--cream60);margin-top:3px;line-height:1.35}
+.ach-name{font-size:var(--fs-xs);font-weight:700;margin-top:6px}
+.ach-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:3px;line-height:1.35}
 .ach-card .pbar{margin-top:9px}
 .faq-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);margin-top:8px !important;overflow:hidden}
-.faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 15px;font-size:13px;font-weight:700;line-height:1.4}
-.faq-chev{flex:none;margin-left:10px;color:var(--cream40);font-size:13px;transition:transform .15s}
+.faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 15px;font-size:var(--fs-xs);font-weight:700;line-height:1.4}
+.faq-chev{flex:none;margin-left:10px;color:var(--cream40);font-size:var(--fs-xs);transition:transform .15s}
 .faq-chev .li{transform:rotate(90deg)}
 .faq-item.open .faq-chev{transform:rotate(180deg)}
-.faq-a{display:none;padding:0 15px 14px;font-size:13px;color:var(--cream60);line-height:1.6}
+.faq-a{display:none;padding:0 15px 14px;font-size:var(--fs-xs);color:var(--cream60);line-height:1.6}
 .faq-item.open .faq-a{display:block}
-.foot-note{text-align:center;font-size:13px;color:var(--cream40);line-height:1.6;margin-top:18px !important}
+.foot-note{text-align:center;font-size:var(--fs-xs);color:var(--cream40);line-height:1.6;margin-top:18px !important}
 .about{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:30px !important}
-.about-full{font-size:13px;font-weight:700;color:var(--cream60);letter-spacing:.3px;margin-top:10px}
-.about-sub{font-size:13px;color:var(--cream40);margin-top:2px}
+.about-full{font-size:var(--fs-xs);font-weight:700;color:var(--cream60);letter-spacing:.3px;margin-top:10px}
+.about-sub{font-size:var(--fs-xs);color:var(--cream40);margin-top:2px}
 .about+.foot-note{margin-top:6px !important}
 
 /* ── COURSE CHOOSER ── a row that cannot be opened ("Coming soon") is dimmed, its label is not */
@@ -645,17 +723,17 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .co-ico b{font-family:var(--font-display);font-size:18px;font-weight:700}
 .co-row.big .co-ico{width:50px;height:50px;border-radius:14px;font-size:25px}
 .co-info{flex:1;min-width:0;display:block}
-.co-name{display:block;font-size:14.5px;font-weight:700;line-height:1.3}
-.co-row.big .co-name{font-size:16px}
-.co-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px;line-height:1.45}
-.co-state{display:block;font-size:13px;font-weight:700;color:var(--cream60);margin-top:5px}
+.co-name{display:block;font-size:var(--fs-sm);font-weight:700;line-height:1.3}
+.co-row.big .co-name{font-size:var(--fs-lg)}
+.co-sub{display:block;font-size:var(--fs-xs);color:var(--cream60);margin-top:2px;line-height:1.45}
+.co-state{display:block;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-top:5px}
 .co-state.on{color:var(--primary-ink)}
 .co-state:before{content:'';display:inline-block;width:7px;height:7px;border:1.5px solid currentColor;border-radius:50%;margin-right:6px}   /* the dot and the arrow below are drawn, not letters: no phone can lack them */
 .co-state.on:before{background:currentColor}
 .co-right{flex:none;display:flex;align-items:center;margin-left:10px}
-.co-soon{font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
-.co-cur{font-size:13px;font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
-.course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-pill);padding:7px 12px;font-size:13px;font-weight:700;white-space:nowrap}
+.co-soon{font-size:var(--fs-xs);font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
+.co-cur{font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
+.course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-pill);padding:7px 12px;font-size:var(--fs-xs);font-weight:700;white-space:nowrap}
 .course-pill:before{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}   /* a taller tap area for the small pill */
 .course-pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;margin-right:6px}
 .course-pill:after{content:'';flex:none;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
@@ -666,11 +744,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .auth-error,.auth-sub,.auth-switch,.m-text,.m-err,.m-list-item,.note,.hint,.alert,.nudge,.toast>span,.busy-t,.small{word-wrap:break-word;word-break:break-word;overflow-wrap:anywhere}
 
 /* ── ACCOUNT & BACKUP ── */
-.nudge{display:flex;align-items:flex-start;width:100%;text-align:left;background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:12px 14px;font-size:13px;font-weight:600;color:var(--info-ink);line-height:1.5}
+.nudge{display:flex;align-items:flex-start;width:100%;text-align:left;background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.5}
 .nudge .li{margin:0 10px 0 0}
 .nudge:active{opacity:.8}
-.acct-email{font-size:15px;font-weight:700;word-break:break-all;margin-top:4px !important}
-.chip{display:inline-block;border-radius:var(--r-pill);padding:4px 11px;font-size:11px;font-weight:800}
+.acct-email{font-size:var(--fs-md);font-weight:700;word-break:break-all;margin-top:4px !important}
+.chip{display:inline-block;border-radius:var(--r-pill);padding:4px 10px;font-size:var(--fs-cap);font-weight:700;letter-spacing:.8px;text-transform:uppercase}   /* 3.11.0 a small label: CAPS, spaced */
 .chip.ok{background:var(--ok-bg);border:1px solid var(--ok-line);color:var(--ok-ink)}
 .chip.warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink)}
 .detail{color:var(--cream40);word-break:break-word;margin-top:4px !important}
@@ -703,20 +781,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .m-card>*+*{margin-top:12px}
 .m-emoji{font-size:40px;text-align:center;line-height:1.2;color:var(--ink2)}
 .m-emoji .li{width:40px;height:40px}
-.m-title{font-size:22px;font-weight:700;line-height:1.3}
-.m-text{font-size:15px;color:var(--ink2);line-height:1.55}
-.m-err{display:none;font-size:13px;font-weight:700;color:var(--red)}
+.m-title{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
+.m-text{font-size:var(--fs-md);color:var(--ink2);line-height:1.55}
+.m-err{display:none;font-size:var(--fs-xs);font-weight:700;color:var(--red)}
 .m-err.show{display:block}
 .m-actions{display:flex;margin-top:20px !important}
-.m-actions .btn{flex:1;min-height:52px;padding:13px 10px;font-size:16px}
+.m-actions .btn{flex:1;min-height:52px;padding:13px 10px;font-size:var(--fs-lg)}
 .m-actions .btn+.btn{margin-left:10px}
 .m-list{max-height:230px;max-height:54vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.m-list-item{font-size:13px;line-height:1.5;padding:9px 0;border-top:1px solid var(--line)}
+.m-list-item{font-size:var(--fs-xs);line-height:1.5;padding:9px 0;border-top:1px solid var(--line)}
 .m-list-item:first-child{border-top:0}
-.m-list-item b{display:block;font-size:13px}
+.m-list-item b{display:block;font-size:var(--fs-xs)}
 .toast{position:absolute;left:0;right:0;bottom:132px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
 .toast.show{opacity:1;visibility:visible}
-.toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:14px;font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
+.toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:var(--fs-sm);font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
 .toast .li{margin:-3px 7px 0 -4px;color:#FFD84D}   /* 3.10.0 "Achievement unlocked": its star is gold (the toast is dark in both looks) */
 
 /* ── "PLEASE WAIT" (sign in, create account, delete account …) ── */
@@ -724,7 +802,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .busy.show{display:flex}
 .busy-card{min-width:150px;max-width:260px;background:var(--modal);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px 22px;text-align:center;box-shadow:0 20px 60px var(--shadow)}
 .spin{width:26px;height:26px;margin:0 auto;border:2.5px solid var(--fill-2);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}
-.busy-t{font-size:13px;font-weight:700;line-height:1.4;margin-top:12px}
+.busy-t{font-size:var(--fs-xs);font-weight:700;line-height:1.4;margin-top:12px}
 
 @media (max-width:340px){
   .page{padding-left:16px;padding-right:16px}
@@ -741,7 +819,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fig-line{fill:none;stroke:currentColor;stroke-width:1.6;stroke-opacity:.75}
 .fig-hub{fill:var(--fill-2);stroke:currentColor;stroke-width:1.4;stroke-opacity:.7}
 .fig-grid{border-collapse:collapse;margin:0 auto}
-.fig-grid td{min-width:40px;height:36px;padding:2px 8px;border:1.5px solid var(--line-2);text-align:center;font-family:var(--font-display);font-size:15px;font-weight:700}
+.fig-grid td{min-width:40px;height:36px;padding:2px 8px;border:1.5px solid var(--line-2);text-align:center;font-family:var(--font-display);font-size:var(--fs-md);font-weight:700}
 .opt-txt .figs{margin:0;text-align:left}
 .opt-txt .fig{margin:0}
 .rv-q .figs,.rv-line .figs,.rv-x .figs,.fb-text .figs{margin:6px 0 2px}
@@ -784,10 +862,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .mh-row{display:flex;align-items:center}
 .mh-art{flex:none;margin:0 -6px 0 12px}
 .mh-art .chi{width:96px;height:96px}
-.mh-kick{display:flex;align-items:center;font-size:14px;font-weight:600;color:var(--ink3);letter-spacing:.3px}
-.mh-title{font-size:34px;font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:2px}
-.mh-desc{font-size:15px;color:var(--ink2);line-height:1.45;margin-top:4px}
-.mh-info{flex:none;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink3);font-family:Georgia,serif;font-style:italic;font-size:12px;font-weight:700;line-height:21px;text-align:center;padding:0;position:relative}
+.mh-kick{display:flex;align-items:center;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);letter-spacing:.3px}
+.mh-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:2px}
+.mh-desc{font-size:var(--fs-md);color:var(--ink2);line-height:1.45;margin-top:4px}
+.mh-info{flex:none;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink3);font-family:Georgia,serif;font-style:italic;font-size:var(--fs-xs);font-weight:700;line-height:21px;text-align:center;padding:0;position:relative}
 .mh-info:before{content:'';position:absolute;top:-10px;right:-10px;bottom:-10px;left:-10px}
 .mh-info:active{background:var(--fill-2)}
 .lvl{margin-top:22px;padding:0 17px 0 0}
@@ -805,7 +883,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .subj{flex:none;width:112px;margin-right:16px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
 .subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
 .subj.on .subj-ico{border:2px solid var(--primary);background:var(--primary-soft)}
-.subj-t{font-size:14px;font-weight:600;margin-top:10px;line-height:1.2;white-space:nowrap}
+.subj-t{font-size:var(--fs-sm);font-weight:600;margin-top:10px;line-height:1.2;white-space:nowrap}
 .subj.on .subj-t{color:var(--primary-ink);font-weight:700}
 .subj.soon .subj-ico .chi{opacity:.45;filter:grayscale(.85)}
 .subj.soon .subj-t{color:var(--ink3)}
@@ -813,13 +891,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .subj.soon:active .subj-ico{transform:translateY(2px)}
 .ch-tile{flex:none;width:54px;height:54px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin-right:14px}
 .ch-list .topic-row{margin-top:10px !important}
-.ch-name{display:block;font-size:17px;font-weight:700;line-height:1.35}
-.ch-kick{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin-top:1px}
+.ch-name{display:block;font-size:var(--fs-lg);font-weight:700;line-height:1.35}
+.ch-kick{display:block;font-size:var(--fs-xs);font-weight:600;color:var(--ink2);margin-top:1px}
 .ch-prog{display:flex;align-items:center;margin-top:6px}
 .ch-bar{flex:1;min-width:0;display:block;height:8px;border-radius:8px;background:var(--fill-2);overflow:hidden}
 .ch-bar>i{display:block;height:100%;border-radius:8px;background:var(--primary);min-width:0}
 .ch-flag{flex:none;display:flex;color:var(--ink3);margin:0 5px 0 6px}
-.ch-n{flex:none;font-size:13px;font-weight:700;color:var(--ink)}
+.ch-n{flex:none;font-size:var(--fs-xs);font-weight:700;color:var(--ink)}
 .ch-st{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;color:var(--ink3)}
 .ch-st.play{background:transparent;color:var(--primary-ink);box-shadow:inset 0 0 0 2px var(--primary)}   /* 3.10.0 on the go: a violet ring (state) */
 .ch-st.play .li{margin-left:2px}
@@ -840,25 +918,25 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .chp-head{text-align:center}
 .chp-art{display:flex;justify-content:center}
 .chp-art .chi{width:136px;height:136px}
-.chp-name{font-size:30px;font-weight:700;line-height:1.25;margin-top:8px}
-.chp-en{font-size:15px;color:var(--ink2);margin-top:2px}
+.chp-name{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;margin-top:8px}
+.chp-en{font-size:var(--fs-md);color:var(--ink2);margin-top:2px}
 /* the exam weight is information (3.10.0): a plain card, a grey icon, the number in bold ink — no violet, which means "current" */
-.chp-why{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;font-size:14px;color:var(--ink)}
+.chp-why{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;font-size:var(--fs-sm);color:var(--ink)}
 .chp-why .li{margin-right:10px;color:var(--ink2)}
 .chp-why b{font-weight:700}
 .steps-list{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:6px 0}
 .step{position:relative;display:flex;align-items:flex-start;width:100%;padding:14px 18px;text-align:left}
 .step+.step{border-top:1px solid var(--line)}
 .step:active{background:var(--surface-2)}
-.step-dot{flex:none;width:32px;height:32px;margin-right:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;background:var(--fill-2);color:var(--ink2)}
+.step-dot{flex:none;width:32px;height:32px;margin-right:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;background:var(--fill-2);color:var(--ink2)}
 /* 3.10.0 the step to do is its violet dot (a dark number on it, 5.8:1) and its bold title — the row itself is not filled */
 .step.now .step-dot{background:var(--primary);color:var(--on-mark)}
 .step.done .step-dot{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* done: a green ring; only the current step is filled */
 .step.locked .step-dot{background:var(--surface-2);color:var(--ink3)}
 .step-b{flex:1;min-width:0;display:block}
-.step-t{display:block;font-size:16px;font-weight:700}
-.step-l{display:block;font-size:13px;color:var(--ink2);margin-top:1px}
-.step-x{display:flex;align-items:center;font-size:13px;color:var(--ink2);margin-top:6px}
+.step-t{display:block;font-size:var(--fs-lg);font-weight:700}
+.step-l{display:block;font-size:var(--fs-xs);color:var(--ink2);margin-top:1px}
+.step-x{display:flex;align-items:center;font-size:var(--fs-xs);color:var(--ink2);margin-top:6px}
 .step-x .li{margin-right:6px}
 .step-x.ok{color:var(--good-ink);font-weight:600}
 .step .ch-prog{margin-top:8px}
@@ -901,7 +979,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .spark i:nth-child(8){--x:-34px;--y:0}
 @keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1.2)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.4)}}
 /* 3.10.0 XP earned is gold (a reward), not green (green = right); on the light theme the darker gold, for 4.5:1 */
-.xp-fly{position:absolute;right:14px;top:50%;margin-top:-11px;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--gold,#FFB020);pointer-events:none;opacity:0;animation:xp-fly .9s ease-out forwards}
+.xp-fly{position:absolute;right:14px;top:50%;margin-top:-11px;font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;color:var(--gold,#FFB020);pointer-events:none;opacity:0;animation:xp-fly .9s ease-out forwards}
 @keyframes xp-fly{0%{opacity:0;transform:translateY(6px)}25%{opacity:1;transform:translateY(-4px)}100%{opacity:0;transform:translateY(-26px)}}
 .summary-big.count{font-variant-numeric:tabular-nums}
 
@@ -928,8 +1006,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cele-badge{position:absolute;left:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:var(--good);color:var(--on-mark);display:flex;align-items:center;justify-content:center;
   border:4px solid var(--bg);box-shadow:0 4px 0 #1F8C66;animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}   /* 3.10.0 a dark tick on green: white was 2.3:1 */
 .cele-badge svg{width:24px;height:24px}
-.cele-t{font-size:28px;font-weight:900;line-height:1.2;margin-top:26px;animation:rise .45s ease-out .55s both}
-.cele-s{font-size:15px;font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
+.cele-t{font-size:var(--fs-3xl);font-weight:900;line-height:1.2;margin-top:26px;animation:rise .45s ease-out .55s both}
+.cele-s{font-size:var(--fs-md);font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
 .cele-s b{color:var(--ink)}
 .cele .btn{max-width:300px;margin-top:28px;animation:rise .45s ease-out .9s both}
 @keyframes cele-in{from{opacity:0}to{opacity:1}}
@@ -965,8 +1043,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fig-fig svg,.fig-word svg{max-width:100%;height:auto}
 .opts.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:10px;gap:10px;margin-top:4px}
 .opts.grid .opt-btn{position:relative;flex-direction:column;justify-content:center;min-width:0;min-height:96px;margin-top:0 !important;padding:22px 8px 12px}
-.opts.grid .opt-key{position:absolute;top:8px;left:8px;width:24px;height:24px;font-size:11px;margin:0}
-.opts.grid.short .opt-btn{min-height:72px;padding:14px 8px;font-size:20px;font-weight:700}
+.opts.grid .opt-key{position:absolute;top:8px;left:8px;width:24px;height:24px;font-size:var(--fs-cap);margin:0}
+.opts.grid.short .opt-btn{min-height:72px;padding:14px 8px;font-size:var(--fs-xl);font-weight:700}
 .opts.grid .opt-txt{flex:none;display:flex;align-items:center;justify-content:center;width:100%}
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
@@ -985,19 +1063,19 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pack-card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--lip)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
 .pack-card:not(.own) .pack-ico{color:var(--ink3)}
-.pack-name{display:block;font-size:14px;font-weight:700}
-.pack-sub{display:block;font-size:13px;color:var(--cream60);margin-top:2px}
-.pack-price{flex:none;margin-left:10px;font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--primary-ink)}
+.pack-name{display:block;font-size:var(--fs-sm);font-weight:700}
+.pack-sub{display:block;font-size:var(--fs-xs);color:var(--cream60);margin-top:2px}
+.pack-price{flex:none;margin-left:10px;font-family:var(--font-display);font-size:var(--fs-lg);font-weight:700;color:var(--primary-ink)}
 .pack-hero{text-align:center;padding:6px 0 4px}
 .pack-hero-ico{font-size:40px;line-height:1.2}
-.pack-hero-name{font-family:var(--font-display);font-size:20px;font-weight:700;margin-top:4px !important}
-.pack-hero-price{display:inline-block;margin-top:10px !important;background:var(--primary-soft);color:var(--primary-ink);border-radius:var(--r-pill);padding:5px 16px;font-family:var(--font-display);font-size:17px;font-weight:700;box-shadow:0 3px 0 var(--brand-lip)}   /* 3.10.0 violet text, 7.2:1 (white on violet was 3.1:1) */
-.pack-list{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.6;color:var(--ink2)}
+.pack-hero-name{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;margin-top:4px !important}
+.pack-hero-price{display:inline-block;margin-top:10px !important;background:var(--primary-soft);color:var(--primary-ink);border-radius:var(--r-pill);padding:5px 16px;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;box-shadow:0 3px 0 var(--brand-lip)}   /* 3.10.0 violet text, 7.2:1 (white on violet was 3.1:1) */
+.pack-list{margin:8px 0 0;padding-left:18px;font-size:var(--fs-xs);line-height:1.6;color:var(--ink2)}
 .pay-steps>*+*{margin-top:12px}
-.pay-step{display:flex;font-size:13px;line-height:1.5}
-.pay-n{flex:none;margin-right:10px;width:24px;height:24px;border-radius:50%;background:var(--pur-bg);color:var(--primary-ink);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.pay-step{display:flex;font-size:var(--fs-xs);line-height:1.5}
+.pay-n{flex:none;margin-right:10px;width:24px;height:24px;border-radius:50%;background:var(--pur-bg);color:var(--primary-ink);font-size:var(--fs-xs);font-weight:900;display:flex;align-items:center;justify-content:center}
 .pay-row{display:flex;flex-wrap:wrap;margin:6px -4px 0}
-.pay-btn{display:flex;align-items:center;justify-content:center;width:auto;flex:1 1 130px;margin:4px;padding:11px 12px;font-size:13px;text-decoration:none}
+.pay-btn{display:flex;align-items:center;justify-content:center;width:auto;flex:1 1 130px;margin:4px;padding:11px 12px;font-size:var(--fs-xs);text-decoration:none}
 .code-form>*+*{margin-top:10px}
 .code-form input{letter-spacing:1.5px;text-transform:uppercase}
 .sel{-webkit-user-select:all;user-select:all}
@@ -1010,14 +1088,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .adm-row>*+*{margin-left:8px}
 .pack-card .chip{margin-left:10px}
 .pay-btn svg{margin-right:6px}
-.adm-code{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:1px}
+.adm-code{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;letter-spacing:1px}
 a.link{text-decoration:none}
 .adm-file{position:relative;overflow:hidden;margin-top:12px !important}
 .adm-file input{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;width:100%;height:100%;cursor:pointer}
 .pay-qr{display:block;width:176px;margin:10px 0 8px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
 .pay-qr svg{display:block}
 .pay-how{display:block}
-.pay-id{display:flex;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:14px}
+.pay-id{display:flex;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:var(--fs-sm)}
 .pay-id .link{margin-left:8px;padding:4px 6px}
 .pay-app{display:inline-flex;align-items:center;margin-top:6px !important;padding-left:0}
 .pay-app svg{margin-right:6px}
@@ -1030,8 +1108,8 @@ a.link{text-decoration:none}
 .done-card{text-align:center;background:var(--surface);box-shadow:none;border:1px dashed var(--line-2)}
 .done-tick{width:64px;height:64px;margin:0 auto;border-radius:50%;background:var(--good);color:var(--on-mark);display:flex;align-items:center;justify-content:center}
 .done-tick .li{stroke-width:3}
-.done-t{font-size:22px;font-weight:700;margin-top:12px}
-.done-s{font-size:14px;color:var(--ink2);margin-top:4px}
+.done-t{font-size:var(--fs-xl);font-weight:700;margin-top:12px}
+.done-s{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px}
 .done-card .link{margin-top:6px}
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
 .path{margin-top:26px}
@@ -1044,8 +1122,8 @@ a.link{text-decoration:none}
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
 .chp-ic{flex:none;width:80px;height:80px;margin-right:20px}
 .chp-ic .chi{display:block}
-.ch-en{display:block;font-size:15px;font-weight:600;color:var(--ink3);letter-spacing:.2px;line-height:1.3}
-.path .ch-name{font-size:21px;font-weight:700;line-height:1.35;margin-top:2px}
+.ch-en{display:block;font-size:var(--fs-md);font-weight:600;color:var(--ink3);letter-spacing:.2px;line-height:1.3}
+.path .ch-name{font-size:var(--fs-xl);font-weight:700;line-height:1.35;margin-top:2px}
 .path .ch-prog{margin-top:10px}
 .path .ch-bar{height:6px}
 .path .k-active,.path .k-revise{border-color:var(--primary);border-width:2px;border-bottom-width:5px}
@@ -1055,7 +1133,7 @@ a.link{text-decoration:none}
 .path .k-locked,.path .k-soon{border-style:solid}
 .path .k-locked .chp-ic,.path .k-locked .topic-info,.path .k-soon .chp-ic,.path .k-soon .topic-info{opacity:.45}
 .path .k-locked .chp-ic .chi,.path .k-soon .chp-ic .chi{filter:grayscale(.7)}
-@media (max-width:370px){.chp-ic{width:68px;height:68px;margin-right:16px}.chp-ic .chi{width:68px;height:68px}.path .ch-panel{padding:20px}.path .ch-name{font-size:19px}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:30px}}
+@media (max-width:370px){.chp-ic{width:68px;height:68px;margin-right:16px}.chp-ic .chi{width:68px;height:68px}.path .ch-panel{padding:20px}.path .ch-name{font-size:var(--fs-xl)}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:var(--fs-3xl)}}
 /* 3.9.1 room to breathe: the subject tiles on top, then a wide gap — the subject's name and its line sit just above the middle of
    the screen — then another gap, then the chapters, each with space around it */
 .subj-row:after{content:'';flex:none;width:8px}
@@ -2398,7 +2476,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.10.0',
+  VERSION: '3.11.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -2422,6 +2500,7 @@ var CONFIG = {
   SYNC_WAIT_MS: 6000,                          // quiet time after a change before it is backed up
   RESTORE_WAIT_MS: 8000,                       // longest the sign-in screen waits for the cloud backup before showing Home
   MAIL_WAIT_MS: 60000,                         // gap between two emails to the same address
+  GOOGLE_CLIENT_ID: '833578570616-8vss4s5lj5jbjtf15bfg3oip8l5dmk7c.apps.googleusercontent.com',   // 3.11.0 Sign in with Google (public: a web client id is no secret)
   PASS_MIN: 8,                                 // shortest password the app accepts
   KEEP_CHOSEN: 12                              // signed-out profiles that only hold a chosen course (no practice yet): the latest 12 are kept on a phone
 };
@@ -3966,7 +4045,7 @@ function splashFull() {
   return spDay;
 }
 /* It goes after 500 ms (300 ms with no animations: 3.9.5; the first open of the day 1.5 s / 1 s, 3.10.0) — or later, once the app is ready, if that takes longer. The app's own data is there at once; the letters of
-   the first screen (Mukta, Latin and Hindi) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
+   the first screen (Noto Sans, Latin and Hindi) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
    just for show. */
 function splashWait() {
   var t = false, r = false, leave = function () { if (t && r && stack.length && top().s === 'splash') enterApp(); };
@@ -3978,7 +4057,7 @@ function appReady(cb) {
   setTimeout(fin, CONFIG.SPLASH_MAX_MS);
   try {
     if (document.fonts && document.fonts.load) {
-      ['400', '600', '700'].forEach(function (w) { document.fonts.load(w + ' 16px Mukta', 'a\u0905').then(one, one); });
+      ['400', '600', '700'].forEach(function (w) { document.fonts.load(w + ' 16px "Noto Sans"', 'a\u0905').then(one, one); });
       return;
     }
   } catch (e) { /* no way to fetch the letters early here: ready now */ }
@@ -4031,6 +4110,7 @@ function appBack() {
   if (modalOpen) { hideModal(); return true; }
   var e = top();
   if (!e) return false;
+  if (e.s === 'login' && auClose()) return true;    // 3.11.0 the email sheet goes down first
   if (e.s === 'practice') { askQuit(); return true; }
   if (stack.length > 1) { stack.pop(); paint(); return true; }
   if (TABS[e.s] && e.s !== 'home') { reset('home'); return true; }
@@ -4202,7 +4282,8 @@ function passField(id, placeholder, auto, strength) {
    the app (splashOff). 3.10.0 under it the name, the line and the foot line (BRAND_TXT, CSS .sp-word); nothing else on the screen. */
 var LAMP = { part: 0.60, lift: 9 / 512, halo: 0.32, glow: '#FFC85A', glowA: 0.26, top: '#FFD84D', foot: '#FF8C00', cream: '#FFF8E7' };
 /* The brand's letters (3.10.0), traced from the logo (brand artwork, 1200 px): IOPET one path per letter (they rise one after another),
-   in a 979 x 211 box; "Padho. Samjho. Aage badho." and "Made in India · ek private pahal" in their own boxes. */
+   in a 979 x 211 box; "Padho. Samjho. Aage badho." in its own box; 3.11.0 the foot line "MADE IN INDIA · EK PRIVATE PAHAL" is set
+   in the app's own Noto Sans Bold, CAPS, as on the sign-in page (one style for the small labels everywhere). */
 var BRAND_TXT = {
   word: { w: 979, h: 211, l: [
     'M0 187.5L0 167 L17 167L34 167 L34 106.5L34 46 L17 46L0 46 L0 25.5L0 5 L59 5L118 5 L118 25.5L118 46 L101 46L84 46 L84 106.5L84 167 L101 167L118 167 L118 187.5L118 208 L59 208L0 208 L0 187.5Z',
@@ -4212,7 +4293,7 @@ var BRAND_TXT = {
     'M867.8 128.2L867.5 48.5 L837.2 48.2L807 48 L807 26.5L807 5 L893 5L979 5 L979 26.5L979 48 L948.2 48.2L917.5 48.5 L917.2 128.2L917 208 L892.5 208L868 208 L867.8 128.2Z'
   ] },
   tag: { w: 639.5, h: 45.75, d: 'M428.6 45.6c-.3-.1-1.3-.3-2.4-.6c-2.9-.7-4.5-1.7-4.5-2.6c0-2.3 2.1-4.2 3.5-3.2c2.4 1.8 8.2 1.6 10.3-.4c2.1-2 3-7.2 .9-5.5c-.4 .3-.7 .5-.8 .5c-.1 0-.4 .2-.7 .5c-.3 .2-1.3 .7-2.3 .9c-11.3 2.8-18.3-12.3-9.6-20.8c.9-.9 1.8-1.6 2-1.6c.2 0 .7-.2 1-.4c.9-.6 4-1.1 5.1-.8c.5 .1 1.2 .2 1.6 .2c.9 0 3.3 1.1 3.9 1.9c.6 .7 1.2 .4 1.3-.8l.1-1 2.9 0l2.9 0 .1 12.5c.1 12 0 12.5-.4 13.6c-.3 .6-.5 1.3-.5 1.4c0 1-2.6 3.9-4.1 4.7c-2.5 1.3-7.8 2.1-10 1.6zM264.6 44.6c-.5-.3-2.2-4-2-4.4c.1-.3 .5-.4 1-.4c1.2 0 3-1.4 3.4-2.7c.3-.8 .4-3.6 .5-13.1l.1-12.1 3 0l3 0 0 13.2l0 13.2-.6 1.4c-.8 1.8-1.4 2.7-2.5 3.3c-2.1 1.3-5.1 2-5.9 1.5zM35.6 35.8c-3.5-.5-6.9-3.3-8.2-6.9c-1-2.7-1.1-7.9-.1-10.1c.3-.6 .5-1.2 .5-1.4c0-.2 .2-.5 .5-.8c.3-.2 .5-.6 .5-.8c0-.4 2.6-2.7 3.9-3.4c3.5-1.9 8.7-1.2 10.9 1.4c.6 .7 1 .4 1.1-.8l.1-1.2 3 0l3 0 .1 11.7c.1 13.6 .5 12.2-3.4 12l-2.6-.1-.1-1.2c-.1-1.4-.2-1.4-1.6-.5c-3.2 2.1-4.5 2.5-7.3 2.1zM64.9 35.8c-3.2-.4-8.1-4.3-8.1-6.5c0-.2-.2-.7-.4-1.1c-.9-1.6-.7-7.1 .3-9.9c2.3-6.2 11-9 15.7-5c1.4 1.2 1.5 .9 1.4-5c0-4.1 0-5.3 .3-5.5c.7-.5 5.4-.3 5.7 .3c.3 .5 .4 30.9 .1 31.9c-.2 .7-.4 .7-3.3 .6l-2.4-.1-.3-.9c-.4-1.3-.5-1.4-1.4-.5c-1.6 1.5-4.5 2.2-7.6 1.8zM123.1 35.7c-3.7-.4-9.4-4.3-9.4-6.4c0-.2-.2-.8-.5-1.4c-.8-1.5-.8-7.1 0-8.7c.3-.6 .5-1.2 .5-1.4c0-1 3.8-4.4 5.9-5.4c2.8-1.3 7.8-1.4 10.1-.2c.4 .2 .9 .4 1.1 .4c1 0 4.6 3.6 5.4 5.5c4.2 9.1-2.9 18.7-13.1 17.5zM143.7 35.7c-4.2-.7-3.2-7.1 1.1-7c2.4 0 3.1 .8 3.1 3.5c0 2.9-1.3 4-4.2 3.5zM175.8 35.8c-3-.3-6-1.6-8.4-3.8c-2.2-2-2.2-2.2-.4-4.2c.4-.5 1-1.2 1.3-1.5c.9-1.1 1.1-1.1 2.7 .6c3.1 3.1 8 4.2 10.8 2.4c3-1.8 .6-5.8-3.9-6.3c-3.4-.4-7.3-2.2-8.9-4c-4.4-5-2-12.3 4.8-14.6c2.2-.7 7.1-.8 8.9-.2c.6 .2 1.4 .5 1.7 .6c.6 .1 1.6 .7 3.1 1.8c.7 .5 1.9 2 1.9 2.5c0 .2-.3 .6-2.6 2.7l-1.4 1.3-1.2-1.1c-1.6-1.6-2.4-2-4.3-2.3c-5-.9-8.4 2.4-5.1 5c1.2 1 3 1.7 5.5 2.1c.8 .1 1.9 .4 2.2 .6c.4 .2 .9 .4 1.1 .4c.2 0 .5 .2 .7 .4c.2 .2 .5 .4 .8 .5c3.7 1.1 5.8 7.2 3.8 11.4c-.8 1.7-3.9 4.8-4.9 4.8c-.2 0-.7 .2-1.3 .5c-1.2 .5-4.4 .8-7.2 .5zM202.8 35.8c-10.3-1.4-12.4-18.3-2.8-23.3c3.5-1.9 9-1.1 10.7 1.5c.6 .9 1 .6 1.1-.8l.1-1.2 3 0l3 0 .1 11.5c0 6.3 0 11.6-.1 11.8c-.2 .3-5.3 .5-5.8 .2c-.2-.1-.3-.7-.3-1.3c0-1.5-.3-1.6-1.6-.5c-2.4 2-4.5 2.6-7.4 2.2zM317.2 35.7c-2.1-.2-3.9-1-6.3-2.6c-.8-.6-3.2-3.6-3.2-4.1c0-.2-.2-.8-.5-1.3c-.7-1.3-.7-6.1-.1-7.8c.2-.6 .5-1.4 .6-1.8c.4-1.4 4.5-5.4 5.5-5.4c.2 0 .6-.2 .9-.4c1.7-1.2 7.6-1.2 9.7 0c.4 .2 .9 .4 1 .4c1.7 0 5.5 4.8 6.1 8c2 9-4.4 16-13.8 15zM337.9 35.8c-2.1-.3-3.2-2.9-2.3-5.1c1.3-3.1 5.9-2.6 6.5 .7c.5 2.8-1.4 4.8-4.3 4.4zM398.9 35.8c-9.3-1.4-12.3-15.5-4.7-22c3.5-3 10.1-3.1 12.4-.2c.7 .9 1.1 .7 1.2-.6l.1-1.1 2.8-.1c1.8 0 3 0 3.2 .2c.4 .3 .5 21.8 .1 22.9c-.2 .6-.4 .6-2.8 .7c-3.2 .1-3.5 0-3.5-1.4c0-1.4-.3-1.6-1.2-.7c-1.9 1.9-4.7 2.8-7.6 2.3zM458.9 35.8c-3.6-.3-7.7-3.3-8.9-6.4c-.1-.3-.4-1.1-.7-1.8c-1.1-2.6-.5-8 1-10.4c.2-.4 .4-.8 .4-.9c0-.5 3.2-3.1 4.6-3.8c7.8-3.6 16.4 1.8 16.4 10.2c0 2.4 .6 2.3-8.7 2.3c-9.4 0-9.3 0-6.5 3.3c1.8 2.1 6.4 2.6 9.5 1c1.2-.6 2.1-.6 2.5 .1c.2 .3 .7 1 1.1 1.6c1 1.3 1 1.6 .2 2.2c-3.3 2.2-6.7 3-10.9 2.6zM502.1 35.7c-1.6-.2-3.1-.8-4-1.5c-.9-.8-1.6-.7-2 .3l-.3 .9-2.6 .1c-2.2 .1-2.6 0-2.9-.4c-.4-.5-.5-31.5-.1-32.1c.3-.4 5.4-.7 6-.3c.3 .2 .3 1.3 .3 5.5c0 5.7 .1 6.2 1.3 5.1c5.6-4.9 15-.4 16.2 7.8c1.3 9-3.9 15.5-11.9 14.6zM526.6 35.8c-1.8-.3-4.6-1.7-5.7-2.9c-.9-1-2.2-3.1-2.2-3.5c0-.2-.2-1-.5-1.7c-.7-1.7-.6-7.2 .1-8.8c1.1-2.5 1.6-3.3 2.9-4.5c4-3.7 10.3-4.1 13.1-.7c.9 1.1 1.2 .9 1.4-.6l.1-1.2 2.7-.1c1.5 0 2.8 0 3 .2c.3 .3 .2 23.1 0 23.4c-.1 .1-1.4 .2-2.8 .2c-2.9 0-3.3-.2-3.1-1.6c.2-1.2-.3-1.3-1.6-.3c-2.4 1.9-4.6 2.6-7.5 2.1zM556 35.7c-.8-.1-1.7-.4-2-.6c-.3-.2-.7-.4-.9-.4c-1 0-3.7-2.6-4.8-4.6c-1.5-2.8-2-8.2-1-10.5c.2-.5 .4-1.1 .4-1.4c0-1.2 3.5-4.9 5.5-5.9c3.4-1.6 9.6-1 10.3 .9c.1 .2 .4 .4 .6 .4c.5 0 .5-.1 .5-5.3c0-6.3-.2-5.9 3.1-5.9c3.6 0 3.3-1.9 3.1 16.9l-.1 16-2.6 .1c-2.8 .1-3.2-.1-3.3-1.2c-.1-.9-.8-1-1.5-.2c-.3 .4-.7 .6-.8 .6c-.1 0-.6 .2-1 .4c-.4 .2-1.3 .4-1.9 .5c-.6 .1-1.4 .2-1.8 .2c-.3 0-1.3 0-2-.1zM614.2 35.8c-3.6-.4-7.6-3.1-9-6c-1.4-2.9-1.5-3.1-1.4-5.7c0-3.4 .5-5.2 1.9-7.2c.8-1.2 4.1-4 4.7-4c.2 0 .6-.2 .9-.4c1.7-1.2 7.6-1.2 9.7 0c.4 .2 .9 .4 1 .4c.4 0 3.1 2.2 4 3.3c2.9 3.4 3.4 9.2 1.1 13.7c-1 1.9-4.5 5-5.7 5c-.2 0-.7 .2-1 .4c-.8 .6-3.7 .9-6.1 .6zM634.8 35.8c-1.6-.2-2.8-2.4-2.5-4.5c.6-3.5 5.6-3.7 6.7-.3c.9 2.9-1.1 5.1-4.3 4.8zM3.1 35.6c-2-.1-2.6-.2-2.8-.5c-.5-.7-.4-29.9 .1-30.4c.5-.5 12-.6 14.9-.1c8.6 1.3 10.9 13.2 3.5 18.4c-1.6 1.2-3.5 1.5-7.7 1.5c-2.6 0-3.9 .1-4.1 .3c-.2 .2-.3 1.8-.3 5.4c0 4.8 0 5.1-.5 5.3c-.3 .1-.5 .2-.6 .2c0 0-1.2-.1-2.6-.1zM102.2 35.5c-.6-.1-.7-.8-.7-8.3c0-8.4-.1-8.9-2.1-9.9c-1.9-.9-4.8-.2-6.2 1.5l-.6 .8-.1 7.9l-.1 7.9-2.9 .1c-2.5 .1-2.9 0-3.2-.4c-.2-.3-.3-3.9-.3-16.3l0-15.8 .6-.2c.8-.3 4.4-.3 5.2 0l.6 .2 0 5.5c0 6.2 0 6.3 1.7 4.9c.4-.3 .9-.6 1-.6c.1 0 .5-.2 .8-.5c2.9-2.3 9.8-.1 10.8 3.3c.1 .3 .3 .9 .5 1.5c.6 1.5 .6 18.1 0 18.3c-.4 .2-4.5 .3-5.1 .1zM227.1 35.5l-2.5-.1-.1-11.5c-.1-7.6 0-11.6 .1-11.8c.5-.7 5.7-.3 5.8 .4c.2 1.9 .6 2.2 1.5 1.2c2.5-3.1 10.6-2.6 11.9 .8c.4 1 .9 .9 2.2-.2c3.9-3.5 10.2-3.6 12.8-.3c1.8 2.3 1.9 2.7 2 12.4c.1 5.7 0 8.8-.2 9c-.4 .4-5.6 .3-5.8-.1c-.1-.2-.2-3.6-.2-7.5c0-6.7 0-7.3-.5-8.4c-1.2-2.8-5.4-3-7.4-.2l-.8 1.1 0 7.6c0 8.9 .4 8-3.5 7.8l-2.6-.1-.1-7.5c-.1-7.1-.2-7.6-.7-8.7c-1.3-2.8-5.3-2.9-7.3-.2l-.8 1.1 0 7.6c0 7.2 0 7.6-.5 7.8c-.3 .1-.5 .2-.6 .2c0 0-1.2-.1-2.6-.2zM296.1 35.4c-.3-.2-.3-2-.4-8l-.1-7.8-.7-1c-1.6-2.4-5.2-2.4-7.4 .1l-.8 .9 0 7.5c0 4.7-.1 7.6-.3 7.9c-.3 .6-5.4 .7-5.9 .2c-.2-.2-.3-4.2-.3-16.2c0-18.4-.4-16.5 3-16.5c3.5 0 3.2-.6 3.3 5.8c.1 6 .2 6.4 1.5 5.2c4.4-3.9 10.8-2.6 13.1 2.7l.7 1.6 .1 8.4c.1 6.8 0 8.5-.2 8.8c-.4 .5-5 .8-5.6 .3zM382.2 35.5c-.3-.2-1.5-2.6-1.5-3.1c0-.2-.3-1-.7-1.9l-.7-1.6-5.8 0l-5.8 0-.5 .7c-.3 .4-.5 .8-.5 1.1c0 .2-.2 .8-.5 1.3c-.3 .5-.5 1.1-.5 1.3c0 .2-.2 .8-.5 1.3l-.5 .8-3 0l-3 0 0-.8c0-.4 .2-1.1 .4-1.4c.2-.4 .5-1.1 .7-1.7c.2-.6 .6-1.6 .9-2.3c.3-.7 .8-1.9 1-2.6c.3-.7 .7-1.8 1-2.6c.3-.7 .7-1.8 .9-2.3c.2-.6 .5-1.3 .7-1.7c.2-.4 .4-.8 .4-1.1c0-.2 .2-.8 .5-1.3c.3-.5 .5-1.1 .5-1.3c0-.2 .2-.6 .4-1c.2-.4 .5-1.1 .7-1.7c.3-.9 .6-1.6 1.9-4.9c.3-.7 .7-1.8 .9-2.4c.7-2.1 1-2.3 4.1-2.3l2.7 0 .7 1.6c1.5 3.3 1.6 3.7 1.6 4c0 .2 .2 .7 .5 1.2c.3 .5 .5 1.1 .5 1.2c0 .2 .2 .8 .5 1.3c.3 .6 .5 1.2 .5 1.3c0 .2 .2 .6 .4 1c.2 .4 .5 1.1 .7 1.7c.2 .6 .6 1.6 .9 2.4c.3 .8 .7 1.8 .9 2.4c.2 .6 .5 1.3 .7 1.7c.2 .4 .4 .9 .4 1.1c0 .2 .2 .7 .4 1.1c.2 .4 .5 1.1 .7 1.7c.2 .6 .6 1.6 .9 2.4c.3 .8 .7 1.8 .9 2.4c.2 .5 .5 1.2 .6 1.4c.7 1.3 .5 1.4-2.8 1.5c-1.7 0-3.1 0-3.3-.1zM593.1 35.4c-.3-.2-.4-1.5-.4-7.7c0-8.4-.1-9-1.8-10.2c-1.8-1.3-5.1-.6-6.5 1.4l-.7 1 0 7.4c0 4.1-.1 7.6-.2 7.8c-.3 .7-5.7 .6-6.1-.1c-.2-.3-.3-5.9-.3-16.2c0-18.3-.4-16.3 3.3-16.3c3.3 0 3-.4 3 5.5c0 6.2 .2 7 1.6 5.5c.2-.3 .7-.6 1-.7c.3-.1 .8-.4 1.2-.6c3.5-2.4 9.1-.4 11 4c.6 1.5 1.1 18.1 .6 18.9c-.3 .4-5.1 .6-5.7 .2zM70.1 30.2c3.5-1.9 4.8-6.3 2.9-10.1c-2.3-4.8-8.7-4.5-10.6 .5c-2.2 6 2.7 12.2 7.6 9.6zM561.3 30.1c4.6-2.5 4.9-9.7 .5-12.6c-2.2-1.4-6-.7-7.5 1.5c-3.9 5.8 1.3 14.1 6.9 11.1zM40.4 30.1c2.6-1.1 4.1-3.4 4.1-6.5c0-7.1-8.2-9.5-11.1-3.2c-2.5 5.3 2.2 11.7 7.1 9.7zM126.4 30.3c.1-.1 .4-.3 .8-.4c5-1.3 5-9.8 0-12.6c-6-3.3-11.6 7.4-6 11.6c1.8 1.3 4.7 2.1 5.2 1.4zM208 29.9c2.6-1.2 3.7-3.1 3.7-6.3c0-5.2-4.3-8.4-8.3-6.1c-6.8 3.8-2.4 15.5 4.6 12.4zM321.3 29.9c2.6-1.2 3.6-2.9 3.6-6.3c0-6.2-5.6-9-9.8-5c-5.1 4.8 0 14.1 6.3 11.3zM403.9 30.1c2.9-1.3 3.8-2.9 3.8-6.5c0-7.9-9.4-9.5-11.3-1.8c-1.4 5.3 3.2 10.3 7.5 8.3zM433.8 29.9c5.2-2.3 5.3-9.9 .1-12.6c-2.7-1.4-5.9-.2-7.9 2.8c-.7 1.2-.7 5.9 .1 7.1c1.8 2.9 4.8 3.9 7.6 2.7zM505.1 29.8c2.4-1.7 3.4-4.2 2.9-7.7c-.6-4.3-5-6.7-8.4-4.6c-2.6 1.6-3.5 4-3 8c.5 3.9 5.4 6.4 8.5 4.2zM531.7 30.1c2.9-1.3 4-3.1 4-6.4c0-7.4-8.7-9.6-11.3-2.8c-2 5.4 2.7 11.3 7.3 9.2zM618.2 30c6.2-2.7 4.5-13.2-2.2-13.2c-2.2 0-4.6 1.8-5.5 4.2c-2.1 5.5 2.7 11.2 7.6 9.1zM374.2 23.5l2.9 0-.2-1.1c-.1-.6-.3-1.4-.6-1.8c-.2-.4-.5-1.3-.7-1.9c-1.4-4.9-2.9-7.2-2.9-4.6c0 .3-.3 1.4-.7 2.5c-.4 1.1-.9 2.4-1 2.9c-.2 .5-.5 1.3-.8 1.9c-.7 1.5-.3 2.6 .7 2.2c.2-.1 1.6-.1 3.2-.1zM465.6 20.7c.6-2.3-4.1-4.7-7-3.6c-2.1 .8-4 3-3.4 3.8c.6 .7 10.1 .5 10.3-.2zM14.6 17.8c2.9-1.9 2.3-6.4-1-7.3c-1.6-.5-6.5-.4-6.7 .1c-.3 .9-.2 7.6 .2 7.8c.9 .5 6.5 .1 7.5-.6zM269.6 6.8c-2.1-.3-3.5-3.4-2.3-5c2.3-3.1 7.2-1.9 7.2 1.8c0 1.3-1.5 3.1-2.5 3.1c-.3 0-.8 0-1.1 .1c-.3 0-.8 0-1.3 0z' },
-  mii: { w: 468.0, h: 27.0, d: 'M275.6 26.7c-.4-.4-.4-18.9-.1-19.4c.1-.2 .6-.4 1.1-.5c.9-.1 1.1 0 1.8 1c.3 .4 .3 .4 1-.1c3.5-2.7 9-.3 9.9 4.4c1.2 6.3-4.3 11.1-9.4 8.2c-1.7-.9-1.7-.9-1.6 2.8c0 2-.1 3.3-.2 3.5c-.3 .4-2 .4-2.4 0zM390.9 26.7c-.3-.6-.3-19.3 .1-19.7c.6-.6 1.7-.4 2.3 .3l.5 .7 1-.5c5.8-2.9 11.4 2.2 9.5 8.7c-1.2 3.9-5.9 6.2-9 4.3c-1.7-1-1.9-.8-1.9 2.8c0 1.7-.1 3.3-.2 3.4c-.2 .4-2.1 .4-2.3 .1zM28.9 21c-5.2-.9-6.9-9.1-2.6-13.1c1.6-1.5 6.5-1.7 7.5-.2c.5 .8 1 .7 1.4-.1c.3-.6 .5-.7 1.3-.8c1.6-.1 1.6-.2 1.5 7.4l-.1 6.7-1.4 0c-1.3 0-1.4 0-1.5-.6c-.1-1-.5-1.1-1.5-.3c-1.4 1.1-2.6 1.4-4.7 1zM48.1 21c-.7-.1-1.5-.4-1.8-.6c-.3-.2-.6-.4-.7-.4c-.1 0-.5-.3-.9-.7c-2.9-3.1-2.6-8.5 .5-11.4c1.7-1.6 5.9-1.8 7.4-.4c1.1 1 1.3 .5 1.3-3c0-3.5 .1-3.8 1.4-3.8c1.6 0 1.6-.2 1.6 10.2c0 10.4 .1 10-1.7 10c-.9 0-1.1-.1-1.3-.6c-.3-.8-.6-.8-1.7 0c-1 .7-2.3 .9-4.2 .7zM67.6 21c-4.3-.6-6.9-4.6-5.8-9c1.2-4.8 7-7.3 10.3-4.5c.2 .2 .6 .5 .9 .5c.8 .3 1.9 2.4 2 4c.3 2.5 .4 2.5-5.2 2.5c-5.2 0-5.6 .1-5.3 1.1c.5 2 4.2 3.8 5.8 2.9c.2-.1 1-.5 1.7-.8l1.2-.6 .5 .6c1.6 2-1.9 3.9-6.2 3.3zM162.8 21c-5.5-.9-7.4-8.2-3.3-12.7c1.7-1.9 5.5-2.3 8-.8c1.3 .7 1.4 .5 1.4-3c0-3.4 .1-3.8 1.3-3.8c1.5 0 1.5-.1 1.5 10.2c0 6.3-.1 9.5-.3 9.7c-.5 .6-2.2 .4-2.5-.3c-.3-.7-.8-.7-2 .1c-.8 .6-2.4 .8-4 .5zM190.5 21c-5.1-.8-7-8.8-3-12.7c2-2 5.9-2.3 7.8-.6c.9 .8 1.1 .7 1.5-.1c.4-.8 1.3-1 2.2-.6c.5 .3 .5 .5 .5 7l0 6.7-.6 .1c-1.2 .3-2 0-2.1-.7c-.1-.9-.4-.9-1.8 0c-1.2 .8-2.7 1.1-4.5 .8zM236.6 21c-3.8-.5-5.8-3-5.8-7.1c0-6.3 5.6-9.6 10.6-6.2c.5 .3 .9 .6 1 .6c.7 .3 1.5 2.2 1.7 3.8c.3 2.5 .4 2.4-5.3 2.4c-5.4 0-5.7 .1-5 1.5c.9 2.2 3.8 3.2 6.5 2.1c.5-.2 1.1-.5 1.2-.6c.5-.5 1.1-.3 1.4 .3c1.1 2-2.3 3.7-6.4 3.2zM337.1 21c-5.2-.9-6.8-8.9-2.7-12.9c1.8-1.7 5.9-2 7.5-.6c.7 .6 1.3 .6 1.5 0c.2-.7 1.6-1 2.3-.6c.4 .3 .5 13.4 .1 13.8c-.5 .5-2.2 .1-2.4-.5c-.3-.7-1-.7-2 0c-.9 .7-2.6 1-4.3 .7zM368.9 21c-4.7-.7-7.3-5.7-5.3-10.3c.5-1.2 1.7-2.7 2.1-2.7c.1 0 .4-.2 .6-.4c1.4-1.3 4.3-1.7 5.9-.8c3.1 1.6 3.4 1.9 3.9 3.8c1.1 3.9 1.3 3.7-4.9 3.9l-5.1 .1-.1 .8c-.1 .9 1.2 2.6 1.9 2.6c.2 0 .7 .2 1.1 .4c1.1 .6 3.6 .2 4.7-.8c.6-.5 .8-.4 1.5 .3c1.7 1.8-2.3 3.7-6.4 3.1zM413.7 21c-5.3-.9-6.9-9.9-2.4-13.4c1.9-1.4 5.7-1.4 7.3 .1c.8 .8 .9 .8 1.5-.4c.3-.6 1.4-.8 2.1-.4c.5 .3 .5 .4 .4 7.1l-.1 6.8-1.2 0c-1.1 0-1.3-.1-1.3-.6c-.1-1-.4-1.1-1.7-.2c-1.3 .9-2.9 1.3-4.6 1zM450.5 21c-2.8-.4-5.2-3.8-5.2-7.2c0-5.8 5.6-9.3 10.1-6.2c.5 .4 1 .6 1 .6c0-.1 .3-.4 .5-.8c.5-.8 1.6-.9 2.3-.3c.6 .6 .6 13.1 0 13.6c-.7 .6-2.3 .2-2.3-.5c0-.4-.2-.7-.3-.7c-.3 0-1.7 .7-2.2 1.1c-.5 .4-2.3 .6-3.8 .4zM.1 20.7c-.1-.2-.1-4.4-.1-9.5l.1-9.1 1.3-.1c1.3-.1 1.9 .3 2.7 1.7c1.1 1.9 1.5 2.5 1.9 3.2c.4 .7 .8 1.3 1.9 3.2c1 1.7 1.7 2 2.2 .9c.2-.4 .6-1.2 .9-1.6c.3-.4 .7-1.2 1.1-1.7c.3-.5 .7-1.2 .8-1.4c.1-.2 .6-1 1.1-1.8c.5-.8 1-1.6 1.1-1.9c.2-.4 .6-.5 1.6-.5l1.3 0 .1 9.2c.1 10.1 .1 9.6-1.5 9.6c-1.5 0-1.5-.1-1.4-6.7c.1-3.3 .1-6 0-6c-.4 0-1.3 1-1.9 2.1c-2.9 5.1-4.1 6-5.5 4.3c-.8-1-3.3-4.9-3.8-5.9c-.2-.4-.5-.7-.7-.7c-.3 0-.4 .9-.4 6.4l-.1 6.4-1.3 .1c-.9 .1-1.4 0-1.4-.3zM90.1 20.8c-.4-.2-.5-13.3 0-13.8c.4-.4 1.3-.4 2 0c.7 .4 .8 13.6 .1 13.8c-.5 .2-1.6 .2-2 0zM98.8 20.8c-.6-.4-.5-13.3 .1-13.7c.9-.6 2.3-.1 2.3 .8c0 .5 .5 .4 1.4-.3c.5-.3 1-.6 1.3-.6c.3 0 .8-.1 1.1-.2c.9-.3 3.4 .2 4.1 .8c1.4 1.3 1.6 2.4 1.7 7.8c.1 5.7 .1 5.7-1.7 5.6l-1.1-.1-.1-5.2l-.1-5.2-.7-.8c-1.3-1.4-4-.9-5.4 1c-.5 .6-.5 1.1-.5 5.2c0 3.1-.1 4.6-.3 4.8c-.3 .3-1.7 .4-2.2 .1zM125.8 20.7c-.8-.8-.1-2.4 1.1-2.4c1.9 0 1.8 .2 1.8-6.8c0-7 .1-6.7-1.8-6.8c-1.2 0-1.9-1.6-1.1-2.5c.4-.4 8.2-.4 8.6 0c.9 .9 .2 2.5-1.2 2.5c-1.7 0-1.7 .1-1.7 6.8c0 6.7 0 6.7 1.7 6.7c1.1 0 1.5 .4 1.5 1.4c0 .4-.1 .9-.3 1.1c-.4 .4-8.2 .4-8.6 0zM140.4 20.8c-.3-.6-.2-13.6 .2-13.8c.7-.5 2.1-.1 2.4 .6c.4 .9 .8 .9 1.6 .1c.3-.3 .8-.6 1.2-.6c.3 0 .8-.1 1.2-.2c.4-.2 1.2-.1 2.2 0c2.9 .5 3.5 1.8 3.6 8.8c.1 5.3 .1 5.4-1.4 5.4c-1.3 0-1.3 .1-1.3-5.1c0-4.7-.1-5.1-1.2-6.4c-1.1-1.2-3.9-.5-5.2 1.2c-.4 .6-.5 1.2-.6 5.4l-.1 4.7-1.2 .1c-.7 0-1.2 0-1.3-.2zM177.6 20.7c-.4-.7-.2-13.3 .3-13.7c.7-.5 1.8-.4 2.1 .1c.3 .7 .3 13 0 13.5c-.3 .4-2.1 .4-2.3 .1zM249.2 20.8c-.3-.3-.2-19.5 .1-19.8c.4-.4 1.8-.4 2.3 .1c.3 .3 .4 1.1 .3 5.6c-.1 6 .1 6.5 1.3 4.9c2.1-2.6 5.2-4.9 6.5-4.9c1.3 0 1.9 .5 1.2 1.1c-1.5 1.1-5.2 4.8-5.2 5.2c0 .5 2.3 3.4 4.8 6c1.6 1.7 1.5 1.9-.4 1.9l-1.6 0-2.2-2.7c-3.3-3.9-3-3.7-4-2.6c-.6 .7-.6 .9-.5 2.7c.1 1.1 0 2.1-.2 2.3c-.3 .3-2.2 .4-2.5 .2zM294.4 20.8c-.3-.5-.2-13.6 .2-13.8c1-.6 2.4-.1 2.4 .9c0 .9 .5 1 1.2 .1c.7-.9 2.9-1.7 3.9-1.4c1.3 .3 .4 2.9-.9 2.9c-3.4 0-4.1 1.1-4.2 6.9l-.1 4.5-1.2 .1c-.7 0-1.2 0-1.3-.2zM307.4 20.7c-.1-.2-.1-3.3-.1-6.9l.1-6.6 .7-.2c.4-.1 1-.2 1.3-.1l.7 .2-.1 6.9l-.1 6.9-1.2 .1c-.8 .1-1.2 0-1.3-.3zM320.5 20.4c-.3-.4-.5-.8-.5-1c0-.2-.2-.7-.4-1c-.2-.4-.7-1.4-1-2.3c-.4-.9-.9-2.1-1.1-2.6c-1.3-2.8-1.5-3.4-1.5-3.7c0-.2-.2-.6-.5-1c-.9-1.1-.6-1.8 .8-1.9c1.4-.1 1.4-.2 3.3 4.6c.3 .7 .7 1.7 1 2.3c.3 .6 .5 1.2 .5 1.3c0 1.4 1.2 1.4 1.7 0c.2-.5 .5-1.3 .8-1.8c1.2-2.7 1.5-3.4 1.5-3.7c0-1.1 1.5-2.7 2.5-2.7c1.3 0 1.4 .4 .8 1.9c-1.1 2.5-1.6 3.4-3.5 7.8l-2 4.5-.9 .1c-.7 .1-1-.1-1.4-.6zM353.8 20.7c-.2-.2-.3-1.7-.3-5.5c0-5.6 0-5.7-1.4-5.7c-2.2 0-2.1-2.5 .1-2.7l1.2-.1 .1-1.5c.1-1.9 .3-2.2 1.7-2.1l1 .1 .1 1.5c.1 1.8 .3 2.1 1.6 2.1c1.4 0 2 .4 2 1.2c0 1-.6 1.5-1.9 1.5c-1.6 0-1.6 .1-1.7 6l-.1 5.4-1 .1c-.6 0-1.1-.1-1.3-.2zM428.4 20.7c-.1-.2-.1-4.7-.1-9.9l.1-9.6 .7-.2c.4-.1 .9-.2 1.3-.1l.7 .2 0 3.5c0 3.9 .2 4.3 1.3 3.3c.9-.9 3.1-1.3 4.8-1c3 .6 3.6 2.2 3.6 9.2l0 4.7-.6 .1c-.3 .1-.9 .1-1.3 .1l-.7-.1-.1-4.9c-.2-6.3-.5-7-3.2-7c-3 0-3.6 1.2-3.8 7.1l-.1 4.8-1.2 .1c-.8 .1-1.2 0-1.3-.3zM465.2 20.8c-.3-.3-.2-19.5 .1-19.8c.4-.4 2-.4 2.4 0c.4 .4 .4 19.2 0 19.7c-.3 .3-2.2 .4-2.5 .1zM32.3 18.3c4.4-1.9 3.3-9.3-1.4-9.3c-4.7 0-6 7-1.7 9.2c1.2 .6 1.8 .7 3.2 .1zM51.7 18.4c3.7-1.9 2.8-8.8-1.3-9.4c-4.7-.7-6.9 6.7-2.7 9.3c.9 .5 3.1 .6 4.1 .1zM166.9 17.9c3-2.6 2-8.1-1.6-8.9c-3.8-.9-6.6 3.6-4.7 7.4c1.3 2.6 4.2 3.3 6.3 1.5zM193.9 18.3c4.7-2.4 3.1-9.8-2-9.2c-4.6 .5-5.3 7.1-1.1 9.2c1 .5 2 .5 3.1 0zM283.8 18.3c3.6-1.8 4-6.5 .7-8.6c-2.2-1.4-4.7-.5-6 2c-1.8 3.6 1.9 8.3 5.3 6.6zM340.7 18.3c5.3-2.7 2-11.4-3.4-8.9c-3.2 1.5-3.2 7.2 0 8.8c1.3 .6 2.2 .7 3.3 .1zM399.4 18.2c3.5-2 3.5-6.9 0-8.6c-3.7-1.8-7.4 2.3-5.7 6.2c1.1 2.6 3.5 3.6 5.6 2.4zM417.4 18.2c4.5-2.5 2.8-9.7-2.2-9.1c-4.4 .5-5.3 7-1.2 9.2c1.2 .6 2.2 .6 3.4-.1zM453.9 18.3c4.5-2.3 3.3-9.2-1.6-9.1c-1.9 0-2.9 .7-3.8 2.5c-1.9 3.7 1.9 8.4 5.4 6.7zM214.1 13.4c-1.3-1.8 1-4.6 2.4-3c.8 .9 .7 2.8-.1 3.4c-.6 .4-1.9 .2-2.3-.4zM72 11.9c.4-.5 .1-1.2-.9-2.2c-1.6-1.4-5.6-.5-6.2 1.3c-.3 1 .2 1.2 3.6 1.2c2.5 0 3.3-.1 3.5-.4zM240.9 12.1c.7-.3 .4-1.1-.6-2.2l-1-1-1.6 .1c-2.4 .2-4.4 1.8-3.6 2.8c.3 .4 6 .5 6.8 .2zM373.5 11.9c.7-.9-1.5-2.9-3.2-2.9c-2.3 0-5.2 2.1-4.2 3.1c.4 .4 7 .2 7.3-.2zM307.8 3.1c-.9-.4-1.2-1.2-.7-2.2c.7-1.3 2.4-1.2 3.1 .1c.7 1.4-.8 2.7-2.4 2zM89.6 2.6c-.8-.8-.8-1 .1-1.9c1.1-1.1 3.3-.4 3.3 1.1c0 1.4-2.3 2-3.4 .8zM177.4 3c-1.2-.7 0-3 1.4-3c.5 0 1.9 1.3 1.9 1.8c0 1-2.2 1.8-3.3 1.2z' }
+  mii: { w: 21620, h: 714, d: 'M392 714 220 154H216Q217 174 219 214Q221 254 223 300Q225 345 225 382V714H90V0H296L465 546H468L647 0H853V714H712V376Q712 342 714 298Q715 254 716 214Q718 175 719 155H715L531 714ZM1597 714 1542 546H1290L1235 714H1070L1321 -3H1509L1762 714ZM1457 263Q1453 248 1444 218Q1436 188 1428 156Q1420 125 1415 105Q1411 128 1404 158Q1396 188 1389 216Q1382 244 1377 263L1326 418H1507ZM2567 345Q2567 468 2521 550Q2475 632 2392 673Q2308 714 2192 714H1974V0H2210Q2323 0 2402 40Q2482 79 2524 156Q2567 233 2567 345ZM2407 351Q2407 274 2384 224Q2362 174 2317 150Q2272 125 2206 125H2127V588H2191Q2301 588 2354 529Q2407 470 2407 351ZM3249 714H2838V0H3249V124H2989V281H3231V405H2989V589H3249ZM4179 714H3854V628L3941 588V126L3854 86V0H4179V86L4092 126V588L4179 628ZM5061 714H4869L4558 174H4554Q4556 208 4558 242Q4559 276 4560 310Q4562 344 4563 378V714H4428V0H4619L4929 535H4932Q4931 502 4930 469Q4929 436 4928 404Q4926 371 4925 338V0H5061ZM6022 714H5697V628L5784 588V126L5697 86V0H6022V86L5935 126V588L6022 628ZM6904 714H6712L6401 174H6397Q6399 208 6400 242Q6402 276 6404 310Q6405 344 6406 378V714H6271V0H6462L6772 535H6775Q6774 502 6773 469Q6772 436 6770 404Q6769 371 6768 338V0H6904ZM7799 345Q7799 468 7753 550Q7707 632 7624 673Q7540 714 7424 714H7206V0H7442Q7555 0 7634 40Q7714 79 7756 156Q7799 233 7799 345ZM7639 351Q7639 274 7616 224Q7594 174 7549 150Q7504 125 7438 125H7359V588H7423Q7533 588 7586 529Q7639 470 7639 351ZM8337 714H8012V628L8099 588V126L8012 86V0H8337V86L8250 126V588L8337 628ZM9023 714 8968 546H8716L8661 714H8496L8747 -3H8935L9188 714ZM8883 263Q8879 248 8870 218Q8862 188 8854 156Q8846 125 8841 105Q8837 128 8830 158Q8822 188 8815 216Q8808 244 8803 263L8752 418H8933ZM9756 361Q9756 314 9782 296Q9807 277 9843 277Q9878 277 9904 296Q9929 314 9929 361Q9929 405 9904 424Q9878 444 9843 444Q9807 444 9782 424Q9756 405 9756 361ZM10998 714H10587V0H10998V124H10738V281H10980V405H10738V589H10998ZM11848 714H11676L11489 413L11425 459V714H11274V0H11425V327Q11440 306 11455 285Q11470 264 11485 243L11678 0H11846L11597 316ZM12671 0Q12809 0 12875 58Q12941 115 12941 220Q12941 267 12927 310Q12913 353 12880 388Q12848 422 12795 442Q12742 461 12665 461H12600V714H12447V0ZM12666 125H12600V335H12651Q12693 335 12724 324Q12754 314 12770 290Q12787 265 12787 225Q12787 177 12758 151Q12728 125 12666 125ZM13414 0Q13508 0 13570 24Q13632 47 13662 93Q13693 139 13693 208Q13693 256 13676 293Q13659 330 13630 356Q13601 382 13564 399L13767 714H13592L13433 440H13348V714H13195V0ZM13411 119H13348V322H13411Q13472 322 13505 297Q13538 272 13538 215Q13538 183 13524 162Q13511 141 13483 130Q13455 119 13411 119ZM14250 714H13925V628L14012 588V126L13925 86V0H14250V86L14163 126V588L14250 628ZM15059 0 14816 714H14651L14409 0H14562L14696 425Q14700 436 14708 466Q14715 495 14723 528Q14731 560 14734 582Q14737 560 14744 528Q14752 495 14760 466Q14768 436 14771 425L14906 0ZM15713 714 15658 546H15406L15351 714H15186L15437 -3H15625L15878 714ZM15573 263Q15569 248 15560 218Q15552 188 15544 156Q15536 125 15531 105Q15527 128 15520 158Q15512 188 15505 216Q15498 244 15493 263L15442 418H15623ZM16370 714H16217V127H16024V0H16563V127H16370ZM17210 714H16799V0H17210V124H16950V281H17192V405H16950V589H17210ZM18092 0Q18230 0 18296 58Q18362 115 18362 220Q18362 267 18348 310Q18334 353 18302 388Q18269 422 18216 442Q18163 461 18086 461H18021V714H17868V0ZM18087 125H18021V335H18072Q18114 335 18144 324Q18175 314 18192 290Q18208 265 18208 225Q18208 177 18178 151Q18149 125 18087 125ZM19058 714 19003 546H18751L18696 714H18531L18782 -3H18970L19223 714ZM18918 263Q18914 248 18906 218Q18897 188 18889 156Q18881 125 18876 105Q18872 128 18864 158Q18857 188 18850 216Q18843 244 18838 263L18787 418H18968ZM20025 714H19874V406H19591V714H19440V0H19591V280H19874V0H20025ZM20769 714 20714 546H20462L20407 714H20242L20493 -3H20681L20934 714ZM20629 263Q20625 248 20616 218Q20608 188 20600 156Q20592 125 20587 105Q20583 128 20576 158Q20568 188 20561 216Q20554 244 20549 263L20498 418H20679ZM21146 714V0H21299V588H21588V714Z' }   // 3.11.0 Noto Sans Bold CAPS, letter-spaced like the sign-in page's foot line; 1000 units = 1 em
 };
 var TILE_FRAC = 0.748, SUN_FULL = 0.58 * 0.94;   // the start screen's tile: 74.8 % of the screen's width; the light: full colour to 58 % of its radius, covering from 94 %
 /* Where the phone's start screen draws the lamp, in the page's px: the tile (the icon's design box) is 74.8 % of the screen's width
@@ -4237,7 +4318,7 @@ function fx1(v) { return Math.round(v * 100) / 100; }
    screen (a short window) is left out: first the foot line, then the line, then the name. */
 function splashName(g, mw, bowlB) {
   var T = BRAND_TXT, ww = mw * 1.12, wh = ww * T.word.h / T.word.w, wt = bowlB + mw * 0.2, th = ww * T.tag.h / T.tag.w,
-    tt = wt + wh * 1.5, mh = ww * T.mii.h / T.mii.w, lx = fx1((g.pw - ww) / 2), o = '', i,
+    tt = wt + wh * 1.5, fw = T.mii.w * 11 / 1000, mh = T.mii.h * 11 / 1000, lx = fx1((g.pw - ww) / 2), o = '', i,
     at = function (t, w, h) { return 'left:' + lx + 'px;' + (t === null ? '' : 'top:' + fx1(t) + 'px;') + 'width:' + fx1(w) + 'px;height:' + fx1(h) + 'px'; },
     svg = function (cls, b, d, fill, st) {
       return '<svg class="' + cls + '" viewBox="0 0 ' + b.w + ' ' + b.h + '" preserveAspectRatio="none"' + (st ? ' style="' + st + '"' : ' width="100%" height="100%"') +
@@ -4249,7 +4330,7 @@ function splashName(g, mw, bowlB) {
   if (tt + th + 16 > g.ph) return o;
   o += svg('sp-tg', T.tag, T.tag.d, '#FFB340', at(tt, ww, th));
   if (tt + th + 24 > g.ph - 62 - mh) return o;                          // (62: 28 px and room for a phone's home bar)
-  return o + svg('sp-mi', T.mii, T.mii.d, '#B4B4B4', at(null, ww, mh));
+  return o + svg('sp-mi', T.mii, T.mii.d, '#8F8F8F', 'left:' + fx1((g.pw - fw) / 2) + 'px;width:' + fx1(fw) + 'px;height:' + fx1(mh) + 'px');
 }
 SCREENS.splash = function () {
   var g = splashGeom(), w = g.w, L = LAMP, mw = w * L.part, s = mw / 80, x = (w - mw) / 2, y = (w - mw * 79 / 80) / 2 - L.lift * w,
@@ -4282,36 +4363,7 @@ function moving(p) { return !!(p.adopt && user && user.guest); }       // a gues
 /* "Use another email": still signed in to the unconfirmed sign-up, and creating the account that replaces it */
 function restarting(p) { return !!(p.restart && db.auth && !db.auth.verified && user && !user.guest && db.auth.uid === p.restart); }
 
-SCREENS.login = function (p) {
-  var mv = moving(p);
-  return '<div class="page bg-auth auth">' + (mv ? BACK_PILL : '') +
-    authHead('Welcome back', mv ? 'Sign in and your guest progress comes with you' : 'Continue your prep journey') +
-    '<div class="auth-form" data-enter="login"><div class="auth-error" id="err" role="alert"></div>' +
-    emailField(p.email, 'username') +
-    passField('f-pass', 'Password', 'current-password', false) +
-    '<button type="button" class="btn btn-primary" data-act="login">Sign in</button>' +
-    '<div class="center"><button type="button" class="link" data-act="go" data-to="forgot">Forgot password?</button></div>' +
-    (mv ? '' : '<div class="divider">or</div><button type="button" class="btn btn-sec" data-act="guest">Continue as guest</button><div class="hint center guest-note">Your progress stays saved on this phone.</div>') + '</div>' +
-    '<div class="auth-switch">New to IOPET? <button type="button" class="link" data-act="' + (mv ? 'adopt' : 'go') + '" data-to="signup">Create account</button></div></div>';
-};
 
-SCREENS.signup = function (p) {
-  var mv = moving(p), rs = restarting(p), n = mv || rs ? user.answered : 0;
-  return '<div class="page bg-auth auth">' + (mv || rs ? BACK_PILL : '') +
-    authHead('Create account', rs ? 'This time with the right email address' : mv ? 'Free. Keeps your progress safe if the phone is lost' : 'Free. Your progress is backed up to the cloud') +
-    '<div class="auth-form" data-enter="signup"><div class="auth-error" id="err" role="alert"></div>' +
-    (n ? '<div class="note">Your ' + (mv ? 'guest ' : '') + 'progress (' + plural(n, 'answer') + ') moves into this account.</div>' : '') +
-    '<div class="input-wrap"><span class="input-icon">' + li('edit', 20) + '</span><input id="f-name" type="text" autocomplete="name" maxlength="40" placeholder="Full name" aria-label="Full name" value="' +
-    esc(p.name || (rs || (mv && user.name !== 'Guest') ? user.name : '')) + '"></div>' +
-    emailField(p.email, 'email') +
-    '<div>' + passField('f-pass', 'Create password', 'new-password', true) +
-    '<div class="strength"><i id="st-bar"></i></div><div class="hint" id="st-txt">At least ' + CONFIG.PASS_MIN + ' characters</div></div>' +
-    '<button type="button" class="btn btn-primary" data-act="signup">Create account</button>' +
-    '<div class="hint center">We email you a link to confirm the address.</div>' +
-    '<div class="center"><button type="button" class="link" data-act="go" data-to="privacy">Privacy policy</button></div></div>' +
-    (rs ? '<div class="hint center">The unconfirmed sign-up for ' + esc(db.auth.email) + ' is removed once the new account exists.</div></div>'
-        : '<div class="auth-switch">Already have an account? <button type="button" class="link" data-act="' + (mv ? 'adopt' : 'back') + '" data-to="login">Sign in</button></div></div>');
-};
 
 /* Shown after sign-up, and from Account while the email is still unconfirmed. */
 SCREENS.verify = function (p) {
@@ -4329,14 +4381,215 @@ SCREENS.verify = function (p) {
 };
 AFTER.verify = function (sc) { var el = sc.querySelector('#err'); if (el && el.textContent) el.classList.add('show'); };
 
-SCREENS.forgot = function (p) {
-  return '<div class="page bg-auth auth">' + BACK_PILL +
-    authHead('Reset password', 'We email you a link to choose a new password') +
-    '<div class="auth-form" data-enter="forgot-send"><div class="auth-error" id="err" role="alert"></div>' +
-    emailField(p.email, 'username') +
-    '<button type="button" class="btn btn-primary" data-act="forgot-send">Send reset link</button></div>' +
-    '<div class="hint center">The link goes only to the inbox of that email. Whoever cannot open that inbox cannot change the password.</div></div>';
+
+/* ════════════════════════════════════════════════════════════════════
+   SIGN-IN PAGES (3.11.0) — thumb first, one field style, one button behaviour
+   --------------------------------------------------------------------
+   Sign-in: the brand up top; Google, email and guest at the bottom, within the thumb's reach. "Continue with email" raises a
+   sheet over the page (p.sheet: a repaint keeps it up; the phone's Back closes it). Create account and Reset password are
+   pages with the same fields, their form at the bottom.
+   Every field says what it needs (data-rule): once filled in right it shows a green tick, when left wrong (or when the
+   grey button is tapped) it turns red with one short line. The main button is grey until every field is right, then
+   orange; a tap on the grey one shows what is missing instead of doing nothing (a phone's password manager may fill a
+   field without telling the page, so the values are read again at the tap). */
+var G_LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>' +
+  '<path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/>' +
+  '<path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+var EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+var AU_RULE = {
+  email: function (v) { return EMAIL_RE.test(v.trim()) && v.trim().length <= 100; },
+  pass: function (v) { return v.length >= CONFIG.PASS_MIN; },
+  name: function (v) { return v.replace(/\s+/g, ' ').trim().length >= 2; }
 };
+function auWordmark() {
+  var T = BRAND_TXT.word;
+  return '<svg class="au-wm" viewBox="0 0 ' + T.w + ' ' + T.h + '" role="img" aria-label="IOPET"><path fill="currentColor" fill-rule="evenodd" d="' + T.l.join('') + '"/></svg>';
+}
+/* one field: id, the input's type and attributes, its icon, placeholder, rule, the line shown when it is wrong */
+function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty) {
+  return '<div class="au-fld" data-rule="' + rule + '"><div class="au-iw">' + li(icon) +
+    '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + '>' +
+    '<span class="au-ok">' + li('check') + '</span>' +
+    (eye ? '<button type="button" class="au-eye" data-act="toggle-pass" data-for="' + id + '" aria-label="Show password" aria-pressed="false">' + EYE_SVG + '</button>' : '') +
+    '</div><div class="au-msg" aria-live="polite"><span data-bad="' + msg + '" data-empty="' + (empty || msg) + '">' + msg + '</span></div></div>';
+}
+function auEmail(value, auto) {
+  return auField('f-email', 'email', 'mail', 'Email', 'email', 'Enter a valid email', value, 'inputmode="email" autocomplete="' + auto + '" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="100"', false, 'Enter your email');
+}
+function auPass(id, ph, auto, strength) {
+  return auField(id, 'password', 'lock', ph, 'pass', 'At least ' + CONFIG.PASS_MIN + ' characters', '', 'autocomplete="' + auto + '" maxlength="64"' + (strength ? ' data-in="pass-new"' : ''), true, 'Enter your password');
+}
+function auGo(act, label) { return '<button type="button" class="btn au-go off" data-act="' + act + '" aria-disabled="true">' + label + '</button>'; }
+/* a field turns red: its line says what is missing (empty) or what is wrong */
+function fldBad(f) {
+  var i = f.querySelector('input'), m = f.querySelector('.au-msg span');
+  if (m) m.textContent = m.getAttribute(i && String(i.value) ? 'data-bad' : 'data-empty') || m.textContent;
+  f.classList.add('bad');
+}
+function fldOk(f) { var i = f.querySelector('input'), r = AU_RULE[f.getAttribute('data-rule')]; return !!(i && r && r(String(i.value))); }
+/* the state of one form: ticks on the right fields, the button grey or orange */
+function auCheck(form) {
+  var fs, go, all = true, i, on;
+  if (!form) return;
+  fs = form.querySelectorAll('.au-fld'); go = form.querySelector('.au-go');
+  for (i = 0; i < fs.length; i++) {
+    if (fldOk(fs[i])) { fs[i].classList.add('ok'); fs[i].classList.remove('bad'); } else { fs[i].classList.remove('ok'); all = false; }
+  }
+  if (!go) return;
+  on = go.classList.contains('on');
+  if (all !== on) { go.classList.toggle('on', all); go.classList.toggle('off', !all); go.setAttribute('aria-disabled', all ? 'false' : 'true'); }
+}
+function auCheckAll(sc) { var f = (sc || elScreens).querySelectorAll('.au-form'), i; for (i = 0; i < f.length; i++) auCheck(f[i]); }
+/* At the tap of the main button: true when every field is right; otherwise each wrong field turns red, the first one
+   shakes once and gets the cursor. */
+function auReady() {
+  var sc = elScreens.lastChild, form = sc && (sc.querySelector('.au.open .au-form') || sc.querySelector('.au-form')), fs, bad = null, i;
+  if (!form) return true;
+  fs = form.querySelectorAll('.au-fld');
+  for (i = 0; i < fs.length; i++) if (!fldOk(fs[i])) { fldBad(fs[i]); if (!bad) bad = fs[i]; }
+  auCheck(form);
+  if (!bad) return true;
+  if (!calmMotion()) { bad.classList.remove('au-shake'); void bad.offsetWidth; bad.classList.add('au-shake'); }
+  try { bad.querySelector('input').focus(); } catch (e) { /* (no keyboard here) */ }
+  feel('no');
+  return false;
+}
+function auUp(el, cls) { while (el && el.classList) { if (el.classList.contains(cls)) return el; el = el.parentNode; } return null; }
+function onAuFocus(ev) {
+  var f = auUp(ev.target, 'au-fld');
+  if (!f) return;
+  if (ev.type === 'focusin') { f.classList.add('focus'); return; }
+  f.classList.remove('focus');
+  if (String(ev.target.value) && !fldOk(f)) fldBad(f);                        // left wrong: say so (never while typing)
+}
+SCREENS.login = function (p) {
+  var mv = moving(p);
+  return '<div class="page bg-auth auth au' + (p.sheet ? ' open still' : '') + '">' + (mv ? '<div class="au-top">' + BACK_PILL + '</div>' : '') +
+    '<div class="au-hero">' + logoMark(64) + auWordmark() +
+      (mv ? '<div class="au-tag note">Sign in and your guest progress comes with you</div>' : '<div class="au-tag">Padho. Samjho. Aage badho.</div>') + '</div>' +
+    '<div class="au-dock"><button type="button" class="btn au-g" data-act="google">' + G_LOGO + 'Continue with Google</button>' +
+      '<button type="button" class="btn au-e" data-act="au-open">' + li('mail') + 'Continue with email</button>' +
+      (mv ? '' : '<button type="button" class="au-ghost" data-act="guest">Continue as guest</button>') +
+      '<div class="au-foot"><span>MADE IN INDIA</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div></div>' +
+    '<div class="au-scrim" data-act="au-close"></div>' +
+    '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><div class="au-grab"></div>' +
+      '<div class="au-head"><h2>Sign in</h2><button type="button" class="au-x" data-act="au-close" aria-label="Close">' + li('close') + '</button></div>' +
+      '<div class="au-form" data-enter="login"><div class="auth-error" id="err" role="alert"></div>' +
+        auEmail(p.email, 'username') + auPass('f-pass', 'Password', 'current-password', false) +
+        '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
+        auGo('login', 'Sign in') + '</div>' +
+      '<div class="au-alt">New to IOPET? <button type="button" data-act="' + (mv ? 'adopt' : 'go') + '" data-to="signup">Create account</button></div>' +
+    '</div></div>';
+};
+SCREENS.signup = function (p) {
+  var mv = moving(p), rs = restarting(p), n = mv || rs ? user.answered : 0;
+  return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
+    '<div class="au-body"><h1 class="au-title">Create account</h1>' +
+    '<div class="au-note">' + (rs ? 'This time with the right email address.' : n ? 'Your ' + (mv ? 'guest ' : '') + 'progress (' + plural(n, 'answer') + ') moves into this account.' : 'Free. Your progress stays safe in the cloud.') + '</div>' +
+    '<div class="au-form" data-enter="signup"><div class="auth-error" id="err" role="alert"></div>' +
+      auField('f-name', 'text', 'edit', 'Full name', 'name', 'Enter your full name', p.name || (rs || (mv && user.name !== 'Guest') ? user.name : ''), 'autocomplete="name" maxlength="40"') +
+      auEmail(p.email, 'email') + auPass('f-pass', 'Create password', 'new-password', true) +
+      '<div class="strength"><i id="st-bar"></i></div><div class="hint" id="st-txt">At least ' + CONFIG.PASS_MIN + ' characters</div>' +
+      auGo('signup', 'Create account') + '</div>' +
+    (rs ? '<div class="au-alt">The unconfirmed sign-up for ' + esc(db.auth.email) + ' is removed once the new account exists.</div>'
+        : '<div class="au-alt">Already have an account? <button type="button" data-act="' + (mv ? 'adopt' : 'back') + '" data-to="login">Sign in</button></div>') +
+    '<div class="au-foot"><span>WE EMAIL YOU A LINK TO CONFIRM</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div>' +
+    '</div></div>';
+};
+SCREENS.forgot = function (p) {
+  return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
+    '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We email you a link to choose a new one. It goes only to that inbox.</div>' +
+    '<div class="au-form" data-enter="forgot-send"><div class="auth-error" id="err" role="alert"></div>' + auEmail(p.email, 'username') + auGo('forgot-send', 'Send reset link') + '</div></div></div>';
+};
+AFTER.login = function (sc) { auCheckAll(sc); gisLoad(null); };
+AFTER.signup = AFTER.forgot = function (sc) { auCheckAll(sc); };
+ACTIONS['au-open'] = function () {
+  var e = top(), pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au');
+  if (!e || e.s !== 'login' || !pg) return;
+  e.p = e.p || {}; e.p.sheet = 1;
+  pg.classList.remove('still'); pg.classList.add('open');
+  setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { try { i.focus(); } catch (x) { /* */ } } }, 320);
+};
+ACTIONS['au-close'] = function () { auClose(); };
+function auClose() {
+  var e = top(), pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au');
+  if (!e || e.s !== 'login' || !e.p || !e.p.sheet) return false;
+  delete e.p.sheet;
+  if (pg) { pg.classList.remove('still'); pg.classList.remove('open'); }
+  try { if (document.activeElement) document.activeElement.blur(); } catch (x) { /* */ }
+  return true;
+}
+
+/* GOOGLE (3.11.0) — Google's own sign-in window (Google Identity Services) gives a one-time pass; Firebase turns it into the
+   IOPET account of that Google address (accounts:signInWithIdp). The same address used before with a password is the same
+   account (Firebase: "link accounts that use the same email"); when Firebase still wants that password once, the student
+   signs in with it and Google is added to the account. The script is fetched when the sign-in page opens (a tap must open
+   Google's window at once: phones block windows opened later). */
+var gis = { st: '', q: [] }, googleWait = '';
+function gisReady() { return !!(window.google && window.google.accounts && window.google.accounts.oauth2); }
+function gisLoad(cb) {
+  var el;
+  if (gisReady()) { if (cb) cb(true); return; }
+  if (cb) gis.q.push(cb);
+  if (gis.st === 'loading') return;
+  gis.st = 'loading';
+  el = document.createElement('script'); el.src = 'https://accounts.google.com/gsi/client'; el.async = true;
+  el.onload = function () { gis.st = gisReady() ? 'ok' : ''; flush(gisReady()); };
+  el.onerror = function () { gis.st = ''; if (el.parentNode) el.parentNode.removeChild(el); flush(false); };
+  document.head.appendChild(el);
+  function flush(ok) { var q = gis.q; gis.q = []; q.forEach(function (f) { f(ok); }); }
+}
+ACTIONS.google = function () {
+  var adopt = moving(top().p || {}), tc;
+  if (navigator.onLine === false) return toast('Google sign-in needs the internet. Connect and try again.');
+  if (!gisReady()) {
+    gisLoad(function (ok) { toast(ok ? 'Ready — tap “Continue with Google” again.' : 'Google could not be reached. Check the connection, or use email.'); });
+    return;
+  }
+  try {
+    tc = window.google.accounts.oauth2.initTokenClient({
+      client_id: CONFIG.GOOGLE_CLIENT_ID, scope: 'openid email profile', prompt: 'select_account',
+      callback: function (r) { googleDone(r, adopt); },
+      error_callback: function (e) {
+        if (e && e.type === 'popup_closed') return;                                     // the student closed Google's window: nothing to say
+        toast('Google sign-in could not open here. Use “Continue with email”.');
+      }
+    });
+    tc.requestAccessToken();
+  } catch (e) { toast('Google sign-in could not open here. Use “Continue with email”.'); }
+};
+function googleDone(r, adopt) {
+  if (!r || r.error || !r.access_token) { if (r && r.error && r.error !== 'access_denied') toast('Google sign-in did not finish. Try again.'); return; }
+  busy('Signing in…');
+  idp('signInWithIdp', { postBody: 'access_token=' + encodeURIComponent(r.access_token) + '&providerId=google.com', requestUri: location.origin + location.pathname,
+                         returnSecureToken: true, returnIdpCredential: true }, function (err, j) {
+    var fresh, isNew;
+    if (err || !j) { idle(); return toast(authMsg(err || 'BAD_RESPONSE')); }
+    if (j.needConfirmation) {                                    // this address has a password account that Firebase will not join by itself
+      idle(); googleWait = r.access_token;
+      if (top().s === 'login') { top().p = top().p || {}; top().p.sheet = 1; top().p.email = String(j.email || ''); paint(); }
+      return formErr('This email already has an IOPET account. Sign in with its password once — after that, Google works too.');
+    }
+    if (!goodLogin(j)) { idle(); return toast(authMsg('BAD_RESPONSE')); }
+    isNew = j.isNewUser === true;
+    fresh = enterAccount(j, str(j.displayName || j.fullName || j.firstName || '', 40), adopt, isNew);
+    if (!isNew) return openAccount(fresh);
+    idle(); reset('home'); toast('Welcome, ' + firstName(user.name) + '!');
+    if (syncAllowed()) syncRun(true);
+  });
+}
+/* After the password sign-in that Google asked for: add Google to this account (same uid: nothing moves). */
+function googleLink() {
+  var t = googleWait;
+  googleWait = '';
+  if (!t || !db.auth) return;
+  idp('signInWithIdp', { idToken: db.auth.it, postBody: 'access_token=' + encodeURIComponent(t) + '&providerId=google.com', requestUri: location.origin + location.pathname,
+                         returnSecureToken: true }, function (err, j) {
+    if (err || !goodLogin(j) || !db.auth || j.localId !== db.auth.uid) return;                 // not joined this time: password sign-in still works
+    setTokens(j.idToken, j.refreshToken, j.expiresIn);
+    toast('Google is now connected to this account.');
+  });
+}
 
 /* The same page whether or not an account exists for that address — so nobody can test which emails are registered. */
 SCREENS.sent = function (p) {
@@ -5408,12 +5661,12 @@ SCREENS.settings = function () {
 SCREENS.privacy = function () {
   var mail = CONFIG.SUPPORT_EMAIL;
   return '<div class="page bg-profile policy">' + subHead('Privacy policy') +
-    '<div class="small muted">IOPET · last updated 21 October 2026</div>' +
+    '<div class="small muted">IOPET · last updated 8 November 2026</div>' +
     '<div class="card"><div class="card-title">What the app keeps</div><div class="small muted">Your name and email address. The course you choose: the exam, or the class with its board and stream. Your practice record: answers, XP, streak, goals and settings. Feedback and question reports you choose to write. If your account has a pack: which pack and the date, with the code that unlocked it (kept so that a code works only once; it holds no name or email) — or, when the teacher unlocks it for your email address, that email address with the pack. Deleting your account removes that email address too. Nothing else: no contacts, no location, no photos, no phone number.</div></div>' +
-    '<div class="card"><div class="card-title">Your password</div><div class="small muted">It is sent over an encrypted connection to Google Firebase Authentication, which checks it. IOPET never stores it on the phone and nobody on the IOPET team can read it.</div></div>' +
+    '<div class="card"><div class="card-title">Your password</div><div class="small muted">It is sent over an encrypted connection to Google Firebase Authentication, which checks it. IOPET never stores it on the phone and nobody on the IOPET team can read it. With “Continue with Google” there is no IOPET password: Google checks who you are.</div></div>' +
     '<div class="card"><div class="card-title">Where it is kept</div><div class="small muted">On this phone, and, once you confirm your email, in Google Cloud Firestore in Mumbai, India. Sign-in is handled by Google Firebase Authentication, which may process your email on Google servers outside India. In guest mode nothing leaves the phone.</div></div>' +
     '<div class="card"><div class="card-title">Who can see it</div><div class="small muted">Only you, after signing in: the database refuses everyone else. The IOPET developer can open stored records when it is needed to fix a problem or answer your request. Your data is never sold, never shared with advertisers and never used for ads.</div></div>' +
-    '<div class="card"><div class="card-title">Other services</div><div class="small muted">The app’s font (Mukta) comes with the app itself, from the same address; no font service is asked for anything. There are no ad networks and no tracking tools in the app.</div></div>' +
+    '<div class="card"><div class="card-title">Other services</div><div class="small muted">The app’s font (Noto Sans) comes with the app itself, from the same address; no font service is asked for anything. When the sign-in page opens, the app loads Google’s sign-in script from accounts.google.com, so that “Continue with Google” can open at once. If you choose Google, Google gives IOPET only your name and email address; nothing else in your Google account is read. There are no ad networks and no tracking tools in the app.</div></div>' +
     '<div class="card"><div class="card-title">Deleting your data</div><div class="small muted">You tab → Account &amp; backup → Delete account removes your login, your cloud backup and the data on this phone, at once and for ever. “Reset progress” in Settings removes only the practice record.</div></div>' +
     '<div class="card"><div class="card-title">Children</div><div class="small muted">If you are under 18, use IOPET with the permission of a parent or guardian.</div></div>' +
     '<div class="card"><div class="card-title">Contact</div><div class="small muted">' + (mail ? 'Write to ' + esc(mail) + '.' : 'Use Help &amp; Support → Send feedback.') + '</div></div></div>';
@@ -5664,7 +5917,8 @@ ACTIONS['toggle-pass'] = function (el) {
   if (!inp) return;
   var show = inp.type === 'password';
   inp.type = show ? 'text' : 'password';
-  el.textContent = show ? 'HIDE' : 'SHOW';
+  if (el.classList.contains('au-eye')) { el.setAttribute('aria-pressed', show ? 'true' : 'false'); el.setAttribute('aria-label', show ? 'Hide password' : 'Show password'); }
+  else el.textContent = show ? 'HIDE' : 'SHOW';
 };
 /* A guest moves to a real account (new or existing) and takes the progress along. */
 ACTIONS.adopt = function (el) {
@@ -5677,6 +5931,7 @@ function loginWait() { var t = window.performance.now(); return loginBlock > t ?
 
 ACTIONS.login = function () {
   var email = val('f-email').toLowerCase(), pw = rawVal('f-pass'), adopt = moving(top().p || {}), wait = loginWait();
+  if (!auReady()) return;                                      // 3.11.0 a wrong or empty field shows itself
   if (!email || !pw) return formErr('Enter your email and password.');
   if (!EMAIL_RE.test(email)) return formErr('Enter a valid email address.');
   if (wait) return formErr('Too many wrong attempts. Try again in ' + plural(wait, 'second') + ', or use “Forgot password?”.');
@@ -5688,6 +5943,7 @@ ACTIONS.login = function () {
       return formErr(authMsg(err || 'BAD_RESPONSE'));        // wrong password and unknown email give the very same message
     }
     openAccount(enterAccount(j, '', adopt, false));
+    googleLink();                                              // 3.11.0 Google asked for this password once: add Google now
   });
 };
 /* After a successful sign-in to an existing account: open Home — at once if this phone already had a copy of it,
@@ -5722,6 +5978,7 @@ ACTIONS.guest = function () {
 ACTIONS.signup = function () {
   var name = val('f-name').replace(/\s+/g, ' ').slice(0, 40), email = val('f-email').toLowerCase(), pw = rawVal('f-pass'), p = top().p || {}, adopt = moving(p), bad, old = null;
   if (p.restart && !restarting(p)) return appBack();          // "use another email", but that sign-up is no longer the one signed in
+  if (!auReady()) return;
   if (name.length < 2) return formErr('Enter your full name.');
   if (!EMAIL_RE.test(email) || email.length > 100) return formErr('Enter a valid email address.');
   if (p.restart && email === db.auth.email) return formErr('That is the address you want to replace. Enter the correct one.');
@@ -5842,6 +6099,7 @@ ACTIONS['verify-restart'] = function () {
 };
 ACTIONS['forgot-send'] = function () {
   var email = val('f-email').toLowerCase(), wait = mailWait('reset:' + email);
+  if (!auReady()) return;
   if (!EMAIL_RE.test(email)) return formErr('Enter the email address of your account.');
   if (wait) return formErr('A link was sent just now. You can ask again in ' + plural(wait, 'second') + '.');
   busy('Sending the link…');
@@ -6382,7 +6640,8 @@ function onClick(ev) {
   run(el.getAttribute('data-act'), el, ev);
 }
 function onInput(ev) {
-  var t = ev.target, kind = t && t.getAttribute ? t.getAttribute('data-in') : null, s, bar, txt;
+  var t = ev.target, kind = t && t.getAttribute ? t.getAttribute('data-in') : null, s, bar, txt, fm = auUp(t, 'au-form');
+  if (fm) auCheck(fm);                                              // 3.11.0 ticks and the button follow the typing
   if (kind !== 'pass-new') return;
   s = passStrength(t.value); bar = $('st-bar'); txt = $('st-txt');
   if (bar) { bar.style.width = s.w + '%'; bar.style.backgroundColor = s.c; }
@@ -7246,6 +7505,8 @@ function boot() {
   elModal.addEventListener('touchstart', function (ev) { backdropDown = ev.target === elModal; });
   elPhone.addEventListener('click', onClick);
   elPhone.addEventListener('input', onInput);
+  elPhone.addEventListener('focusin', onAuFocus);                    // 3.11.0 sign-in fields: light up, and say when left wrong
+  elPhone.addEventListener('focusout', onAuFocus);
   elPhone.addEventListener('keydown', onKeyDown);
   document.addEventListener('keydown', function (ev) {
     if (ev.key === 'Escape' || ev.key === 'Esc' || ev.keyCode === 27) { if (appBack()) ev.preventDefault(); }
