@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.13.0)
+# IOPET design rules (v2, 3.14.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -26,7 +26,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 | Role | Token | Dark | Light | Used for |
 |---|---|---|---|---|
-| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#D96C00` text, `#FF9F0A` fill | main button, current item (e.g. the subject), progress bars, switches that are on, the "?" in a figure |
+| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#A35200` text, `#D96C00` lines, `#FF9F0A` button fill | main button, current item (e.g. the subject), progress bars, switches that are on, the "?" in a figure |
 | Reward | `--gold` | `#FFD84D` | `#8A5A00` (fill `#FFC400`) | XP, streak (lit), badges |
 | Correct / done | `--good` | `#2FD39A` | `#0B9468` | right answer, passed, "done" ticks |
 | Wrong answer / error / destructive | `--wrong` (panel `--wrong-soft`) | `#FF453A` (panel `#2C1A1A`) | `#D92D20` (panel `#FDECEA`) | the wrong option, the result panel after a wrong answer, review marks, form errors, delete |
@@ -45,11 +45,17 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 - Gradients are not used, except the splash light.
 - Contrast: normal text ≥ 4.5 : 1, large text and icons ≥ 3 : 1, in both themes.
 
-## 3. Type (Noto Sans, Latin + Devanagari, 400 / 600 / 700)
+## 3. Type ("IOPET Sans": English and numbers in Plus Jakarta Sans, Hindi in Noto Sans Devanagari)
+
+- 3.14.0: Plus Jakarta Sans replaced Noto Sans for English. Noto's Latin comes from the Open Sans family, which half the web
+  uses, so buttons read as "default". Plus Jakarta Sans is geometric, has a tall x-height and tabular figures. Its English
+  is drawn one step heavier than the CSS weight asks (400 → its 500, 600 → 600, 700 → its 800): its own 400 is thin on a
+  cheap screen in the sun, and its 700 looked light beside the Hindi. The Hindi stays Noto Sans Devanagari 400/600/700.
+- All six files: 166 KB, OFL (see `OFL.txt`).
 
 | Token | Size | Use |
 |---|---|---|
-| `--fs-cap` | 11 | small CAPS labels only, letter-spacing .8–1.4 px, weight 700 (MADE IN INDIA, chips, eyebrows) |
+| `--fs-cap` | 12 | small CAPS labels only, letter-spacing .8–1.4 px, weight 700 (MADE IN INDIA, chips, eyebrows); 11 until 3.14.0 |
 | `--fs-xs` | 13 | meta lines, hints, footnotes |
 | `--fs-sm` | 14 | secondary text, chips, small links |
 | `--fs-md` | 15 | body text, explanations |
@@ -104,7 +110,28 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 - **Daily streak moment**: after the day's first set, full screen: the flame, the count, one line, this week's days
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
-- **Sheet**: for choices and short info over a page. It is dimmed behind, has a grab handle and rises 300 ms.
+- **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
+  - Each field has a line under it that is always there, empty, so a message appears in place. One line, red
+    (`--wrong-ink`), never wrapping.
+  - The wrong field itself becomes the panel: `--wrong-soft` fill (burgundy in dark, pink in light) with a red border.
+  - The new password has one line under its strength bar: a grey hint ("At least 8 characters", "Good", "Strong") that
+    turns red when it has to say what is wrong. The rule is never said twice.
+  - A message about the whole form (wrong password, no internet, too many tries) floats 12 px above the form, in space
+    that is already empty: above the sheet, or above the form of the page. It is the same panel as a wrong answer:
+    `--wrong-soft`, a red ✕ circle and ink text. On a very short screen it may cover the title, never a field. It goes
+    away at the next try or when the sheet closes.
+  - A tap on the inactive button marks every wrong field and puts the cursor in the first one. The field is
+    `aria-invalid` and its line is its description, so a screen reader hears both.
+- **Sheet**: for choices and short info over a page. It is dimmed behind and rises 300 ms. Its grab line is a real strip
+  (full width, 28–36 px high) and it is the sheet's control (3.14.0):
+  - Drag it and the sheet follows the finger, and the page behind gets lighter.
+  - Let go past a third of the sheet's height, or with a flick, and it goes down (140–280 ms). Any less and it settles back
+    (260 ms, no bounce). Pulled up, it gives a little.
+  - A tap on the strip, on the dimmed page, or Back also closes it.
+  - The sign-in sheet has no title and no ✕: the title only repeated the Sign in button, and the line already says "pull
+    me down".
+- **Sign-in foot**: MADE IN INDIA in CAPS, then Privacy as a small tag: a green shield with a dark tick (safe), the word,
+  a hairline pill.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
   tint. A done item gets a green tick, and its label stays at full ink. A locked item is dimmed with a lock.
 - **Chips**: small CAPS labels, used for state only (TODAY'S PRACTICE, NEW).
@@ -121,6 +148,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | celebrate | 600–1000 ms, once | | reward screens, count-up numbers |
 
 - Only `transform` and `opacity` animate, except colour transitions on one element.
+- Nothing shakes. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
+  field shake and the wrong-option shake were removed).
 - Nothing loops forever except loading indicators.
 - "Reduce animations" (in-app `.calm`) and the phone's reduce-motion turn movement off and keep fades.
 
