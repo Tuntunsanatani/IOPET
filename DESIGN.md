@@ -17,8 +17,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 3. **Fewer words.** No instructions for things every app does ("tap Check"). One bold line and at
    most one grey line per moment. Icons replace words where the icon is universal (flag = report,
    ↻ = again, ✕ = close).
-4. **Numbers carry the moment.** XP, streak and score are shown big, with a small CAPS label
-   above them.
+4. **Numbers carry the moment.** XP, streak and score are shown big: the icon above, the number, and a short label
+   under it (numbers come before words, §8).
 5. **Honest and calm.** No fake urgency, no fake numbers, and a mistake is never punished in
    words. "Not quite", never "Wrong!".
 
@@ -26,7 +26,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 | Role | Token | Dark | Light | Used for |
 |---|---|---|---|---|
-| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#D96C00` text, `#FF9F0A` fill | main button, current item, progress bars, selected option ring |
+| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#D96C00` text, `#FF9F0A` fill | main button, current item (e.g. the subject), progress bars, switches that are on, the "?" in a figure |
 | Reward | `--gold` | `#FFD84D` | `#8A5A00` (fill `#FFC400`) | XP, streak (lit), badges |
 | Correct / done | `--good` | `#2FD39A` | `#0B9468` | right answer, passed, "done" ticks |
 | Wrong answer / error / destructive | `--wrong` (panel `--wrong-soft`) | `#FF453A` (panel `#2C1A1A`) | `#D92D20` (panel `#FDECEA`) | the wrong option, the result panel after a wrong answer, review marks, form errors, delete |
@@ -34,7 +34,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 - Text in three levels only: `--ink` (main), `--ink2` (secondary), `--ink3` (hint, locked).
   Coloured text is only for links (`--primary-ink`) and the meanings above.
-- Glyphs on a coloured fill use dark ink `#141414`, never white (contrast).
+- Glyphs on a coloured fill use dark ink `#141414` (contrast). The one exception is the light theme's red, where the ✕ is
+  white: 4.8 : 1, against 3.8 : 1 for dark ink. On the dark theme's red, dark ink stays (5.4 : 1).
 - A chosen option (before Check) is a neutral ring: white in dark, black in light. It is never orange, because orange is
   the action (the Check button). The ✕ / ✓ marks carry the meaning for colour-blind students.
 - A wrong answer sits on a burgundy panel in dark (`#2C1A1A`) and a soft pink one in light (`#FDECEA`), never on a brown
@@ -76,7 +77,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | Kind | Look | Examples |
 |---|---|---|
 | Primary | orange, 16 px corners, dark text, lip, full width where it is the screen's one action | Start, Check, Next set, Create account |
-| Result / acknowledge | green pill after right; neutral pill (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
+| Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | outlined button, or a quiet text link under the primary | Skip (quiz dock), Review answers and Practice this again (summary), Quit |
 | Inactive | grey fill, grey text, still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
 | Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
@@ -87,8 +88,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 ## 6. Components
 
 - **Bottom dock**: the main action area of a screen. It is anchored to the bottom (sticky), on the page colour.
-- **Result panel** (quiz): slides up from the bottom and is tinted by the result (green-soft / amber-soft /
-  neutral). Row 1: icon + "Correct!" / "Not quite" / "Skipped" + "+10 XP" + flag. Row 2: the
+- **Result panel** (quiz): slides up from the bottom and is tinted by the result (green-soft after right,
+  wrong-soft after wrong, grey after a skip). Row 1: icon + "Correct!" / "Not quite" / "Skipped" + "+10 XP" + flag. Row 2: the
   explanation (open after a wrong answer or a skip, behind "Why?" after a right one). Row 3: one
   result button.
 - **Reward moment** (end of a set): the chapter art in a soft glow, one word (Perfect! / Well done! / Set complete),
