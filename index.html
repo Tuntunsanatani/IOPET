@@ -345,7 +345,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-x{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--ink2);background:var(--surface-2)}
 .au-x .li{width:18px;height:18px}
 .au-form>.auth-error{margin-bottom:12px}
-.au-fld+.au-fld{margin-top:12px}
+.au-fld+.au-fld{margin-top:8px}
 .au-iw{display:flex;align-items:center;min-height:54px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 6px 0 14px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
 .au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .15s ease-out}
 .au-iw input{flex:1;min-width:0;height:52px;margin-left:10px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
@@ -358,12 +358,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-eye{width:44px;height:44px;display:grid;place-items:center;color:var(--ink3);border-radius:12px;flex:none}
 .au-eye svg{width:20px;height:20px}
 .au-eye[aria-pressed="true"]{color:var(--primary-ink)}
-.au-fld.bad .au-iw{border-color:var(--wrong);box-shadow:0 0 0 3px var(--wrong-soft)}
+.au-fld.bad .au-iw{border-color:var(--wrong);background:var(--wrong-soft);box-shadow:none}
 .au-fld.bad .au-iw>.li{color:var(--wrong-ink)}
-.au-msg{display:grid;grid-template-rows:0fr;transition:grid-template-rows .18s ease-out}
-.au-msg>span{overflow:hidden;min-height:0;font-size:var(--fs-xs);font-weight:600;color:var(--wrong-ink);padding-left:4px;opacity:0;transition:opacity .18s ease-out}
-.au-fld.bad .au-msg{grid-template-rows:1fr}
-.au-fld.bad .au-msg>span{opacity:1;padding-top:6px}
+/* 3.14.0 calm errors (DESIGN.md §6): the line under a field is always there, empty, so a message appears in place and
+   nothing above or below it moves. One line only (it never wraps), red, and the field itself turns into the burgundy
+   (dark) / pink (light) panel. No shaking anywhere. */
+.au-msg{min-height:20px;padding:4px 0 0 4px}
+.au-msg>span{display:block;font-size:var(--fs-xs);line-height:16px;font-weight:600;color:var(--wrong-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;visibility:hidden;transition:opacity .15s ease-out,visibility 0s .15s}
+.au-fld.bad .au-msg>span,.au-hint>span{opacity:1;visibility:visible;transition:opacity .15s ease-out,visibility 0s}
+.au-hint>span{color:var(--ink2);font-weight:400}   /* the new-password line is a hint until it has to say what is wrong */
+.au-fld.bad .au-hint>span{color:var(--wrong-ink);font-weight:600}
+/* a message about the whole form (wrong password, no internet, too many tries) floats just above the form, in space that
+   is already empty: above the sheet, or above the form of the page. Nothing in the form moves. */
+.au-err{position:absolute;left:20px;right:20px;z-index:4;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--wrong-soft);border:1px solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s .2s}
+.au-err.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s}
+.au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-mark);margin-top:0}
+.au-err-ico .li{width:13px;height:13px}
+[data-theme="light"] .au-err-ico{color:#FFFFFF}
+.au-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}   /* heard, not seen */
 .au-fgt{display:flex;justify-content:flex-end;margin-top:2px}
 .au-fgt button{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:44px;padding:0 4px}
 .au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
@@ -378,14 +390,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-body{margin-top:auto;padding-top:24px}
 .au-body>.au-title{margin-bottom:6px}
 .au-body>.au-note{margin-bottom:18px}
-.au-body .strength{margin-top:10px}
-.au-body .hint{margin-top:6px}
-.au-shake{animation:au-shake .32s cubic-bezier(.36,.07,.19,.97)}
 @keyframes au-ready{0%{transform:scale(.97)}60%{transform:scale(1.015)}100%{transform:none}}
-@keyframes au-shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
-.calm .au-sheet,.calm .au-scrim{transition:none}
-.calm .au-go.on,.calm .au-shake{animation:none}
-@media (prefers-reduced-motion:reduce){.au-sheet,.au-scrim{transition:none}.au-go.on,.au-shake{animation:none}}
+.calm .au-sheet,.calm .au-scrim,.calm .au-err,.calm .au-err.show{transition:none}
+.calm .au-go.on{animation:none}
+@media (prefers-reduced-motion:reduce){.au-sheet,.au-scrim,.au-err,.au-err.show{transition:none}.au-go.on{animation:none}}
 
 /* ── CONFIRM EMAIL / RESET LINK ── */
 .otp-icon{display:flex;justify-content:center;margin:0 auto;width:84px;height:84px;align-items:center;border-radius:50%;background:var(--primary-soft);color:var(--primary)}
@@ -1105,9 +1113,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── ANSWER FEEDBACK: a pop and a few sparks for right, a shake for wrong ── */
 .opt-btn{position:relative}
 .opt-btn.pop.correct{animation:opt-ok .42s cubic-bezier(.3,1.6,.5,1)}
-.opt-btn.pop.wrong{animation:opt-no .38s ease-in-out}
+.opt-btn.pop.wrong{animation:none}   /* 3.14.0 a wrong answer is shown, never shaken: the option turns red and stays still */
 @keyframes opt-ok{0%{transform:scale(1)}40%{transform:scale(1.035) translateY(-2px)}100%{transform:none}}
-@keyframes opt-no{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
 .spark{position:absolute;left:26px;top:50%;width:0;height:0;pointer-events:none}
 .spark i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;opacity:0;animation:spark .6s ease-out forwards}
 /* 3.10.0 the sparks are gold (the XP) and green (right), nothing else */
@@ -2619,7 +2626,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.13.0',
+  VERSION: '3.14.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4287,12 +4294,27 @@ function modalErr(msg) { var el = $('m-err'); if (el) { el.textContent = msg; el
 function formErr(msg) {
   var el = $('err'), e = top();
   if (el && e && LIVE[e.s]) { e.p = e.p || {}; e.p.err = msg; }
-  if (el) { el.textContent = msg; el.classList.add('show'); } else toast(msg);
+  if (!el) { toast(msg); return; }
+  if (!el.classList.contains('au-err')) { el.textContent = msg; el.classList.add('show'); return; }
+  if (el.getAttribute('aria-hidden') && !el.parentNode.classList.contains('open')) { toast(msg); return; }   // sign-in page, sheet closed
+  el.classList.add('show');                                         // shown first, so a screen reader hears the new words
+  el.innerHTML = '<span class="au-err-ico">' + li('close') + '</span><span>' + esc(msg) + '</span>'; auErrPlace(el);
+  if ($('err-sr')) $('err-sr').textContent = msg;
+}
+/* 3.14.0 a message about the whole form sits 12 px above it: above the sheet when it is open, else above the form of the
+   page. Both are anchored to the bottom, so the space above is empty. On a very short screen it stops under the top bar. */
+function auErrPlace(el) {
+  var pg = el.parentNode, an = pg && (pg.classList.contains('open') ? pg.querySelector('.au-sheet') : pg.querySelector('.au-body')), pr, r;
+  if (!an) return;
+  pr = pg.getBoundingClientRect(); r = an.getBoundingClientRect();
+  el.style.top = 'auto'; el.style.bottom = Math.round(pr.bottom - r.top + 12) + 'px';
+  if (el.getBoundingClientRect().top < pr.top + 60) { el.style.bottom = 'auto'; el.style.top = '60px'; }
 }
 function formNote(msg) {
   var el = $('err'), e = top();
   if (e && e.p && e.p.err) e.p.err = '';
-  if (el) { el.textContent = ''; el.classList.remove('show'); }
+  if (el) { el.classList.remove('show'); if (!el.classList.contains('au-err')) el.textContent = ''; }   // a floating one fades out with its words
+  if ($('err-sr')) $('err-sr').textContent = '';
   toast(msg);
 }
 function toast(msg, ico) {                                         // ico: a line icon (li()) before the words, or nothing
@@ -4550,25 +4572,34 @@ function auWordmark() {
   return '<svg class="au-wm" viewBox="0 0 ' + T.w + ' ' + T.h + '" role="img" aria-label="IOPET"><path fill="currentColor" fill-rule="evenodd" d="' + T.l.join('') + '"/></svg>';
 }
 /* one field: id, the input's type and attributes, its icon, placeholder, rule, the line shown when it is wrong */
-function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty) {
+function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty, hint) {
   return '<div class="au-fld" data-rule="' + rule + '"><div class="au-iw">' + li(icon) +
-    '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + '>' +
+    '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + (hint ? ' aria-describedby="st-txt"' : '') + '>' +
     '<span class="au-ok">' + li('check') + '</span>' +
     (eye ? '<button type="button" class="au-eye" data-act="toggle-pass" data-for="' + id + '" aria-label="Show password" aria-pressed="false">' + EYE_SVG + '</button>' : '') +
-    '</div><div class="au-msg" aria-live="polite"><span data-bad="' + msg + '" data-empty="' + (empty || msg) + '">' + msg + '</span></div></div>';
+    '</div>' + (hint ? '<div class="strength"><i id="st-bar"></i></div><div class="au-msg au-hint"><span id="st-txt"' : '<div class="au-msg" aria-live="polite"><span id="' + id + '-m"') +
+    ' data-bad="' + msg + '" data-empty="' + (empty || msg) + '">' + (hint || msg) + '</span></div></div>';
 }
 function auEmail(value, auto) {
   return auField('f-email', 'email', 'mail', 'Email', 'email', 'Enter a valid email', value, 'inputmode="email" autocomplete="' + auto + '" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="100"', false, 'Enter your email');
 }
-function auPass(id, ph, auto, strength) {
-  return auField(id, 'password', 'lock', ph, 'pass', 'At least ' + CONFIG.PASS_MIN + ' characters', '', 'autocomplete="' + auto + '" maxlength="64"' + (strength ? ' data-in="pass-new"' : ''), true, 'Enter your password');
+function auPass(id, ph, auto, strength) {                          // strength: the new password, with its bar and hint line
+  var n = CONFIG.PASS_MIN + ' characters';
+  return auField(id, 'password', 'lock', ph, 'pass', strength ? 'Too short — at least ' + n : 'At least ' + n, '',
+    'autocomplete="' + auto + '" maxlength="64"' + (strength ? ' data-in="pass-new"' : ''), true, 'Enter your password', strength ? 'At least ' + n : '');
 }
 function auGo(act, label) { return '<button type="button" class="btn au-go off" data-act="' + act + '" aria-disabled="true">' + label + '</button>'; }
-/* a field turns red: its line says what is missing (empty) or what is wrong */
+/* a field turns red: its line says what is missing (empty) or what is wrong; a screen reader hears it with the field */
 function fldBad(f) {
   var i = f.querySelector('input'), m = f.querySelector('.au-msg span');
   if (m) m.textContent = m.getAttribute(i && String(i.value) ? 'data-bad' : 'data-empty') || m.textContent;
+  if (i) { i.setAttribute('aria-invalid', 'true'); if (m && m.id) i.setAttribute('aria-describedby', m.id); }
   f.classList.add('bad');
+}
+function fldGood(f) {
+  var i = f.querySelector('input');
+  f.classList.add('ok'); f.classList.remove('bad');
+  if (i) { i.removeAttribute('aria-invalid'); if (i.getAttribute('aria-describedby') !== 'st-txt') i.removeAttribute('aria-describedby'); }
 }
 function fldOk(f) { var i = f.querySelector('input'), r = AU_RULE[f.getAttribute('data-rule')]; return !!(i && r && r(String(i.value))); }
 /* the state of one form: ticks on the right fields, the button grey or orange */
@@ -4577,23 +4608,23 @@ function auCheck(form) {
   if (!form) return;
   fs = form.querySelectorAll('.au-fld'); go = form.querySelector('.au-go');
   for (i = 0; i < fs.length; i++) {
-    if (fldOk(fs[i])) { fs[i].classList.add('ok'); fs[i].classList.remove('bad'); } else { fs[i].classList.remove('ok'); all = false; }
+    if (fldOk(fs[i])) fldGood(fs[i]); else { fs[i].classList.remove('ok'); all = false; }
   }
   if (!go) return;
   on = go.classList.contains('on');
   if (all !== on) { go.classList.toggle('on', all); go.classList.toggle('off', !all); go.setAttribute('aria-disabled', all ? 'false' : 'true'); }
 }
 function auCheckAll(sc) { var f = (sc || elScreens).querySelectorAll('.au-form'), i; for (i = 0; i < f.length; i++) auCheck(f[i]); }
-/* At the tap of the main button: true when every field is right; otherwise each wrong field turns red, the first one
-   shakes once and gets the cursor. */
+/* At the tap of the main button: true when every field is right; otherwise each wrong field turns red and the first one
+   gets the cursor. Nothing moves or shakes (3.14.0). A message left from the last try goes away: this is a new try. */
 function auReady() {
-  var sc = elScreens.lastChild, form = sc && (sc.querySelector('.au.open .au-form') || sc.querySelector('.au-form')), fs, bad = null, i;
+  var sc = elScreens.lastChild, form = sc && (sc.querySelector('.au.open .au-form') || sc.querySelector('.au-form')), fs, bad = null, i, er = $('err');
   if (!form) return true;
+  if (er && er.classList.contains('au-err')) { er.classList.remove('show'); if ($('err-sr')) $('err-sr').textContent = ''; }
   fs = form.querySelectorAll('.au-fld');
   for (i = 0; i < fs.length; i++) if (!fldOk(fs[i])) { fldBad(fs[i]); if (!bad) bad = fs[i]; }
   auCheck(form);
   if (!bad) return true;
-  if (!calmMotion()) { bad.classList.remove('au-shake'); void bad.offsetWidth; bad.classList.add('au-shake'); }
   try { bad.querySelector('input').focus(); } catch (e) { /* (no keyboard here) */ }
   feel('no');
   return false;
@@ -4606,6 +4637,9 @@ function onAuFocus(ev) {
   f.classList.remove('focus');
   if (String(ev.target.value) && !fldOk(f)) fldBad(f);                        // left wrong: say so (never while typing)
 }
+var AU_ERR = '<div class="au-err" id="err" role="alert"></div>';
+/* on the sign-in page the message is seen above the sheet and heard from inside it (the sheet is a modal dialog) */
+var AU_ERR_SHEET = '<div class="au-err" id="err" aria-hidden="true"></div>';
 SCREENS.login = function (p) {
   var mv = moving(p);
   return '<div class="page bg-auth auth au' + (p.sheet ? ' open still' : '') + '">' + (mv ? '<div class="au-top">' + BACK_PILL + '</div>' : '') +
@@ -4618,32 +4652,32 @@ SCREENS.login = function (p) {
     '<div class="au-scrim" data-act="au-close"></div>' +
     '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><div class="au-grab"></div>' +
       '<div class="au-head"><h2>Sign in</h2><button type="button" class="au-x" data-act="au-close" aria-label="Close">' + li('close') + '</button></div>' +
-      '<div class="au-form" data-enter="login"><div class="auth-error" id="err" role="alert"></div>' +
+      '<div class="au-sr" id="err-sr" role="alert"></div><div class="au-form" data-enter="login">' +
         auEmail(p.email, 'username') + auPass('f-pass', 'Password', 'current-password', false) +
         '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
         auGo('login', 'Sign in') + '</div>' +
       '<div class="au-alt">New to IOPET? <button type="button" data-act="' + (mv ? 'adopt' : 'go') + '" data-to="signup">Create account</button></div>' +
-    '</div></div>';
+    '</div>' + AU_ERR_SHEET + '</div>';
 };
 SCREENS.signup = function (p) {
   var mv = moving(p), rs = restarting(p), n = mv || rs ? user.answered : 0;
   return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
     '<div class="au-body"><h1 class="au-title">Create account</h1>' +
-    '<div class="au-note">' + (rs ? 'This time with the right email address.' : n ? 'Your ' + (mv ? 'guest ' : '') + 'progress (' + plural(n, 'answer') + ') moves into this account.' : 'Free. Your progress stays safe in the cloud.') + '</div>' +
-    '<div class="au-form" data-enter="signup"><div class="auth-error" id="err" role="alert"></div>' +
+    '<div class="au-note">' + (rs ? 'This time with the right email address.' : n ? 'Your ' + (mv ? 'guest ' : '') + 'progress (' + plural(n, 'answer') + ') moves into this account.' : 'Free. Your progress stays safe in the cloud.') +
+      ' We email you a link to confirm.</div>' +
+    '<div class="au-form" data-enter="signup">' +
       auField('f-name', 'text', 'edit', 'Full name', 'name', 'Enter your full name', p.name || (rs || (mv && user.name !== 'Guest') ? user.name : ''), 'autocomplete="name" maxlength="40"') +
       auEmail(p.email, 'email') + auPass('f-pass', 'Create password', 'new-password', true) +
-      '<div class="strength"><i id="st-bar"></i></div><div class="hint" id="st-txt">At least ' + CONFIG.PASS_MIN + ' characters</div>' +
       auGo('signup', 'Create account') + '</div>' +
     (rs ? '<div class="au-alt">The unconfirmed sign-up for ' + esc(db.auth.email) + ' is removed once the new account exists.</div>'
         : '<div class="au-alt">Already have an account? <button type="button" data-act="' + (mv ? 'adopt' : 'back') + '" data-to="login">Sign in</button></div>') +
-    '<div class="au-foot"><span>WE EMAIL YOU A LINK TO CONFIRM</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div>' +
-    '</div></div>';
+    '<div class="au-foot"><span>MADE IN INDIA</span><i></i><button type="button" data-act="go" data-to="privacy">PRIVACY</button></div>' +
+    '</div>' + AU_ERR + '</div>';
 };
 SCREENS.forgot = function (p) {
   return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
     '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We email you a link to choose a new one. It goes only to that inbox.</div>' +
-    '<div class="au-form" data-enter="forgot-send"><div class="auth-error" id="err" role="alert"></div>' + auEmail(p.email, 'username') + auGo('forgot-send', 'Send reset link') + '</div></div></div>';
+    '<div class="au-form" data-enter="forgot-send">' + auEmail(p.email, 'username') + auGo('forgot-send', 'Send reset link') + '</div></div>' + AU_ERR + '</div>';
 };
 AFTER.login = function (sc) { auCheckAll(sc); gisLoad(null); };
 AFTER.signup = AFTER.forgot = function (sc) { auCheckAll(sc); };
@@ -4660,6 +4694,8 @@ function auClose() {
   if (!e || e.s !== 'login' || !e.p || !e.p.sheet) return false;
   delete e.p.sheet;
   if (pg) { pg.classList.remove('still'); pg.classList.remove('open'); }
+  if ($('err')) $('err').classList.remove('show');                 // its message belonged to the sheet
+  if ($('err-sr')) $('err-sr').textContent = '';
   try { if (document.activeElement) document.activeElement.blur(); } catch (x) { /* */ }
   return true;
 }

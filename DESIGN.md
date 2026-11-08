@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.13.0)
+# IOPET design rules (v2, 3.14.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -26,7 +26,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 | Role | Token | Dark | Light | Used for |
 |---|---|---|---|---|
-| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#D96C00` text, `#FF9F0A` fill | main button, current item (e.g. the subject), progress bars, switches that are on, the "?" in a figure |
+| Brand action / current / progress / selected | `--primary`, `--cta` | `#FF9F0A` | `#A35200` text, `#D96C00` lines, `#FF9F0A` button fill | main button, current item (e.g. the subject), progress bars, switches that are on, the "?" in a figure |
 | Reward | `--gold` | `#FFD84D` | `#8A5A00` (fill `#FFC400`) | XP, streak (lit), badges |
 | Correct / done | `--good` | `#2FD39A` | `#0B9468` | right answer, passed, "done" ticks |
 | Wrong answer / error / destructive | `--wrong` (panel `--wrong-soft`) | `#FF453A` (panel `#2C1A1A`) | `#D92D20` (panel `#FDECEA`) | the wrong option, the result panel after a wrong answer, review marks, form errors, delete |
@@ -104,6 +104,18 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 - **Daily streak moment**: after the day's first set, full screen: the flame, the count, one line, this week's days
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
+- **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
+  - Each field has a line under it that is always there, empty, so a message appears in place. One line, red
+    (`--wrong-ink`), never wrapping.
+  - The wrong field itself becomes the panel: `--wrong-soft` fill (burgundy in dark, pink in light) with a red border.
+  - The new password has one line under its strength bar: a grey hint ("At least 8 characters", "Good", "Strong") that
+    turns red when it has to say what is wrong. The rule is never said twice.
+  - A message about the whole form (wrong password, no internet, too many tries) floats 12 px above the form, in space
+    that is already empty: above the sheet, or above the form of the page. It is the same panel as a wrong answer:
+    `--wrong-soft`, a red ✕ circle and ink text. On a very short screen it may cover the title, never a field. It goes
+    away at the next try or when the sheet closes.
+  - A tap on the inactive button marks every wrong field and puts the cursor in the first one. The field is
+    `aria-invalid` and its line is its description, so a screen reader hears both.
 - **Sheet**: for choices and short info over a page. It is dimmed behind, has a grab handle and rises 300 ms.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
   tint. A done item gets a green tick, and its label stays at full ink. A locked item is dimmed with a lock.
@@ -121,6 +133,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | celebrate | 600–1000 ms, once | | reward screens, count-up numbers |
 
 - Only `transform` and `opacity` animate, except colour transitions on one element.
+- Nothing shakes. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
+  field shake and the wrong-option shake were removed).
 - Nothing loops forever except loading indicators.
 - "Reduce animations" (in-app `.calm`) and the phone's reduce-motion turn movement off and keep fades.
 
