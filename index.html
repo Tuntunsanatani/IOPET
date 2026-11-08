@@ -51,8 +51,7 @@
   --primary:#FF9F0A;--primary-2:#FFB340;--primary-soft:#282828;--primary-ink:#FFB340;   /* 8.1:1; its text tone 9.4:1. A chosen thing: orange ring + ink on a neutral fill */
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;                    /* the button to press: dark letters on the flame, 9:1 */
   --gold:#FFD84D;--gold-ink:#FFD84D;--gold-fill:#FFD84D;--gold-soft:#2E2A16;
-  --wrong:#FF453A;--wrong-soft:#2E1A19;--wrong-ink:#FF6961;
-  --miss:#C9961A;--miss-soft:#2E2508;   /* 3.13.0 "not quite" (a wrong answer): amber, kept darker than the brand orange (OKLab dE 9.5) and the gold (19) */
+  --wrong:#FF453A;--wrong-soft:#2C1A1A;--wrong-ink:#FF6961;   /* 3.13.0 the wrong-answer panel: burgundy (white text 14.8:1) */
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--ink2);
   --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
@@ -77,7 +76,7 @@
   --glow-a:rgba(255,159,10,.20);--glow-b:rgba(255,216,77,.12);--glow-c:rgba(255,159,10,.12);   /* only the celebration glows (--glow-a) */
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
-  --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;
+  --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
   --font-display:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'Noto Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   color-scheme:dark;
@@ -92,8 +91,7 @@
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
-  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;
-  --miss:#A87A0F;--miss-soft:#FBF1D9;   /* 3.13.0 3.9:1 on white; the dark cross on it 4.8:1 */
+  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
   --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
@@ -174,7 +172,7 @@ sub,sup{font-size:.72em;line-height:0}
 .card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .card>*+*{margin-top:12px}
 /* BUTTONS: one primary per screen — the ink pill (white in dark); others are a white pill or a text link. A press sinks 2px, no bounce. */
-.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform .12s ease-out,box-shadow .12s ease-out;margin-bottom:5px}
+.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform .12s ease-out,box-shadow .12s ease-out;margin-bottom:5px}
 .btn:active{transform:translateY(2px)}
 .btn-primary{min-height:58px;padding:16px 22px;font-size:var(--fs-lg);line-height:26px;background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
 .btn-primary:active{box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
@@ -368,7 +366,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fld.bad .au-msg>span{opacity:1;padding-top:6px}
 .au-fgt{display:flex;justify-content:flex-end;margin-top:2px}
 .au-fgt button{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:44px;padding:0 4px}
-.au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-pill);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
+.au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
 .au-go.off{background:var(--surface-3);color:var(--ink3);box-shadow:none}
 :root:not([data-theme="light"]) .au-go.off{color:#A0A0A0}   /* (dark: 4.9:1 on the grey — inactive, still readable) */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
@@ -483,24 +481,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opt-btn[disabled]{cursor:default;transform:none}
 /* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
 .opt-btn.correct{background:var(--good-soft);border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}   /* 3.10.0 the right answer is filled, */
-.opt-btn.wrong{background:var(--surface);border-color:var(--miss);box-shadow:inset 0 0 0 1px var(--miss)}   /* the wrong pick only outlined; 3.13.0 amber: a mistake, not an error */
+.opt-btn.wrong{background:var(--surface);border-color:var(--wrong);box-shadow:inset 0 0 0 1px var(--wrong)}   /* the wrong pick only outlined */
 .opt-btn.dim{opacity:.55;box-shadow:none}
 .opt-key{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:700;color:var(--ink2);margin-right:12px}
 .opt-key .li{stroke-width:3}
 .opt-btn.correct .opt-key{background:var(--good);border-color:var(--good);color:var(--on-mark)}
-.opt-btn.wrong .opt-key{background:var(--miss);border-color:var(--miss);color:var(--on-mark)}
+.opt-btn.wrong .opt-key{background:var(--wrong);border-color:var(--wrong);color:var(--on-mark)}
 .opt-txt{flex:1;min-width:0}
 .feedback-box{border-radius:var(--r-lg);padding:18px 18px 16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2)}
 .feedback-box.correct-fb{border-top:4px solid var(--good)}
-.feedback-box.wrong-fb{border-top:4px solid var(--miss)}
+.feedback-box.wrong-fb{border-top:4px solid var(--wrong)}
 .fb-head{display:flex;align-items:center}
 .fb-ico{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:10px;background:var(--fill-2);color:var(--ink2)}
 .fb-ico .li{stroke-width:3}
 .correct-fb .fb-ico{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* 3.10.0 a ring: the white Next leads */
-.wrong-fb .fb-ico{background:var(--miss-soft);color:var(--ink);box-shadow:inset 0 0 0 2px var(--miss)}
+.wrong-fb .fb-ico{background:var(--wrong-soft);color:var(--wrong-ink);box-shadow:inset 0 0 0 2px var(--wrong)}
 .fb-title{flex:1;font-size:var(--fs-xl);font-weight:700}
 .correct-fb .fb-title{color:var(--green)}
-.wrong-fb .fb-title{color:var(--ink)}
+.wrong-fb .fb-title{color:var(--wrong-ink)}
 .fb-xp{flex:none}
 .fb-sub{font-size:var(--fs-xs);color:var(--ink2);margin-top:8px}
 .fb-text{font-size:var(--fs-md);color:var(--ink);line-height:1.7;margin-top:10px}
@@ -525,13 +523,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz>.q-dock.res{display:block;padding:0;background:transparent}
 .q-result{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--surface-2)}
 .q-result.ok{background:var(--good-soft)}
-.q-result.bad{background:var(--miss-soft)}
+.q-result.bad{background:var(--wrong-soft)}
 .q-result.fresh{animation:qr-in .3s cubic-bezier(.05,.7,.1,1)}
 @keyframes qr-in{from{transform:translateY(100%)}to{transform:none}}
 .qr-head{display:flex;align-items:center;min-height:40px}
 .qr-head .fb-ico{margin-right:10px}
 .q-result.ok .fb-ico{background:var(--good);color:var(--on-mark)}
-.q-result.bad .fb-ico{background:var(--miss);color:var(--on-mark)}
+.q-result.bad .fb-ico{background:var(--wrong);color:var(--on-mark)}
+[data-theme="light"] .q-result.bad .fb-ico,[data-theme="light"] .opt-btn.wrong .opt-key,[data-theme="light"] .rv-dot.bad{color:#FFFFFF}
 .qr-head .fb-title{flex:none;font-size:var(--fs-xl);font-weight:700}
 .qr-head .fb-xp{margin-left:10px}
 .qr-sp{flex:1}
@@ -541,7 +540,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-flag .li{width:20px;height:20px}
 .qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
 .q-result.open .qr-text{display:block}
-.qr-go{display:block;width:100%;margin-top:14px !important;min-height:58px;border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:700;transition:transform .12s ease-out,box-shadow .12s ease-out}
+.qr-go{display:block;width:100%;margin-top:14px !important;min-height:58px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;transition:transform .12s ease-out,box-shadow .12s ease-out}
 .qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 #1F8C66}
 .qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 #1F8C66}
 .qr-go.plain{background:#E6E6E6;color:#141414;box-shadow:0 4px 0 #8F8F8F}
@@ -645,29 +644,36 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-art .chi{position:relative}
 .sm-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.2}
 .sm-sub{font-size:var(--fs-md);color:var(--ink2);margin-top:4px}
-.sm-tiles{display:flex}
-.sm-tile{flex:1;min-width:0;border-radius:var(--r-lg);padding:16px 8px 14px;text-align:center;background:var(--surface);border:1px solid var(--line)}
-.sm-tile+.sm-tile{margin-left:12px}
-.sm-tile.xp{background:var(--gold-soft);border-color:transparent}
-.sm-tile.ok{background:var(--good-soft);border-color:transparent}
-.sm-n{display:flex;align-items:center;justify-content:center;font-size:var(--fs-3xl);font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
-.sm-n .chi{margin-left:6px}
-.sm-of{font-size:var(--fs-xl);color:var(--ink2);margin-left:2px}
-.sm-l,.sm-cap{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2);margin-top:6px}
-.sm-cap{margin-top:24px !important}
-.sm-meta{font-size:var(--fs-xs);color:var(--ink2);text-align:center;margin-top:10px !important}
+.sm-stats{display:flex}
+.sm-stat{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 4px 12px;text-align:center}
+.sm-stat+.sm-stat{margin-left:10px}
+.sm-stat .chi{margin:0 auto}
+.sm-v{font-size:var(--fs-2xl);font-weight:700;line-height:1.2;margin-top:6px;font-variant-numeric:tabular-nums}
+.sm-k{font-size:var(--fs-cap);font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink2);margin-top:2px}
+.sm-cap{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2);margin-top:24px !important}
 .sm-chips{display:flex;flex-wrap:wrap;justify-content:center;margin:12px -4px 0 !important}
 .sm-chip{display:inline-flex;align-items:center;margin:4px;padding:7px 12px 7px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:var(--fs-sm);font-weight:600;line-height:1.3}
 .sm-chip .li{width:16px;height:16px;margin-right:6px;stroke-width:2.5;color:var(--ink2)}
 .sm-chip.g .li{color:var(--good)}
 .sm-chip.y .li{color:var(--gold)}
 .sm2 .next-card{margin-top:8px !important}
-.sm-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px !important;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
+/* the dock: the next set alone at full width (the one big target); Review and Again as quiet links under it */
+.sm-dock{position:sticky;bottom:0;z-index:5;margin:auto -24px -32px !important;padding:16px 24px 6px;padding-bottom:calc(6px + env(safe-area-inset-bottom));background:var(--bg)}
 .sm-dock .btn{margin:0 !important}
-.sm-dock .btn-primary{flex:1;min-width:0}
-.sm-sec{flex:0 0 34%;margin-right:12px !important;min-height:58px;background:transparent;border:1.5px solid var(--line-2);color:var(--ink);font-size:var(--fs-lg);font-weight:700;box-shadow:none}
-.sm-sec:active{transform:scale(.97)}
-.sm-again{text-align:center;margin-top:4px !important}
+.sm-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px}
+.sm-links .link{min-height:44px;padding:10px 12px;color:var(--ink2);font-size:var(--fs-md)}
+.sm-links i{width:3px;height:3px;border-radius:50%;background:var(--ink3)}
+@media (max-height:700px){   /* a short phone (360 x 640): the art and the gaps give way, so UP NEXT shows above the dock */
+  .page.summary.sm2{padding-top:8px}
+  .sm2>*+*{margin-top:12px}
+  .sm-top{min-height:40px}
+  .sm-art{margin-bottom:6px}
+  .sm-art .chi{width:60px;height:60px}
+  .sm-title{font-size:var(--fs-2xl)}
+  .sm-stat{padding:10px 4px 9px}
+  .sm-stat .chi{width:28px;height:28px}
+  .sm-cap{margin-top:16px !important}
+}
 /* ── THE DAILY STREAK MOMENT, 3.13.0 ── after the day's first set: the flame, the count, the week. Once a day. */
 .cele.sk{background:radial-gradient(80% 45% at 50% 30%,rgba(255,216,77,.14),transparent 75%),var(--bg)}
 [data-theme="light"] .cele.sk{background:radial-gradient(80% 45% at 50% 30%,rgba(255,196,0,.20),transparent 75%),var(--bg)}
@@ -691,17 +697,48 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes sk-light{from{transform:scale(.4)}to{transform:none}}
 .calm .sk-art,.calm .sk-n,.calm .sk-t,.calm .sk-d,.calm .sk-d.now.on i,.calm .sk-s{animation:none}
 @media (prefers-reduced-motion:reduce){.sk-art,.sk-n,.sk-t,.sk-d,.sk-d.now.on i,.sk-s{animation:none}}
-.rv-item{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:18px}
-.rv-head{font-size:var(--fs-xs);font-weight:600;color:var(--ink2)}
 .rv-q{font-size:var(--fs-lg);font-weight:700;line-height:1.55;margin-top:6px}
 .rv-line{display:flex;align-items:flex-start;font-size:var(--fs-sm);line-height:1.5;margin-top:8px}
 .rv-line .li{margin:2px 6px 0 0;stroke-width:3}
 .rv-line.ok,.rv-line.bad{color:var(--ink)}   /* 3.13.0 the words in ink; the meaning is on the mark */
 .rv-line.ok .li{color:var(--good)}
-.rv-line.bad .li{color:var(--miss)}
-.rv-item.bad{border-left:4px solid var(--miss)}   /* 3.10.0 found at a glance; 3.13.0 amber */
-.rv-item.skip{border-left:4px solid var(--mark-off)}
+.rv-line.bad .li{color:var(--wrong)}   /* 3.13.0 red again, after a look at amber */
 .rv-x{font-size:var(--fs-sm);color:var(--ink2);line-height:1.6;margin-top:8px}
+/* ── REVIEW, 3.13.0 ── a grid of question cards: the number, a mark (its colour on the card's lip too), the start of the
+   question. A tap opens the explanation in a sheet. */
+.page.rv2{display:flex;flex-direction:column}
+.rv2>*+*{margin-top:16px}
+.rv-sum{display:flex;justify-content:center;align-items:center}
+.rv-c{display:inline-flex;align-items:center;margin:0 10px;font-size:var(--fs-lg);font-weight:700;font-variant-numeric:tabular-nums}
+.rv-c .li{margin-right:5px;stroke-width:3}
+.rv-c.ok .li{color:var(--good)}
+.rv-c.bad .li{color:var(--wrong)}
+.rv-c.skip .li{color:var(--ink3)}
+.rv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:12px;gap:12px}
+.rv-card{display:flex;flex-direction:column;min-height:116px;padding:12px 14px 14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-bottom:4px solid var(--line-2);border-radius:var(--r-md);transition:transform .12s ease-out,border-bottom-width .12s ease-out}
+.rv-card.ok{border-bottom-color:var(--good)}
+.rv-card.bad{border-bottom-color:var(--wrong)}
+.rv-card:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.rv-top{display:flex;align-items:center;justify-content:space-between}
+.rv-n{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2)}
+.rv-dot{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--on-mark)}
+.rv-dot .li{stroke-width:3}
+.rv-dot.ok{background:var(--good)}
+.rv-dot.bad{background:var(--wrong)}
+.rv-dot.skip{background:var(--surface-3);color:var(--ink2)}
+.rv-pv{display:block;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;margin-top:10px;font-size:var(--fs-sm);font-weight:600;line-height:1.5;color:var(--ink);word-break:break-word}
+.rv-sh-top{display:flex;align-items:center;justify-content:space-between}
+.rv-chip{display:inline-flex;align-items:center;padding:4px 10px 4px 7px;border-radius:var(--r-pill);font-size:var(--fs-xs);font-weight:700}
+.rv-chip .li{margin-right:4px;stroke-width:3}
+.rv-chip.ok{background:var(--good-soft);color:var(--good-ink)}
+.rv-chip.bad{background:var(--wrong-soft);color:var(--wrong-ink)}
+.rv-chip.skip{background:var(--surface-2);color:var(--ink2)}
+.m-card .rv-q{margin-top:14px}
+.m-card .rv-x{color:var(--ink);font-size:var(--fs-md);line-height:1.7;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.rv-nav{display:flex;align-items:center;margin-top:20px !important}
+.rv-nav .btn{flex:1;min-width:0;margin:0 12px}
+.rv-nav .icon-btn[disabled]{opacity:.35}
+.calm .rv-card{transition:none}
 
 /* ── PROGRESS ── */
 .progress>*+*,.profile>*+*{margin-top:20px}
@@ -756,7 +793,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
 .menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
-.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important}
+.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important}
 .sign-out .li{margin-right:8px}
 .sign-out:active{opacity:.75}
 .sub-header{display:flex;align-items:center}
@@ -5288,16 +5325,15 @@ AFTER.practice = function () { startTimer(); if (!actx) setTimeout(warmAudio, 80
 
 /* ── SET COMPLETE (3.9.0): one row of numbers, what the set earned, and the next step with its size and time ── */
 SCREENS.summary = function () {
-  var u = user, n = S.items.length, st = liveStreak(u), t = topicById(S.topic), html, chips = [], nx, nn2, same, ts, good = S.correct * 10 >= n * 6, achs, mini = [];
+  var u = user, n = S.items.length, st = liveStreak(u), t = topicById(S.topic), html, chips = [], nx, nn2, same, ts, good = S.correct * 10 >= n * 6, achs,
+    acc = n ? Math.round(S.correct * 100 / n) : 0,
+    stat = function (ico, val, key) { return '<div class="sm-stat">' + statIcon(ico, 36) + '<div class="sm-v num">' + val + '</div><div class="sm-k">' + key + '</div></div>'; };
   html = '<div class="page bg-dash summary sm2"><div class="sm-top"><button type="button" class="icon-btn" data-act="home" aria-label="Close">' + li('close') + '</button></div>' +
     '<div class="sm-hero">' + (t.ch && has(ICONS, t.ch) ? '<div class="sm-art">' + chIcon(t.ch, 88) + '</div>' : '') +
     '<div class="sm-title" role="heading" aria-level="1">' + (S.correct === n ? 'Perfect!' : good ? 'Well done!' : 'Set complete') + '</div><div class="sm-sub">' + esc(t.name) + '</div></div>' +
-    '<div class="sm-tiles"><div class="sm-tile xp"><div class="sm-n num"><span data-count="' + S.xp + '" data-pre="+">+' + S.xp + '</span>' + statIcon('star', 24) + '</div><div class="sm-l">XP EARNED</div></div>' +
-    '<div class="sm-tile' + (good ? ' ok' : '') + '"><div class="sm-n num">' + S.correct + '<span class="sm-of">/' + n + '</span></div><div class="sm-l">RIGHT</div></div></div>';
-  mini.push(fmtTime(S.elapsed));
-  if (S.wrong) mini.push(plural(S.wrong, 'mistake'));
-  if (S.skipped) mini.push(S.skipped + ' skipped');
-  html += '<div class="sm-meta">' + mini.join(' · ') + '</div>';
+    /* 3.13.0 three blocks: how right (the share, and the count under it), how long, how much XP (it counts up) */
+    '<div class="sm-stats">' + stat('tick', acc + '%', S.correct + '/' + n + ' right') + stat('clock', fmtTime(S.elapsed), 'time') +
+      stat('star', '<span data-count="' + S.xp + '" data-pre="+">+' + S.xp + '</span>', 'XP earned') + '</div>';
   if (t.mark) {
     ts = topicStats(u, t);
     if (!S.passed0 && markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ' passed', 'g']);
@@ -5315,10 +5351,10 @@ SCREENS.summary = function () {
   html += '<div class="sm-cap">UP NEXT</div><div class="next-card">' + (nx.ch && has(ICONS, nx.ch) ? chTile(nx.ch, 40) : '') +
     '<div class="grow"><div class="next-t"' + (nx.ch ? ' lang="hi"' : '') + '>' + esc(nx.ch ? (chapterOf(nx).hi || chapterOf(nx).name) : nx.name) + (nx.mark ? ' · M' + nx.mark : '') + '</div>' +
     '<div class="next-l">' + plural(nn2, 'question') + ' · about ' + aboutMin(u, nn2) + ' min</div></div></div>' +
-    (same ? '' : '<div class="sm-again"><button class="link" data-act="again">Practice this again</button></div>') +
-    '<div class="sm-dock"><button type="button" class="btn sm-sec" data-act="review">Review</button>' +
-    (same ? '<button type="button" class="btn btn-primary" data-act="again">Next set · ' + aboutMin(u, nn2) + ' min</button>'
-          : '<button type="button" class="btn btn-primary" data-act="start" data-topic="' + nx.id + '">Start · ' + aboutMin(u, nn2) + ' min</button>') + '</div></div>';
+    '<div class="sm-dock">' + (same ? '<button type="button" class="btn btn-primary" data-act="again">Next set · ' + aboutMin(u, nn2) + ' min</button>'
+          : '<button type="button" class="btn btn-primary" data-act="start" data-topic="' + nx.id + '">Start · ' + aboutMin(u, nn2) + ' min</button>') +
+    '<div class="sm-links"><button type="button" class="link" data-act="review">Review answers</button>' +
+    (same ? '' : '<i aria-hidden="true"></i><button type="button" class="link" data-act="again">Practice this again</button>') + '</div></div></div>';
   return html;
 };
 /* The XP of the set counts up once, from 0, when the summary is first seen (after any celebration over it). */
@@ -5370,16 +5406,57 @@ function afterCele() {
   if (S.skPending) { S.skPending = false; if (streakMoment()) return; }
   sumCount();
 }
+/* REVIEW ANSWERS (3.13.0): one card per question — its number, a mark (green tick / red cross / grey skip) and the start of
+   the question; a tap opens the whole question, the answers and the way to it in a sheet (‹ › go through the set). */
+function rvState(it) { return it.pick === -1 || it.pick === null ? 'skip' : it.pick === it.q.a ? 'ok' : 'bad'; }
+function rvIcon(st, size) { return li(st === 'ok' ? 'check' : st === 'bad' ? 'close' : 'chev', size || 15); }
+function rvText(x) { return String(x || '').replace(/\[\[[^\]]*\]\]/g, ' ').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim(); }
+/* What tells this card from the others: the start of the question — or, when the set has that same question line more
+   than once (a whole chapter of "Which one is different?"), its options. */
+function rvPreview(q, same) {
+  var t = rvText(q.q), o;
+  if (same) { o = q.o.map(rvText).filter(Boolean).join(' · '); if (o) return o; }
+  return t || 'A question with a figure';
+}
 SCREENS.review = function () {
-  var html = '<div class="page bg-dash">' + subHead('Review answers');
+  var c = { ok: 0, bad: 0, skip: 0 }, cards = '', sum = [], seen = {};
+  S.items.forEach(function (it) { var k = rvText(it.q.q); seen[k] = (seen[k] || 0) + 1; });
   S.items.forEach(function (it, i) {
-    var q = it.q, ok = it.pick === q.a, line;
-    line = it.pick === -1 || it.pick === null ? '<div class="rv-line muted">You skipped this question</div>'
-      : '<div class="rv-line ' + (ok ? 'ok' : 'bad') + '">' + li(ok ? 'check' : 'close', 16) + ' Your answer: ' + figHtml(q.o[it.pick]) + '</div>';
-    html += '<div class="rv-item' + (it.pick === -1 || it.pick === null ? ' skip' : ok ? '' : ' bad') + '"><div class="rv-head">Question ' + (i + 1) + '</div><div class="rv-q">' + figHtml(q.q) + '</div>' + line +
-      (ok ? '' : '<div class="rv-line ok">' + li('check', 16) + ' Correct answer: ' + figHtml(q.o[q.a]) + '</div>') + '<div class="rv-x">' + figHtml(explainOf(q)) + '</div></div>';
+    var st = rvState(it), pv = rvPreview(it.q, seen[rvText(it.q.q)] > 1);
+    c[st]++;
+    cards += '<button type="button" class="rv-card ' + st + '" data-act="rv-open" data-i="' + i + '" aria-label="Question ' + (i + 1) + ', ' +
+      (st === 'ok' ? 'right' : st === 'bad' ? 'wrong' : 'skipped') + '. Show the explanation."><span class="rv-top"><span class="rv-n">Q' + (i + 1) + '</span>' +
+      '<span class="rv-dot ' + st + '">' + rvIcon(st) + '</span></span><span class="rv-pv"' + (/[\u0900-\u097F]/.test(pv) ? ' lang="hi"' : '') + '>' + esc(pv) + '</span></button>';
   });
-  return html + '<button class="btn btn-primary" data-act="back">Back to results</button></div>';
+  if (c.ok) sum.push('<span class="rv-c ok">' + rvIcon('ok', 18) + c.ok + '</span>');
+  if (c.bad) sum.push('<span class="rv-c bad">' + rvIcon('bad', 18) + c.bad + '</span>');
+  if (c.skip) sum.push('<span class="rv-c skip">' + rvIcon('skip', 18) + c.skip + '</span>');
+  return '<div class="page bg-dash rv2">' + subHead('Review answers') +
+    '<div class="rv-sum" aria-label="' + c.ok + ' right, ' + c.bad + ' wrong, ' + c.skip + ' skipped">' + sum.join('') + '</div>' +
+    '<div class="rv-grid">' + cards + '</div>' +
+    '<div class="sm-dock"><button type="button" class="btn btn-neutral" data-act="back">Done</button></div></div>';
+};
+function rvSheet(i) {
+  var it = S.items[i], q = it.q, st = rvState(it), n = S.items.length;
+  return '<div class="rv-sh-top"><span class="rv-n">QUESTION ' + (i + 1) + ' OF ' + n + '</span><span class="rv-chip ' + st + '">' + rvIcon(st, 14) +
+      (st === 'ok' ? 'Right' : st === 'bad' ? 'Wrong' : 'Skipped') + '</span></div>' +
+    '<div class="rv-q">' + figHtml(q.q) + '</div>' +
+    (st === 'skip' ? '' : '<div class="rv-line ' + st + '">' + rvIcon(st, 16) + ' Your answer: ' + figHtml(q.o[it.pick]) + '</div>') +
+    (st === 'ok' ? '' : '<div class="rv-line ok">' + rvIcon('ok', 16) + ' Correct answer: ' + figHtml(q.o[q.a]) + '</div>') +
+    '<div class="rv-x">' + figHtml(explainOf(q)) + '</div>' +
+    '<div class="rv-nav"><button type="button" class="icon-btn" data-act="rv-nav" data-d="-1" aria-label="Previous question"' + (i > 0 ? '' : ' disabled') + '>' + li('back') + '</button>' +
+    '<button type="button" class="btn btn-neutral" data-act="modal-close">Done</button>' +
+    '<button type="button" class="icon-btn" data-act="rv-nav" data-d="1" aria-label="Next question"' + (i < n - 1 ? '' : ' disabled') + '>' + li('chev') + '</button></div>';
+}
+ACTIONS['rv-open'] = function (el) {
+  var i = parseInt(el.getAttribute('data-i'), 10);
+  if (!S || !S.items[i]) return;
+  S.rv = i; showModal(rvSheet(i));
+};
+ACTIONS['rv-nav'] = function (el) {
+  var i = (S && typeof S.rv === 'number' ? S.rv : 0) + (parseInt(el.getAttribute('data-d'), 10) || 0), card = elModal.querySelector('.m-card');
+  if (!S || !S.items[i] || !card) return;
+  S.rv = i; card.innerHTML = rvSheet(i); card.scrollTop = 0;
 };
 
 /* ════════════════════════════════════════════════════════════════════
