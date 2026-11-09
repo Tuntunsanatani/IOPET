@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.14.0)
+# IOPET design rules (v2, 3.15.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -71,7 +71,10 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 ## 4. Space, shape, depth
 
-- Page side padding 24 px (20 on sign-in). The gap between blocks is 16 px, and 24 px between groups.
+- Page side padding 24 px (16 on the sign-in, registration and reset pages and in sheets). The gap between blocks is
+  16 px, and 24 px between groups.
+- 8 pt grid (3.15.0, sign-in first): every margin and padding is a multiple of 8 (4 only inside a small component).
+  Fields 56 px high with 8 px between field rows; a form's message row 24 px; small links 40 px drawn, 48 px to touch.
 - Radius: 14 (fields), 16 (`--r-btn`, every full-size button), 18 (`--r-md`, options, rows, review cards), 24 (`--r-lg`,
   cards, panels, sheets), pill only for small chips and tags.
 - Depth comes from a 3–5 px darker bottom lip on pressable things (buttons, path panels). Pressing
@@ -85,7 +88,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | Primary | orange, 16 px corners, dark text, lip, full width where it is the screen's one action | Start, Check, Next set, Create account |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | outlined button, or a quiet text link under the primary | Skip (quiz dock), Review answers and Practice this again (summary), Quit |
-| Inactive | grey fill, grey text, still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
+| Inactive | flat grey fill with a hairline, no lip, text ≥ 7 : 1 (dark `#C4C4C4` on `#2B2B2B`, light `#4A4A4A` on `#EFEFEF`); still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
 | Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
 | Icon button | 40–44 px circle | ✕ close, ‹ back, flag (report) |
 
@@ -111,17 +114,22 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
 - **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
-  - Each field has a line under it that is always there, empty, so a message appears in place. One line, red
-    (`--wrong-ink`), never wrapping.
+  - 3.15.0: the words are in ONE message row of the form, under its last field, always there (24 px, fixed height),
+    so the fields can sit 8 px apart. It says what the first wrong field needs, in red (`--wrong-ink`), one line, never
+    wrapping; with nothing wrong it is the new password's grey hint ("At least 8 characters", "Good", "Strong"), or
+    empty. Every wrong field still turns into the panel, so the eye finds it.
   - The wrong field itself becomes the panel: `--wrong-soft` fill (burgundy in dark, pink in light) with a red border.
-  - The new password has one line under its strength bar: a grey hint ("At least 8 characters", "Good", "Strong") that
-    turns red when it has to say what is wrong. The rule is never said twice.
+  - Email (3.15.0): `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, no `..`, no `.` or `-` at the start or end of
+    the domain. That pattern lets `gmail.co` through (`.co` is a real domain), so a well-known mail service (gmail,
+    yahoo, outlook, hotmail, rediffmail, icloud, live) must be written in full: `gmail.co`, `gmail.con` or `gmial.com`
+    gets no tick, and the row offers "Did you mean …@gmail.com?", which one tap writes in. `yahoo.co.in` and the like
+    are right.
   - A message about the whole form (wrong password, no internet, too many tries) floats 12 px above the form, in space
     that is already empty: above the sheet, or above the form of the page. It is the same panel as a wrong answer:
     `--wrong-soft`, a red ✕ circle and ink text. On a very short screen it may cover the title, never a field. It goes
     away at the next try or when the sheet closes.
-  - A tap on the inactive button marks every wrong field and puts the cursor in the first one. The field is
-    `aria-invalid` and its line is its description, so a screen reader hears both.
+  - A tap on the inactive button marks every wrong field and puts the cursor in the first one. The fields are
+    `aria-invalid`, and the first one is described by the message row, so a screen reader hears both.
 - **Sheet**: for choices and short info over a page. It is dimmed behind and rises 300 ms. Its grab line is a real strip
   (full width, 28–36 px high) and it is the sheet's control (3.14.0):
   - Drag it and the sheet follows the finger, and the page behind gets lighter.
@@ -130,6 +138,9 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   - A tap on the strip, on the dimmed page, or Back also closes it.
   - The sign-in sheet has no title and no ✕: the title only repeated the Sign in button, and the line already says "pull
     me down".
+  - The brand stays whole above the sign-in sheet (3.15.0). When the sheet opens, the logo, the name and the line move
+    into the middle of the free space above it (and above a message on it), 16 px clear of each edge, and get smaller
+    only if they must; with almost no room (a keyboard) they fade out. Transform only, on the sheet's 300 ms curve.
 - **Sign-in foot**: MADE IN INDIA in CAPS, then Privacy as a small tag: a green shield with a dark tick (safe), the word,
   a hairline pill.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
