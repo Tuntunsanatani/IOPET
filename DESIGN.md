@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.16.0)
+# IOPET design rules (v2, 3.17.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -156,13 +156,30 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | state | 150–220 ms | ease-out | colour/border changes, ticks, inactive → active |
 | pop (`--t-pop`, `--ease-pop`) | 250 ms | spring k 400, c 28, m 0.8: 1.9 % overshoot | a tapped option (out 3 % and back), the right answer's option |
 | sheet (`--t-sheet`, `--ease-sheet`) | 280 ms | spring k 400, c 35.8, m 0.8: critically damped, no bounce | sheets (from 100 % below), the brand above the sign-in sheet, the progress bar |
-| page | 300 ms | `cubic-bezier(.05,.7,.1,1)` | screen to screen |
+| screen (`scr`) | 200 ms | swift (`--ease-swift`, `cubic-bezier(.25,1,.5,1)`) | a new screen comes in: from 35 % and 6 px below (never from 0, so a throttled WebView still shows it) |
+| tab switch (`--t-out`, `--t-in`) | 120 ms out, then 150 ms in | out `linear` (`--ease-leave`), in swift | the four tabs of the bottom bar (below) |
 | celebrate | 600–1000 ms, once | | reward moments, count-up numbers; they never block the next tap |
 
 - 3.16.0 springs: the curves are the real spring, drawn once at start as CSS `linear()` (20 points) by `applyEase()`, so
   the compositor plays them and no script runs per frame; an old browser keeps the cubic fallbacks in `:root`. The
   owner's first spring (320 / 22 / 0.8) overshoots 5 % and needs 300 ms to settle (at 250 ms it is still 4 % off, a
   visible jump), so small things use the tuned pop and sheets never bounce (5 % of a sheet is ~19 px).
+- 3.17.0 **tab switch** (the owner's timeline), native View Transitions (`tabTo()`):
+  - Only the page moves. The bottom bar is never redrawn (only its classes change) and shows the new tab at the tap; the
+    ground, the bar, the top edge's fade and a message that is showing stay exactly as they are, live, in every frame.
+  - The old page leaves in 120 ms (fades out, sinks 10 px); then the new page comes in 150 ms (fades in, rises 10 px into
+    place). Transform and opacity only, on the compositor.
+  - No frame is empty or half-drawn: the browser shows a still picture of the old page while the new one is built, so a
+    slow phone waits on the old page (measured: the move starts 32–60 ms after the tap; 83–130 ms on a 6× slower CPU).
+  - Why the leaving page is `linear`: on the swift curve it is 84 % gone in 50 ms and the screen stands empty for ~80 ms
+    (five frames) before the next page, a blink. Linear keeps that gap to one frame and still answers in the first frame.
+  - Each tab keeps its place (per profile): coming back to Topics opens it where it was left; a second tap on the tab goes
+    to the top. Taps wait 300 ms, as on every screen.
+  - Without View Transitions (older phones) the new page comes in like any screen (`scr`); with "Reduce animations" or the
+    phone's reduce-motion it just appears.
+  - On a tablet or a computer the phone has round corners; the moving pictures are clipped to them (`--phone-r`).
+  - Tested frame by frame (20 frames per switch, both looks, phone and frame): the bar identical in every frame; the
+    first frame is the old page and the last the new one; between them only the page colour; no other colour anywhere.
 - Anything that answers a touch is done in 300 ms or less.
 - Only `transform` and `opacity` animate, except colour transitions on one element.
 - Nothing shakes. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
