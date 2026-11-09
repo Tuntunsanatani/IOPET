@@ -85,6 +85,11 @@
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
   --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  /* 3.17.0 page switches (the owner's timeline): the page leaves in 120 ms, then the next one comes in 150 ms. What comes in
+     settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
+     screen would stand empty for ~80 ms (five frames) before the next page — a blink. Evenly, the gap is one frame. */
+  --ease-swift:cubic-bezier(.25,1,.5,1);--ease-leave:linear;--t-out:120ms;--t-in:150ms;
+  --phone-r:0px;                   /* the phone's corners: none when the app fills the screen, 40px in the frame (below) */
   --font-display:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   color-scheme:dark;
@@ -136,13 +141,33 @@ sub,sup{font-size:.72em;line-height:0}
 #app{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;background:var(--bg-deep)}
 .phone{position:relative;width:100%;height:100%;overflow:hidden;background:var(--bg)}
 @media (min-width:500px) and (min-height:560px){
-  .phone{width:390px;height:844px;max-height:calc(100% - 28px);border-radius:40px;box-shadow:0 0 0 1px var(--line),0 30px 80px var(--shadow)}
+  :root{--phone-r:40px}
+  .phone{width:390px;height:844px;max-height:calc(100% - 28px);border-radius:var(--phone-r);box-shadow:0 0 0 1px var(--line),0 30px 80px var(--shadow)}
 }
 #screens,.screen{position:absolute;top:0;right:0;bottom:0;left:0}
-.screen{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;animation:scr .2s ease-out}
+.screen{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;animation:scr .2s var(--ease-swift)}
 .screen::-webkit-scrollbar{display:none}
 /* one light fade per screen; never starts invisible, so a throttled WebView still shows content */
 @keyframes scr{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* 3.17.0 TAB SWITCH (the owner's timeline; see tabTo). Native View Transitions: the browser keeps a still picture of the old
+   page, the new one is built behind it, so no frame is ever empty or half-drawn. Only the page moves: it leaves (120 ms,
+   fading, 10 px down), then the next one comes (150 ms, fading in and rising 10 px into place). Everything else is shown
+   live and does not move: the ground (root), the bottom bar, the top edge's fade and a message that is showing; each has a
+   name only so that it stays above the page, as it always is. Transform and opacity only, on the compositor. */
+.vt-tab #screens>.screen{view-transition-name:page}
+.vt-tab #nav{view-transition-name:nav}
+.vt-tab #toast{view-transition-name:toast}
+.vt-tab .phone::after{view-transition-name:edge}
+::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none}
+::view-transition-old(*){opacity:0}                 /* no still copy of what does not move: only the live one shows */
+::view-transition-old(page){opacity:1;animation:vt-out var(--t-out) var(--ease-leave) both}
+::view-transition-new(page){animation:vt-in var(--t-in) var(--ease-swift) var(--t-out) both}
+@keyframes vt-out{to{opacity:0;transform:translateY(10px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* the browser draws these pictures above the page, without the phone's own clip: they are clipped to its shape here (on a
+   tablet or a computer the phone has round corners; the bar keeps the 28px fade it has above itself) */
+::view-transition-group(page){clip-path:inset(0 round var(--phone-r))}
+::view-transition-group(nav){clip-path:inset(-28px 0 0 round 0 0 var(--phone-r) var(--phone-r))}
 @keyframes spin{to{transform:rotate(360deg)}}
 .screen.quiet{animation:none}
 .calm .screen{animation:none}
@@ -2667,7 +2692,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.16.0',
+  VERSION: '3.17.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6390,10 +6415,45 @@ ACTIONS.tab = function (el) {
   if (stack.length === 1 && top().s === t) {      // same-page guard (CHANGE #5): no navigation, just refresh and go to top
     repaint();
     if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
+    tabMem()[t] = 0;
     return;
   }
-  reset(t);
+  tabTo(t);
 };
+/* 3.17.0 A TAB SWITCH. The bar shows the new tab at the tap (it is never redrawn, only its classes change), and the app is on the
+   new tab from that moment. The page then changes behind a native View Transition (CSS above): the browser shows a still picture
+   of the old page while the new one is built, so a slow phone waits on the old page and never on an empty or half-drawn one.
+   Each tab keeps its place: coming back to Topics opens it where it was left (a second tap on the tab goes to the top).
+   Without View Transitions (an older phone) the page is drawn at once and comes in on its own, as every screen does; with
+   "Reduce animations" it just appears. Taps wait for the switch (the usual 300 ms lock). */
+var tabScroll = {}, vtSeq = 0;
+function tabMem() {                               // where each tab was left, for the profile in use only
+  if (!user) return {};
+  if (tabScroll.id !== user.id) tabScroll = { id: user.id };
+  return tabScroll;
+}
+function tabTo(t) {
+  var mem = tabMem(), from = stack.length ? top().s : '', root = document.documentElement, seq, vt;
+  function show(still) {
+    var sc;
+    paint();
+    sc = elScreens.firstChild;
+    if (!sc || top().s !== t) return;             // the guard sent the student elsewhere (no course yet, signed out)
+    if (still) sc.classList.add('quiet');         // the transition moves it: it does not also come in by itself
+    sc.scrollTop = mem[t] || 0;
+  }
+  function done() { if (seq === vtSeq) root.classList.remove('vt-tab'); }
+  if (TABS[from]) mem[from] = curScroll();
+  stack = [{ s: t }];
+  paintNav(t);
+  if (calmMotion() || !document.startViewTransition || document.hidden) { show(false); return; }
+  seq = ++vtSeq;
+  root.classList.add('vt-tab');
+  try { vt = document.startViewTransition(function () { show(true); }); }
+  catch (e) { done(); show(false); return; }
+  lock(CONFIG.NAV_LOCK_MS);
+  vt.finished.then(done, done);
+}
 
 /* ── auth ── */
 ACTIONS['toggle-pass'] = function (el) {
