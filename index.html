@@ -82,6 +82,9 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
+  /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
+     (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
+  --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   --font-display:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   color-scheme:dark;
@@ -96,7 +99,7 @@
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
-  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
+  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
   --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
@@ -323,7 +326,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    decelerate), a field lights up on focus (150 ms), the button turns (220 ms). No motion with "Reduce animations". */
 .page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 16px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
 .au .btn{margin-bottom:0;-webkit-tap-highlight-color:transparent}
-.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform .3s cubic-bezier(.05,.7,.1,1),opacity .2s ease-out}
+.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform var(--t-sheet) var(--ease-sheet),opacity .2s ease-out}
 .au.still .au-hero,.calm .au-hero{transition:none}
 .au-hero .lg{margin-bottom:22px}
 .au-wm{display:block;width:150px;height:auto;color:var(--ink)}
@@ -344,9 +347,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-priv .chi{width:18px;height:18px;flex:none;margin-top:-1px}
 .au-priv:active{transform:scale(.97)}
 .au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
-.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s linear .3s}
+.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
-.au.open .au-sheet{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s}
+.au.open .au-sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
 /* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
    "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
@@ -389,6 +392,17 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-mark);margin-top:0}
 .au-err-ico .li{width:13px;height:13px}
 [data-theme="light"] .au-err-ico{color:#FFFFFF}
+/* 3.16.0 SKELETON — content on its way: grey blocks in its shape, and one soft light passing over them (1.2 s; a loading
+   sign is the one loop the app allows). Transform only. With "Reduce animations" or the phone's reduce-motion they stay still. */
+.skel{position:relative;overflow:hidden;background:var(--fill-2);border-radius:var(--r-md)}   /* (a grey that shows in both looks) */
+.skel:after{content:'';position:absolute;top:0;bottom:0;left:0;width:60%;background:linear-gradient(90deg,transparent,var(--skel-hi),transparent);transform:translateX(-100%);animation:skel 1.2s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes skel{to{transform:translateX(170%)}}
+.calm .skel:after{animation:none;opacity:0}
+@media (prefers-reduced-motion:reduce){.skel:after{animation:none;opacity:0}}
+.skel-line{height:14px;border-radius:7px}
+.skel-page{padding:24px}
+.skel-page>*+*{margin-top:16px}
+.skel-row{height:72px;margin-top:8px}
 .au-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}   /* heard, not seen */
 .au-fgt{display:flex;justify-content:flex-end}
 .au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
@@ -999,15 +1013,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    to reduce motion. The answer arrives (explanation rises in, the chosen option gives a small pop, the progress bar grows),
    a dialog opens softly, and every tappable thing answers the finger. 3.10.0: the progress bar slides (transform), it is not widened. */
 .feedback-box.fresh{animation:fb-in .24s ease-out}
-.opt-btn.pop{animation:opt-pop .26s ease-out}
-.q-progress>i.grow{animation:qp-grow .35s ease-out}
+.opt-btn.pop{animation:opt-pop var(--t-pop) var(--ease-pop)}
+.q-progress>i.grow{animation:qp-grow var(--t-sheet) var(--ease-sheet)}
 .modal.open{animation:m-fade .16s ease-out}
-.modal.open .m-card{animation:m-pop .2s ease-out}
+.modal.open .m-card{animation:m-up var(--t-sheet) var(--ease-sheet)}   /* 3.16.0 from below the screen */
 @keyframes fb-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes opt-pop{0%{transform:scale(1)}45%{transform:scale(1.02)}100%{transform:scale(1)}}
 @keyframes qp-grow{from{transform:translateX(var(--from))}}
 @keyframes m-fade{from{opacity:0}to{opacity:1}}
-@keyframes m-pop{from{transform:translateY(40px)}to{transform:none}}
+@keyframes m-up{from{transform:translateY(100%)}to{transform:none}}
 .calm .feedback-box.fresh,.calm .opt-btn.pop,.calm .q-progress>i.grow,.calm .modal.open,.calm .modal.open .m-card{animation:none}
 @media (prefers-reduced-motion:reduce){.feedback-box.fresh,.opt-btn.pop,.q-progress>i.grow,.modal.open,.modal.open .m-card{animation:none}}
 .link:active{opacity:.55}
@@ -1043,7 +1057,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .lvl{margin-top:22px;padding:0 17px 0 0}
 .lvl-wrap{position:relative;height:40px}
 .lvl-track{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px;background:var(--fill-2);overflow:hidden}
-.lvl-track>i{display:block;height:100%;border-radius:4px;min-width:0;transition:width .4s ease-out;background:hsl(var(--h),90%,52%)}   /* 3.10.0 the flame (36) to the emerald (160) */
+.lvl-track>i{display:block;height:100%;border-radius:4px;min-width:0;transition:width .3s var(--ease-sheet);background:hsl(var(--h),90%,52%)}   /* 3.10.0 the flame (36) to the emerald (160) */
 [data-theme="light"] .lvl-track>i{background:hsl(var(--h),85%,38%)}
 .lvl-medal{position:absolute;top:50%;width:30px;height:30px;margin:-18px 0 0 -15px;transition:transform .25s ease-out,filter .25s,opacity .25s}
 .lvl-medal .chi{display:block}
@@ -1132,7 +1146,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* ── ANSWER FEEDBACK: a pop and a few sparks for right, a shake for wrong ── */
 .opt-btn{position:relative}
-.opt-btn.pop.correct{animation:opt-ok .42s cubic-bezier(.3,1.6,.5,1)}
+.opt-btn.pop.correct{animation:opt-ok var(--t-pop) var(--ease-pop)}
 .opt-btn.pop.wrong{animation:none}   /* 3.14.0 a wrong answer is shown, never shaken: the option turns red and stays still */
 @keyframes opt-ok{0%{transform:scale(1)}40%{transform:scale(1.035) translateY(-2px)}100%{transform:none}}
 .spark{position:absolute;left:26px;top:50%;width:0;height:0;pointer-events:none}
@@ -1315,7 +1329,7 @@ a.link{text-decoration:none}
 .ch-badge.done{width:34px;height:34px;right:12px;bottom:10px;background:none;color:var(--good)}
 .ch-badge .seal{display:block;width:34px;height:34px}
 /* 3.9.1 a tap on the bottom bar: the icon and the name brighten at once, then settle (not with "Reduce animations") */
-.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash .5s ease-out}
+.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash var(--t-pop) ease-out}
 @keyframes navflash{0%{color:var(--flash);filter:drop-shadow(0 0 6px var(--flash-glow))}100%{filter:drop-shadow(0 0 0 transparent)}}
 /* a locked chapter (3.9.1): the panel a little dimmer but fully readable; in its middle a flat, see-through lock (no ring, no 3D).
    Every 2 s a light runs across the lock and it turns a little less see-through for that moment — the words behind stay readable.
@@ -1326,15 +1340,15 @@ a.link{text-decoration:none}
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
   background:var(--lock);background:linear-gradient(110deg,var(--lock) 38%,var(--lock-hi) 50%,var(--lock) 62%);background-size:320% 100%;background-position:100% 0;
-  opacity:.3;animation:lockshine 2s ease-in-out infinite}
-@keyframes lockshine{0%{background-position:100% 0;opacity:.3}18%{opacity:.55}36%{background-position:0 0;opacity:.3}100%{background-position:0 0;opacity:.3}}
-.ch-panel.tap .lock-mid{animation:lockshine .65s ease-in-out 1}
+  opacity:.3}   /* 3.16.0 no loop: it shines once, when tapped */
+@keyframes lockshine{0%{background-position:100% 0;opacity:.3}50%{opacity:.6}100%{background-position:0 0;opacity:.3}}
+.ch-panel.tap .lock-mid{animation:lockshine .3s ease-in-out 1}
 .calm .nav-item.flash .nav-ic,.calm .nav-item.flash .nav-lbl,.calm .lock-mid,.calm .ch-panel.tap .lock-mid{animation:none}
 @media (prefers-reduced-motion:reduce){.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl,.lock-mid,.ch-panel.tap .lock-mid{animation:none}}
 /* 3.9.1 the mark of a touch: a soft ring that spreads and fades (grey on the bar, green on a chapter) */
 .rip-clip{position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;overflow:hidden;pointer-events:none}
-.ripple{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ripple);transform:scale(0);animation:ripple .5s ease-out forwards}
-.ripple.go{width:120px;height:120px;margin:-60px 0 0 -60px;background:var(--tap-ring);animation-duration:.55s}
+.ripple{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--ripple);transform:scale(0);animation:ripple .3s ease-out forwards}
+.ripple.go{width:120px;height:120px;margin:-60px 0 0 -60px;background:var(--tap-ring);animation-duration:.3s}
 @keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(2.6);opacity:0}}
 /* 3.9.1 purple belongs to the syllabus: only a chapter passed or on the go has a light purple ground (the one on the go also its
    strong edge); a chapter not started and a locked one stay neutral */
@@ -2653,7 +2667,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.15.0',
+  VERSION: '3.16.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3536,9 +3550,9 @@ function applyMerged(u, M) {
 /* ════════════════════════════════════════════════════════════════════
    SOUND + VIBRATION (both optional, both fail silently)
    ════════════════════════════════════════════════════════════════════ */
-function tone(freq, start, dur, vol) {
+function tone(freq, start, dur, vol, type) {
   var o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime + start;
-  o.type = 'sine'; o.frequency.value = freq;
+  o.type = type || 'sine'; o.frequency.value = freq;
   g.gain.setValueAtTime(0.0001, t0);
   g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
   g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
@@ -3551,6 +3565,45 @@ function warmAudio() {
   if (actx || !user || !user.settings.sound) return;
   try { var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } catch (e) { /* no audio */ }
 }
+/* 3.16.0 SPRINGS (the owner's Phase 3) — stiffness k, damping c, mass m. pop: 1.9 % overshoot, settled in 250 ms (the owner's
+   320/22/0.8 overshoots 5 % and needs 300 ms, so at 250 ms it would jump); sheet: critically damped, no bounce, 280 ms. Each is
+   drawn once as a CSS linear() curve, so the compositor plays it and no script runs per frame. */
+var MOTION = { pop: { k: 400, c: 28, m: 0.8, ms: 250 }, sheet: { k: 400, c: 35.78, m: 0.8, ms: 280 } };
+var EASE = { pop: 'cubic-bezier(.34,1.3,.64,1)', sheet: 'cubic-bezier(.05,.7,.1,1)' };
+function springEase(o, n) {
+  var w0 = Math.sqrt(o.k / o.m), z = o.c / (2 * Math.sqrt(o.k * o.m)), wd = w0 * Math.sqrt(Math.max(0, 1 - z * z)), pts = [], i, t, x;
+  for (i = 0; i <= n; i++) {
+    t = o.ms / 1000 * i / n;
+    x = z < 0.999 ? 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + z * w0 / wd * Math.sin(wd * t)) : 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+    pts.push(i === n ? '1' : String(Math.round(x * 1000) / 1000));
+  }
+  return 'linear(' + pts.join(', ') + ')';
+}
+function applyEase() {
+  var k, ok = false;
+  try { ok = !!(window.CSS && CSS.supports && CSS.supports('transition-timing-function', 'linear(0, 1)')); } catch (e) { /* old browser */ }
+  if (!ok) return;
+  for (k in MOTION) if (has(MOTION, k)) { EASE[k] = springEase(MOTION[k], 20); document.documentElement.style.setProperty('--ease-' + k, EASE[k]); }
+}
+/* the tapped option answers the finger: out by 3 % and back, on the pop spring (Web Animations, transform only) */
+function pop(el) {
+  if (!el || !el.animate || calmMotion()) return;
+  try { el.animate([{ transform: 'scale(1)', easing: 'cubic-bezier(.2,0,0,1)' }, { transform: 'scale(1.03)', offset: 0.3, easing: EASE.pop }, { transform: 'scale(1)' }], { duration: MOTION.pop.ms }); } catch (e) { /* */ }
+}
+/* 3.16.0 SENSES — what each moment sounds and feels like, in one table. Code calls sense('…'), so a moment is changed in one
+   place. Sound and vibration each have their switch in Settings. Only learning moments make a sound (never a tab or a
+   menu); phones without the Vibration API (iPhones) simply stay still. */
+var SENSE = {
+  select:    { h: 'tap' },                  // an option chosen, a tab or a menu chip changed
+  correct:   { s: 'ok', h: 'ok' },          // Check: right — a quick rising chime
+  wrong:     { s: 'bad', h: 'bad' },        // Check: not quite — a soft low drop and one light knock, never alarming
+  complete:  { s: 'done', h: 'done' },      // a set complete, the moment its summary appears
+  milestone: { s: 'win', h: 'win' },        // a Mark passed, timed with its celebration
+  refuse:    { h: 'no' },                   // a locked chapter; Sign in before the form is right
+  fail:      { h: 'fail' },                 // the network failed during something the student started
+  confirm:   { h: 'ok' }                    // a pack unlocked, a pack given (admin)
+};
+function sense(ev) { var e = has(SENSE, ev) ? SENSE[ev] : null; if (!e) return; if (e.s) sfx(e.s); if (e.h) feel(e.h); }
 function sfx(kind) {
   if (!user || !user.settings.sound) return;
   var p;
@@ -3558,8 +3611,8 @@ function sfx(kind) {
     warmAudio();
     if (!actx) return;
     if (actx.state === 'suspended' && actx.resume) { p = actx.resume(); if (p && p.then) p.then(null, function () {}); }
-    if (kind === 'ok') { tone(660, 0, 0.13, 0.12); tone(880, 0.1, 0.18, 0.12); }
-    else if (kind === 'bad') { tone(196, 0, 0.24, 0.14); }
+    if (kind === 'ok') { tone(784, 0, 0.14, 0.1, 'triangle'); tone(988, 0.055, 0.14, 0.1, 'triangle'); tone(1175, 0.11, 0.24, 0.09, 'triangle'); }   // 3.16.0 G-B-D, rising, crisp
+    else if (kind === 'bad') { tone(220, 0, 0.16, 0.07); tone(185, 0.09, 0.26, 0.06); }                          // 3.16.0 A then F#: low, soft, plain sine
     else if (kind === 'done') { tone(523, 0, 0.12, 0.1); tone(659, 0.1, 0.12, 0.1); tone(784, 0.2, 0.22, 0.1); }
     else if (kind === 'win') {                                  /* timed with the celebration: the icon lands at 0.7 s, the tick pops at 1 s */
       tone(392, 0.05, 0.1, 0.06); tone(523, 0.68, 0.14, 0.12); tone(659, 0.77, 0.14, 0.12); tone(784, 0.86, 0.16, 0.12); tone(1047, 0.95, 0.42, 0.13); tone(1568, 1.02, 0.3, 0.05);
@@ -3568,7 +3621,7 @@ function sfx(kind) {
   } catch (e) { /* no audio on this device */ }
 }
 function buzz(pattern) {
-  if (!user || !user.settings.haptic) return;
+  if (user && !user.settings.haptic) return;                       // 3.16.0 before sign-in: the default (on)
   try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) { /* not supported */ }
 }
 /* HAPTICS — the body feels what the eye sees. A phone's browser can only switch the motor on and off, so each moment has
@@ -3578,9 +3631,10 @@ function buzz(pattern) {
 var HAPTIC = {
   tap: 10,
   ok: [16, 70, 28],
-  bad: [45, 55, 45],
+  bad: 15,                          // 3.16.0 one light knock (it was two firm ones): a mistake is not an alarm
   no: [28, 40, 28],                 // 3.9.1 a locked chapter: two light knocks — it is there, it does not open
-  done: [16, 70, 24, 70, 40],
+  done: [15, 30, 15],               // 3.16.0 a quick double beat when the summary appears
+  fail: 60,                         // 3.16.0 one long pulse: the network failed during something the student started
   win: [22, 110, 14, 110, 14, 110, 14, 300, 75, 210, 40]
 };
 function feel(kind) { buzz(HAPTIC[kind]); }
@@ -3608,6 +3662,7 @@ function http(url, ctype, body, bearer, cb) {
     if (done) return;
     done = true; netCount(-1);
     if (status) { try { j = JSON.parse(x.responseText); } catch (e) { j = null; } }
+    else if (busyOn) sense('fail');                                  // 3.16.0 (background syncs never buzz)
     cb(status, j);
   }
   netCount(1);
@@ -4696,7 +4751,7 @@ function auReady() {
   auCheck(form);
   if (!bad) return true;
   try { bad.querySelector('input').focus(); } catch (e) { /* (no keyboard here) */ }
-  feel('no');
+  sense('refuse');
   return false;
 }
 function auUp(el, cls) { while (el && el.classList) { if (el.classList.contains(cls)) return el; el = el.parentNode; } return null; }
@@ -5525,6 +5580,13 @@ SCREENS.practice = function () {
 };
 AFTER.practice = function () { startTimer(); if (!actx) setTimeout(warmAudio, 80); };
 
+/* 3.16.0 a new phone, just signed in, fetching its backup: Home's shape in skeletons (no numbers until they are real) */
+SCREENS.restoring = function () {
+  return '<div class="page skel-page" aria-busy="true" aria-label="Loading your progress"><div class="skel skel-line" style="width:40%"></div>' +
+    '<div class="skel skel-line" style="width:62%;height:24px;border-radius:12px"></div><div class="skel" style="height:208px;border-radius:var(--r-lg)"></div>' +
+    '<div style="display:flex;gap:16px"><div class="skel" style="flex:1;height:120px;border-radius:var(--r-lg)"></div><div class="skel" style="flex:1;height:120px;border-radius:var(--r-lg)"></div></div>' +
+    '<div class="skel skel-row"></div><div class="skel skel-row"></div></div>';
+};
 /* ── SET COMPLETE (3.9.0): one row of numbers, what the set earned, and the next step with its size and time ── */
 SCREENS.summary = function () {
   var u = user, n = S.items.length, st = liveStreak(u), t = topicById(S.topic), html, chips = [], nx, nn2, same, ts, good = S.correct * 10 >= n * 6, achs,
@@ -5599,7 +5661,7 @@ function streakMoment() {
     '<button class="btn btn-neutral" data-act="cele-close">Continue</button>';
   elPhone.appendChild(celeEl);
   lock(600);
-  sfx('done'); feel('done');
+  sense('complete');
   return true;
 }
 /* After a celebration over the summary: the streak moment (if it is waiting), then the XP counts up. */
@@ -5779,8 +5841,8 @@ function paperPick(el) {
   var it = S.items[S.i], pos = parseInt(el.getAttribute('data-i'), 10);
   if (S.done || !it || typeof it.order[pos] !== 'number' || it.sel === pos) return;
   it.sel = pos;
-  savePaper(); feel('tap');
-  repaint();
+  savePaper(); sense('select');
+  repaint(); pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
 }
 function paperMove(i) {
   if (!S || !S.exam || S.done) return;
@@ -5817,7 +5879,7 @@ function submitPaper(auto) {
   hideModal();
   stack[stack.length - 1] = { s: 'paperres' };
   paint();
-  sfx('done'); feel('done');
+  sense('complete');
   if (auto) toast('Time is up. Your paper was submitted.');
 }
 /* ── the marks: out of the paper, against the pass mark, by part; then every question with its answer ── */
@@ -6238,7 +6300,7 @@ function celebrate(o) {
     '<button class="btn btn-primary" data-act="cele-close">Continue</button>';
   elPhone.appendChild(celeEl);
   lock(600);                                                  // the button cannot be hit by the same finger that ended the test
-  sfx('win'); feel('win');
+  sense('milestone');
   if (!still) confetti(celeEl.firstChild, o.hue);
 }
 function closeCelebration() {
@@ -6376,7 +6438,10 @@ function openAccount(fresh) {
     var id;
     if (shown) return;
     shown = true; clearTimeout(timer); idle();
-    if (!db.auth || !user) return;                             // the server ended this login while the backup was loading
+    if (!db.auth || !user) {                                   // the server ended this login while the backup was loading
+      if (stack.length && top().s === 'restoring') reset(user ? 'home' : 'login');   // (3.16.0 never left on the skeleton)
+      return;
+    }
     reset('home');
     if (!db.auth.verified) go('verify');
     id = courseOf(user);
@@ -6386,7 +6451,8 @@ function openAccount(fresh) {
   }
   if (!db.auth.verified) return show(false, '');
   if (!fresh) { show(false, ''); syncRun(true); return; }     // this phone already has a copy: open at once, catch up in the background
-  $('busy-t').textContent = 'Loading your progress…';         // a new phone: fetch the backup first so Home does not look empty
+  try { elBusy.classList.remove('show'); reset('restoring'); }   // 3.16.0 Home's shape while the backup comes (taps stay off: busyOn)
+  catch (x) { elBusy.classList.add('show'); $('busy-t').textContent = 'Loading your progress…'; }   // a new phone: fetch the backup first so Home does not look empty
   timer = setTimeout(function () { show(true, ''); }, CONFIG.RESTORE_WAIT_MS);
   syncRun(true, function (e2) { show(!!e2 && e2 !== 'off', e2); });
 }
@@ -6657,7 +6723,7 @@ ACTIONS.locked = function (el) {
   var t = topicById(el.getAttribute('data-topic'));
   if (!t) return;
   if (el.classList && el.classList.contains('ch-panel') && isLocked(user, t)) {      // 3.9.1 a locked chapter panel: touchable, not openable
-    feel('no');                                                                       // two light knocks …
+    sense('refuse');                                                                  // two light knocks …
     el.classList.remove('tap'); void el.offsetWidth; el.classList.add('tap');        // … and its lock shines at once (again on every tap)
     setTimeout(function () { el.classList.remove('tap'); }, 700);
     return;
@@ -6673,7 +6739,7 @@ ACTIONS.pick = function (el) {
   pos = parseInt(el.getAttribute('data-i'), 10);
   if (!it || it.pick !== null || typeof it.order[pos] !== 'number' || it.sel === pos) return;
   it.sel = pos;
-  repaint(); showCheck();
+  repaint(); showCheck(); pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));   // 3.16.0 (the tap's knock comes from onClick)
 };
 function showCheck() {
   var b = elScreens.querySelector('.btn-check');
@@ -6696,7 +6762,7 @@ ACTIONS.check = function () {
   save();
   S.fresh = true;                                // the next drawing shows the answer arriving (once, not on later redraws)
   repaint(); revealEnd();                        // show the result first, then sound and vibration
-  if (ok) { sfx('ok'); feel('ok'); } else { sfx('bad'); feel('bad'); }
+  sense(ok ? 'correct' : 'wrong');
 };
 ACTIONS.skip = function () {
   var it;
@@ -6717,8 +6783,8 @@ ACTIONS.next = function () {
     finishSession(); stack[stack.length - 1] = { s: 'summary' }; paint();
     S.skPending = liveStreak(user) > S.streak0;      // 3.13.0 the first set of the day: the streak moment
     if (S.cele) { celebrateMark(); }
-    else if (S.skPending) { S.skPending = false; if (!streakMoment()) { sfx('done'); feel('done'); sumCount(); } }
-    else { sfx('done'); feel('done'); sumCount(); }
+    else if (S.skPending) { S.skPending = false; if (!streakMoment()) { sense('complete'); sumCount(); } }
+    else { sense('complete'); sumCount(); }
   }
 };
 ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
@@ -7061,9 +7127,9 @@ function onClick(ev) {
   }
   el = upTo(t, 'data-act');
   if (!el || el.disabled) return;
-  if (el.classList && el.classList.contains('nav-item')) { splash(el, ev); flashNav(el); }
+  if (el.classList && el.classList.contains('nav-item')) { splash(el, ev); flashNav(el); sense('select'); }   // 3.16.0 a tab: felt, never heard
   if (locked() || busyOn) return;                                   // CHANGE #5: navigation lock; nothing is tappable during a network step
-  if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) feel('tap');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
+  if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) sense('select');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
   if (el.classList && el.classList.contains('ch-panel') && !/(^| )k-(locked|soon)( |$)/.test(el.className) && !calmMotion()) {
     el.classList.add('press'); splash(el, ev, 'go'); lock(260);
     setTimeout(function () { run(el.getAttribute('data-act'), el, ev); }, 170);     // the press is seen first (a sixth of a second)
@@ -7651,7 +7717,8 @@ function packRows(u, p) {
 function packSection(u) {
   return packsOfCourse(u).filter(function (p) { return !PLAY || canSeePack(u, p.id); }).map(function (p) {      // 3.9.7 Play: nothing for sale
     var own = canSeePack(u, p.id);
-    return own && packTopics(p.id).length ? '<div class="tier-label">' + esc(p.name) + '</div>' + packRows(u, p) : packCard(u, p);
+    return own && packTopics(p.id).length ? '<div class="tier-label">' + esc(p.name) + '</div>' + packRows(u, p)
+      : packCard(u, p) + (own ? '<div class="skel skel-row" aria-hidden="true"></div><div class="skel skel-row" aria-hidden="true"></div><div class="skel skel-row" aria-hidden="true"></div>' : '');   // 3.16.0 its papers on their way
   }).join('');
 }
 ACTIONS.pack = function (el) {
@@ -7737,7 +7804,7 @@ ACTIONS.redeem = function () {
   redeemCode(raw, function (err, p) {
     idle();
     if (err) { if (e === top()) { e.p = e.p || {}; e.p.err = redeemMsg(err); } formErr(redeemMsg(err)); return; }
-    feel('ok');
+    sense('confirm');
     toast('Unlocked: ' + p.name + '!');
     if (courseOf(user) === p.course) reset('topics'); else reset('home');
   });
@@ -7892,7 +7959,7 @@ ACTIONS['adm-give'] = function () {
     if (state === 'conflict') return toast(email + ' already has ' + k.name + '.');
     if (state !== 'ok') return toast(admState(state));
     admKeep(e); e.p.pack = k.id; e.p.email = ''; e.p.gnote = ''; e.p.given = { email: email }; e.p.glist = null;
-    repaint(); feel('ok'); toast('Given to ' + email + '.');
+    repaint(); sense('confirm'); toast('Given to ' + email + '.');
   });
 };
 ACTIONS['adm-glist'] = function () {
@@ -7935,6 +8002,7 @@ function boot() {
   window.addEventListener('online', function () { if (syncAllowed()) syncSoon(1000); autoVerify(); });
   elModal.addEventListener('mousedown', function (ev) { backdropDown = ev.target === elModal; });
   elModal.addEventListener('touchstart', function (ev) { backdropDown = ev.target === elModal; });
+  applyEase();                                                       // 3.16.0 the two springs, drawn once
   elPhone.addEventListener('click', onClick);
   elPhone.addEventListener('input', onInput);
   elPhone.addEventListener('focusin', onAuFocus);                    // 3.11.0 sign-in fields: light up, and say when left wrong

@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.15.0)
+# IOPET design rules (v2, 3.16.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -42,7 +42,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   or yellow tint. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
 - The action orange stays `#FF9F0A`, the logo's flame. A suggested `#FFAB00` measured ΔE 2.9 from it, which is the same
   colour to the eye, and it sits closer to the reward gold.
-- Gradients are not used, except the splash light.
+- Gradients are not used, except the splash light and the skeleton's passing light.
 - Contrast: normal text ≥ 4.5 : 1, large text and icons ≥ 3 : 1, in both themes.
 
 ## 3. Type ("IOPET Sans": English and numbers in Plus Jakarta Sans, Hindi in Noto Sans Devanagari)
@@ -154,15 +154,45 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 |---|---|---|---|
 | press | 100–120 ms | ease-out | button sink, card press |
 | state | 150–220 ms | ease-out | colour/border changes, ticks, inactive → active |
-| enter | 300 ms | `cubic-bezier(.05,.7,.1,1)` (emphasized decelerate) | sheets, result panel, field messages |
-| page | 300 ms | same | screen to screen |
-| celebrate | 600–1000 ms, once | | reward screens, count-up numbers |
+| pop (`--t-pop`, `--ease-pop`) | 250 ms | spring k 400, c 28, m 0.8: 1.9 % overshoot | a tapped option (out 3 % and back), the right answer's option |
+| sheet (`--t-sheet`, `--ease-sheet`) | 280 ms | spring k 400, c 35.8, m 0.8: critically damped, no bounce | sheets (from 100 % below), the brand above the sign-in sheet, the progress bar |
+| page | 300 ms | `cubic-bezier(.05,.7,.1,1)` | screen to screen |
+| celebrate | 600–1000 ms, once | | reward moments, count-up numbers; they never block the next tap |
 
+- 3.16.0 springs: the curves are the real spring, drawn once at start as CSS `linear()` (20 points) by `applyEase()`, so
+  the compositor plays them and no script runs per frame; an old browser keeps the cubic fallbacks in `:root`. The
+  owner's first spring (320 / 22 / 0.8) overshoots 5 % and needs 300 ms to settle (at 250 ms it is still 4 % off, a
+  visible jump), so small things use the tuned pop and sheets never bounce (5 % of a sheet is ~19 px).
+- Anything that answers a touch is done in 300 ms or less.
 - Only `transform` and `opacity` animate, except colour transitions on one element.
 - Nothing shakes. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
   field shake and the wrong-option shake were removed).
-- Nothing loops forever except loading indicators.
+- Nothing loops forever except loading indicators (the spinner, the skeleton's light). 3.16.0: the locked chapter's lock
+  no longer shines every 2 s; it shines once, in 300 ms, when tapped.
 - "Reduce animations" (in-app `.calm`) and the phone's reduce-motion turn movement off and keep fades.
+
+## 7b. Senses: sound and touch (3.16.0, the owner's Phase 3)
+
+Every moment goes through one table, `SENSE`, and one call, `sense('…')`, so a moment changes in one place.
+
+| Moment | Sound | Haptic |
+|---|---|---|
+| select: an option chosen, a tab, a menu chip | none | 10 ms knock |
+| correct: Check, right | G5-B5-D6 chime, rising, 55 ms apart (triangle) | `[16, 70, 28]` |
+| wrong: Check, not quite | A3 then F#3, soft, 90 ms apart (sine, quieter) | one light 15 ms knock |
+| complete: a set's summary appears | C5-E5-G5 | `[15, 30, 15]` |
+| milestone: a Mark passed | the celebration's notes | timed with the celebration |
+| refuse: a locked chapter, Sign in too early | none | `[28, 40, 28]` |
+| fail: the network fails during a step the student started | none | one 60 ms pulse (never for a background sync) |
+| confirm: a pack unlocked or given | none | `[16, 70, 28]` |
+
+- Sounds are made by the app (Web Audio oscillators): 0 KB, offline, no delay. Only learning moments make a sound,
+  never navigation.
+- "Sound effects" and "Vibration" in Settings switch them off. Before sign-in the defaults (on) apply.
+- iPhones have no vibration in the browser; a cheap phone's motor may not feel 10 ms (test on the phone).
+- **Skeleton**: where content is on its way (a new phone's first backup; a pack's papers downloading), grey blocks in its
+  shape (`--fill-2`) with one soft light passing every 1.2 s; still with reduce motion. Actions keep their own waiting
+  state: a skeleton is never used for a button press.
 
 ## 8. Words (copy)
 
