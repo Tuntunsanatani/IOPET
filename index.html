@@ -321,14 +321,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    style, one button behaviour on all three auth pages. The main button stays grey until what it needs is filled in right,
    then turns orange (still tappable before: a tap shows what is missing). Motion: the sheet rises (300 ms, emphasized
    decelerate), a field lights up on focus (150 ms), the button turns (220 ms). No motion with "Reduce animations". */
-.page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 20px calc(14px + env(safe-area-inset-bottom));overflow:hidden}
+.page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 16px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
 .au .btn{margin-bottom:0;-webkit-tap-highlight-color:transparent}
-.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px}
+.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform .3s cubic-bezier(.05,.7,.1,1),opacity .2s ease-out}
+.au.still .au-hero,.calm .au-hero{transition:none}
 .au-hero .lg{margin-bottom:22px}
 .au-wm{display:block;width:150px;height:auto;color:var(--ink)}
 .au-tag{margin-top:14px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
 .au-tag.note{color:var(--ink2);font-weight:400}
-.au-dock>*+*{margin-top:12px}
+.au-dock>*+*{margin-top:8px}
 .au-g,.au-e{display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;font-size:var(--fs-lg);font-weight:600;box-shadow:none}
 .au-g{background:#fff;color:#1F1F1F;border:1px solid #DADCE0}
 .au-g svg{width:20px;height:20px;flex:none}
@@ -336,29 +337,29 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-e .li{width:20px;height:20px}
 .au-g:active,.au-e:active{transform:scale(.98)}
 .au-ghost{display:block;width:100%;min-height:48px;text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
-.au-foot{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:4px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink3)}
+.au-foot{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:8px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink3)}
 /* privacy as a small tag: its shield, the word, a hairline pill (pills are for tags); the touch area reaches 44 px */
-.au-priv{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px 0 8px;border:1px solid var(--line-2);border-radius:var(--r-pill);background:var(--surface);font:inherit;letter-spacing:inherit;color:var(--ink2)}
-.au-priv:after{content:'';position:absolute;top:-5px;right:-4px;bottom:-5px;left:-4px}
+.au-priv{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 16px 0 8px;border:1px solid var(--line-2);border-radius:var(--r-pill);background:var(--surface);font:inherit;letter-spacing:inherit;color:var(--ink2)}
+.au-priv:after{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}
 .au-priv .chi{width:18px;height:18px;flex:none;margin-top:-1px}
 .au-priv:active{transform:scale(.97)}
 .au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
-.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:8px 20px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s linear .3s}
+.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s linear .3s}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
 .au.open .au-sheet{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.05,.7,.1,1),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
 /* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
    "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
    and the sheet goes down. */
-.au-grab{display:block;position:relative;width:calc(100% + 40px);height:36px;margin:-8px -20px 6px;background:none;touch-action:none;-webkit-tap-highlight-color:transparent}
-.au-grab:before{content:'';position:absolute;left:50%;top:11px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}   /* ≥ 3:1 in both looks */
+.au-grab{display:block;position:relative;width:calc(100% + 32px);height:32px;margin:0 -16px 0;background:none;touch-action:none;-webkit-tap-highlight-color:transparent}
+.au-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}   /* ≥ 3:1 in both looks */
 .au-grab:active:before{transform:scaleX(1.15)}
 .au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
 .au-form>.auth-error{margin-bottom:12px}
 .au-fld+.au-fld{margin-top:8px}
-.au-iw{display:flex;align-items:center;min-height:54px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 6px 0 14px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
+.au-iw{display:flex;align-items:center;min-height:56px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 8px 0 16px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
 .au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .15s ease-out}
-.au-iw input{flex:1;min-width:0;height:52px;margin-left:10px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
+.au-iw input{flex:1;min-width:0;height:53px;margin-left:8px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
 .au-iw input::placeholder{color:var(--ink3)}
 .au-fld.focus .au-iw{border-color:var(--primary);box-shadow:0 0 0 3px var(--tap-tint)}
 .au-fld.focus .au-iw>.li{color:var(--primary-ink)}
@@ -370,36 +371,40 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-eye[aria-pressed="true"]{color:var(--primary-ink)}
 .au-fld.bad .au-iw{border-color:var(--wrong);background:var(--wrong-soft);box-shadow:none}
 .au-fld.bad .au-iw>.li{color:var(--wrong-ink)}
-/* 3.14.0 calm errors (DESIGN.md §6): the line under a field is always there, empty, so a message appears in place and
-   nothing above or below it moves. One line only (it never wraps), red, and the field itself turns into the burgundy
-   (dark) / pink (light) panel. No shaking anywhere. */
-.au-msg{min-height:20px;padding:4px 0 0 4px}
-.au-msg>span{display:block;font-size:var(--fs-xs);line-height:16px;font-weight:600;color:var(--wrong-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;visibility:hidden;transition:opacity .15s ease-out,visibility 0s .15s}
-.au-fld.bad .au-msg>span,.au-hint>span{opacity:1;visibility:visible;transition:opacity .15s ease-out,visibility 0s}
-.au-hint>span{color:var(--ink2);font-weight:400}   /* the new-password line is a hint until it has to say what is wrong */
-.au-fld.bad .au-hint>span{color:var(--wrong-ink);font-weight:600}
+/* 3.14.0 calm errors (DESIGN.md §6): nothing moves and nothing shakes; the wrong field itself turns into the burgundy
+   (dark) / pink (light) panel. 3.15.0 the 8 pt grid: fields 56 px with 8 px between them, so the words are no longer under
+   each field but in ONE line of the form, under its last field, always there (24 px, empty or a hint): it says what the
+   first wrong field needs, or offers the fix for a well-known address typed wrong ("Did you mean …?"). One line only. */
+.au-row-msg{display:block;height:24px;padding:4px;overflow:hidden;font-size:var(--fs-xs);line-height:16px;font-weight:600}   /* fixed: it never resizes */
+.au-m{display:block;height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--wrong-ink)}
+.au-m.hint{color:var(--ink2);font-weight:400}
+.au-fix{position:relative;display:block;width:100%;font:inherit;color:var(--ink);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.au-fix:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* the whole row, never over the field above */
+.au-fix b{color:var(--primary-ink);text-decoration:underline;text-underline-offset:2px}
+.au-fld .strength{margin-top:8px !important}
 /* a message about the whole form (wrong password, no internet, too many tries) floats just above the form, in space that
    is already empty: above the sheet, or above the form of the page. Nothing in the form moves. */
-.au-err{position:absolute;left:20px;right:20px;z-index:4;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--wrong-soft);border:1px solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s .2s}
+.au-err{position:absolute;left:16px;right:16px;z-index:4;display:flex;align-items:flex-start;gap:8px;padding:16px;border-radius:var(--r-md);background:var(--wrong-soft);border:1px solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s .2s}
 .au-err.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s}
 .au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-mark);margin-top:0}
 .au-err-ico .li{width:13px;height:13px}
 [data-theme="light"] .au-err-ico{color:#FFFFFF}
 .au-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}   /* heard, not seen */
-.au-fgt{display:flex;justify-content:flex-end;margin-top:2px}
-.au-fgt button{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:44px;padding:0 4px}
+.au-fgt{display:flex;justify-content:flex-end}
+.au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
+.au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
 .au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
-.au-go.off{background:var(--surface-3);color:var(--ink3);box-shadow:none}
-:root:not([data-theme="light"]) .au-go.off{color:#A0A0A0}   /* (dark: 4.9:1 on the grey — inactive, still readable) */
+.au-go.off{background:#EFEFEF;color:#4A4A4A;box-shadow:inset 0 0 0 1px #DADADA}   /* 3.15.0 inactive: readable (7.7:1), flat, grey */
+:root:not([data-theme="light"]) .au-go.off{background:#2B2B2B;color:#C4C4C4;box-shadow:inset 0 0 0 1px #3A3A3A}   /* (dark: 8.1:1) */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
 .au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
-.au-alt button{font:inherit;font-weight:700;color:var(--primary-ink);min-height:44px;padding:0 4px}
+.au-alt button{position:relative;font:inherit;font-weight:700;color:var(--primary-ink);min-height:40px;padding:0 4px}
 .au-note{font-size:var(--fs-sm);color:var(--ink2);line-height:1.5}
 .au-top{display:flex;align-items:center;min-height:44px}
 .au-body{margin-top:auto;padding-top:24px}
-.au-body>.au-title{margin-bottom:6px}
-.au-body>.au-note{margin-bottom:18px}
+.au-body>.au-title{margin-bottom:8px}
+.au-body>.au-note{margin-bottom:16px}
 @keyframes au-ready{0%{transform:scale(.97)}60%{transform:scale(1.015)}100%{transform:none}}
 .calm .au-sheet,.calm .au-scrim,.calm .au-err,.calm .au-err.show{transition:none}
 .calm .au-go.on{animation:none}
@@ -2648,7 +2653,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.14.0',
+  VERSION: '3.15.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -2726,7 +2731,22 @@ var ACH = [
    ════════════════════════════════════════════════════════════════════ */
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
-var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+var EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;   // 3.15.0 the owner's pattern
+/* 3.15.0 the pattern lets "rahul@gmail.co" through (.co is a real domain, so it must), so a well-known mail service has to
+   be written in full: gmail.co, gmail.con or gmial.com is not right yet, and the form offers the address it most likely is */
+var MAIL_HOST = { gmail: 'gmail.com', googlemail: 'googlemail.com', yahoo: 'yahoo.com', ymail: 'ymail.com', rediffmail: 'rediffmail.com',
+  hotmail: 'hotmail.com', outlook: 'outlook.com', icloud: 'icloud.com', live: 'live.com' };
+var MAIL_ALSO = { 'yahoo.co.in': 1, 'yahoo.in': 1, 'outlook.in': 1, 'hotmail.co.in': 1, 'hotmail.co.uk': 1, 'live.in': 1 };
+var MAIL_TYPO = { gmial: 'gmail', gmai: 'gmail', gamil: 'gmail', gnail: 'gmail', gmali: 'gmail', gmil: 'gmail', gmaill: 'gmail',
+  yaho: 'yahoo', yahooo: 'yahoo', rediff: 'rediffmail', hotmial: 'hotmail', outlok: 'outlook' };
+function emailSuggest(v) {
+  var at = v.lastIndexOf('@'), dom, lab;
+  if (at < 1) return '';
+  dom = v.slice(at + 1).toLowerCase(); lab = dom.split('.')[0]; lab = has(MAIL_TYPO, lab) ? MAIL_TYPO[lab] : lab;
+  if (!has(MAIL_HOST, lab) || has(MAIL_ALSO, dom) || dom === MAIL_HOST[lab]) return '';
+  return v.slice(0, at + 1) + MAIL_HOST[lab];
+}
+function emailOk(v) { v = String(v || '').trim(); return v.length <= 100 && EMAIL_RE.test(v) && !/\.\.|@[.-]|[.-]$|-\.|\.-/.test(v) && !emailSuggest(v); }
 var UID_RE = /^[A-Za-z0-9]{10,128}$/;                 // a Firebase user id; can never be "guest" or a built-in object key
 var QID_RE = /^[A-Za-z0-9][A-Za-z0-9_.-]{0,39}$/;     // a question id
 var PACK_ID_RE = /^[a-z0-9-]{2,24}$/;                 // a paid pack's id (3.8.0); needed by fixOwns, which runs when the stored data is read
@@ -4321,7 +4341,7 @@ function formErr(msg) {
   if (!el.classList.contains('au-err')) { el.textContent = msg; el.classList.add('show'); return; }
   if (el.getAttribute('aria-hidden') && !el.parentNode.classList.contains('open')) { toast(msg); return; }   // sign-in page, sheet closed
   el.classList.add('show');                                         // shown first, so a screen reader hears the new words
-  el.innerHTML = '<span class="au-err-ico">' + li('close') + '</span><span>' + esc(msg) + '</span>'; auErrPlace(el);
+  el.innerHTML = '<span class="au-err-ico">' + li('close') + '</span><span>' + esc(msg) + '</span>'; auErrPlace(el); auFit();
   if ($('err-sr')) $('err-sr').textContent = msg;
 }
 /* 3.14.0 a message about the whole form sits 12 px above it: above the sheet when it is open, else above the form of the
@@ -4586,7 +4606,7 @@ var G_LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><pat
   '<path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
 var EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 var AU_RULE = {
-  email: function (v) { return EMAIL_RE.test(v.trim()) && v.trim().length <= 100; },
+  email: function (v) { return emailOk(v); },
   pass: function (v) { return v.length >= CONFIG.PASS_MIN; },
   name: function (v) { return v.replace(/\s+/g, ' ').trim().length >= 2; }
 };
@@ -4596,12 +4616,11 @@ function auWordmark() {
 }
 /* one field: id, the input's type and attributes, its icon, placeholder, rule, the line shown when it is wrong */
 function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty, hint) {
-  return '<div class="au-fld" data-rule="' + rule + '"><div class="au-iw">' + li(icon) +
-    '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + (hint ? ' aria-describedby="st-txt"' : '') + '>' +
+  return '<div class="au-fld" data-rule="' + rule + '" data-bad="' + msg + '" data-empty="' + (empty || msg) + '"><div class="au-iw">' + li(icon) +
+    '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + (hint ? ' aria-describedby="au-m"' : '') + '>' +
     '<span class="au-ok">' + li('check') + '</span>' +
     (eye ? '<button type="button" class="au-eye" data-act="toggle-pass" data-for="' + id + '" aria-label="Show password" aria-pressed="false">' + EYE_SVG + '</button>' : '') +
-    '</div>' + (hint ? '<div class="strength"><i id="st-bar"></i></div><div class="au-msg au-hint"><span id="st-txt"' : '<div class="au-msg" aria-live="polite"><span id="' + id + '-m"') +
-    ' data-bad="' + msg + '" data-empty="' + (empty || msg) + '">' + (hint || msg) + '</span></div></div>';
+    '</div>' + (hint ? '<div class="strength"><i id="st-bar"></i></div>' : '') + '</div>';
 }
 function auEmail(value, auto) {
   return auField('f-email', 'email', 'mail', 'Email', 'email', 'Enter a valid email', value, 'inputmode="email" autocomplete="' + auto + '" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="100"', false, 'Enter your email');
@@ -4611,19 +4630,47 @@ function auPass(id, ph, auto, strength) {                          // strength: 
   return auField(id, 'password', 'lock', ph, 'pass', strength ? 'Too short — at least ' + n : 'At least ' + n, '',
     'autocomplete="' + auto + '" maxlength="64"' + (strength ? ' data-in="pass-new"' : ''), true, 'Enter your password', strength ? 'At least ' + n : '');
 }
+/* 3.15.0 the form's one message row (always there): a hint, or what the first wrong field needs */
+function auMsgRow(hint) { return '<div class="au-row-msg"><span class="au-m hint" id="au-m" aria-live="polite"' + (hint ? ' data-hint="' + hint + '"' : '') + '>' + (hint || '') + '</span></div>'; }
 function auGo(act, label) { return '<button type="button" class="btn au-go off" data-act="' + act + '" aria-disabled="true">' + label + '</button>'; }
 /* a field turns red: its line says what is missing (empty) or what is wrong; a screen reader hears it with the field */
 function fldBad(f) {
-  var i = f.querySelector('input'), m = f.querySelector('.au-msg span');
-  if (m) m.textContent = m.getAttribute(i && String(i.value) ? 'data-bad' : 'data-empty') || m.textContent;
-  if (i) { i.setAttribute('aria-invalid', 'true'); if (m && m.id) i.setAttribute('aria-describedby', m.id); }
+  var i = f.querySelector('input');
+  if (i) i.setAttribute('aria-invalid', 'true');
   f.classList.add('bad');
+  auShowMsg(auUp(f, 'au-form'));
 }
 function fldGood(f) {
-  var i = f.querySelector('input');
+  var i = f.querySelector('input'), was = f.classList.contains('bad');
   f.classList.add('ok'); f.classList.remove('bad');
-  if (i) { i.removeAttribute('aria-invalid'); if (i.getAttribute('aria-describedby') !== 'st-txt') i.removeAttribute('aria-describedby'); }
+  if (i) i.removeAttribute('aria-invalid');
+  if (was) auShowMsg(auUp(f, 'au-form'));
 }
+/* the row says what the first wrong field needs (that field is described by it, for a screen reader); a well-known address
+   typed wrong gets its fix as a button; with nothing wrong the row is the new password's hint, or empty */
+function auShowMsg(form) {
+  var row = form && form.querySelector('.au-m'), fs, i, f = null, inp, sug;
+  if (!row) return;
+  fs = form.querySelectorAll('.au-fld');
+  for (i = 0; i < fs.length; i++) {
+    inp = fs[i].querySelector('input');
+    if (inp && inp.getAttribute('data-in') !== 'pass-new') inp.removeAttribute('aria-describedby');
+    if (!f && fs[i].classList.contains('bad')) f = fs[i];
+  }
+  if (!f) { row.className = 'au-m hint'; row.textContent = row.getAttribute('data-hint') || ''; return; }
+  inp = f.querySelector('input'); sug = f.getAttribute('data-rule') === 'email' && inp ? emailSuggest(String(inp.value).trim()) : '';
+  row.className = 'au-m';
+  if (sug) row.innerHTML = '<button type="button" class="au-fix" data-act="au-fix" data-v="' + esc(sug) + '">Did you mean <b>' + esc(sug) + '</b>?</button>';
+  else row.textContent = f.getAttribute(inp && String(inp.value) ? 'data-bad' : 'data-empty');
+  if (inp) inp.setAttribute('aria-describedby', 'au-m');
+}
+ACTIONS['au-fix'] = function (el) {                                   // "Did you mean …?": one tap writes it
+  var i = $('f-email'), fm;
+  if (!i) return;
+  i.value = el.getAttribute('data-v'); fm = auUp(i, 'au-form');
+  auCheck(fm); auShowMsg(fm);
+  try { ($('f-pass') || i).focus(); } catch (x) { /* (no keyboard here) */ }
+};
 function fldOk(f) { var i = f.querySelector('input'), r = AU_RULE[f.getAttribute('data-rule')]; return !!(i && r && r(String(i.value))); }
 /* the state of one form: ticks on the right fields, the button grey or orange */
 function auCheck(form) {
@@ -4643,7 +4690,7 @@ function auCheckAll(sc) { var f = (sc || elScreens).querySelectorAll('.au-form')
 function auReady() {
   var sc = elScreens.lastChild, form = sc && (sc.querySelector('.au.open .au-form') || sc.querySelector('.au-form')), fs, bad = null, i, er = $('err');
   if (!form) return true;
-  if (er && er.classList.contains('au-err')) { er.classList.remove('show'); if ($('err-sr')) $('err-sr').textContent = ''; }
+  if (er && er.classList.contains('au-err')) { er.classList.remove('show'); if ($('err-sr')) $('err-sr').textContent = ''; auFit(); }
   fs = form.querySelectorAll('.au-fld');
   for (i = 0; i < fs.length; i++) if (!fldOk(fs[i])) { fldBad(fs[i]); if (!bad) bad = fs[i]; }
   auCheck(form);
@@ -4678,7 +4725,7 @@ SCREENS.login = function (p) {
     '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><button type="button" class="au-grab" data-act="au-close" aria-label="Close"></button>' +
       '<div class="au-sr" id="err-sr" role="alert"></div><div class="au-form" data-enter="login">' +
         auEmail(p.email, 'username') + auPass('f-pass', 'Password', 'current-password', false) +
-        '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
+        auMsgRow('') + '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
         auGo('login', 'Sign in') + '</div>' +
       '<div class="au-alt">New to IOPET? <button type="button" data-act="' + (mv ? 'adopt' : 'go') + '" data-to="signup">Create account</button></div>' +
     '</div>' + AU_ERR_SHEET + '</div>';
@@ -4692,7 +4739,7 @@ SCREENS.signup = function (p) {
     '<div class="au-form" data-enter="signup">' +
       auField('f-name', 'text', 'edit', 'Full name', 'name', 'Enter your full name', p.name || (rs || (mv && user.name !== 'Guest') ? user.name : ''), 'autocomplete="name" maxlength="40"') +
       auEmail(p.email, 'email') + auPass('f-pass', 'Create password', 'new-password', true) +
-      auGo('signup', 'Create account') + '</div>' +
+      auMsgRow('At least ' + CONFIG.PASS_MIN + ' characters') + auGo('signup', 'Create account') + '</div>' +
     (rs ? '<div class="au-alt">The unconfirmed sign-up for ' + esc(db.auth.email) + ' is removed once the new account exists.</div>'
         : '<div class="au-alt">Already have an account? <button type="button" data-act="' + (mv ? 'adopt' : 'back') + '" data-to="login">Sign in</button></div>') +
     auFoot() + '</div>' + AU_ERR + '</div>';
@@ -4700,15 +4747,38 @@ SCREENS.signup = function (p) {
 SCREENS.forgot = function (p) {
   return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
     '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We email you a link to choose a new one. It goes only to that inbox.</div>' +
-    '<div class="au-form" data-enter="forgot-send">' + auEmail(p.email, 'username') + auGo('forgot-send', 'Send reset link') + '</div></div>' + AU_ERR + '</div>';
+    '<div class="au-form" data-enter="forgot-send">' + auEmail(p.email, 'username') + auMsgRow('') + auGo('forgot-send', 'Send reset link') + '</div></div>' + AU_ERR + '</div>';
 };
-AFTER.login = function (sc) { auCheckAll(sc); gisLoad(null); };
+AFTER.login = function (sc) { auCheckAll(sc); gisLoad(null); auFit(); };
 AFTER.signup = AFTER.forgot = function (sc) { auCheckAll(sc); };
+/* 3.15.0 THE BRAND STAYS WHOLE ABOVE THE SHEET. The page is a flex column (the brand flex:1 and centred, the buttons at the
+   foot); the sheet slides over it. When the sheet is open, the free box is the space between the top inset (16 px, or the
+   top bar) and the sheet (or the message on it), 16 px clear of each. The brand moves to the middle of that box and gets
+   smaller only if it must: transform only (translate + scale), on the sheet's own 300 ms curve, measured from layout
+   (offsetTop), so the sheet's slide does not change the sums. Too little room (a keyboard): it fades out. */
+function heroTop(el, hero) { return el.offsetParent === hero ? el.offsetTop : el.offsetTop - hero.offsetTop; }   // (a moved hero is its children's offsetParent)
+function auFit() {
+  var pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au'), hero = pg && pg.querySelector('.au-hero'), sh, er, tb, a, b, t, bt, k, dy;
+  if (!hero) return;
+  if (!pg.classList.contains('open')) { hero.style.transform = ''; hero.style.opacity = ''; return; }
+  sh = pg.querySelector('.au-sheet'); er = $('err'); tb = pg.querySelector('.au-top');
+  a = hero.firstElementChild; b = hero.lastElementChild;
+  if (!sh || !a || !b) return;
+  t = tb ? tb.offsetTop + tb.offsetHeight + 8 : 16;
+  bt = sh.offsetTop - 16;
+  if (er && er.classList.contains('show')) bt = Math.min(bt, er.offsetTop - 16);
+  a = heroTop(a, hero); b = heroTop(b, hero) + b.offsetHeight;      // the brand's box inside the hero (no transform)
+  k = Math.min(1, (bt - t) / Math.max(1, b - a));
+  dy = (t + bt) / 2 - (hero.offsetTop + (a + b) / 2);
+  hero.style.transformOrigin = '50% ' + Math.round((a + b) / 2) + 'px';
+  hero.style.transform = 'translateY(' + Math.round(dy) + 'px) scale(' + Math.max(0, k).toFixed(3) + ')';
+  hero.style.opacity = k < 0.55 ? '0' : '';
+}
 ACTIONS['au-open'] = function () {
   var e = top(), pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au');
   if (!e || e.s !== 'login' || !pg) return;
   e.p = e.p || {}; e.p.sheet = 1;
-  pg.classList.remove('still'); pg.classList.add('open');
+  pg.classList.remove('still'); pg.classList.add('open'); auFit();
   setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { try { i.focus(); } catch (x) { /* */ } } }, 320);
 };
 ACTIONS['au-close'] = function (el) { if (!grabClickAfterDrag(el)) auClose(); };
@@ -4719,7 +4789,7 @@ function grabClickAfterDrag(el) { return !!(el && el.classList && (el.classList.
    goes down (140–280 ms, faster after a faster flick); any less and it settles back (260 ms, no bounce). Up: it gives a little
    and comes back. A tap on the strip, on the dimmed page, or Back closes it too. With "Reduce animations" it still follows the
    finger, then goes or comes back at once. */
-var auDrag = null, auDragEnd = 0;
+var auDrag = null, auDragEnd = 0, fitQ = 0;
 function rgbaOf(c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''), v = m ? m[1].split(',') : []; return v.length >= 3 ? { r: +v[0], g: +v[1], b: +v[2], a: v.length > 3 ? +v[3] : 1 } : null; }
 function onAuDown(ev) {
   var g = auUp(ev.target, 'au-grab') || auUp(ev.target, 'm-grab'), pg, sh, er, d;
@@ -4790,6 +4860,7 @@ function auClose() {
   delete e.p.sheet;
   if (pg) { pg.classList.remove('still'); pg.classList.remove('open'); }
   if ($('err')) $('err').classList.remove('show');                 // its message belonged to the sheet
+  auFit();
   if ($('err-sr')) $('err-sr').textContent = '';
   try { if (document.activeElement) document.activeElement.blur(); } catch (x) { /* */ }
   return true;
@@ -6284,7 +6355,7 @@ ACTIONS.login = function () {
   var email = val('f-email').toLowerCase(), pw = rawVal('f-pass'), adopt = moving(top().p || {}), wait = loginWait();
   if (!auReady()) return;                                      // 3.11.0 a wrong or empty field shows itself
   if (!email || !pw) return formErr('Enter your email and password.');
-  if (!EMAIL_RE.test(email)) return formErr('Enter a valid email address.');
+  if (!emailOk(email)) return formErr('Enter a valid email address.');
   if (wait) return formErr('Too many wrong attempts. Try again in ' + plural(wait, 'second') + ', or use “Forgot password?”.');
   busy('Signing in…');
   idp('signInWithPassword', { email: email, password: pw, returnSecureToken: true }, function (err, j) {
@@ -6331,7 +6402,7 @@ ACTIONS.signup = function () {
   if (p.restart && !restarting(p)) return appBack();          // "use another email", but that sign-up is no longer the one signed in
   if (!auReady()) return;
   if (name.length < 2) return formErr('Enter your full name.');
-  if (!EMAIL_RE.test(email) || email.length > 100) return formErr('Enter a valid email address.');
+  if (!emailOk(email)) return formErr('Enter a valid email address.');
   if (p.restart && email === db.auth.email) return formErr('That is the address you want to replace. Enter the correct one.');
   bad = passProblem(pw, email);
   if (bad) return formErr(bad);
@@ -6451,7 +6522,7 @@ ACTIONS['verify-restart'] = function () {
 ACTIONS['forgot-send'] = function () {
   var email = val('f-email').toLowerCase(), wait = mailWait('reset:' + email);
   if (!auReady()) return;
-  if (!EMAIL_RE.test(email)) return formErr('Enter the email address of your account.');
+  if (!emailOk(email)) return formErr('Enter the email address of your account.');
   if (wait) return formErr('A link was sent just now. You can ask again in ' + plural(wait, 'second') + '.');
   busy('Sending the link…');
   idp('sendOobCode', { requestType: 'PASSWORD_RESET', email: email }, function (err) {
@@ -7004,9 +7075,9 @@ function onInput(ev) {
   var t = ev.target, kind = t && t.getAttribute ? t.getAttribute('data-in') : null, s, bar, txt, fm = auUp(t, 'au-form');
   if (fm) auCheck(fm);                                              // 3.11.0 ticks and the button follow the typing
   if (kind !== 'pass-new') return;
-  s = passStrength(t.value); bar = $('st-bar'); txt = $('st-txt');
+  s = passStrength(t.value); bar = $('st-bar'); txt = $('au-m');
   if (bar) { bar.style.width = s.w + '%'; bar.style.backgroundColor = s.c; }
-  if (txt) txt.textContent = s.t;
+  if (txt) { txt.setAttribute('data-hint', s.t); if (fm) auShowMsg(fm); }
 }
 function onKeyDown(ev) {
   var t = ev.target, key = ev.key, code = ev.keyCode, host;
@@ -7870,6 +7941,7 @@ function boot() {
   elPhone.addEventListener('focusout', onAuFocus);
   elPhone.addEventListener('keydown', onKeyDown);
   elPhone.addEventListener('pointerdown', onAuDown);                 // 3.14.0 the sign-in sheet follows the finger
+  window.addEventListener('resize', function () { if (!fitQ) { fitQ = 1; requestAnimationFrame(function () { fitQ = 0; auFit(); }); } });   // 3.15.0
   document.addEventListener('pointermove', onAuMove);
   document.addEventListener('pointerup', onAuUp);
   document.addEventListener('pointercancel', onAuUp);
