@@ -19,7 +19,14 @@ jobs:
       - name: Install the checkers
         run: npm install --no-save --no-package-lock acorn@8.18.0 playwright@1.56.1
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        # The browser only. The system libraries it needs are already on GitHub's Ubuntu image (Chrome is installed there).
+        # "--with-deps" also fetched extra fonts from Ubuntu's package mirror: the checks do not need them, and when the
+        # mirror could not be reached the step hung until the job's time limit (11 Nov 2026, twice in a row). The
+        # packages are now fetched only if the browser does not start without them.
+        timeout-minutes: 5
+        run: |
+          npx playwright install chromium
+          node -e "require('playwright').chromium.launch().then(function (b) { return b.close(); })" || npx playwright install-deps chromium
       - name: Check
         run: node .github/scripts/check.js
       - name: Keep the screenshots of a failure
