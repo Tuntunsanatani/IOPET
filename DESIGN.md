@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.17.0)
+# IOPET design rules (v2, 3.17.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -114,6 +114,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
 - **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
+  - 3.17.1 sign-in: "Forgot password?" sits right under the password field, right-aligned; the message row comes after it.
   - 3.15.0: the words are in ONE message row of the form, under its last field, always there (24 px, fixed height),
     so the fields can sit 8 px apart. It says what the first wrong field needs, in red (`--wrong-ink`), one line, never
     wrapping; with nothing wrong it is the new password's grey hint ("At least 8 characters", "Good", "Strong"), or
@@ -132,6 +133,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
     `aria-invalid`, and the first one is described by the message row, so a screen reader hears both.
 - **Sheet**: for choices and short info over a page. It is dimmed behind and rises 300 ms. Its grab line is a real strip
   (full width, 28–36 px high) and it is the sheet's control (3.14.0):
+  - 3.17.1 (sign-in sheet): while the line is held it is 40 % wider and a little thicker (5 → 6 px), 180 ms on the swift
+    curve, with a 10 ms knock; it goes back when let go. Transform only; nothing around it moves.
   - Drag it and the sheet follows the finger, and the page behind gets lighter.
   - Let go past a third of the sheet's height, or with a flick, and it goes down (140–280 ms). Any less and it settles back
     (260 ms, no bounce). Pulled up, it gives a little.
