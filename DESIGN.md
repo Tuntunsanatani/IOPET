@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.18.0)
+# IOPET design rules (v2, 3.19.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -88,7 +88,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | Primary | orange, 16 px corners, dark text, lip, full width where it is the screen's one action | Start, Check, Next set, Create account |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | outlined button, or a quiet text link under the primary | Skip (quiz dock), Review answers and Practice this again (summary), Quit |
-| Inactive | flat grey fill with a hairline, no lip, text ≥ 7 : 1 (dark `#C4C4C4` on `#2B2B2B`, light `#4A4A4A` on `#EFEFEF`); still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
+| Inactive (sign-in forms since 3.19.0: an outline, see §6) | flat grey fill with a hairline, no lip, text ≥ 7 : 1 (dark `#C4C4C4` on `#2B2B2B`, light `#4A4A4A` on `#EFEFEF`); still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
 | Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
 | Icon button | 40–44 px circle | ✕ close, ‹ back, flag (report) |
 
@@ -114,6 +114,13 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
 - **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
+  - 3.19.0 a field has three states, told by its border and a faint tint, never by an icon (the green ticks are gone):
+    grey = not yet right; green (`--good`, `--ok-tint`) = right; muted red (`--field-bad`, `--bad-tint`, quieter than
+    the green) = left wrong or sent wrong, never while typing. The ring's width says which field is in use, its colour
+    the state. A field that turns wrong gets one 4 px nudge sideways (260 ms, once, none with reduce motion) and, when
+    it was left wrong, a 15 ms knock. The words stay in the message row. Sign-in forms only (see §7).
+  - 3.19.0 the form's button, not ready: no fill, the field's outline (`--field-line`), text `--ink3` (5:1). Ready (every
+    field right): the orange button, as before. Grey = not ready, green = right, muted red = wrong, orange = go.
   - 3.18.0 a field is part of the surface it sits on: no fill of its own, a 1.5 px border that can be seen
     (`--field-line`, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option: ink border with the
     same 2 px neutral ring, the inside one step lighter (`--surface-2`), the icon in ink, fading in 180 ms on the swift
@@ -190,7 +197,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
     first frame is the old page and the last the new one; between them only the page colour; no other colour anywhere.
 - Anything that answers a touch is done in 300 ms or less.
 - Only `transform` and `opacity` animate, except colour transitions on one element.
-- Nothing shakes. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
+- Nothing shakes, with one exception the owner asked for (3.19.0): a sign-in field that turns wrong is nudged 4 px once. A quiz answer never moves. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
   field shake and the wrong-option shake were removed).
 - Nothing loops forever except loading indicators (the spinner, the skeleton's light). 3.16.0: the locked chapter's lock
   no longer shines every 2 s; it shines once, in 300 ms, when tapped.
