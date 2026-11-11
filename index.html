@@ -49,7 +49,7 @@
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--field-line:#6B6B6B;--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --line:#2E2E2E;--field-line:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -98,7 +98,7 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --line:#E3E3E3;--field-line:#8F8F8F;--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
+  --line:#E3E3E3;--field-line:#8F8F8F;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#5E5E5E;--ink3:#6A6A6A;--ink-deco:#A3A3A3;   /* 18.4, 6.5 and 5.4:1 on white */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
@@ -398,14 +398,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-iw input::placeholder{color:var(--ink3)}
 .au-fld.focus .au-iw{border-color:var(--ink);background:var(--surface-2);box-shadow:0 0 0 2px var(--ink)}
 .au-fld.focus .au-iw>.li{color:var(--ink)}
-.au-ok{width:22px;height:22px;display:grid;place-items:center;margin-right:8px;opacity:0;transform:scale(.6);transition:opacity .18s ease-out,transform .18s cubic-bezier(.2,0,0,1.4)}
-.au-ok .li{width:18px;height:18px;color:var(--good)}
-.au-fld.ok .au-ok{opacity:1;transform:none}
+/* 3.19.0 (the owner's refinement 03) a field has three states, told by its border and a faint tint, never by an icon:
+   grey = not yet right, green = right, muted red = left wrong (never while typing). The ring's width still says which
+   field is in use; its colour says the state. The red is kept quieter than the green. */
+.au-fld.ok .au-iw{border-color:var(--good);background:var(--ok-tint)}
+.au-fld.ok.focus .au-iw{box-shadow:0 0 0 2px var(--good)}
 .au-eye{width:44px;height:44px;display:grid;place-items:center;color:var(--ink3);border-radius:12px;flex:none}
 .au-eye svg{width:20px;height:20px}
 .au-eye[aria-pressed="true"]{color:var(--primary-ink)}
-.au-fld.bad .au-iw{border-color:var(--wrong);background:var(--wrong-soft);box-shadow:none}
-.au-fld.bad .au-iw>.li{color:var(--wrong-ink)}
+.au-fld.bad .au-iw{border-color:var(--field-bad);background:var(--bad-tint);box-shadow:none}
 /* 3.14.0 calm errors (DESIGN.md §6): nothing moves and nothing shakes; the wrong field itself turns into the burgundy
    (dark) / pink (light) panel. 3.15.0 the 8 pt grid: fields 56 px with 8 px between them, so the words are no longer under
    each field but in ONE line of the form, under its last field, always there (24 px, empty or a hint): it says what the
@@ -440,8 +441,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
 .au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
-.au-go.off{background:#EFEFEF;color:#4A4A4A;box-shadow:inset 0 0 0 1px #DADADA}   /* 3.15.0 inactive: readable (7.7:1), flat, grey */
-:root:not([data-theme="light"]) .au-go.off{background:#2B2B2B;color:#C4C4C4;box-shadow:inset 0 0 0 1px #3A3A3A}   /* (dark: 8.1:1) */
+.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 1.5px var(--field-line)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
 .au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
@@ -2699,7 +2699,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.18.0',
+  VERSION: '3.19.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4705,7 +4705,6 @@ function auWordmark() {
 function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty, hint) {
   return '<div class="au-fld" data-rule="' + rule + '" data-bad="' + msg + '" data-empty="' + (empty || msg) + '"><div class="au-iw">' + li(icon) +
     '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" aria-label="' + ph + '" value="' + esc(value || '') + '" ' + attrs + (hint ? ' aria-describedby="au-m"' : '') + '>' +
-    '<span class="au-ok">' + li('check') + '</span>' +
     (eye ? '<button type="button" class="au-eye" data-act="toggle-pass" data-for="' + id + '" aria-label="Show password" aria-pressed="false">' + EYE_SVG + '</button>' : '') +
     '</div>' + (hint ? '<div class="strength"><i id="st-bar"></i></div>' : '') + '</div>';
 }
@@ -4721,9 +4720,13 @@ function auPass(id, ph, auto, strength) {                          // strength: 
 function auMsgRow(hint) { return '<div class="au-row-msg"><span class="au-m hint" id="au-m" aria-live="polite"' + (hint ? ' data-hint="' + hint + '"' : '') + '>' + (hint || '') + '</span></div>'; }
 function auGo(act, label) { return '<button type="button" class="btn au-go off" data-act="' + act + '" aria-disabled="true">' + label + '</button>'; }
 /* a field turns red: its line says what is missing (empty) or what is wrong; a screen reader hears it with the field */
-function fldBad(f) {
-  var i = f.querySelector('input');
+function fldBad(f, felt) {                                           // felt: also a light knock (leaving the field; the button has its own)
+  var i = f.querySelector('input'), w = f.querySelector('.au-iw');
   if (i) i.setAttribute('aria-invalid', 'true');
+  if (!f.classList.contains('bad')) {                                // 3.19.0 newly wrong: one small nudge sideways (4 px, 260 ms), once
+    if (w && w.animate && !calmMotion()) { try { w.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)', offset: 0.2 }, { transform: 'translateX(3px)', offset: 0.45 }, { transform: 'translateX(-2px)', offset: 0.7 }, { transform: 'translateX(0)' }], { duration: 260, easing: 'cubic-bezier(.25,1,.5,1)' }); } catch (e) { /* */ } }
+    if (felt) feel('bad');
+  }
   f.classList.add('bad');
   auShowMsg(auUp(f, 'au-form'));
 }
@@ -4792,7 +4795,7 @@ function onAuFocus(ev) {
   if (!f) return;
   if (ev.type === 'focusin') { if (!auQuiet && !f.classList.contains('focus') && !f.classList.contains('bad')) pop(f.querySelector('.au-iw'), 0.015); f.classList.add('focus'); return; }   // 3.18.0 (a wrong field is shown, never moved)
   f.classList.remove('focus');
-  if (String(ev.target.value) && !fldOk(f)) fldBad(f);                        // left wrong: say so (never while typing)
+  if (String(ev.target.value) && !fldOk(f)) fldBad(f, true);                        // left wrong: say so (never while typing)
 }
 var AU_ERR = '<div class="au-err" id="err" role="alert"></div>';
 /* 3.14.0 the foot of the sign-in and registration pages: where it is made, and privacy as a tag with its shield */
