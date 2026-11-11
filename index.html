@@ -380,8 +380,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
    and the sheet goes down. */
 .au-grab{display:block;position:relative;width:calc(100% + 32px);height:32px;margin:0 -16px 0;background:none;touch-action:none;-webkit-tap-highlight-color:transparent}
-.au-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}   /* ≥ 3:1 in both looks */
-.au-grab:active:before{transform:scaleX(1.15)}
+.au-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .18s var(--ease-swift)}   /* ≥ 3:1 in both looks */
+/* 3.17.1 the line answers the finger: 40 % wider (20 % each side) and a little thicker (5 → 6 px) while it is held, back when
+   let go. Transform only, so nothing around it moves; no bounce. The class is set on touch-down (onAuDown) and kept at least
+   180 ms, so a quick tap shows it too. */
+.au-grab.on:before{transform:scale(1.4,1.2)}
 .au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
 .au-form>.auth-error{margin-bottom:12px}
 .au-fld+.au-fld{margin-top:8px}
@@ -2692,7 +2695,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.17.0',
+  VERSION: '3.17.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4805,7 +4808,7 @@ SCREENS.login = function (p) {
     '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><button type="button" class="au-grab" data-act="au-close" aria-label="Close"></button>' +
       '<div class="au-sr" id="err-sr" role="alert"></div><div class="au-form" data-enter="login">' +
         auEmail(p.email, 'username') + auPass('f-pass', 'Password', 'current-password', false) +
-        auMsgRow('') + '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' +
+        '<div class="au-fgt"><button type="button" data-act="go" data-to="forgot">Forgot password?</button></div>' + auMsgRow('') +   // 3.17.1 right under the password it belongs to
         auGo('login', 'Sign in') + '</div>' +
       '<div class="au-alt">New to IOPET? <button type="button" data-act="' + (mv ? 'adopt' : 'go') + '" data-to="signup">Create account</button></div>' +
     '</div>' + AU_ERR_SHEET + '</div>';
@@ -4883,8 +4886,9 @@ function onAuDown(ev) {
     if (!sh || !modalOpen) return;
     d = { sh: sh, modal: true, bg: rgbaOf(getComputedStyle(elModal).backgroundColor) };
   }
-  d.g = g; d.id = ev.pointerId; d.y0 = d.y = ev.clientY; d.t = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
+  d.g = g; d.id = ev.pointerId; d.y0 = d.y = ev.clientY; d.t = d.t0 = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
   auDrag = d;
+  if (!d.modal) { g.classList.add('on'); sense('select'); }           // 3.17.1 the sign-in sheet's line: felt, and it widens
   try { g.setPointerCapture(ev.pointerId); } catch (x) { /* (an old browser: the tap still closes) */ }
 }
 function auDragSet(d, ty, ms, ease, dim) {                            // ty null: back to the style sheet; ms 0: at once
@@ -4913,6 +4917,7 @@ function onAuUp(ev) {
   var d = auDrag, ms, go, ease = 'cubic-bezier(.2,.7,.2,1)';
   if (!d || ev.pointerId !== d.id) return;
   auDrag = null;
+  if (!d.modal) setTimeout(function () { d.g.classList.remove('on'); }, Math.max(0, 180 - (Date.now() - d.t0)));   // (a quick tap shows it too)
   if (!d.moved) return;                                              // a tap: the strip's own click closes the sheet
   auDragEnd = Date.now();
   go = ev.type === 'pointerup' && (d.dy > d.h / 3 || (d.v > 0.5 && d.dy > 20));
