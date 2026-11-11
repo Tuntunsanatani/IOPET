@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.17.1)
+# IOPET design rules (v2, 3.18.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -114,6 +114,11 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   (lit = practised, today bold), one grey line, a neutral Continue. It shows once a day, after the Mark celebration if
   there is one.
 - **Form errors** (sign-in, registration, reset; 3.14.0): nothing moves and nothing shakes.
+  - 3.18.0 a field is part of the surface it sits on: no fill of its own, a 1.5 px border that can be seen
+    (`--field-line`, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option: ink border with the
+    same 2 px neutral ring, the inside one step lighter (`--surface-2`), the icon in ink, fading in 180 ms on the swift
+    curve; on a tap or Tab it pops out 1.5 % and back (250 ms, transform only). No pop for a wrong field, for the app's
+    own focus when the sheet opens, or with reduce motion. Orange stays the button's.
   - 3.17.1 sign-in: "Forgot password?" sits right under the password field, right-aligned; the message row comes after it.
   - 3.15.0: the words are in ONE message row of the form, under its last field, always there (24 px, fixed height),
     so the fields can sit 8 px apart. It says what the first wrong field needs, in red (`--wrong-ink`), one line, never

@@ -49,7 +49,7 @@
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --line:#2E2E2E;--field-line:#6B6B6B;--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -98,7 +98,7 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --line:#E3E3E3;--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
+  --line:#E3E3E3;--field-line:#8F8F8F;--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#5E5E5E;--ink3:#6A6A6A;--ink-deco:#A3A3A3;   /* 18.4, 6.5 and 5.4:1 on white */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
@@ -388,12 +388,16 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
 .au-form>.auth-error{margin-bottom:12px}
 .au-fld+.au-fld{margin-top:8px}
-.au-iw{display:flex;align-items:center;min-height:56px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:14px;padding:0 8px 0 16px;transition:border-color .15s ease-out,box-shadow .15s ease-out}
-.au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .15s ease-out}
+/* 3.18.0 (the owner's refinement 02) a field is part of the surface it sits on: no fill of its own, only a border that can
+   be seen (--field-line, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option (.opt-btn.sel): the
+   border goes to ink with the same neutral ring, the inside lifts one step, and it pops out 1.5 % and back (onAuFocus).
+   Orange stays the button's. Colours fade in 180 ms; the pop is transform only, so nothing moves around it. */
+.au-iw{display:flex;align-items:center;min-height:56px;background:transparent;border:1.5px solid var(--field-line);border-radius:14px;padding:0 8px 0 16px;transition:border-color .18s var(--ease-swift),background-color .18s var(--ease-swift),box-shadow .18s var(--ease-swift)}
+.au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .18s var(--ease-swift)}
 .au-iw input{flex:1;min-width:0;height:53px;margin-left:8px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
 .au-iw input::placeholder{color:var(--ink3)}
-.au-fld.focus .au-iw{border-color:var(--primary);box-shadow:0 0 0 3px var(--tap-tint)}
-.au-fld.focus .au-iw>.li{color:var(--primary-ink)}
+.au-fld.focus .au-iw{border-color:var(--ink);background:var(--surface-2);box-shadow:0 0 0 2px var(--ink)}
+.au-fld.focus .au-iw>.li{color:var(--ink)}
 .au-ok{width:22px;height:22px;display:grid;place-items:center;margin-right:8px;opacity:0;transform:scale(.6);transition:opacity .18s ease-out,transform .18s cubic-bezier(.2,0,0,1.4)}
 .au-ok .li{width:18px;height:18px;color:var(--good)}
 .au-fld.ok .au-ok{opacity:1;transform:none}
@@ -2695,7 +2699,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.17.1',
+  VERSION: '3.18.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3614,9 +3618,9 @@ function applyEase() {
   for (k in MOTION) if (has(MOTION, k)) { EASE[k] = springEase(MOTION[k], 20); document.documentElement.style.setProperty('--ease-' + k, EASE[k]); }
 }
 /* the tapped option answers the finger: out by 3 % and back, on the pop spring (Web Animations, transform only) */
-function pop(el) {
+function pop(el, by) {                                              // by: how far out (0.03 unless given)
   if (!el || !el.animate || calmMotion()) return;
-  try { el.animate([{ transform: 'scale(1)', easing: 'cubic-bezier(.2,0,0,1)' }, { transform: 'scale(1.03)', offset: 0.3, easing: EASE.pop }, { transform: 'scale(1)' }], { duration: MOTION.pop.ms }); } catch (e) { /* */ }
+  try { el.animate([{ transform: 'scale(1)', easing: 'cubic-bezier(.2,0,0,1)' }, { transform: 'scale(' + (1 + (by || 0.03)) + ')', offset: 0.3, easing: EASE.pop }, { transform: 'scale(1)' }], { duration: MOTION.pop.ms }); } catch (e) { /* */ }
 }
 /* 3.16.0 SENSES — what each moment sounds and feels like, in one table. Code calls sense('…'), so a moment is changed in one
    place. Sound and vibration each have their switch in Settings. Only learning moments make a sound (never a tab or a
@@ -4786,7 +4790,7 @@ function auUp(el, cls) { while (el && el.classList) { if (el.classList.contains(
 function onAuFocus(ev) {
   var f = auUp(ev.target, 'au-fld');
   if (!f) return;
-  if (ev.type === 'focusin') { f.classList.add('focus'); return; }
+  if (ev.type === 'focusin') { if (!auQuiet && !f.classList.contains('focus') && !f.classList.contains('bad')) pop(f.querySelector('.au-iw'), 0.015); f.classList.add('focus'); return; }   // 3.18.0 (a wrong field is shown, never moved)
   f.classList.remove('focus');
   if (String(ev.target.value) && !fldOk(f)) fldBad(f);                        // left wrong: say so (never while typing)
 }
@@ -4862,7 +4866,7 @@ ACTIONS['au-open'] = function () {
   if (!e || e.s !== 'login' || !pg) return;
   e.p = e.p || {}; e.p.sheet = 1;
   pg.classList.remove('still'); pg.classList.add('open'); auFit();
-  setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { try { i.focus(); } catch (x) { /* */ } } }, 320);
+  setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { auQuiet = true; try { i.focus(); } catch (x) { /* */ } auQuiet = false; } }, 320);   // (the app's own focus: no pop)
 };
 ACTIONS['au-close'] = function (el) { if (!grabClickAfterDrag(el)) auClose(); };
 /* the click a browser may send when a drag on a grab strip ends is not a tap (other buttons are never ignored) */
@@ -4872,7 +4876,7 @@ function grabClickAfterDrag(el) { return !!(el && el.classList && (el.classList.
    goes down (140–280 ms, faster after a faster flick); any less and it settles back (260 ms, no bounce). Up: it gives a little
    and comes back. A tap on the strip, on the dimmed page, or Back closes it too. With "Reduce animations" it still follows the
    finger, then goes or comes back at once. */
-var auDrag = null, auDragEnd = 0, fitQ = 0;
+var auDrag = null, auDragEnd = 0, fitQ = 0, auQuiet = false;
 function rgbaOf(c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''), v = m ? m[1].split(',') : []; return v.length >= 3 ? { r: +v[0], g: +v[1], b: +v[2], a: v.length > 3 ? +v[3] : 1 } : null; }
 function onAuDown(ev) {
   var g = auUp(ev.target, 'au-grab') || auUp(ev.target, 'm-grab'), pg, sh, er, d;
