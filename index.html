@@ -1558,7 +1558,7 @@ var PLANS = {
      items .. what the student gets, a few short lines for the unlock page
    ════════════════════════════════════════════════════════════════════ */
 var PACKS = [
-  { id: 'nmms-mock', code: 'NM', course: 'x-nmms-hi', price: 299, live: false, emoji: '📝',     // 3.9.6 the IOPET NMMS Pass (was the ₹99 mock series)
+  { id: 'nmms-mock', code: 'NM', course: 'x-nmms-hi', price: 299, live: true, emoji: '📝',     // 3.9.6 the IOPET NMMS Pass (was the ₹99 mock series)
     name: 'IOPET NMMS Pass', sub: 'Full NMMS Bihar papers · until the 2027 exam',
     items: ['Real NMMS Bihar papers, MAT and SAT, 90 questions each', 'Taken like the exam: 90-minute clock, marks out of 90, the pass mark', 'Every answer explained in Hindi',
             'New papers added until the NMMS 2027 exam'] },
@@ -2699,7 +2699,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.19.0',
+  VERSION: '3.19.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
