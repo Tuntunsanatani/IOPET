@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.19.0)
+# IOPET design rules (v2, 3.20.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -44,6 +44,31 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   colour to the eye, and it sits closer to the reward gold.
 - Gradients are not used, except the splash light and the skeleton's passing light.
 - Contrast: normal text ≥ 4.5 : 1, large text and icons ≥ 3 : 1, in both themes.
+
+## 2b. Two looks, one design (3.20.0)
+
+Dark and light are the same design. Neither is made from the other by turning colours round.
+
+- **Only tokens differ.** Every box, size, weight, space and every motion is the same in both looks. A rule of a
+  component names tokens, never a colour; a colour that is right in one look only gets two token values, not a second
+  rule. (Sign-in pages: checked, no colour is written into any of their rules.)
+- **Light**: an off-white page (`--bg #F2F2F2`), white surfaces, charcoal ink, shadows soft and few. A control that is
+  only a line (`--outline`) must show on the page and on a sheet: 3 : 1 on both (`#8A8A8A`; dark `#6B6B6B`).
+- **Dark**: charcoal page, lighter charcoal surfaces, off-white ink, no shadows: a surface is lifted by its grey.
+- **Orange** is not one value: the button's fill is `#FF9F0A` in both looks; orange words and thin marks are lighter on
+  dark (`#FFB340`) and deeper on light (`#A35200`, `#D96C00`); the logo's flame is `--logo-flame`. Orange is for the
+  brand, the button to press and links. An icon that only shows a state (the eye of "show password") is ink, not orange.
+- **The dim behind the sign-in sheet** is `--scrim-soft`: 50 % black on dark, 40 % on light, so the brand stays readable
+  above the sheet. It covers the whole page, top edge included.
+- **Changing the look** (Settings, or the phone going from day to night):
+  - It is set in one frame: nothing fades by itself while it changes, so no part is still on its way from the old
+    colour (before 3.20.0 a field's border took 180 ms and a button 220 ms while the rest changed at once).
+  - On a screen that is showing, the whole page then dissolves into the new look in 200 ms. With "Reduce animations" or
+    the phone's reduce-motion it just changes.
+  - What was typed, an open sheet and the cursor stay. A page with chapter pictures is drawn again, because they are
+    drawn for one look.
+- Tested: on ten sign-in screens and states every element has the same place, size, type and motion in both looks;
+  after a change of look the page is, pixel for pixel, the page of a fresh start in that look.
 
 ## 3. Type ("IOPET Sans": English and numbers in Plus Jakarta Sans, Hindi in Noto Sans Devanagari)
 
@@ -119,10 +144,10 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
     the green) = left wrong or sent wrong, never while typing. The ring's width says which field is in use, its colour
     the state. A field that turns wrong gets one 4 px nudge sideways (260 ms, once, none with reduce motion) and, when
     it was left wrong, a 15 ms knock. The words stay in the message row. Sign-in forms only (see §7).
-  - 3.19.0 the form's button, not ready: no fill, the field's outline (`--field-line`), text `--ink3` (5:1). Ready (every
+  - 3.19.0 the form's button, not ready: no fill, the field's outline (`--outline`), text `--ink3` (5:1). Ready (every
     field right): the orange button, as before. Grey = not ready, green = right, muted red = wrong, orange = go.
   - 3.18.0 a field is part of the surface it sits on: no fill of its own, a 1.5 px border that can be seen
-    (`--field-line`, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option: ink border with the
+    (`--outline`, 3:1 on the sheet and on the page in both looks). In use it answers like a chosen quiz option: ink border with the
     same 2 px neutral ring, the inside one step lighter (`--surface-2`), the icon in ink, fading in 180 ms on the swift
     curve; on a tap or Tab it pops out 1.5 % and back (250 ms, transform only). No pop for a wrong field, for the app's
     own focus when the sheet opens, or with reduce motion. Orange stays the button's.
@@ -156,8 +181,14 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
   - The brand stays whole above the sign-in sheet (3.15.0). When the sheet opens, the logo, the name and the line move
     into the middle of the free space above it (and above a message on it), 16 px clear of each edge, and get smaller
     only if they must; with almost no room (a keyboard) they fade out. Transform only, on the sheet's 300 ms curve.
-- **Sign-in foot**: MADE IN INDIA in CAPS, then Privacy as a small tag: a green shield with a dark tick (safe), the word,
-  a hairline pill.
+- **Sign-in foot** (3.20.0): MADE IN INDIA leads (CAPS, bold, `--ink2`); Privacy follows, quieter: a 14 px green shield
+  and the word (CAPS, semibold, `--ink3`), with no frame round it (the hairline pill of 3.14.0 is gone). Both stay 12 px,
+  the smallest size of the scale; the touch area of Privacy is 48 px high.
+- **Ways to sign in** (3.20.0): one column. Each mark sits in the same 24 px box and each line of words starts at the
+  same place, so the Google "G" and the envelope stand exactly under each other; the block is in the middle of the
+  button. Google: white with dark letters in both looks (on a light page with a hairline and a soft shadow). Email: an
+  outlined button (`--outline`), with nothing behind it on dark and white behind it on a light page. Guest: words only,
+  `--ink2`.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
   tint. A done item gets a green tick, and its label stays at full ink. A locked item is dimmed with a lock.
 - **Chips**: small CAPS labels, used for state only (TODAY'S PRACTICE, NEW).
@@ -173,6 +204,7 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 | sheet (`--t-sheet`, `--ease-sheet`) | 280 ms | spring k 400, c 35.8, m 0.8: critically damped, no bounce | sheets (from 100 % below), the brand above the sign-in sheet, the progress bar |
 | screen (`scr`) | 200 ms | swift (`--ease-swift`, `cubic-bezier(.25,1,.5,1)`) | a new screen comes in: from 35 % and 6 px below (never from 0, so a throttled WebView still shows it) |
 | tab switch (`--t-out`, `--t-in`) | 120 ms out, then 150 ms in | out `linear` (`--ease-leave`), in swift | the four tabs of the bottom bar (below) |
+| look change | 200 ms | `linear` | light ↔ dark on a screen that is showing: the whole page dissolves (see §2b) |
 | celebrate | 600–1000 ms, once | | reward moments, count-up numbers; they never block the next tap |
 
 - 3.16.0 springs: the curves are the real spring, drawn once at start as CSS `linear()` (20 points) by `applyEase()`, so
