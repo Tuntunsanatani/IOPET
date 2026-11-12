@@ -49,14 +49,23 @@
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--field-line:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --line:#2E2E2E;--outline:#6B6B6B;--outline-bg:transparent;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#FF9F0A;--primary-2:#FFB340;--primary-soft:#282828;--primary-ink:#FFB340;   /* 8.1:1; its text tone 9.4:1. A chosen thing: orange ring + ink on a neutral fill */
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;                    /* the button to press: dark letters on the flame, 9:1 */
   --gold:#FFD84D;--gold-ink:#FFD84D;--gold-fill:#FFD84D;--gold-soft:#2E2A16;
-  --wrong:#FF453A;--wrong-soft:#2C1A1A;--wrong-ink:#FF6961;   /* 3.13.0 the wrong-answer panel: burgundy (white text 14.8:1) */
+  --wrong:#FF453A;--wrong-soft:#2C1A1A;--wrong-ink:#FF6961;--on-wrong:#141414;   /* 3.13.0 the wrong-answer panel: burgundy (white text 14.8:1) */
+  /* 3.20.0 SIGN-IN, both looks (DESIGN.md §2b): the colours that were written into its rules are tokens now.
+       --outline      the line round a control with no fill of its own: a field, the email button, a button not ready; 3:1 on
+                      the page and on a sheet in both looks (light was #8F8F8F: 3.2 on white but 2.9 on the page)
+       --outline-bg   what the email button stands on: nothing on dark (the page shows), white on a light page
+       --g-*          the Google button: white with dark letters in both looks (Google's own light button); on a light page
+                      it needs a line and a soft shadow to stand off the page, on dark it needs neither
+       --scrim-soft   the dim behind the sign-in sheet: lighter than a dialog's, the brand stays readable above it
+       --on-wrong     a glyph on the red mark;  --logo-flame  the diya's flame (deeper on a light page) */
+  --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--g-shadow:none;--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--ink2);
   --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
@@ -98,13 +107,14 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --line:#E3E3E3;--field-line:#8F8F8F;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
+  --line:#E3E3E3;--outline:#8A8A8A;--outline-bg:#FFFFFF;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#5E5E5E;--ink3:#6A6A6A;--ink-deco:#A3A3A3;   /* 18.4, 6.5 and 5.4:1 on white */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
-  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
+  --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--on-wrong:#FFFFFF;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
+  --g-line:#C7C7C7;--g-shadow:0 1px 2px rgba(20,20,20,.05),0 4px 12px rgba(20,20,20,.06);--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;
   --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
@@ -164,6 +174,15 @@ sub,sup{font-size:.72em;line-height:0}
 ::view-transition-new(page){animation:vt-in var(--t-in) var(--ease-swift) var(--t-out) both}
 @keyframes vt-out{to{opacity:0;transform:translateY(10px)}}
 @keyframes vt-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* 3.20.0 THE LOOK CHANGES (light ↔ dark; themeSet, themeFade). Some parts fade their own colours (a field's border in
+   180 ms, a button in 220 ms) while the rest change at once, so for a moment the screen showed two looks. While the
+   look is set nothing fades by itself (.th-swap), so every part has its new colour in the same frame. When the student
+   or the phone changes it on a screen that is showing, the whole page then dissolves into the new look in 200 ms: one
+   picture over the other (a View Transition of the root only), so no part is ahead of another. */
+.th-swap,.th-swap *,.th-swap *:before,.th-swap *:after{transition:none !important}
+.vt-theme::view-transition-old(root){opacity:1}
+.vt-theme::view-transition-new(root){animation:th-in .2s linear both}
+@keyframes th-in{from{opacity:0}}
 /* the browser draws these pictures above the page, without the phone's own clip: they are clipped to its shape here (on a
    tablet or a computer the phone has round corners; the bar keeps the 28px fade it has above itself) */
 ::view-transition-group(page){clip-path:inset(0 round var(--phone-r))}
@@ -178,7 +197,7 @@ sub,sup{font-size:.72em;line-height:0}
 .lg{position:relative;display:block;flex:none}
 .lg svg{position:absolute;top:0;left:0;width:100%;height:100%}
 .lg-b,.lg-n{fill:var(--ink)}
-.lg-f{fill:#FFB020}
+.lg-f{fill:var(--logo-flame)}
 .lg-n{display:block;flex:none;max-width:100%;height:auto}   /* on a very narrow screen the name shrinks with it */
 
 /* CHANGE #9: top padding 24px (28px on auth screens) — the fake status bar is gone (CHANGE #1) */
@@ -358,24 +377,32 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-tag{margin-top:14px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
 .au-tag.note{color:var(--ink2);font-weight:400}
 .au-dock>*+*{margin-top:8px}
-.au-g,.au-e{display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;font-size:var(--fs-lg);font-weight:600;box-shadow:none}
-.au-g{background:#fff;color:#1F1F1F;border:1px solid #DADCE0}
-.au-g svg{width:20px;height:20px;flex:none}
-.au-e{background:transparent;border:1.5px solid var(--line-2);color:var(--ink)}
-.au-e .li{width:20px;height:20px}
+/* 3.20.0 the ways to sign in are one column: each mark sits in the same 24 px box and each line of words starts at the
+   same place (the words' box is as wide as the longest of them: its other label is in it, unseen), so the Google "G" and
+   the envelope stand exactly under each other. The block of mark and words is in the middle of the button. */
+.au-g,.au-e{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;font-size:var(--fs-lg);font-weight:600;border:1.5px solid}
+.au-g{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:var(--g-shadow)}
+.au-e{background:var(--outline-bg);color:var(--ink);border-color:var(--outline);box-shadow:none}
+.au-ic{flex:none;width:24px;height:24px;display:grid;place-items:center}
+.au-ic>svg{display:block;width:20px;height:20px}
+.au-lb{display:inline-grid;text-align:left;white-space:nowrap}
+.au-lb:after{content:attr(data-w);grid-area:1/1;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
 .au-g:active,.au-e:active{transform:scale(.98)}
 .au-ghost{display:block;width:100%;min-height:48px;text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
-.au-foot{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:8px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink3)}
-/* privacy as a small tag: its shield, the word, a hairline pill (pills are for tags); the touch area reaches 44 px */
-.au-priv{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 16px 0 8px;border:1px solid var(--line-2);border-radius:var(--r-pill);background:var(--surface);font:inherit;letter-spacing:inherit;color:var(--ink2)}
-.au-priv:after{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}
-.au-priv .chi{width:18px;height:18px;flex:none;margin-top:-1px}
+.au-foot{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:8px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink2)}
+/* 3.20.0 where it is made leads (ink2, bold); privacy follows, quieter: a small shield and the word (ink3, semibold), no
+   frame round it. The shield keeps its green: the one mark of trust on the page. The touch area is still 48 px high. */
+.au-priv{position:relative;display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:0 4px;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--ink3)}
+.au-priv:after{content:'';position:absolute;top:-8px;right:-8px;bottom:-8px;left:-8px}
+.au-priv .chi{width:14px;height:14px;flex:none;margin-top:-1px}
 .au-priv:active{transform:scale(.97)}
-.au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
+.au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;margin:0;z-index:2;background:var(--scrim-soft);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
 .au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
 .au.open .au-sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
+/* (3.20.0 the dim covers the whole page: as a later child of .page it had that rule's 12px top margin, so a strip at the
+   very top stayed undimmed, a white strip in the light look) */
 /* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
    "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
    and the sheet goes down. */
@@ -389,10 +416,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-form>.auth-error{margin-bottom:12px}
 .au-fld+.au-fld{margin-top:8px}
 /* 3.18.0 (the owner's refinement 02) a field is part of the surface it sits on: no fill of its own, only a border that can
-   be seen (--field-line, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option (.opt-btn.sel): the
+   be seen (--outline, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option (.opt-btn.sel): the
    border goes to ink with the same neutral ring, the inside lifts one step, and it pops out 1.5 % and back (onAuFocus).
    Orange stays the button's. Colours fade in 180 ms; the pop is transform only, so nothing moves around it. */
-.au-iw{display:flex;align-items:center;min-height:56px;background:transparent;border:1.5px solid var(--field-line);border-radius:14px;padding:0 8px 0 16px;transition:border-color .18s var(--ease-swift),background-color .18s var(--ease-swift),box-shadow .18s var(--ease-swift)}
+.au-iw{display:flex;align-items:center;min-height:56px;background:transparent;border:1.5px solid var(--outline);border-radius:14px;padding:0 8px 0 16px;transition:border-color .18s var(--ease-swift),background-color .18s var(--ease-swift),box-shadow .18s var(--ease-swift)}
 .au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .18s var(--ease-swift)}
 .au-iw input{flex:1;min-width:0;height:53px;margin-left:8px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
 .au-iw input::placeholder{color:var(--ink3)}
@@ -405,7 +432,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fld.ok.focus .au-iw{box-shadow:0 0 0 2px var(--good)}
 .au-eye{width:44px;height:44px;display:grid;place-items:center;color:var(--ink3);border-radius:12px;flex:none}
 .au-eye svg{width:20px;height:20px}
-.au-eye[aria-pressed="true"]{color:var(--primary-ink)}
+.au-eye[aria-pressed="true"]{color:var(--ink)}   /* 3.20.0 shown: brighter, not orange (orange is the button's) */
 .au-fld.bad .au-iw{border-color:var(--field-bad);background:var(--bad-tint);box-shadow:none}
 /* 3.14.0 calm errors (DESIGN.md §6): nothing moves and nothing shakes; the wrong field itself turns into the burgundy
    (dark) / pink (light) panel. 3.15.0 the 8 pt grid: fields 56 px with 8 px between them, so the words are no longer under
@@ -422,9 +449,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    is already empty: above the sheet, or above the form of the page. Nothing in the form moves. */
 .au-err{position:absolute;left:16px;right:16px;z-index:4;display:flex;align-items:flex-start;gap:8px;padding:16px;border-radius:var(--r-md);background:var(--wrong-soft);border:1px solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s .2s}
 .au-err.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s}
-.au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-mark);margin-top:0}
+.au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-wrong);margin-top:0}
 .au-err-ico .li{width:13px;height:13px}
-[data-theme="light"] .au-err-ico{color:#FFFFFF}
 /* 3.16.0 SKELETON — content on its way: grey blocks in its shape, and one soft light passing over them (1.2 s; a loading
    sign is the one loop the app allows). Transform only. With "Reduce animations" or the phone's reduce-motion they stay still. */
 .skel{position:relative;overflow:hidden;background:var(--fill-2);border-radius:var(--r-md)}   /* (a grey that shows in both looks) */
@@ -441,7 +467,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
 .au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
-.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 1.5px var(--field-line)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
+.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 1.5px var(--outline)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
 .au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
@@ -1061,7 +1087,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .seg-btn:active{background:var(--fill-2)}
 .seg-btn.on:active{background:var(--surface)}
 .avatar-circle:active{transform:scale(.95)}
-[data-theme="light"] .lg-f{fill:#F29A0B}
 
 /* ── CHAPTER ICONS (icons.js) ── paper-white parts follow the theme */
 .chi{display:block;flex:none;overflow:visible}
@@ -2699,7 +2724,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.19.1',
+  VERSION: '3.20.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3435,13 +3460,35 @@ function themeOf(u) {
    the first screen after it. */
 function applyTheme(s) {
   var on = (s || (stack.length ? top().s : 'splash')) === 'splash', th = on ? 'dark' : themeOf(user || bootUser()), root = document.documentElement,
-    meta = document.querySelector('meta[name="theme-color"]'), bar = on || barHold ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th];
-  if (root.getAttribute('data-theme') !== th) root.setAttribute('data-theme', th);
+    meta = document.querySelector('meta[name="theme-color"]'), bar = on || barHold ? SPLASH_BAR : (framed() ? BAR_FRAMED : BAR)[th],
+    changed = root.getAttribute('data-theme') !== th;
+  if (changed) themeSet(root, th);
   if (meta && meta.getAttribute('content') !== bar) meta.setAttribute('content', bar);      // the colour of the phone's top bar
   /* 3.9.2 the page starts in the splash's colour (the class is written in the page, so even the very first paint has it) and keeps
      it while the splash shows: body, the frame round the app and the phone are all #100F1C, and the top fade comes out of that */
   if (root.classList.contains('on-splash') !== on) { if (on) root.classList.add('on-splash'); else root.classList.remove('on-splash'); }
+  return changed;
 }
+/* 3.20.0 The look is set in one frame (the style sheet, .th-swap): with the fades off, the new colours are worked out at
+   once, so no part is still on its way from the old colour when the others have arrived. */
+function themeSet(root, th) {
+  root.classList.add('th-swap');
+  root.setAttribute('data-theme', th);
+  void root.offsetWidth;                                             // (the new colours are worked out now, while nothing may fade)
+  root.classList.remove('th-swap');
+}
+/* The look changes on a screen that is showing (Settings, or the phone going from day to night): fn sets it, and the
+   whole page dissolves into it in 200 ms. Without View Transitions, with "Reduce animations", the phone's reduce-motion
+   or an app that is not on screen, it just changes. */
+function themeFade(fn) {
+  var root = document.documentElement, vt, end = function () { root.classList.remove('vt-theme'); };
+  if (!document.startViewTransition || calmMotion() || document.hidden) { fn(); return; }
+  vtSeq++; root.classList.remove('vt-tab');                          // (a tab switch still under way gives way)
+  root.classList.add('vt-theme');
+  try { vt = document.startViewTransition(fn); } catch (e) { end(); fn(); return; }
+  vt.finished.then(end, end);
+}
+function themeDue() { return !!stack.length && top().s !== 'splash' && themeOf(user || bootUser()) !== document.documentElement.getAttribute('data-theme'); }
 var SPLASH_BAR = '#100F1C';               // 3.9.2 the splash, the page under it, the manifest and the phone's top bar: one colour
 var barHold = false;                      // the splash is fading out: the phone's top bar keeps the splash's colour until half-way
 /* THE PHONE'S TOP BAR (3.7.2). An installed web app cannot draw under the phone's own top bar (clock, battery); it can only give it
@@ -3459,7 +3506,12 @@ function framed() {
 function bootUser() { return db && db.session && has(db.users, db.session) ? db.users[db.session] : null; }
 function watchTheme() {
   themeOf(null); framed();
-  var fn = function () { applyTheme(); };
+  var fn = function () {
+    /* 3.20.0 the chapter pictures are drawn for one look, so a page that shows them is drawn again (softRefresh: never
+       under a dialog or a "please wait"; the sign-in pages have no such picture and keep what was typed) */
+    var go = function () { if (applyTheme() && user) softRefresh(); };
+    if (themeDue()) themeFade(go); else go();
+  };
   [themeMq, frameMq].forEach(function (mq) {                       // the phone turns light or dark; a tablet turns, a window is resized
     if (!mq) return;
     try { if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); } catch (e) { /* the phone cannot tell: the choice stays as it is */ }
@@ -4324,7 +4376,7 @@ function splashFull() {
   return spDay;
 }
 /* It goes after 500 ms (300 ms with no animations: 3.9.5; the first open of the day 1.5 s / 1 s, 3.10.0) — or later, once the app is ready, if that takes longer. The app's own data is there at once; the letters of
-   the first screen (Noto Sans, Latin and Hindi) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
+   the first screen (IOPET Sans: Plus Jakarta Sans and Noto Sans Devanagari) are fetched during the splash and waited for, at most 1.5 s from the start. Never longer
    just for show. */
 function splashWait() {
   var t = false, r = false, leave = function () { if (t && r && stack.length && top().s === 'splash') enterApp(); };
@@ -4336,7 +4388,7 @@ function appReady(cb) {
   setTimeout(fin, CONFIG.SPLASH_MAX_MS);
   try {
     if (document.fonts && document.fonts.load) {
-      ['400', '600', '700'].forEach(function (w) { document.fonts.load(w + ' 16px "Noto Sans"', 'a\u0905').then(one, one); });
+      ['400', '600', '700'].forEach(function (w) { document.fonts.load(w + ' 16px "IOPET Sans"', 'a\u0905').then(one, one); });
       return;
     }
   } catch (e) { /* no way to fetch the letters early here: ready now */ }
@@ -4701,6 +4753,10 @@ function auWordmark() {
   var T = BRAND_TXT.word;
   return '<svg class="au-wm" viewBox="0 0 ' + T.w + ' ' + T.h + '" role="img" aria-label="IOPET"><path fill="currentColor" fill-rule="evenodd" d="' + T.l.join('') + '"/></svg>';
 }
+/* 3.20.0 a way to sign in: its mark in the fixed box, its words; "other" is the other way's words (they share one width) */
+function auWay(cls, act, icon, label, other) {
+  return '<button type="button" class="btn ' + cls + '" data-act="' + act + '"><span class="au-ic">' + icon + '</span><span class="au-lb" data-w="' + other + '">' + label + '</span></button>';
+}
 /* one field: id, the input's type and attributes, its icon, placeholder, rule, the line shown when it is wrong */
 function auField(id, type, icon, ph, rule, msg, value, attrs, eye, empty, hint) {
   return '<div class="au-fld" data-rule="' + rule + '" data-bad="' + msg + '" data-empty="' + (empty || msg) + '"><div class="au-iw">' + li(icon) +
@@ -4799,7 +4855,7 @@ function onAuFocus(ev) {
 }
 var AU_ERR = '<div class="au-err" id="err" role="alert"></div>';
 /* 3.14.0 the foot of the sign-in and registration pages: where it is made, and privacy as a tag with its shield */
-function auFoot() { return '<div class="au-foot"><span>MADE IN INDIA</span><button type="button" class="au-priv" data-act="go" data-to="privacy">' + statIcon('shield', 18) + 'PRIVACY</button></div>'; }
+function auFoot() { return '<div class="au-foot"><span>MADE IN INDIA</span><button type="button" class="au-priv" data-act="go" data-to="privacy">' + statIcon('shield', 14) + 'PRIVACY</button></div>'; }
 /* on the sign-in page the message is seen above the sheet and heard from inside it (the sheet is a modal dialog) */
 var AU_ERR_SHEET = '<div class="au-err" id="err" aria-hidden="true"></div>';
 SCREENS.login = function (p) {
@@ -4807,8 +4863,8 @@ SCREENS.login = function (p) {
   return '<div class="page bg-auth auth au' + (p.sheet ? ' open still' : '') + '">' + (mv ? '<div class="au-top">' + BACK_PILL + '</div>' : '') +
     '<div class="au-hero">' + logoMark(64) + auWordmark() +
       (mv ? '<div class="au-tag note">Sign in and your guest progress comes with you</div>' : '<div class="au-tag">Padho. Samjho. Aage badho.</div>') + '</div>' +
-    '<div class="au-dock"><button type="button" class="btn au-g" data-act="google">' + G_LOGO + 'Continue with Google</button>' +
-      '<button type="button" class="btn au-e" data-act="au-open">' + li('mail') + 'Continue with email</button>' +
+    '<div class="au-dock">' + auWay('au-g', 'google', G_LOGO, 'Continue with Google', 'Continue with email') +
+      auWay('au-e', 'au-open', li('mail'), 'Continue with email', 'Continue with Google') +
       (mv ? '' : '<button type="button" class="au-ghost" data-act="guest">Continue as guest</button>') +
       auFoot() + '</div>' +
     '<div class="au-scrim" data-act="au-close"></div>' +
@@ -6944,9 +7000,11 @@ ACTIONS.toggle = function (el) {
   }
 };
 ACTIONS.theme = function (el) {
-  var v = el.getAttribute('data-v');
+  var v = el.getAttribute('data-v'), go;
   if (THEMES.indexOf(v) < 0 || user.settings.theme === v) return;
-  user.settings.theme = v; touchPrefs(); save(); applyTheme(); repaint();
+  user.settings.theme = v; touchPrefs(); save();
+  go = function () { applyTheme(); repaint(); };
+  if (themeDue()) themeFade(go); else go();                           // 3.20.0 (System → Dark on a dark phone changes nothing to see)
 };
 ACTIONS.size = function (el) {
   var n = parseInt(el.getAttribute('data-n'), 10);
