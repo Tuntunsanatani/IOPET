@@ -50,7 +50,7 @@
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
   --line:#2E2E2E;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
-  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1) */
+  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#A0A0A0;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#FF9F0A;--primary-2:#FFB340;--primary-soft:#282828;--primary-ink:#FFB340;   /* 8.1:1; its text tone 9.4:1. A chosen thing: orange ring + ink on a neutral fill */
@@ -67,7 +67,8 @@
        --on-wrong     a glyph on the red mark;  --logo-flame  the diya's flame (deeper on a light page) */
   --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--ink2);
-  --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;
+  --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;--good-lip:#1F8C66;
+  --neutral:#E6E6E6;--on-neutral:#141414;--neutral-lip:#8F8F8F;   /* 3.22.0 the button after a wrong answer and on a reward: light grey on dark, near-black on light (they were written into the rules) */
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#282828;--track:rgba(255,255,255,.10);--glow:rgba(255,255,255,.06);
   --t-violet:#262626;--t-blue:#262626;--t-teal:#262626;--t-green:#262626;--t-pink:#262626;--t-yellow:#262626;--t-orange:#262626;   /* every icon sits on one neutral plate */
@@ -127,14 +128,14 @@
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
   --line:#E3E3E3;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
-  --ink:#141414;--ink2:#5E5E5E;--ink3:#6A6A6A;--ink-deco:#A3A3A3;   /* 18.4, 6.5 and 5.4:1 on white */
+  --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#6A6A6A;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
   --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--on-wrong:#FFFFFF;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
   --g-line:var(--outline);--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;--outline-on:#5E5E5E;--ctl-on:#FFFFFF;
-  --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;
+  --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;--good-lip:#087553;--neutral:#141414;--on-neutral:#FFFFFF;--neutral-lip:#000000;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
   --t-violet:#F2F2F2;--t-blue:#F2F2F2;--t-teal:#F2F2F2;--t-green:#F2F2F2;--t-pink:#F2F2F2;--t-yellow:#F2F2F2;--t-orange:#F2F2F2;
@@ -174,7 +175,7 @@ sub,sup{font-size:.72em;line-height:0}
   .phone{width:390px;height:844px;max-height:calc(100% - 28px);border-radius:var(--phone-r);box-shadow:0 0 0 1px var(--line),0 30px 80px var(--shadow)}
 }
 #screens,.screen{position:absolute;top:0;right:0;bottom:0;left:0}
-.screen{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;animation:scr .2s var(--ease-swift)}
+.screen{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;animation:scr var(--t-fade) var(--ease-swift)}
 .screen::-webkit-scrollbar{display:none}
 /* one light fade per screen; never starts invisible, so a throttled WebView still shows content */
 @keyframes scr{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -200,7 +201,7 @@ sub,sup{font-size:.72em;line-height:0}
    picture over the other (a View Transition of the root only), so no part is ahead of another. */
 .th-swap,.th-swap *,.th-swap *:before,.th-swap *:after{transition:none !important}
 .vt-theme::view-transition-old(root){opacity:1}
-.vt-theme::view-transition-new(root){animation:th-in .2s linear both}
+.vt-theme::view-transition-new(root){animation:th-in var(--t-fade) linear both}
 @keyframes th-in{from{opacity:0}}
 /* the browser draws these pictures above the page, without the phone's own clip: they are clipped to its shape here (on a
    tablet or a computer the phone has round corners; the bar keeps the 28px fade it has above itself) */
@@ -243,18 +244,22 @@ sub,sup{font-size:.72em;line-height:0}
 .card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .card>*+*{margin-top:12px}
 /* BUTTONS: one primary per screen — the ink pill (white in dark); others are a white pill or a text link. A press sinks 2px, no bounce. */
-.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:5px}
-.btn:active{transform:translateY(2px)}
-.btn-primary{min-height:58px;padding:16px 22px;font-size:var(--fs-lg);line-height:26px;background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
-.btn-primary:active{box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
-.btn-sec{background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);color:var(--ink)}
+/* 3.22.0 ONE BUTTON FAMILY (DESIGN.md §5, §1c). Every button is 56 px (--h-ctl) with its words in its middle; they were
+   53.5, 56 and 58 px. The one to press is orange on its 4 px edge and sinks onto it. The second button of a page is a
+   line on what it stands on (.btn-sec, .btn-line: --outline; it was a filled white button with a shadow in some places
+   and a fainter line in others) and gets 2 % smaller under the finger, like every flat control. */
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 24px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.3;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:4px}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
+.btn-primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
+.btn-sec,.btn-line,.q-skip{background:transparent;border:var(--bw-ctl) solid var(--outline);color:var(--ink);font-weight:600;box-shadow:none}
 .btn-danger{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad-ink)}
-.link{display:inline-block;color:var(--primary-ink);font-size:var(--fs-sm);font-weight:600;padding:10px 6px}
+.link{display:inline-block;color:var(--primary-ink);font-size:var(--fs-sm);font-weight:600;padding:12px 8px}   /* 44 px to touch (3.22.0: it was 40) */
 .link.block{display:block;width:100%;text-align:center}
 .pbar{height:8px;background:var(--fill-2);border-radius:8px;overflow:hidden}
 .pbar>i{display:block;height:100%;border-radius:8px;background:var(--primary)}
 .pbar.thin{height:6px;margin-top:8px}
-.icon-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.icon-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .icon-btn svg{width:22px;height:22px}
 .icon-btn:active{background:var(--surface-2)}
 .alert{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-xs);font-weight:600;color:var(--warn-ink);line-height:1.5}
@@ -279,14 +284,17 @@ sub,sup{font-size:.72em;line-height:0}
 .li{display:inline-block;flex:none;width:24px;height:24px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── INPUTS ── */
-.input-wrap{display:flex;align-items:center;min-height:52px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:var(--r-md);padding:0 14px}
-.input-wrap:focus-within{border-color:var(--purple);background:var(--pur-bg)}
-.input-wrap input{flex:1;min-width:0;width:100%;padding:13px 4px;font-size:var(--fs-in);font-weight:600}
-.input-icon{flex:none;width:24px;display:flex;justify-content:center;color:var(--ink3);font-size:var(--fs-md)}
-.eye{flex:none;font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);padding:10px 4px}
-.field-lbl{display:block;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);letter-spacing:.4px;margin-bottom:6px}
-textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:12px;font-size:var(--fs-in);line-height:1.45}
-textarea.ta:focus{border-color:var(--purple)}
+/* 3.22.0 ONE FIELD (DESIGN.md §1b, §6): the fields of the code box, the goal, the account sheets and the feedback box
+   are the sign-in field now: no fill of their own, a line that can be seen (--outline, 3:1), 56 px, the button's
+   corners; in use --outline-on with a 1 px ring and the inside one step lighter. They were a filled grey box with a
+   faint line that turned orange in use (orange is the button's). "Show" is the same eye as on the sign-in page. */
+.input-wrap{display:flex;align-items:center;min-height:var(--h-ctl);background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);padding:0 var(--sp-in);transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift)}
+.input-wrap:focus-within,textarea.ta:focus{border-color:var(--outline-on);background:var(--ctl-on);box-shadow:0 0 0 var(--ring) var(--outline-on)}
+.input-wrap input{flex:1;min-width:0;width:100%;padding:12px 4px;font-size:var(--fs-in)}
+.input-wrap .au-eye{margin-right:-8px}
+.input-icon{flex:none;width:var(--ic);display:flex;justify-content:center;color:var(--ink3);font-size:var(--fs-md)}
+.field-lbl{display:block;font-size:var(--fs-xs);font-weight:700;color:var(--ink2);letter-spacing:.4px;margin-bottom:8px}
+textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);padding:12px var(--sp-in);font-size:var(--fs-in);line-height:1.45;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift)}
 input[type=date]{color-scheme:inherit}
 
 /* ── SPLASH (3.9.2; 3.9.5 one lamp, from the phone's start screen into the app) ── One colour from the phone's own start screen into
@@ -391,19 +399,16 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* 3.20.0 the ways to sign in are one column: each mark sits in the same 24 px box and each line of words starts at the
    same place (the words' box is as wide as the longest of them: its other label is in it, unseen), so the Google "G" and
    the envelope stand exactly under each other. The block of mark and words is in the middle of the button. */
-.au-g,.au-e,.btn-line{display:flex;align-items:center;justify-content:center;gap:var(--sp-icon);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:600;border:var(--bw-ctl) solid}
+.au-g,.au-e{gap:var(--sp-icon);font-weight:600;border:var(--bw-ctl) solid}
 .au-g{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:none}
-.au-e,.btn-line{background:transparent;color:var(--ink);border-color:var(--outline);box-shadow:none}   /* .btn-line: the second button of a page, a line on what it stands on */
-/* on these pages the orange button is a control like the others: 56 px, its words in its middle */
-.au .btn-primary{display:flex;align-items:center;justify-content:center;min-height:var(--h-ctl);padding:0 24px;line-height:1.3}
-.au .btn-primary:active{transform:translateY(3px)}   /* onto its edge: the edge goes from 4 px to 1 */
+.au-e{background:transparent;color:var(--ink);border-color:var(--outline);box-shadow:none}   /* (the same look as .btn-line, the second button of a page) */
 .au-ic{flex:none;width:var(--ic);height:var(--ic);display:grid;place-items:center}
 .au-ic>svg{display:block;width:var(--ic-sm);height:var(--ic-sm)}
 .au-lb{display:inline-grid;text-align:left;white-space:nowrap}
 .au-lb:after{content:attr(data-w);grid-area:1/1;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
 /* 3.21.0 A PRESS, by what the thing is (DESIGN.md §7): a button that stands on an edge sinks onto it (.btn-primary,
    .au-go.on); a flat control gets 2 % smaller; words alone dim. Each answers in --t-press. */
-.au-g:active,.au-e:active,.btn-line:active,.au-go.off:active{transform:scale(.98)}
+.au-go.off:active{transform:scale(.98)}
 .au-ghost,.au-priv,.au-tos,.au-fgt button,.au-alt button{transition:opacity var(--t-press) var(--ease-swift)}
 .au-ghost:active,.au-priv:active,.au-tos:active,.au-fgt button:active,.au-alt button:active{opacity:.55}
 .au-ghost{display:block;width:100%;min-height:var(--h-row);text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
@@ -435,14 +440,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* (3.20.0 the dim covers the whole page: as a later child of .page it had that rule's 12px top margin, so a strip at the
    very top stayed undimmed, a white strip in the light look) */
 /* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
-   "pull me down"). The whole width and 40 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
-   and the sheet goes down.
+   "pull me down"). The whole width and 44 px high (3.22.0; --tap), so it is easy to catch; drag it and the sheet follows
+   the finger, tap it and the sheet goes down.
    3.21.0 (the owner: it was too loud and too near the first field) the line is a hint, not a headline: 36 x 4 px in the
    grey of marks that are not text (--ink-deco, 2.5 : 1 in both looks, as on the phone's own sheets), and what is under it
    starts 24 px below it (it was 15). The same line on every sheet (.m-grab). */
-.au-grab,.m-grab{display:block;height:40px;touch-action:none;-webkit-tap-highlight-color:transparent}
+.au-grab,.m-grab{display:block;height:var(--tap);touch-action:none;-webkit-tap-highlight-color:transparent}
 .au-grab{position:relative;width:calc(100% + 32px);margin:0 -16px 0;background:none}
-.au-grab:before,.m-grab:before{content:'';position:absolute;left:calc(50% - 18px);top:12px;width:36px;height:4px;border-radius:var(--r-pill);background:var(--ink-deco);transition:transform var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+.au-grab:before,.m-grab:before{content:'';position:absolute;left:calc(50% - 18px);top:16px;width:36px;height:4px;border-radius:var(--r-pill);background:var(--ink-deco);transition:transform var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
 /* 3.17.1 the line answers the finger: 40 % wider (20 % each side), a little thicker (4 → 5 px) and one step brighter while
    it is held, back when let go. Transform and colour only, so nothing around it moves; no bounce. The class is set on
    touch-down (onAuDown) and kept at least 180 ms, so a quick tap shows it too. */
@@ -547,10 +552,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .dash-hello{flex:1;min-width:0;padding-right:12px}
 .greeting-badge{font-size:var(--fs-sm);font-weight:600;color:var(--ink2)}
 .greeting-name{font-size:var(--fs-xl);font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}   /* 3.10.0 (was 30px) a greeting, not the focus: under the hero card's chapter name (24px) */
-.exam-pill{display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:5px 12px 5px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:var(--fs-xs);font-weight:600;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.exam-pill .li{margin-right:6px;color:var(--ink2)}
 /* 3.10.0 the avatar is a neutral disc with an ink letter (white on violet was 2.1-3.1:1); light keeps its violet disc */
-.avatar-circle{flex:none;width:48px;height:48px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-size:19px;font-weight:700;text-align:center;box-shadow:0 0 0 3px var(--surface),var(--shadow-1)}
 .hero{position:relative;border-radius:var(--r-xl);padding:22px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--line)}
 .hero-top{display:flex;align-items:flex-start}
 .hero-txt{flex:1;min-width:0}
@@ -592,8 +594,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* ── TOPICS ── */
 .tier-label{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:28px !important}
-.topic-row{display:flex;align-items:center;width:100%;min-height:76px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 16px;margin-top:10px !important;text-align:left;transition:transform .12s}
-.topic-row:active{transform:translateY(2px)}
+.topic-row{display:flex;align-items:center;width:100%;min-height:76px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 16px;margin-top:10px !important;text-align:left;transition:transform var(--t-press) var(--ease-swift)}
+.topic-row:active{transform:scale(.98)}
 .topic-row.locked{opacity:.6}
 .topic-emoji-big{flex:none;width:54px;height:54px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:24px;margin-right:14px}
 .topic-info{flex:1;min-width:0;display:block}
@@ -616,8 +618,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-level .chi{margin-right:8px}
 .q-text{font-size:var(--fs-xl);font-weight:700;line-height:1.6}
 .opts>.opt-btn+.opt-btn{margin-top:10px}
-.opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:13px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform .12s,border-color .12s,background-color .12s}
-.opt-btn:active{transform:translateY(2px)}
+.opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
+.opt-btn:active{transform:scale(.98)}
 .opt-btn[disabled]{cursor:default;transform:none}
 /* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
 .opt-btn.correct{background:var(--good-soft);border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}   /* 3.10.0 the right answer is filled, */
@@ -628,20 +630,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opt-btn.correct .opt-key{background:var(--good);border-color:var(--good);color:var(--on-mark)}
 .opt-btn.wrong .opt-key{background:var(--wrong);border-color:var(--wrong);color:var(--on-mark)}
 .opt-txt{flex:1;min-width:0}
-.feedback-box{border-radius:var(--r-lg);padding:18px 18px 16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2)}
-.feedback-box.correct-fb{border-top:4px solid var(--good)}
-.feedback-box.wrong-fb{border-top:4px solid var(--wrong)}
-.fb-head{display:flex;align-items:center}
 .fb-ico{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:10px;background:var(--fill-2);color:var(--ink2)}
 .fb-ico .li{stroke-width:3}
-.correct-fb .fb-ico{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* 3.10.0 a ring: the white Next leads */
-.wrong-fb .fb-ico{background:var(--wrong-soft);color:var(--wrong-ink);box-shadow:inset 0 0 0 2px var(--wrong)}
 .fb-title{flex:1;font-size:var(--fs-xl);font-weight:700}
-.correct-fb .fb-title{color:var(--green)}
-.wrong-fb .fb-title{color:var(--wrong-ink)}
 .fb-xp{flex:none}
-.fb-sub{font-size:var(--fs-xs);color:var(--ink2);margin-top:8px}
-.fb-text{font-size:var(--fs-md);color:var(--ink);line-height:1.7;margin-top:10px}
 .practice .btn-primary{margin-top:20px}
 .practice .link{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}   /* 3.10.0 skip / report: grey, underlined, not violet */
 /* ── QUIZ, 3.12.0 (DESIGN.md §6) ── The question sits on the page (no card, no "tap Check" line). Every action lives in one
@@ -655,16 +647,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-level{margin-bottom:10px}
 .qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
 .qz .q-dock .btn{margin:0 !important}
-.qz .q-skip{flex:0 0 32%;margin-right:12px !important;min-height:58px;background:transparent;border:1.5px solid var(--line-2);color:var(--ink);font-size:var(--fs-lg);font-weight:700;box-shadow:none}
-.qz .q-skip:active{transform:scale(.97)}
+.qz .q-dock .q-skip{flex:0 0 32%;margin-right:12px !important}   /* a second button (its look: .btn-line). 3.22.0 the 12 px between Skip and Check are there now: ".qz .q-dock .btn" was stronger and set them to 0, so the two buttons touched */
 .qz .q-dock .btn-check{flex:1;min-width:0}
-.qz .q-dock .btn-check[disabled]{opacity:1;background:var(--surface-3);color:var(--ink3);box-shadow:none}   /* inactive, still readable (as the sign-in button) */
-:root:not([data-theme="light"]) .qz .q-dock .btn-check[disabled]{color:#A0A0A0}
 .qz>.q-dock.res{display:block;padding:0;background:transparent}
 .q-result{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--surface-2)}
 .q-result.ok{background:var(--good-soft)}
 .q-result.bad{background:var(--wrong-soft)}
-.q-result.fresh{animation:qr-in .3s cubic-bezier(.05,.7,.1,1)}
+.q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet)}
 @keyframes qr-in{from{transform:translateY(100%)}to{transform:none}}
 .qr-head{display:flex;align-items:center;min-height:40px}
 .qr-head .fb-ico{margin-right:10px}
@@ -674,26 +663,22 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-head .fb-title{flex:none;font-size:var(--fs-xl);font-weight:700}
 .qr-head .fb-xp{margin-left:10px}
 .qr-sp{flex:1}
-.qr-why{flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
-[data-theme="light"] .qr-why{background:rgba(20,20,20,.07)}
+.qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
+.qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
 .qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
 .qr-flag .li{width:20px;height:20px}
 .qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
 .q-result.open .qr-text{display:block}
-.qr-go{display:block;width:100%;margin-top:14px !important;min-height:58px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;transition:transform .12s ease-out,box-shadow .12s ease-out}
-.qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 #1F8C66}
-.qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 #1F8C66}
-.qr-go.plain{background:#E6E6E6;color:#141414;box-shadow:0 4px 0 #8F8F8F}
-.qr-go.plain:active{transform:translateY(3px);box-shadow:0 1px 0 #8F8F8F}
-[data-theme="light"] .qr-go.ok{box-shadow:0 4px 0 #087553}
-[data-theme="light"] .qr-go.ok:active{box-shadow:0 1px 0 #087553}
-[data-theme="light"] .qr-go.plain{background:#141414;color:#FFFFFF;box-shadow:0 4px 0 #000}
-[data-theme="light"] .qr-go.plain:active{box-shadow:0 1px 0 #000}
+.qr-go{margin-top:16px !important}
+.qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 var(--good-lip)}
+.qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 var(--good-lip)}
+.qr-go.plain,.btn-neutral{background:var(--neutral);color:var(--on-neutral);box-shadow:0 4px 0 var(--neutral-lip)}
+.qr-go.plain:active,.btn-neutral:active{transform:translateY(3px);box-shadow:0 1px 0 var(--neutral-lip)}
 .calm .q-result.fresh{animation:none}
-@media (prefers-reduced-motion:reduce){.q-result.fresh{animation:qr-fade .2s ease-out}}
+@media (prefers-reduced-motion:reduce){.q-result.fresh{animation:qr-fade var(--t-fade) var(--ease-std)}}
 @keyframes qr-fade{from{opacity:0}to{opacity:1}}
 .btn-check{margin-top:20px !important}
-.btn-check[disabled]{opacity:1;background:var(--fill-2);color:var(--ink3);box-shadow:none}
+.btn.btn-check[disabled]{opacity:1;background:var(--surface-3);color:var(--ink-off);box-shadow:none}   /* Check before a choice cannot be pressed at all: a flat grey block with words that can be read (4.6–4.9:1). Not the outline of Sign in: that one answers a tap (DESIGN.md §1c) */
 
 /* ── FULL PAPER (3.9.6): taken like the exam — the count opens the grid, the clock runs down, Previous / Next, then the marks ── */
 .paper .p-count{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;color:var(--ink2);padding:8px 10px}
@@ -705,9 +690,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-level .p-qn{margin-left:auto;font-weight:600;color:var(--ink3)}
 .p-nav{display:flex;margin-top:20px}
 .p-nav .btn{flex:1;display:flex;align-items:center;justify-content:center;margin:0}
-.p-nav .btn+.btn{margin-left:10px}
+.p-nav .btn+.btn{margin-left:12px}
 .p-nav .btn .li{margin:0 4px}
-.p-nav .btn[disabled]{opacity:.45;box-shadow:none;cursor:default}
+.p-nav .btn[disabled]{box-shadow:none;cursor:default}
 .paper .btn-primary{margin-top:0}
 .p-done{margin-top:12px !important}
 .pg-sum{display:flex;align-items:center;flex-wrap:wrap}
@@ -743,7 +728,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .paper-res .btn-sec{display:flex;align-items:center;justify-content:center}
 .paper-res .btn-sec .li,.sh-btn .li{margin-right:6px}
 .share-card{display:flex;align-items:center}
-.sh-btn{flex:none;width:auto;display:flex;align-items:center;min-height:44px;padding:10px 16px;margin:0 0 0 12px;font-size:var(--fs-md)}
+.sh-btn{flex:none;width:auto;min-height:var(--tap);padding:8px 16px;margin:0 0 0 12px;font-size:var(--fs-md)}
 
 /* ── SET COMPLETE / REVIEW ── */
 .summary>*+*{margin-top:20px}
@@ -829,10 +814,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sk-d.now{color:var(--ink)}
 .sk-d.now.on i{animation:sk-light .45s cubic-bezier(.2,0,0,1.4) 1s both}
 .sk-s{font-size:var(--fs-md);color:var(--ink2);margin-top:18px;animation:rise .4s ease-out .9s both}
-.btn-neutral{background:#E6E6E6;color:#141414;box-shadow:0 4px 0 #8F8F8F}
-.btn-neutral:active{transform:translateY(3px);box-shadow:0 1px 0 #8F8F8F}
-[data-theme="light"] .btn-neutral{background:#141414;color:#FFFFFF;box-shadow:0 4px 0 #000}
-[data-theme="light"] .btn-neutral:active{box-shadow:0 1px 0 #000}
 @keyframes sk-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @keyframes sk-light{from{transform:scale(.4)}to{transform:none}}
 .calm .sk-art,.calm .sk-n,.calm .sk-t,.calm .sk-d,.calm .sk-d.now.on i,.calm .sk-s{animation:none}
@@ -855,7 +836,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .rv-c.bad .li{color:var(--wrong)}
 .rv-c.skip .li{color:var(--ink3)}
 .rv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:12px;gap:12px}
-.rv-card{display:flex;flex-direction:column;min-height:116px;padding:12px 14px 14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-bottom:4px solid var(--line-2);border-radius:var(--r-md);transition:transform .12s ease-out,border-bottom-width .12s ease-out}
+.rv-card{display:flex;flex-direction:column;min-height:116px;padding:12px 14px 14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-bottom:4px solid var(--line-2);border-radius:var(--r-md);transition:transform var(--t-press) var(--ease-swift),border-bottom-width var(--t-press) var(--ease-swift)}
 .rv-card.ok{border-bottom-color:var(--good)}
 .rv-card.bad{border-bottom-color:var(--wrong)}
 .rv-card:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
@@ -933,26 +914,26 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
 .menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
-.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important}
+.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 16px;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important;transition:transform var(--t-press) var(--ease-swift)}
 .sign-out .li{margin-right:8px}
-.sign-out:active{opacity:.75}
+.sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
 .sub-title{font-size:var(--fs-2xl);font-weight:700;margin-left:14px}
 .toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:14px 16px;margin-top:8px !important}
 .toggle-info{flex:1;min-width:0;padding-right:12px}
 .toggle-label{font-size:var(--fs-md);font-weight:600}
 .toggle-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:2px;line-height:1.45}
-.toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--mark-off);transition:background-color .15s}   /* off: a grey track that can be seen (3.10.0) */
-.toggle:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .15s}
+.toggle{flex:none;position:relative;width:46px;height:26px;border-radius:26px;background:var(--mark-off);transition:background-color var(--t-state) var(--ease-swift)}   /* off: a grey track that can be seen (3.10.0) */
+.toggle:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform var(--t-state) var(--ease-swift)}
 .toggle:before{content:'';position:absolute;top:-11px;right:-10px;bottom:-11px;left:-10px}   /* 66x48 tap area around the 46x26 switch */
 .toggle.on{background:var(--primary)}
 .toggle.on:after{transform:translateX(20px)}
-.seg{display:flex;background:var(--fill);border-radius:var(--r-md);padding:3px}
-.seg-btn{flex:1;padding:9px 4px;border-radius:11px;font-size:var(--fs-xs);font-weight:700;text-align:center;color:var(--cream60)}
+.seg{display:flex;background:var(--fill);border-radius:var(--r-md);padding:4px}
+.seg-btn{flex:1;display:flex;align-items:center;justify-content:center;min-height:var(--tap);padding:0 4px;border-radius:calc(var(--r-md) - 4px);font-size:var(--fs-xs);font-weight:700;text-align:center;color:var(--ink2);transition:background-color var(--t-state) var(--ease-swift)}   /* 3.22.0 44 px to touch (it was 37) */
 .seg-btn.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1)}
 .stepper{display:flex;align-items:center}
-.step-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);font-size:20px;font-weight:700;line-height:1;text-align:center}
-.step-btn:active{transform:translateY(3px);box-shadow:none}
+.step-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:20px;font-weight:700;line-height:1;text-align:center}
+.step-btn:active{background:var(--surface-2)}
 .step-val{flex:1;text-align:center;font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700}
 .step-val small{display:block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;color:var(--cream60)}
 .goal-card{background:var(--pur-bg);border:1px solid var(--pur-line);border-radius:var(--r-lg);padding:18px}
@@ -963,8 +944,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cd-num{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1}
 .cd-lbl{font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-top:5px;letter-spacing:.6px}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:10px;gap:10px}
-.ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 10px;text-align:center}
-.ach-card:active{transform:translateY(3px);box-shadow:none}
+.ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:14px 10px;text-align:center;transition:transform var(--t-press) var(--ease-swift)}
+.ach-card:active{transform:scale(.98)}
 .ach-card.earned{background:var(--surface)}   /* 3.10.0 earned: the icon in full colour and an ink name; no violet frame */
 .ach-card.locked .ach-name{color:var(--ink3);font-weight:400}
 .ach-card.locked .ach-desc{color:var(--ink3)}
@@ -980,7 +961,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ach-card .pbar{margin-top:9px}
 .faq-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);margin-top:8px !important;overflow:hidden}
 .faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 15px;font-size:var(--fs-xs);font-weight:700;line-height:1.4}
-.faq-chev{flex:none;margin-left:10px;color:var(--cream40);font-size:var(--fs-xs);transition:transform .15s}
+.faq-chev{flex:none;margin-left:10px;color:var(--cream40);font-size:var(--fs-xs);transition:transform var(--t-state) var(--ease-swift)}
 .faq-chev .li{transform:rotate(90deg)}
 .faq-item.open .faq-chev{transform:rotate(180deg)}
 .faq-a{display:none;padding:0 15px 14px;font-size:var(--fs-xs);color:var(--cream60);line-height:1.6}
@@ -992,11 +973,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .about+.foot-note{margin-top:6px !important}
 
 /* ── COURSE CHOOSER ── a row that cannot be opened ("Coming soon") is dimmed, its label is not */
-.co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;transition:transform .07s}
-.co-row:active{transform:translateY(3px);box-shadow:none}
+.co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;transition:transform var(--t-press) var(--ease-swift)}
+.co-row:active{transform:scale(.98)}
 .co-row.big{padding:17px 15px;margin-top:12px !important}
 .co-row.current{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary),var(--shadow-1)}   /* 3.10.0 your course is the selected one: violet, like every selection */
-.co-row.locked:active{transform:none;box-shadow:var(--shadow-1)}
+.co-row.locked:active{transform:none}
 .co-row.locked .co-ico{opacity:.55;filter:grayscale(1)}
 .co-row.locked .co-name,.co-row.locked .co-sub{color:var(--ink3)}
 .co-row.locked .co-name,.co-row.soon .co-name{font-weight:400}
@@ -1016,7 +997,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .co-right{flex:none;display:flex;align-items:center;margin-left:10px}
 .co-soon{font-size:var(--fs-xs);font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap}
 .co-cur{font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
-.course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-pill);padding:7px 12px;font-size:var(--fs-xs);font-weight:700;white-space:nowrap}
+.course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:var(--bw) solid var(--line-2);border-radius:var(--r-pill);padding:8px 12px;font-size:var(--fs-xs);font-weight:700;white-space:nowrap}
 .course-pill:before{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}   /* a taller tap area for the small pill */
 .course-pill span{min-width:0;overflow:hidden;text-overflow:ellipsis;margin-right:6px}
 .course-pill:after{content:'';flex:none;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
@@ -1029,7 +1010,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── ACCOUNT & BACKUP ── */
 .nudge{display:flex;align-items:flex-start;width:100%;text-align:left;background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.5}
 .nudge .li{margin:0 10px 0 0}
-.nudge:active{opacity:.8}
+.nudge:active{transform:scale(.98)}
 .acct-email{font-size:var(--fs-md);font-weight:700;word-break:break-all;margin-top:4px !important}
 .chip{display:inline-block;border-radius:var(--r-pill);padding:4px 10px;font-size:var(--fs-cap);font-weight:700;letter-spacing:.8px;text-transform:uppercase}   /* 3.11.0 a small label: CAPS, spaced */
 .chip.ok{background:var(--ok-bg);border:1px solid var(--ok-line);color:var(--ok-ink)}
@@ -1037,6 +1018,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .detail{color:var(--cream40);word-break:break-word;margin-top:4px !important}
 .detail:empty{display:none}
 .btn[disabled]{opacity:.5}
+.btn[disabled]:active{transform:none}                 /* what cannot be pressed does not move under the finger */
+.btn-primary[disabled]:not(.btn-check):active{box-shadow:var(--shadow-cta)}
 .policy .card-title{margin-bottom:2px}
 
 /* ── BOTTOM NAV (CHANGE #6: solid background, no backdrop-filter) ── */
@@ -1047,7 +1030,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .bottom-nav:before{content:'';position:absolute;left:0;right:0;bottom:100%;height:28px;background:linear-gradient(var(--nav-0),var(--nav));pointer-events:none}
 .nav-pill{display:flex;align-items:stretch;width:100%;padding:12px 0 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--nav);pointer-events:auto}
 .nav-item{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;padding:2px 0 0;text-align:center;color:var(--ink3);border-radius:16px}
-.nav-ic{display:flex;align-items:center;justify-content:center;width:70px;height:40px;border-radius:20px;transition:background-color .15s}
+.nav-ic{display:flex;align-items:center;justify-content:center;width:70px;height:40px;border-radius:20px;transition:background-color var(--t-state) var(--ease-swift)}
 .nav-item svg{display:block;width:35px;height:35px}
 .nav-lbl{display:block;font-size:var(--fs-lg);font-weight:400;line-height:1.2;margin-top:6px}   /* 3.12.0 (was 24px: bigger than the page titles) */
 .nav-item.active{color:var(--ink)}
@@ -1072,13 +1055,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .m-err{display:none;font-size:var(--fs-xs);font-weight:700;color:var(--red)}
 .m-err.show{display:block}
 .m-actions{display:flex;margin-top:20px !important}
-.m-actions .btn{flex:1;min-height:52px;padding:13px 10px;font-size:var(--fs-lg)}
-.m-actions .btn+.btn{margin-left:10px}
+.m-actions .btn{flex:1;padding:8px 12px}
+.m-actions .btn+.btn{margin-left:12px}
 .m-list{max-height:230px;max-height:54vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .m-list-item{font-size:var(--fs-xs);line-height:1.5;padding:9px 0;border-top:1px solid var(--line)}
 .m-list-item:first-child{border-top:0}
 .m-list-item b{display:block;font-size:var(--fs-xs)}
-.toast{position:absolute;left:0;right:0;bottom:132px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:70}
+.toast{position:absolute;left:0;right:0;bottom:132px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity var(--t-fade) var(--ease-std),visibility var(--t-fade) var(--ease-std);z-index:70}
 .toast.show{opacity:1;visibility:visible}
 .toast.at-top{bottom:auto;top:76px;top:calc(76px + env(safe-area-inset-top))}   /* 3.12.0 in a quiz the bottom is the result panel: messages come under the header */
 .toast>span{display:inline-block;max-width:86%;background:var(--toast);color:#FFFFFF;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:12px 20px;font-size:var(--fs-sm);font-weight:600;line-height:1.4;box-shadow:var(--shadow-2)}
@@ -1109,27 +1092,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .fig-grid td{min-width:40px;height:36px;padding:2px 8px;border:1.5px solid var(--line-2);text-align:center;font-family:var(--font-display);font-size:var(--fs-md);font-weight:700}
 .opt-txt .figs{margin:0;text-align:left}
 .opt-txt .fig{margin:0}
-.rv-q .figs,.rv-line .figs,.rv-x .figs,.fb-text .figs{margin:6px 0 2px}
+.rv-q .figs,.rv-line .figs,.rv-x .figs{margin:8px 0 2px}
 /* ── MOTION THAT HELPS THE EYE (3.4.0) ── short, only where something just changed; none with "Reduce animations" or a phone set
    to reduce motion. The answer arrives (explanation rises in, the chosen option gives a small pop, the progress bar grows),
    a dialog opens softly, and every tappable thing answers the finger. 3.10.0: the progress bar slides (transform), it is not widened. */
-.feedback-box.fresh{animation:fb-in .24s ease-out}
 .opt-btn.pop{animation:opt-pop var(--t-pop) var(--ease-pop)}
 .q-progress>i.grow{animation:qp-grow var(--t-sheet) var(--ease-sheet)}
-.modal.open{animation:m-fade .16s ease-out}
+.modal.open{animation:m-fade var(--t-fade) var(--ease-std)}
 .modal.open .m-card{animation:m-up var(--t-sheet) var(--ease-sheet)}   /* 3.16.0 from below the screen */
-@keyframes fb-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes opt-pop{0%{transform:scale(1)}45%{transform:scale(1.02)}100%{transform:scale(1)}}
 @keyframes qp-grow{from{transform:translateX(var(--from))}}
 @keyframes m-fade{from{opacity:0}to{opacity:1}}
 @keyframes m-up{from{transform:translateY(100%)}to{transform:none}}
-.calm .feedback-box.fresh,.calm .opt-btn.pop,.calm .q-progress>i.grow,.calm .modal.open,.calm .modal.open .m-card{animation:none}
-@media (prefers-reduced-motion:reduce){.feedback-box.fresh,.opt-btn.pop,.q-progress>i.grow,.modal.open,.modal.open .m-card{animation:none}}
+.calm .opt-btn.pop,.calm .q-progress>i.grow,.calm .modal.open,.calm .modal.open .m-card{animation:none}
+@media (prefers-reduced-motion:reduce){.opt-btn.pop,.q-progress>i.grow,.modal.open,.modal.open .m-card{animation:none}}
 .link:active{opacity:.55}
 .faq-q:active{background:var(--surface-2)}
 .seg-btn:active{background:var(--fill-2)}
 .seg-btn.on:active{background:var(--surface)}
-.avatar-circle:active{transform:scale(.95)}
 
 /* ── CHAPTER ICONS (icons.js) ── paper-white parts follow the theme */
 .chi{display:block;flex:none;overflow:visible}
@@ -1157,9 +1137,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .lvl{margin-top:22px;padding:0 17px 0 0}
 .lvl-wrap{position:relative;height:40px}
 .lvl-track{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px;background:var(--fill-2);overflow:hidden}
-.lvl-track>i{display:block;height:100%;border-radius:4px;min-width:0;transition:width .3s var(--ease-sheet);background:hsl(var(--h),90%,52%)}   /* 3.10.0 the flame (36) to the emerald (160) */
+.lvl-track>i{display:block;height:100%;border-radius:4px;min-width:0;transition:width var(--t-sheet) var(--ease-sheet);background:hsl(var(--h),90%,52%)}   /* 3.10.0 the flame (36) to the emerald (160) */
 [data-theme="light"] .lvl-track>i{background:hsl(var(--h),85%,38%)}
-.lvl-medal{position:absolute;top:50%;width:30px;height:30px;margin:-18px 0 0 -15px;transition:transform .25s ease-out,filter .25s,opacity .25s}
+.lvl-medal{position:absolute;top:50%;width:30px;height:30px;margin:-18px 0 0 -15px;transition:transform var(--t-pop) var(--ease-swift),filter var(--t-pop) var(--ease-swift),opacity var(--t-pop) var(--ease-swift)}
 .lvl-medal .chi{display:block}
 .lvl-medal:not(.on){filter:grayscale(1);opacity:.45}
 .lvl-medal.on{transform:scale(1.2)}
@@ -1167,14 +1147,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .subj-row{display:flex;overflow-x:auto;margin:0 -24px;padding:6px 24px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subj-row::-webkit-scrollbar{display:none}
 .subj{flex:none;width:112px;margin-right:16px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
-.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
+.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:var(--bw-ctl) solid var(--line-2);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
 .subj.on .subj-ico{border:2px solid var(--primary);background:var(--primary-soft)}
 .subj-t{font-size:var(--fs-sm);font-weight:600;margin-top:10px;line-height:1.2;white-space:nowrap}
 .subj.on .subj-t{color:var(--primary-ink);font-weight:700}
 .subj.soon .subj-ico .chi{opacity:.45;filter:grayscale(.85)}
 .subj.soon .subj-t{color:var(--ink3)}
 .subj-clock{position:absolute;right:-5px;top:-5px;width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);color:var(--ink2);display:flex;align-items:center;justify-content:center}
-.subj.soon:active .subj-ico{transform:translateY(2px)}
+.subj.soon:active .subj-ico{transform:scale(.98)}
 .ch-tile{flex:none;width:54px;height:54px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin-right:14px}
 .ch-list .topic-row{margin-top:10px !important}
 .ch-name{display:block;font-size:var(--fs-lg);font-weight:700;line-height:1.35}
@@ -1242,7 +1222,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* the practice button: no hop any more (3.9.0) — the calm hero card asks for it */
 .btn-cta{position:relative}
-.q-ico{flex:none;margin-left:10px}
 
 /* ── ANSWER FEEDBACK: a pop and a few sparks for right, a shake for wrong ── */
 .opt-btn{position:relative}
@@ -1288,7 +1267,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cele-icon{position:relative;transform-style:preserve-3d;animation:flip3d 1.15s cubic-bezier(.2,.9,.25,1.12) both;will-change:transform}
 .cele-icon .chi{filter:drop-shadow(0 12px 14px rgba(0,0,0,.35))}   /* soft: the icon has its own sides (3.10.0) */
 .cele-badge{position:absolute;left:-8px;bottom:-4px;width:46px;height:46px;border-radius:50%;background:var(--good);color:var(--on-mark);display:flex;align-items:center;justify-content:center;
-  border:4px solid var(--bg);box-shadow:0 4px 0 #1F8C66;animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}   /* 3.10.0 a dark tick on green: white was 2.3:1 */
+  border:4px solid var(--bg);box-shadow:0 4px 0 var(--good-lip);animation:badge-pop .45s cubic-bezier(.3,1.7,.5,1) .95s both}   /* 3.10.0 a dark tick on green: white was 2.3:1 */
 .cele-badge svg{width:24px;height:24px}
 .cele-t{font-size:var(--fs-3xl);font-weight:900;line-height:1.2;margin-top:26px;animation:rise .45s ease-out .55s both}
 .cele-s{font-size:var(--fs-md);font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
@@ -1334,17 +1313,17 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
 .opts.grid .fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
 /* small examples side by side in an explanation (counting: one coloured example of each kind) */
-.fb-text .fig-fig svg,.rv-x .fig-fig svg{width:auto;max-width:92px;max-height:82px}
-.fb-text .figs .fig-fig,.rv-x .figs .fig-fig{margin:4px 5px}
-.fb-text .fig-word svg,.rv-x .fig-word svg{max-width:200px}
+.rv-x .fig-fig svg{width:auto;max-width:92px;max-height:82px}
+.rv-x .figs .fig-fig{margin:4px}
+.rv-x .fig-word svg{max-width:200px}
 .fig-wide{display:block;margin:6px 0}
-.fig-wide svg,.fb-text .fig-wide svg,.rv-x .fig-wide svg{width:100%;max-width:420px;max-height:none;height:auto;margin:0 auto}
+.fig-wide svg,.rv-x .fig-wide svg{width:100%;max-width:420px;max-height:none;height:auto;margin:0 auto}
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
 .pay-or{margin:10px 2px 0}.adm-sub{margin-top:16px}
 .pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px dashed var(--pur-line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:13px 14px;margin-top:10px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
-.pack-card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--lip)}
+.pack-card:active{transform:scale(.98)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
 .pack-card:not(.own) .pack-ico{color:var(--ink3)}
 .pack-name{display:block;font-size:var(--fs-sm);font-weight:700}
@@ -1359,9 +1338,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pay-step{display:flex;font-size:var(--fs-xs);line-height:1.5}
 .pay-n{flex:none;margin-right:10px;width:24px;height:24px;border-radius:50%;background:var(--pur-bg);color:var(--primary-ink);font-size:var(--fs-xs);font-weight:900;display:flex;align-items:center;justify-content:center}
 .pay-row{display:flex;flex-wrap:wrap;margin:6px -4px 0}
-.pay-btn{display:flex;align-items:center;justify-content:center;width:auto;flex:1 1 130px;margin:4px;padding:11px 12px;font-size:var(--fs-xs);text-decoration:none}
+.pay-btn{width:auto;flex:1 1 130px;min-height:var(--tap);margin:4px;padding:8px 12px;font-size:var(--fs-xs);text-decoration:none}
 .code-form>*+*{margin-top:10px}
-.code-form input{letter-spacing:1.5px;text-transform:uppercase}
+.code-form input{letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
 .sel{-webkit-user-select:all;user-select:all}
 .seg.wrap{flex-wrap:wrap}
 .seg.wrap .seg-btn{flex:1 1 100%;margin:2px 0}
@@ -1386,7 +1365,7 @@ a.link{text-decoration:none}
 /* narrow phones (340 px wide or less): the side margin is 16px, so the full-width rows pull back by 16px only (last in the file: it must win) */
 @media (max-width:340px){.subj-row{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}}
 /* 3.9.1 HOME: before today's set the stats are quiet; after it, the practice card goes quiet and the stats are the reward */
-.home .stats{opacity:.55;transition:opacity .2s}
+.home .stats{opacity:.55;transition:opacity var(--t-fade) var(--ease-std)}
 .home.is-done .stats{opacity:1}
 .home.is-done .stats .mini{border-color:var(--gold);box-shadow:var(--shadow-2)}   /* 3.10.0 the reward's colour, gold (orange is for what to do) */
 .done-card{text-align:center;background:var(--surface);box-shadow:none;border:1px dashed var(--line-2)}
@@ -1401,7 +1380,7 @@ a.link{text-decoration:none}
   background:var(--surface);border:1.5px solid var(--line);border-bottom-width:5px;box-shadow:none}
 .path .ch-panel:first-child{margin-top:0 !important}
 .path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-25px;width:2px;height:22px;margin-left:-1px;background:var(--line-2)}
-.path .ch-panel{transition:transform .08s ease-out,border-color .08s,background-color .08s}
+.path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
 .path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(3px);border-bottom-width:2px;margin-bottom:3px;border-color:var(--tap-line);
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
 .chp-ic{flex:none;width:80px;height:80px;margin-right:20px}
@@ -1429,7 +1408,7 @@ a.link{text-decoration:none}
 .ch-badge.done{width:34px;height:34px;right:12px;bottom:10px;background:none;color:var(--good)}
 .ch-badge .seal{display:block;width:34px;height:34px}
 /* 3.9.1 a tap on the bottom bar: the icon and the name brighten at once, then settle (not with "Reduce animations") */
-.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash var(--t-pop) ease-out}
+.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash var(--t-pop) var(--ease-swift)}
 @keyframes navflash{0%{color:var(--flash);filter:drop-shadow(0 0 6px var(--flash-glow))}100%{filter:drop-shadow(0 0 0 transparent)}}
 /* a locked chapter (3.9.1): the panel a little dimmer but fully readable; in its middle a flat, see-through lock (no ring, no 3D).
    Every 2 s a light runs across the lock and it turns a little less see-through for that moment — the words behind stay readable.
@@ -2767,7 +2746,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.21.0',
+  VERSION: '3.22.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4674,7 +4653,7 @@ function passStrength(p) {
 function passField(id, placeholder, auto, strength) {
   return '<div class="input-wrap"><span class="input-icon">' + li('lock', 20) + '</span><input id="' + id + '" type="password" autocomplete="' + auto + '" maxlength="64" placeholder="' +
     placeholder + '" aria-label="' + placeholder + '"' + (strength ? ' data-in="pass-new"' : '') + '>' +
-    '<button type="button" class="eye" data-act="toggle-pass" data-for="' + id + '">Show</button></div>';
+    '<button type="button" class="au-eye" data-act="toggle-pass" data-for="' + id + '" aria-label="Show password" aria-pressed="false">' + EYE_SVG + '</button></div>';   // 3.22.0 the same eye as on the sign-in page (it was the word "Show")
 }
 
 /* THE SPLASH (3.9.5). The phone opens the installed app on its own start screen: the app's icon on #100F1C — and the icon's tile IS
@@ -6614,8 +6593,7 @@ ACTIONS['toggle-pass'] = function (el) {
   if (!inp) return;
   var show = inp.type === 'password';
   inp.type = show ? 'text' : 'password';
-  if (el.classList.contains('au-eye')) { el.setAttribute('aria-pressed', show ? 'true' : 'false'); el.setAttribute('aria-label', show ? 'Hide password' : 'Show password'); }
-  else el.textContent = show ? 'HIDE' : 'SHOW';
+  el.setAttribute('aria-pressed', show ? 'true' : 'false'); el.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
 };
 /* A guest moves to a real account (new or existing) and takes the progress along. */
 ACTIONS.adopt = function (el) {

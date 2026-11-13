@@ -67,7 +67,7 @@ function designDebt() {
     if (/^(margin|padding)(-(top|right|bottom|left))?$|^(grid-|row-|column-)?gap$/.test(prop) &&
         [...val.matchAll(/(-?\d*\.?\d+)px/g)].some(m => { const v = Math.abs(parseFloat(m[1])); return v > 2 && v % 4 !== 0; })) add('offGrid ');
     if (!/mask/.test(prop) && !prop.startsWith('--') && /#[0-9a-fA-F]{3,8}\b|\b(rgba?|hsla?)\(/.test(val)) add('rawColor');
-    if (/^border(-(top|bottom)-(left|right))?-radius$/.test(prop) && /\d+px/.test(val.replace(/var\([^)]*\)/g, ''))) add('rawRadius');
+    if (/^border(-(top|bottom)-(left|right))?-radius$/.test(prop) && /\d+px/.test(val.replace(/calc\([^()]*var\([^)]*\)[^()]*\)/g, '').replace(/var\([^)]*\)/g, ''))) add('rawRadius');   // (a sum made from a token is the system's)
     if (/^(transition|animation)(-duration|-delay)?$/.test(prop) && !byHand.test(r.sel)) {
       const v = val.replace(/var\([^)]*\)/g, '').replace(/cubic-bezier\([^)]*\)/g, 'CB');
       if ((v.match(/(^|[ ,])\d*\.?\d+m?s\b/g) || []).some(t => parseFloat(t.replace(/^[ ,]/, '')) > 0)) add('rawTime ');     // (0s is no time)

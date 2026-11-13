@@ -18,9 +18,6 @@ offGrid   .auth-error { padding:10px 12px }
 offGrid   .auth-logo-row .lg-n { margin-left:11px }
 offGrid   .badge-line { padding:12px 14px }
 offGrid   .bar-lbl { margin-top:6px }
-offGrid   .btn { margin-bottom:5px }
-offGrid   .btn { padding:14px 20px }
-offGrid   .btn-primary { padding:16px 22px }
 offGrid   .busy-card { padding:20px 22px }
 offGrid   .cd-lbl { margin-top:5px }
 offGrid   .cele-t { margin-top:26px }
@@ -43,25 +40,16 @@ offGrid   .co-state { margin-top:5px }
 offGrid   .co-state:before { margin-right:6px }
 offGrid   .code-form>*+* { margin-top:10px }
 offGrid   .course-pill span { margin-right:6px }
-offGrid   .course-pill { padding:7px 12px }
 offGrid   .cp b { margin-right:3px }
 offGrid   .cp svg { margin-right:5px }
 offGrid   .cp { padding:3px 11px }
 offGrid   .done-card .link { margin-top:6px }
 offGrid   .empty { padding:22px 16px }
 offGrid   .empty-t { margin-top:6px }
-offGrid   .exam-pill .li { margin-right:6px }
-offGrid   .exam-pill { margin-top:10px }
-offGrid   .exam-pill { padding:5px 12px 5px 9px }
-offGrid   .eye { padding:10px 4px }
 offGrid   .faq-a { padding:0 15px 14px }
 offGrid   .faq-chev { margin-left:10px }
 offGrid   .faq-q { padding:14px 15px }
 offGrid   .fb-ico { margin-right:10px }
-offGrid   .fb-text .figs .fig-fig,.rv-x .figs .fig-fig { margin:4px 5px }
-offGrid   .fb-text { margin-top:10px }
-offGrid   .feedback-box { padding:18px 18px 16px }
-offGrid   .field-lbl { margin-bottom:6px }
 offGrid   .fig { margin:4px 6px }
 offGrid   .fig-wide { margin:6px 0 }
 offGrid   .figs { margin:10px 0 2px }
@@ -76,15 +64,10 @@ offGrid   .hero-art { margin:-6px -6px 0 8px }
 offGrid   .hero-meta .li { margin-right:6px }
 offGrid   .hero-out { margin-top:14px }
 offGrid   .hero-prog { margin-top:14px }
-offGrid   .input-wrap input { padding:13px 4px }
-offGrid   .input-wrap { padding:0 14px }
-offGrid   .link { padding:10px 6px }
 offGrid   .lock-mid { margin:-20px 0 0 -18px }
 offGrid   .lvl { margin-top:22px }
 offGrid   .lvl { padding:0 17px 0 0 }
 offGrid   .lvl-medal { margin:-18px 0 0 -15px }
-offGrid   .m-actions .btn { padding:13px 10px }
-offGrid   .m-actions .btn+.btn { margin-left:10px }
 offGrid   .m-actions.col .link { margin-top:6px }
 offGrid   .m-card .rv-q { margin-top:14px }
 offGrid   .m-card .rv-x { margin-top:14px }
@@ -100,13 +83,11 @@ offGrid   .next-card { padding:14px 16px }
 offGrid   .next-step .ns-row { margin-top:14px }
 offGrid   .nudge .li { margin:0 10px 0 0 }
 offGrid   .nudge { padding:12px 14px }
-offGrid   .opt-btn { padding:13px 16px }
 offGrid   .opts.grid .opt-btn { padding:22px 8px 12px }
 offGrid   .opts.grid { gap:10px }
 offGrid   .opts.grid { grid-gap:10px }
 offGrid   .opts.grid.short .opt-btn { padding:14px 8px }
 offGrid   .opts>.opt-btn+.opt-btn { margin-top:10px }
-offGrid   .p-nav .btn+.btn { margin-left:10px }
 offGrid   .pack-card .chip { margin-left:10px }
 offGrid   .pack-card { margin-top:10px !important }
 offGrid   .pack-card { padding:13px 14px }
@@ -127,7 +108,6 @@ offGrid   .path { margin-top:26px }
 offGrid   .pay-app svg { margin-right:6px }
 offGrid   .pay-app { margin-top:6px !important }
 offGrid   .pay-btn svg { margin-right:6px }
-offGrid   .pay-btn { padding:11px 12px }
 offGrid   .pay-id .link { padding:4px 6px }
 offGrid   .pay-id { margin-top:6px }
 offGrid   .pay-n { margin-right:10px }
@@ -147,9 +127,7 @@ offGrid   .pr-pass { padding:10px 16px }
 offGrid   .prof-rank .li { margin:0 6px 0 -2px }
 offGrid   .prof-rank { padding:5px 14px }
 offGrid   .q-header .q-progress { margin:0 14px }
-offGrid   .q-ico { margin-left:10px }
 offGrid   .q-level { margin-bottom:10px }
-offGrid   .qr-go { margin-top:14px !important }
 offGrid   .qr-head .fb-ico { margin-right:10px }
 offGrid   .qr-head .fb-xp { margin-left:10px }
 offGrid   .qz .q-level { margin-bottom:10px }
@@ -160,12 +138,7 @@ offGrid   .rv-card { padding:12px 14px 14px }
 offGrid   .rv-chip { padding:4px 10px 4px 7px }
 offGrid   .rv-line .li { margin:2px 6px 0 0 }
 offGrid   .rv-pv { margin-top:10px }
-offGrid   .rv-q .figs,.rv-line .figs,.rv-x .figs,.fb-text .figs { margin:6px 0 2px }
 offGrid   .rv-q { margin-top:6px }
-offGrid   .seg { padding:3px }
-offGrid   .seg-btn { padding:9px 4px }
-offGrid   .sh-btn { padding:10px 16px }
-offGrid   .sign-out { padding:14px }
 offGrid   .sk-d i { margin-bottom:6px }
 offGrid   .sk-n { margin-top:18px }
 offGrid   .sk-s { margin-top:18px }
@@ -202,11 +175,6 @@ offGrid   .topic-row { padding:14px 16px }
 offGrid   .xp-fly { margin-top:-11px }
 offGrid   @media (max-height:700px) .sm-art { margin-bottom:6px }
 offGrid   @media (max-height:700px) .sm-stat { padding:10px 4px 9px }
-rawColor  .btn-neutral { background:#E6E6E6 }
-rawColor  .btn-neutral { box-shadow:0 4px 0 #8F8F8F }
-rawColor  .btn-neutral { color:#141414 }
-rawColor  .btn-neutral:active { box-shadow:0 1px 0 #8F8F8F }
-rawColor  .cele-badge { box-shadow:0 4px 0 #1F8C66 }
 rawColor  .cele-icon .chi { filter:drop-shadow(0 12px 14px rgba(0,0,0,.35)) }
 rawColor  .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,216,77,.14),transparent 75%),var(--bg) }
 rawColor  .fv-h1 { fill:#FFC233 }
@@ -218,13 +186,6 @@ rawColor  .fv-h3 { stroke:#B52E69 }
 rawColor  .fv-h4 { fill:#33C25E }
 rawColor  .fv-h4 { stroke:#1E8A40 }
 rawColor  .lvl-track>i { background:hsl(var(--h),90%,52%) }
-rawColor  .qr-go.ok { box-shadow:0 4px 0 #1F8C66 }
-rawColor  .qr-go.ok:active { box-shadow:0 1px 0 #1F8C66 }
-rawColor  .qr-go.plain { background:#E6E6E6 }
-rawColor  .qr-go.plain { box-shadow:0 4px 0 #8F8F8F }
-rawColor  .qr-go.plain { color:#141414 }
-rawColor  .qr-go.plain:active { box-shadow:0 1px 0 #8F8F8F }
-rawColor  .qr-why { background:rgba(255,255,255,.08) }
 rawColor  .sp-kin { background:radial-gradient(closest-side,rgba(255,181,71,.30),rgba(255,181,71,.12) 45%,rgba(255,181,71,0)) }
 rawColor  .sp-sun { background:radial-gradient(closest-side,#FFF8E7 58%,rgba(255,248,231,0)) }
 rawColor  .splash { background:#100F1C }
@@ -234,30 +195,9 @@ rawColor  .toast>span { color:#FFFFFF }
 rawColor  .toggle:after { background:#fff }
 rawColor  .toggle:after { box-shadow:0 2px 4px rgba(0,0,0,.3) }
 rawColor  .xp-fly { color:var(--gold,#FFB020) }
-rawColor  :root:not([data-theme="light"]) .qz .q-dock .btn-check[disabled] { color:#A0A0A0 }
-rawColor  [data-theme="light"] .btn-neutral { background:#141414 }
-rawColor  [data-theme="light"] .btn-neutral { box-shadow:0 4px 0 #000 }
-rawColor  [data-theme="light"] .btn-neutral { color:#FFFFFF }
-rawColor  [data-theme="light"] .btn-neutral:active { box-shadow:0 1px 0 #000 }
 rawColor  [data-theme="light"] .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,196,0,.20),transparent 75%),var(--bg) }
 rawColor  [data-theme="light"] .lvl-track>i { background:hsl(var(--h),85%,38%) }
 rawColor  [data-theme="light"] .q-result.bad .fb-ico,[data-theme="light"] .opt-btn.wrong .opt-key,[data-theme="light"] .rv-dot.bad { color:#FFFFFF }
-rawColor  [data-theme="light"] .qr-go.ok { box-shadow:0 4px 0 #087553 }
-rawColor  [data-theme="light"] .qr-go.ok:active { box-shadow:0 1px 0 #087553 }
-rawColor  [data-theme="light"] .qr-go.plain { background:#141414 }
-rawColor  [data-theme="light"] .qr-go.plain { box-shadow:0 4px 0 #000 }
-rawColor  [data-theme="light"] .qr-go.plain { color:#FFFFFF }
-rawColor  [data-theme="light"] .qr-go.plain:active { box-shadow:0 1px 0 #000 }
-rawColor  [data-theme="light"] .qr-why { background:rgba(20,20,20,.07) }
-rawEase   .feedback-box.fresh { animation:fb-in .24s ease-out }
-rawEase   .lvl-medal { transition:transform .25s ease-out,filter .25s,opacity .25s }
-rawEase   .modal.open { animation:m-fade .16s ease-out }
-rawEase   .nav-item.flash .nav-ic,.nav-item.flash .nav-lbl { animation:navflash var(--t-pop) ease-out }
-rawEase   .path .ch-panel { transition:transform .08s ease-out,border-color .08s,background-color .08s }
-rawEase   .q-result.fresh { animation:qr-in .3s cubic-bezier(.05,.7,.1,1) }
-rawEase   .qr-go { transition:transform .12s ease-out,box-shadow .12s ease-out }
-rawEase   .rv-card { transition:transform .12s ease-out,border-bottom-width .12s ease-out }
-rawEase   @media (prefers-reduced-motion:reduce) .q-result.fresh { animation:qr-fade .2s ease-out }
 rawEase   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }
 rawRadius  .bar { border-radius:8px 8px 3px 3px }
 rawRadius  .ch-bar { border-radius:8px }
@@ -275,12 +215,10 @@ rawRadius  .pg-cell { border-radius:12px }
 rawRadius  .pg-key { border-radius:4px }
 rawRadius  .q-progress { border-radius:10px }
 rawRadius  .q-progress>i { border-radius:10px }
-rawRadius  .seg-btn { border-radius:11px }
 rawRadius  .skel-line { border-radius:7px }
 rawRadius  .toggle { border-radius:26px }
 rawRadius  @media (max-width:340px) .nav-ic { border-radius:18px }
 rawSize   .ach-emoji { font-size:30px }
-rawSize   .avatar-circle { font-size:19px }
 rawSize   .co-ico b { font-size:18px }
 rawSize   .co-ico { font-size:21px }
 rawSize   .co-row.big .co-ico { font-size:25px }
@@ -296,24 +234,4 @@ rawSize   .prof-avatar { font-size:36px }
 rawSize   .sk-n { font-size:72px }
 rawSize   .step-btn { font-size:20px }
 rawSize   .topic-emoji-big { font-size:24px }
-rawTime   .co-row { transition:transform .07s }
-rawTime   .faq-chev { transition:transform .15s }
-rawTime   .feedback-box.fresh { animation:fb-in .24s ease-out }
-rawTime   .home .stats { transition:opacity .2s }
-rawTime   .lvl-medal { transition:transform .25s ease-out,filter .25s,opacity .25s }
-rawTime   .lvl-track>i { transition:width .3s var(--ease-sheet) }
-rawTime   .modal.open { animation:m-fade .16s ease-out }
-rawTime   .nav-ic { transition:background-color .15s }
-rawTime   .opt-btn { transition:transform .12s,border-color .12s,background-color .12s }
-rawTime   .path .ch-panel { transition:transform .08s ease-out,border-color .08s,background-color .08s }
-rawTime   .q-result.fresh { animation:qr-in .3s cubic-bezier(.05,.7,.1,1) }
-rawTime   .qr-go { transition:transform .12s ease-out,box-shadow .12s ease-out }
-rawTime   .rv-card { transition:transform .12s ease-out,border-bottom-width .12s ease-out }
-rawTime   .screen { animation:scr .2s var(--ease-swift) }
-rawTime   .toast { transition:opacity .18s,visibility .18s }
-rawTime   .toggle { transition:background-color .15s }
-rawTime   .toggle:after { transition:transform .15s }
-rawTime   .topic-row { transition:transform .12s }
-rawTime   .vt-theme::view-transition-new(root) { animation:th-in .2s linear both }
-rawTime   @media (prefers-reduced-motion:reduce) .q-result.fresh { animation:qr-fade .2s ease-out }
 rawTime   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }
