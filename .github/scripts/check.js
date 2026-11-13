@@ -2,7 +2,8 @@
    Locally: npm install --no-save acorn playwright && npx playwright install chromium && node .github/scripts/check.js
    1. the app's code is ES5 (it must run on old phones);  2. index.html and sw.js carry the same version, and every file the
    service worker caches is in the repo;  3. the app opens and works in a real browser, dark and light: splash (with the name),
-   guest sign-in, course choice, the four tabs, a chapter, one question checked — with no script error on the way. */
+   guest sign-in, course choice, the four tabs, a chapter, one question checked — with no script error on the way;
+   2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token. */
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http');
 const ROOT = path.resolve(__dirname, '..', '..'), SHOTS = path.join(ROOT, 'ci-shots');
@@ -28,6 +29,72 @@ try {
   const gone = (mf.icons || []).map(i => i.src).filter(s => !fs.existsSync(path.join(ROOT, s)));
   if (gone.length) bad('manifest icons missing: ' + gone.join(', ')); else ok('manifest.webmanifest is valid JSON, its icons exist');
 } catch (e) { bad('manifest.webmanifest: ' + e.message); }
+
+// 2b. THE DESIGN SYSTEM KEEPS ITSELF (3.21.0, DESIGN.md §10). The style sheet is read rule by rule:
+//   - a token that is used must exist (a mistyped var(--name) draws nothing and says nothing), and a token of the light
+//     look must be one of the dark look's;
+//   - whatever is written into a rule instead of coming from the system is DESIGN DEBT: a space off the 4 pt grid, a colour,
+//     a corner, a time or a curve that is not a token, a text size outside the scale. Every such line that exists today is
+//     listed in .github/design-debt.txt. A line that is not on the list fails the check, so the list can only get
+//     shorter: the app cannot drift, whoever changes it.
+//   The splash, the celebrations, the sparks and the loading marks are moves made by hand (DESIGN.md §7, "celebrate"):
+//   their times and curves are their own. "node .github/scripts/check.js --write-debt" writes the list again (after a
+//   clean-up, or for a line that must stay: say why in the pull request); "--design" runs the checks without the browser.
+const DEBT_FILE = path.join(ROOT, '.github', 'design-debt.txt');
+function designDebt() {
+  const css = ((html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '').replace(/\/\*[\s\S]*?\*\//g, ''), rules = [];
+  (function walk(s, at) {
+    let i = 0;
+    while (i < s.length) {
+      const o = s.indexOf('{', i); if (o < 0) break;
+      const sel = s.slice(i, o).trim().replace(/\s+/g, ' ');
+      let d = 1, j = o + 1; while (j < s.length && d) { if (s[j] === '{') d++; else if (s[j] === '}') d--; j++; }
+      const body = s.slice(o + 1, j - 1);
+      if (/^@(media|supports)/.test(sel)) walk(body, sel + ' ');
+      else if (!/^@/.test(sel)) rules.push({ sel: at + sel, decls: body.split(';').map(x => x.trim()).filter(Boolean).map(x => { const k = x.indexOf(':'); return [x.slice(0, k).trim(), x.slice(k + 1).trim().replace(/\s+/g, ' ')]; }) });
+      i = j;
+    }
+  })(css, '');
+  const isTokens = r => /(^| )(:root|\[data-theme="light"\]|html\.on-splash)$/.test(r.sel);
+  const byHand = /\.(sp-|cele|sk-|spark|xp-fly|skel|spin\b|ripple|lock-mid)|\.screen\.sp-out|\.screen\[data-screen="splash"\]|\.splash\b/;
+  const defined = new Set(), dark = new Set(), light = new Set(), used = new Map(), debt = [];
+  const inScript = new Set((scripts.join('\n').match(/--[a-z][a-z0-9-]*/g) || []));          // set by the app itself (style="--i:3")
+  for (const r of rules) for (const [prop, val] of r.decls) {
+    if (prop.startsWith('--')) { defined.add(prop); if (/(^| ):root$/.test(r.sel)) dark.add(prop); if (r.sel === '[data-theme="light"]') light.add(prop); }
+    for (const m of val.matchAll(/var\((--[\w-]+)/g)) if (!used.has(m[1])) used.set(m[1], r.sel);
+    if (isTokens(r)) continue;
+    const add = kind => debt.push(kind + '  ' + r.sel + ' { ' + prop + ':' + val + ' }');
+    if (/^(margin|padding)(-(top|right|bottom|left))?$|^(grid-|row-|column-)?gap$/.test(prop) &&
+        [...val.matchAll(/(-?\d*\.?\d+)px/g)].some(m => { const v = Math.abs(parseFloat(m[1])); return v > 2 && v % 4 !== 0; })) add('offGrid ');
+    if (!/mask/.test(prop) && !prop.startsWith('--') && /#[0-9a-fA-F]{3,8}\b|\b(rgba?|hsla?)\(/.test(val)) add('rawColor');
+    if (/^border(-(top|bottom)-(left|right))?-radius$/.test(prop) && /\d+px/.test(val.replace(/var\([^)]*\)/g, ''))) add('rawRadius');
+    if (/^(transition|animation)(-duration|-delay)?$/.test(prop) && !byHand.test(r.sel)) {
+      const v = val.replace(/var\([^)]*\)/g, '').replace(/cubic-bezier\([^)]*\)/g, 'CB');
+      if ((v.match(/(^|[ ,])\d*\.?\d+m?s\b/g) || []).some(t => parseFloat(t.replace(/^[ ,]/, '')) > 0)) add('rawTime ');     // (0s is no time)
+      if (/CB|\bease(-in|-out|-in-out)?\b/.test(v)) add('rawEase ');
+    }
+    if (prop === 'font-size' && /^\d*\.?\d+px$/.test(val)) add('rawSize ');
+  }
+  const undef = [...used].filter(([t]) => !defined.has(t) && !inScript.has(t)), lightOnly = [...light].filter(t => !dark.has(t));
+  return { debt: debt.sort(), undef, lightOnly };
+}
+{
+  const d = designDebt(), count = k => d.debt.filter(x => x.startsWith(k)).length;
+  const head = '# IOPET design debt (see .github/scripts/check.js, 2b, and DESIGN.md §10). Written by: node .github/scripts/check.js --write-debt\n' +
+    '# Every line is something written into a rule that is not from the system. A line that is not here fails the check.\n';
+  if (process.argv.includes('--write-debt')) { fs.writeFileSync(DEBT_FILE, head + d.debt.join('\n') + '\n'); console.log('wrote ' + d.debt.length + ' lines to .github/design-debt.txt'); process.exit(0); }
+  if (d.undef.length) bad('design: tokens that are used but do not exist: ' + d.undef.map(([t, sel]) => t + ' (in ' + sel + ')').join(', ')); else ok('design: every token that is used exists');
+  if (d.lightOnly.length) bad('design: tokens of the light look that the dark look does not have: ' + d.lightOnly.join(', ')); else ok('design: the light look only redefines tokens of the dark look');
+  let listed = null;
+  try { listed = fs.readFileSync(DEBT_FILE, 'utf8').split('\n').filter(l => l && l[0] !== '#'); } catch (e) { bad('design: .github/design-debt.txt is missing (node .github/scripts/check.js --write-debt)'); }
+  if (listed) {
+    const left = listed.slice(), fresh = [];
+    for (const x of d.debt) { const i = left.indexOf(x); if (i < 0) fresh.push(x); else left.splice(i, 1); }
+    if (fresh.length) bad('design: ' + fresh.length + ' new line(s) outside the system (DESIGN.md §10). Use a token or a value of the scale; a line that must stay goes on the list with --write-debt, with the reason in the pull request:\n      ' + fresh.slice(0, 25).join('\n      ') + (fresh.length > 25 ? '\n      … and ' + (fresh.length - 25) + ' more' : ''));
+    else ok('design: nothing new outside the system; debt left: ' + ['offGrid', 'rawColor', 'rawRadius', 'rawTime', 'rawEase', 'rawSize'].map(k => k + ' ' + count(k)).join(', ') + (left.length ? ' (' + left.length + ' listed line(s) are gone: --write-debt shortens the list)' : ''));
+  }
+  if (process.argv.includes('--design')) { console.log(failed ? '\n' + failed + ' check(s) failed' : '\nstatic checks passed'); process.exit(failed ? 1 : 0); }
+}
 
 // 3. in a browser
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.woff2': 'font/woff2', '.txt': 'text/plain' };

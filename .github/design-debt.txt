@@ -1,0 +1,319 @@
+# IOPET design debt (see .github/scripts/check.js, 2b, and DESIGN.md §10). Written by: node .github/scripts/check.js --write-debt
+# Every line is something written into a rule that is not from the system. A line that is not here fails the check.
+offGrid   .about { margin-top:30px !important }
+offGrid   .about+.foot-note { margin-top:6px !important }
+offGrid   .about-full { margin-top:10px }
+offGrid   .ach-card .pbar { margin-top:9px }
+offGrid   .ach-card { padding:14px 10px }
+offGrid   .ach-desc { margin-top:3px }
+offGrid   .ach-grid { gap:10px }
+offGrid   .ach-grid { grid-gap:10px }
+offGrid   .ach-name { margin-top:6px }
+offGrid   .ach-strip .chi { margin-right:14px }
+offGrid   .ach-strip .menu-arrow { margin-left:10px }
+offGrid   .adm-lbl { margin-bottom:6px }
+offGrid   .adm-row { padding:10px 0 }
+offGrid   .alert { padding:12px 14px }
+offGrid   .auth-error { padding:10px 12px }
+offGrid   .auth-logo-row .lg-n { margin-left:11px }
+offGrid   .badge-line { padding:12px 14px }
+offGrid   .bar-lbl { margin-top:6px }
+offGrid   .btn { margin-bottom:5px }
+offGrid   .btn { padding:14px 20px }
+offGrid   .btn-primary { padding:16px 22px }
+offGrid   .busy-card { padding:20px 22px }
+offGrid   .cd-lbl { margin-top:5px }
+offGrid   .cele-t { margin-top:26px }
+offGrid   .ch-flag { margin:0 5px 0 6px }
+offGrid   .ch-list .topic-row { margin-top:10px !important }
+offGrid   .ch-prog { margin-top:6px }
+offGrid   .ch-tile { margin-right:14px }
+offGrid   .chip { padding:4px 10px }
+offGrid   .chips { margin:-3px }
+offGrid   .chips>.cp { margin:3px }
+offGrid   .chp-why .li { margin-right:10px }
+offGrid   .chp-why { padding:14px 16px }
+offGrid   .co-ico { margin-right:13px }
+offGrid   .co-right { margin-left:10px }
+offGrid   .co-row { margin-top:10px !important }
+offGrid   .co-row { padding:13px 14px }
+offGrid   .co-row.big { padding:17px 15px }
+offGrid   .co-soon { padding:4px 9px }
+offGrid   .co-state { margin-top:5px }
+offGrid   .co-state:before { margin-right:6px }
+offGrid   .code-form>*+* { margin-top:10px }
+offGrid   .course-pill span { margin-right:6px }
+offGrid   .course-pill { padding:7px 12px }
+offGrid   .cp b { margin-right:3px }
+offGrid   .cp svg { margin-right:5px }
+offGrid   .cp { padding:3px 11px }
+offGrid   .done-card .link { margin-top:6px }
+offGrid   .empty { padding:22px 16px }
+offGrid   .empty-t { margin-top:6px }
+offGrid   .exam-pill .li { margin-right:6px }
+offGrid   .exam-pill { margin-top:10px }
+offGrid   .exam-pill { padding:5px 12px 5px 9px }
+offGrid   .eye { padding:10px 4px }
+offGrid   .faq-a { padding:0 15px 14px }
+offGrid   .faq-chev { margin-left:10px }
+offGrid   .faq-q { padding:14px 15px }
+offGrid   .fb-ico { margin-right:10px }
+offGrid   .fb-text .figs .fig-fig,.rv-x .figs .fig-fig { margin:4px 5px }
+offGrid   .fb-text { margin-top:10px }
+offGrid   .feedback-box { padding:18px 18px 16px }
+offGrid   .field-lbl { margin-bottom:6px }
+offGrid   .fig { margin:4px 6px }
+offGrid   .fig-wide { margin:6px 0 }
+offGrid   .figs { margin:10px 0 2px }
+offGrid   .foot-note { margin-top:18px !important }
+offGrid   .goal-card { padding:18px }
+offGrid   .goal-countdown { margin-top:14px }
+offGrid   .goal-countdown { padding:14px 6px }
+offGrid   .got-list,.summary .next-card { margin-top:10px !important }
+offGrid   .hero .btn-cta { margin:18px 0 0 }
+offGrid   .hero { padding:22px }
+offGrid   .hero-art { margin:-6px -6px 0 8px }
+offGrid   .hero-meta .li { margin-right:6px }
+offGrid   .hero-out { margin-top:14px }
+offGrid   .hero-prog { margin-top:14px }
+offGrid   .input-wrap input { padding:13px 4px }
+offGrid   .input-wrap { padding:0 14px }
+offGrid   .link { padding:10px 6px }
+offGrid   .lock-mid { margin:-20px 0 0 -18px }
+offGrid   .lvl { margin-top:22px }
+offGrid   .lvl { padding:0 17px 0 0 }
+offGrid   .lvl-medal { margin:-18px 0 0 -15px }
+offGrid   .m-actions .btn { padding:13px 10px }
+offGrid   .m-actions .btn+.btn { margin-left:10px }
+offGrid   .m-actions.col .link { margin-top:6px }
+offGrid   .m-card .rv-q { margin-top:14px }
+offGrid   .m-card .rv-x { margin-top:14px }
+offGrid   .m-card .rv-x { padding-top:14px }
+offGrid   .m-list-item { padding:9px 0 }
+offGrid   .mat-hero .lvl { margin-top:30px }
+offGrid   .menu-item { padding:14px 16px }
+offGrid   .mh-art { margin:0 -6px 0 12px }
+offGrid   .mini { padding:18px }
+offGrid   .mini-n { margin-top:10px }
+offGrid   .nav-lbl { margin-top:6px }
+offGrid   .next-card { padding:14px 16px }
+offGrid   .next-step .ns-row { margin-top:14px }
+offGrid   .nudge .li { margin:0 10px 0 0 }
+offGrid   .nudge { padding:12px 14px }
+offGrid   .opt-btn { padding:13px 16px }
+offGrid   .opts.grid .opt-btn { padding:22px 8px 12px }
+offGrid   .opts.grid { gap:10px }
+offGrid   .opts.grid { grid-gap:10px }
+offGrid   .opts.grid.short .opt-btn { padding:14px 8px }
+offGrid   .opts>.opt-btn+.opt-btn { margin-top:10px }
+offGrid   .p-nav .btn+.btn { margin-left:10px }
+offGrid   .pack-card .chip { margin-left:10px }
+offGrid   .pack-card { margin-top:10px !important }
+offGrid   .pack-card { padding:13px 14px }
+offGrid   .pack-hero { padding:6px 0 4px }
+offGrid   .pack-hero-price { margin-top:10px !important }
+offGrid   .pack-hero-price { padding:5px 16px }
+offGrid   .pack-list { padding-left:18px }
+offGrid   .pack-price { margin-left:10px }
+offGrid   .paper .p-count .li { margin-right:6px }
+offGrid   .paper .p-count { padding:8px 10px }
+offGrid   .paper-intro .btn-primary { margin-top:22px }
+offGrid   .paper-res .btn-sec .li,.sh-btn .li { margin-right:6px }
+offGrid   .path .ch-panel { margin-top:22px !important }
+offGrid   .path .ch-panel { padding:20px 22px }
+offGrid   .path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press { margin-bottom:3px }
+offGrid   .path .ch-prog { margin-top:10px }
+offGrid   .path { margin-top:26px }
+offGrid   .pay-app svg { margin-right:6px }
+offGrid   .pay-app { margin-top:6px !important }
+offGrid   .pay-btn svg { margin-right:6px }
+offGrid   .pay-btn { padding:11px 12px }
+offGrid   .pay-id .link { padding:4px 6px }
+offGrid   .pay-id { margin-top:6px }
+offGrid   .pay-n { margin-right:10px }
+offGrid   .pay-or { margin:10px 2px 0 }
+offGrid   .pay-qr { margin:10px 0 8px }
+offGrid   .pay-row { margin:6px -4px 0 }
+offGrid   .pg-grid { margin:14px -3px 6px }
+offGrid   .pg-grid { padding:3px }
+offGrid   .pg-key { margin:0 6px 0 14px }
+offGrid   .pi-fact { padding:12px 6px }
+offGrid   .pi-fact+.pi-fact { margin-left:10px }
+offGrid   .pi-pass { margin-top:14px }
+offGrid   .pi-rule .li { margin:3px 10px 0 0 }
+offGrid   .pi-rule+.pi-rule { margin-top:10px }
+offGrid   .pr-pass .li { margin-right:6px }
+offGrid   .pr-pass { padding:10px 16px }
+offGrid   .prof-rank .li { margin:0 6px 0 -2px }
+offGrid   .prof-rank { padding:5px 14px }
+offGrid   .q-header .q-progress { margin:0 14px }
+offGrid   .q-ico { margin-left:10px }
+offGrid   .q-level { margin-bottom:10px }
+offGrid   .qr-go { margin-top:14px !important }
+offGrid   .qr-head .fb-ico { margin-right:10px }
+offGrid   .qr-head .fb-xp { margin-left:10px }
+offGrid   .qz .q-level { margin-bottom:10px }
+offGrid   .ripple { margin:-22px 0 0 -22px }
+offGrid   .rv-c .li { margin-right:5px }
+offGrid   .rv-c { margin:0 10px }
+offGrid   .rv-card { padding:12px 14px 14px }
+offGrid   .rv-chip { padding:4px 10px 4px 7px }
+offGrid   .rv-line .li { margin:2px 6px 0 0 }
+offGrid   .rv-pv { margin-top:10px }
+offGrid   .rv-q .figs,.rv-line .figs,.rv-x .figs,.fb-text .figs { margin:6px 0 2px }
+offGrid   .rv-q { margin-top:6px }
+offGrid   .seg { padding:3px }
+offGrid   .seg-btn { padding:9px 4px }
+offGrid   .sh-btn { padding:10px 16px }
+offGrid   .sign-out { padding:14px }
+offGrid   .sk-d i { margin-bottom:6px }
+offGrid   .sk-n { margin-top:18px }
+offGrid   .sk-s { margin-top:18px }
+offGrid   .sk-t { margin-top:10px }
+offGrid   .sm-chip .li { margin-right:6px }
+offGrid   .sm-chip { padding:7px 12px 7px 9px }
+offGrid   .sm-dock { padding-bottom:calc(6px + env(safe-area-inset-bottom)) }
+offGrid   .sm-dock { padding:16px 24px 6px }
+offGrid   .sm-links .link { padding:10px 12px }
+offGrid   .sm-stat { padding:14px 4px 12px }
+offGrid   .sm-stat+.sm-stat { margin-left:10px }
+offGrid   .sm-v { margin-top:6px }
+offGrid   .srow { padding-top:10px }
+offGrid   .stat-box { padding:14px 6px 12px }
+offGrid   .stat-box+.stat-box { margin-left:10px }
+offGrid   .stat-val { margin-top:6px }
+offGrid   .step { padding:14px 18px }
+offGrid   .step-dot { margin-right:14px }
+offGrid   .step-x .li { margin-right:6px }
+offGrid   .step-x { margin-top:6px }
+offGrid   .steps-list { padding:6px 0 }
+offGrid   .sub-title { margin-left:14px }
+offGrid   .subj-row { padding:6px 24px 8px }
+offGrid   .subj-t { margin-top:10px }
+offGrid   .sum-head .chi { margin:0 auto 6px }
+offGrid   .sum-mini { margin-top:10px !important }
+offGrid   .summary .btn-sec { margin-top:10px }
+offGrid   .toast .li { margin:-3px 7px 0 -4px }
+offGrid   .toggle-row { padding:14px 16px }
+offGrid   .topic-emoji-big { margin-right:14px }
+offGrid   .topic-right { margin-left:10px }
+offGrid   .topic-row { margin-top:10px !important }
+offGrid   .topic-row { padding:14px 16px }
+offGrid   .xp-fly { margin-top:-11px }
+offGrid   @media (max-height:700px) .sm-art { margin-bottom:6px }
+offGrid   @media (max-height:700px) .sm-stat { padding:10px 4px 9px }
+rawColor  .btn-neutral { background:#E6E6E6 }
+rawColor  .btn-neutral { box-shadow:0 4px 0 #8F8F8F }
+rawColor  .btn-neutral { color:#141414 }
+rawColor  .btn-neutral:active { box-shadow:0 1px 0 #8F8F8F }
+rawColor  .cele-badge { box-shadow:0 4px 0 #1F8C66 }
+rawColor  .cele-icon .chi { filter:drop-shadow(0 12px 14px rgba(0,0,0,.35)) }
+rawColor  .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,216,77,.14),transparent 75%),var(--bg) }
+rawColor  .fv-h1 { fill:#FFC233 }
+rawColor  .fv-h1 { stroke:#CF8E00 }
+rawColor  .fv-h2 { fill:#33B5F0 }
+rawColor  .fv-h2 { stroke:#0A7DB3 }
+rawColor  .fv-h3 { fill:#F2559A }
+rawColor  .fv-h3 { stroke:#B52E69 }
+rawColor  .fv-h4 { fill:#33C25E }
+rawColor  .fv-h4 { stroke:#1E8A40 }
+rawColor  .lvl-track>i { background:hsl(var(--h),90%,52%) }
+rawColor  .qr-go.ok { box-shadow:0 4px 0 #1F8C66 }
+rawColor  .qr-go.ok:active { box-shadow:0 1px 0 #1F8C66 }
+rawColor  .qr-go.plain { background:#E6E6E6 }
+rawColor  .qr-go.plain { box-shadow:0 4px 0 #8F8F8F }
+rawColor  .qr-go.plain { color:#141414 }
+rawColor  .qr-go.plain:active { box-shadow:0 1px 0 #8F8F8F }
+rawColor  .qr-why { background:rgba(255,255,255,.08) }
+rawColor  .sp-kin { background:radial-gradient(closest-side,rgba(255,181,71,.30),rgba(255,181,71,.12) 45%,rgba(255,181,71,0)) }
+rawColor  .sp-sun { background:radial-gradient(closest-side,#FFF8E7 58%,rgba(255,248,231,0)) }
+rawColor  .splash { background:#100F1C }
+rawColor  .toast .li { color:#FFD84D }
+rawColor  .toast>span { border:1px solid rgba(255,255,255,.12) }
+rawColor  .toast>span { color:#FFFFFF }
+rawColor  .toggle:after { background:#fff }
+rawColor  .toggle:after { box-shadow:0 2px 4px rgba(0,0,0,.3) }
+rawColor  .xp-fly { color:var(--gold,#FFB020) }
+rawColor  :root:not([data-theme="light"]) .qz .q-dock .btn-check[disabled] { color:#A0A0A0 }
+rawColor  [data-theme="light"] .btn-neutral { background:#141414 }
+rawColor  [data-theme="light"] .btn-neutral { box-shadow:0 4px 0 #000 }
+rawColor  [data-theme="light"] .btn-neutral { color:#FFFFFF }
+rawColor  [data-theme="light"] .btn-neutral:active { box-shadow:0 1px 0 #000 }
+rawColor  [data-theme="light"] .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,196,0,.20),transparent 75%),var(--bg) }
+rawColor  [data-theme="light"] .lvl-track>i { background:hsl(var(--h),85%,38%) }
+rawColor  [data-theme="light"] .q-result.bad .fb-ico,[data-theme="light"] .opt-btn.wrong .opt-key,[data-theme="light"] .rv-dot.bad { color:#FFFFFF }
+rawColor  [data-theme="light"] .qr-go.ok { box-shadow:0 4px 0 #087553 }
+rawColor  [data-theme="light"] .qr-go.ok:active { box-shadow:0 1px 0 #087553 }
+rawColor  [data-theme="light"] .qr-go.plain { background:#141414 }
+rawColor  [data-theme="light"] .qr-go.plain { box-shadow:0 4px 0 #000 }
+rawColor  [data-theme="light"] .qr-go.plain { color:#FFFFFF }
+rawColor  [data-theme="light"] .qr-go.plain:active { box-shadow:0 1px 0 #000 }
+rawColor  [data-theme="light"] .qr-why { background:rgba(20,20,20,.07) }
+rawEase   .feedback-box.fresh { animation:fb-in .24s ease-out }
+rawEase   .lvl-medal { transition:transform .25s ease-out,filter .25s,opacity .25s }
+rawEase   .modal.open { animation:m-fade .16s ease-out }
+rawEase   .nav-item.flash .nav-ic,.nav-item.flash .nav-lbl { animation:navflash var(--t-pop) ease-out }
+rawEase   .path .ch-panel { transition:transform .08s ease-out,border-color .08s,background-color .08s }
+rawEase   .q-result.fresh { animation:qr-in .3s cubic-bezier(.05,.7,.1,1) }
+rawEase   .qr-go { transition:transform .12s ease-out,box-shadow .12s ease-out }
+rawEase   .rv-card { transition:transform .12s ease-out,border-bottom-width .12s ease-out }
+rawEase   @media (prefers-reduced-motion:reduce) .q-result.fresh { animation:qr-fade .2s ease-out }
+rawEase   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }
+rawRadius  .bar { border-radius:8px 8px 3px 3px }
+rawRadius  .ch-bar { border-radius:8px }
+rawRadius  .ch-bar>i { border-radius:8px }
+rawRadius  .co-row.big .co-ico { border-radius:14px }
+rawRadius  .lvl-track { border-radius:4px }
+rawRadius  .lvl-track>i { border-radius:4px }
+rawRadius  .nav-ic { border-radius:20px }
+rawRadius  .nav-item { border-radius:16px }
+rawRadius  .pack-ico { border-radius:12px }
+rawRadius  .pay-qr { border-radius:12px }
+rawRadius  .pbar { border-radius:8px }
+rawRadius  .pbar>i { border-radius:8px }
+rawRadius  .pg-cell { border-radius:12px }
+rawRadius  .pg-key { border-radius:4px }
+rawRadius  .q-progress { border-radius:10px }
+rawRadius  .q-progress>i { border-radius:10px }
+rawRadius  .seg-btn { border-radius:11px }
+rawRadius  .skel-line { border-radius:7px }
+rawRadius  .toggle { border-radius:26px }
+rawRadius  @media (max-width:340px) .nav-ic { border-radius:18px }
+rawSize   .ach-emoji { font-size:30px }
+rawSize   .avatar-circle { font-size:19px }
+rawSize   .co-ico b { font-size:18px }
+rawSize   .co-ico { font-size:21px }
+rawSize   .co-row.big .co-ico { font-size:25px }
+rawSize   .empty-ico { font-size:34px }
+rawSize   .hero-emoji { font-size:56px }
+rawSize   .icon-btn { font-size:17px }
+rawSize   .m-emoji { font-size:40px }
+rawSize   .menu-ico { font-size:18px }
+rawSize   .pack-hero-ico { font-size:40px }
+rawSize   .pack-ico { font-size:21px }
+rawSize   .pr-big { font-size:64px }
+rawSize   .prof-avatar { font-size:36px }
+rawSize   .sk-n { font-size:72px }
+rawSize   .step-btn { font-size:20px }
+rawSize   .topic-emoji-big { font-size:24px }
+rawTime   .co-row { transition:transform .07s }
+rawTime   .faq-chev { transition:transform .15s }
+rawTime   .feedback-box.fresh { animation:fb-in .24s ease-out }
+rawTime   .home .stats { transition:opacity .2s }
+rawTime   .lvl-medal { transition:transform .25s ease-out,filter .25s,opacity .25s }
+rawTime   .lvl-track>i { transition:width .3s var(--ease-sheet) }
+rawTime   .modal.open { animation:m-fade .16s ease-out }
+rawTime   .nav-ic { transition:background-color .15s }
+rawTime   .opt-btn { transition:transform .12s,border-color .12s,background-color .12s }
+rawTime   .path .ch-panel { transition:transform .08s ease-out,border-color .08s,background-color .08s }
+rawTime   .q-result.fresh { animation:qr-in .3s cubic-bezier(.05,.7,.1,1) }
+rawTime   .qr-go { transition:transform .12s ease-out,box-shadow .12s ease-out }
+rawTime   .rv-card { transition:transform .12s ease-out,border-bottom-width .12s ease-out }
+rawTime   .screen { animation:scr .2s var(--ease-swift) }
+rawTime   .toast { transition:opacity .18s,visibility .18s }
+rawTime   .toggle { transition:background-color .15s }
+rawTime   .toggle:after { transition:transform .15s }
+rawTime   .topic-row { transition:transform .12s }
+rawTime   .vt-theme::view-transition-new(root) { animation:th-in .2s linear both }
+rawTime   @media (prefers-reduced-motion:reduce) .q-result.fresh { animation:qr-fade .2s ease-out }
+rawTime   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }
