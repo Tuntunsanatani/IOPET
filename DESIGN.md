@@ -1,4 +1,4 @@
-# IOPET design rules (v2, 3.20.0)
+# IOPET design rules (v3, 3.21.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -6,6 +6,10 @@ here first, with the reason.
 
 It was written after studying 75 Brilliant screens and 4 screen recordings (Nov 2026) and
 measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a design to copy.
+
+v3 (3.21.0, the owner's master directive) adds the rulebook in numbers (§1b), the states every part
+has (§1c), and the check that keeps the app on the system (§10). §11 says which pages follow it
+already and which are next.
 
 ## 1. Principles
 
@@ -21,6 +25,92 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
    under it (numbers come before words, §8).
 5. **Honest and calm.** No fake urgency, no fake numbers, and a mistake is never punished in
    words. "Not quite", never "Wrong!".
+
+## 1b. The rulebook in numbers (3.21.0)
+
+Measured on the app's 93 screens in both looks, then set. "Share" is how far a grey stands from its
+ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 % is `--ink`.
+
+**Text: three levels, and a grey that is never text.**
+
+| Level | Token | Dark (on a card) | Light (on white) | Share | Used for |
+|---|---|---|---|---|---|
+| Primary | `--ink` | 14.9 : 1 | 18.4 : 1 | 100 % | what the screen is about: titles, values, answers, button words |
+| Secondary | `--ink2` | 8.0 : 1 | 6.5 : 1 | 64–74 % | what explains it: one line under a title, labels, quiet links |
+| Tertiary | `--ink3` | 5.2 : 1 | 5.4 : 1 | 57–59 % | hints, placeholders, small print, locked things |
+| Marks only | `--ink-deco` | 2.5 : 1 | 2.5 : 1 | ~35 % | a sheet's handle, a divider dot. Never words |
+
+- Tertiary cannot go lower: under 4.5 : 1 small words fail on a cheap screen in the sun. Hierarchy
+  below that is made with size and weight, not with a fainter grey.
+- One level per piece of text. Bold is for the primary level and for buttons; secondary and tertiary
+  text is regular or semibold, never bold and grey at once (a bold grey line competes with the title).
+
+**Lines: three kinds. A line gets brighter only when the thing does more.**
+
+| Kind | For | Token | Width | Dark | Light | Share |
+|---|---|---|---|---|---|---|
+| A, a box that holds things | cards, panels, rows of a list, stat blocks | `--line` | 1 px (`--bw`) | 1.2 : 1 | 1.3 : 1 | ~10 % |
+| B, a control with its own fill | a second button on a card, pills that act, steppers, options | `--line-2` | 1 px | 1.5 : 1 | 1.7 : 1 | ~20 % |
+| B, a control that is only a line | a text field, the email button, a button not ready, a checkbox | `--outline` | 1.5 px (`--bw-ctl`) | 3.1 : 1 | 3.5 : 1 | ~40 % |
+| C, in use | the field with the cursor in it | `--outline-on` + a 1 px ring (`--ring`) | 2.5 px in all | 6.4 : 1 | 6.5 : 1 | ~65 % |
+| C, said by the student | the chosen answer of a question | `--ink` + a 2 px ring | 3.5 px | 14.9 : 1 | 18.4 : 1 | 100 % |
+
+- Why a control that is only a line is brighter than the directive's 20–30 %: it has no fill, so the
+  line is all there is to see, and under 3 : 1 a field cannot be found (WCAG 1.4.11).
+- Why focus is not ink: a white outline shouts. 6.4 : 1 with one more pixel is twice the line at rest
+  and reads as "here" at once. Its colour also says the state: green when right, muted red when wrong.
+- Why the chosen answer keeps ink: it is what the student said, the main thing on that screen before
+  Check. It is the one line in the app that is as strong as text.
+- State colours replace the grey, never add to it: right `--good`, wrong `--field-bad` (a quieter red
+  than `--wrong`), current or on `--primary`.
+- No glow anywhere. A shadow only in light, and only under a card (`--shadow-1`, `--shadow-2`).
+
+**Sizes.**
+
+| Token | Value | For |
+|---|---|---|
+| `--h-ctl` | 56 px | a button or a field |
+| `--h-row` | 48 px | a line of words to tap (guest, "Skip for now") |
+| `--tap` | 44 px | the least a finger needs; a smaller drawing gets an unseen area up to it |
+| `--ic` / `--ic-sm` / `--ic-xs` | 24 / 20 / 16 px | an icon; inside a control; inside a chip |
+| `--fs-in` | 16 px | what is typed (smaller makes iPhones zoom in) |
+
+**Space, by what it separates** (all on the 4 pt grid; §4).
+
+| Token | Value | Between |
+|---|---|---|
+| `--sp-icon` | 8 px | a mark and its words |
+| `--sp-in` | 16 px | words and the edge of their control or sheet |
+| `--sp-rel` | 8 px | things of one group: field and field, button and button |
+| `--sp-grp` | 16 px | one group and the next (the ways in, the consent, the foot) |
+| `--sp-sec` | 24 px | one section and the next; a sheet's handle and what is under it |
+
+- Things that belong together stand closer than things that do not. If two gaps look alike, the
+  parts read as one group.
+- Type does not grow or shrink with the screen: the eight sizes are the same on every phone, and
+  the layout gives way instead (the brand above the sign-in sheet gets smaller, a short phone hides
+  a page's mark, a title drops one step at 370 px and under). The phone's own font-size setting is
+  not followed yet (see §11, open points).
+
+## 1c. The states of a part (3.21.0)
+
+Every part that can be touched has these, in both looks, from tokens only:
+
+| State | Button to press | Second button (a line) | Field | Option of a question | Checkbox / switch |
+|---|---|---|---|---|---|
+| At rest | orange, on its 4 px edge | `--outline`, ink words | `--outline`, no fill | `--line`, card fill | `--outline` / grey track |
+| In use (focus) | the phone's focus ring | the same | `--outline-on` + ring, inside `--ctl-on`, icon ink | the same ring | the same ring |
+| Pressed | sinks 3 px onto its edge | 2 % smaller | (no press) | sinks 2 px | fills at once |
+| Chosen / on | | | | ink line + ring, key filled | `--primary` fill, dark tick |
+| Not ready | an outline (`--outline`), words `--ink3`, still tappable: a tap shows what is missing | | | dimmed after the answer | |
+| Waiting | the page's "please wait" card over everything; the button does not spin | | | | |
+| Right | green button after a right answer | | `--good` line, `--ok-tint` | filled green, ✓ | |
+| Wrong | neutral button after a wrong answer | | `--field-bad` line, `--bad-tint`, one 4 px nudge | red line, ✕, never moved | `--field-bad` line when it is asked for |
+
+- A press, by what the thing is: a button on an edge sinks onto it; a flat control gets 2 % smaller;
+  words alone dim to 55 %. All in `--t-press`. (The directive asked for "scale down" on every
+  button; the orange one keeps its sink because it is the one thing with an edge, and shrinking it
+  would shrink the edge too.)
 
 ## 2. Colour roles (tokens in `index.html`, `:root` and `[data-theme="light"]`)
 
@@ -52,8 +142,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 - **Only tokens differ.** Every box, size, weight, space and every motion is the same in both looks. A rule of a
   component names tokens, never a colour; a colour that is right in one look only gets two token values, not a second
   rule. (Sign-in pages: checked, no colour is written into any of their rules.)
-- **Light**: an off-white page (`--bg #F2F2F2`), white surfaces, charcoal ink, shadows soft and few. A control that is
-  only a line (`--outline`) must show on the page and on a sheet: 3 : 1 on both (`#8A8A8A`; dark `#6B6B6B`).
+- **Light**: an off-white page (`--bg #F2F2F2`), white surfaces, charcoal ink, shadows soft and few (under cards only;
+  no button has one). A control that is only a line (`--outline`) must show on the page and on a sheet: 3 : 1 on both
+  (`#8A8A8A`; dark `#6B6B6B`). In use it goes to `--outline-on` (`#5E5E5E`; dark `#A0A0A0`), never to ink.
 - **Dark**: charcoal page, lighter charcoal surfaces, off-white ink, no shadows: a surface is lifted by its grey.
 - **Orange** is not one value: the button's fill is `#FF9F0A` in both looks; orange words and thin marks are lighter on
   dark (`#FFB340`) and deeper on light (`#A35200`, `#D96C00`); the logo's flame is `--logo-flame`. Orange is for the
@@ -100,8 +191,11 @@ Dark and light are the same design. Neither is made from the other by turning co
   16 px, and 24 px between groups.
 - 8 pt grid (3.15.0, sign-in first): every margin and padding is a multiple of 8 (4 only inside a small component).
   Fields 56 px high with 8 px between field rows; a form's message row 24 px; small links 40 px drawn, 48 px to touch.
-- Radius: 14 (fields), 16 (`--r-btn`, every full-size button), 18 (`--r-md`, options, rows, review cards), 24 (`--r-lg`,
-  cards, panels, sheets), pill only for small chips and tags.
+  The scale: 4, 8, 12, 16, 24, 32, 48. 1 and 2 px are allowed as a nudge of the eye (an icon on its line, a title and
+  the line under it). Anything else is counted by the check (§10).
+- Radius, one family: 12 (`--r-sm`, a small thing inside a control), 16 (`--r-btn`, every control: buttons and, since
+  3.21.0, fields, which had 14), 18 (`--r-md`, options, rows, review cards), 24 (`--r-lg`, cards, panels, sheets),
+  32 (`--r-xl`, the hero card), pill for chips, tags, handles and bars.
 - Depth comes from a 3–5 px darker bottom lip on pressable things (buttons, path panels). Pressing
   sinks it (translateY 3 px, lip 1 px). There are no drop shadows in dark.
 - Touch targets are ≥ 44 × 44 px.
@@ -112,7 +206,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 |---|---|---|
 | Primary | orange, 16 px corners, dark text, lip, full width where it is the screen's one action | Start, Check, Next set, Create account |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
-| Secondary | outlined button, or a quiet text link under the primary | Skip (quiz dock), Review answers and Practice this again (summary), Quit |
+| Secondary | a line on what it stands on (`.btn-line`: `--outline`, 56 px, ink words, semibold), or a quiet text link under the primary | Continue with email, Send the email again, Skip (quiz dock), Review answers (summary) |
 | Inactive (sign-in forms since 3.19.0: an outline, see §6) | flat grey fill with a hairline, no lip, text ≥ 7 : 1 (dark `#C4C4C4` on `#2B2B2B`, light `#4A4A4A` on `#EFEFEF`); still tappable: a tap shows what is missing | Check before a choice, Sign in before valid input |
 | Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
 | Icon button | 40–44 px circle | ✕ close, ‹ back, flag (report) |
@@ -147,10 +241,14 @@ Dark and light are the same design. Neither is made from the other by turning co
   - 3.19.0 the form's button, not ready: no fill, the field's outline (`--outline`), text `--ink3` (5:1). Ready (every
     field right): the orange button, as before. Grey = not ready, green = right, muted red = wrong, orange = go.
   - 3.18.0 a field is part of the surface it sits on: no fill of its own, a 1.5 px border that can be seen
-    (`--outline`, 3:1 on the sheet and on the page in both looks). In use it answers like a chosen quiz option: ink border with the
-    same 2 px neutral ring, the inside one step lighter (`--surface-2`), the icon in ink, fading in 180 ms on the swift
-    curve; on a tap or Tab it pops out 1.5 % and back (250 ms, transform only). No pop for a wrong field, for the app's
-    own focus when the sheet opens, or with reduce motion. Orange stays the button's.
+    (`--outline`, 3:1 on the sheet and on the page in both looks). On a tap or Tab it pops out 1.5 % and back (250 ms,
+    transform only). No pop for a wrong field, for the app's own focus when the sheet opens, or with reduce motion.
+    Orange stays the button's.
+  - 3.21.0 in use (the owner: no aggressive white outlines): the border goes to `--outline-on` with a 1 px ring of the
+    same (2.5 px of line at 6.4 : 1; it was 3.5 px of ink), the inside one step lighter (`--ctl-on`: `#282828`, white
+    in light), the icon in ink, fading in 180 ms (`--t-state`). Right and in use: the ring is green. Corners 16.
+  - 3.21.0 the new password's strength line shows only once something is typed. Empty, it was a grey line under the
+    field that said nothing.
   - 3.17.1 sign-in: "Forgot password?" sits right under the password field, right-aligned; the message row comes after it.
   - 3.15.0: the words are in ONE message row of the form, under its last field, always there (24 px, fixed height),
     so the fields can sit 8 px apart. It says what the first wrong field needs, in red (`--wrong-ink`), one line, never
@@ -169,9 +267,12 @@ Dark and light are the same design. Neither is made from the other by turning co
   - A tap on the inactive button marks every wrong field and puts the cursor in the first one. The fields are
     `aria-invalid`, and the first one is described by the message row, so a screen reader hears both.
 - **Sheet**: for choices and short info over a page. It is dimmed behind and rises 300 ms. Its grab line is a real strip
-  (full width, 28–36 px high) and it is the sheet's control (3.14.0):
-  - 3.17.1 (sign-in sheet): while the line is held it is 40 % wider and a little thicker (5 → 6 px), 180 ms on the swift
-    curve, with a 10 ms knock; it goes back when let go. Transform only; nothing around it moves.
+  (full width, 40 px high) and it is the sheet's control (3.14.0):
+  - 3.21.0 the line is a hint, not a headline: 36 × 4 px in `--ink-deco` (2.5 : 1 in both looks, as on the phone's own
+    sheets; it was 40 × 5 at 3.5 : 1), and what is under it starts 24 px below it (it was 15). The same on every sheet.
+  - 3.17.1: while the line is held it is 40 % wider, a little thicker (4 → 5 px) and one step brighter (`--ink3`),
+    180 ms on the swift curve, with a 10 ms knock; it goes back when let go. Transform and colour only; nothing around
+    it moves. (3.21.0: on every sheet, not only the sign-in one.)
   - Drag it and the sheet follows the finger, and the page behind gets lighter.
   - Let go past a third of the sheet's height, or with a flick, and it goes down (140–280 ms). Any less and it settles back
     (260 ms, no bounce). Pulled up, it gives a little.
@@ -186,9 +287,20 @@ Dark and light are the same design. Neither is made from the other by turning co
   the smallest size of the scale; the touch area of Privacy is 48 px high.
 - **Ways to sign in** (3.20.0): one column. Each mark sits in the same 24 px box and each line of words starts at the
   same place, so the Google "G" and the envelope stand exactly under each other; the block is in the middle of the
-  button. Google: white with dark letters in both looks (on a light page with a hairline and a soft shadow). Email: an
-  outlined button (`--outline`), with nothing behind it on dark and white behind it on a light page. Guest: words only,
-  `--ink2`.
+  button. 3.21.0 the two are one family in both looks: the same size, corners and line; Google is the filled one (white,
+  dark letters), email the same shape as a line on the page. No shadow (light had one under Google, and white behind
+  email, so the two looked like different parts). Guest: words only, `--ink2`.
+- **Consent** (3.21.0, the owner's directive 9.6; built, and off until there are Terms of Service: `CONFIG.TERMS`): a
+  20 px box and the sentence "By continuing, you acknowledge that you have chosen to proceed and agree to our Terms of
+  Service." between "Continue as guest" and the foot, 16 px from each. The box is empty at every visit; ticked it is
+  filled like a switch that is on. Until it is ticked none of the three ways in goes on: a tap points at the box (muted
+  red line, one nudge, "Tick the box to continue."). "Terms of Service" is the accent and opens the terms.
+- **Confirm your email, Check your email, You're all set** (3.21.0): the same page as Create account. They were the last
+  three pages in the older look (a centred card with a shadow, a "← Back" pill, a filled second button, orange links).
+  A mark, the title, one line, the numbered steps, the small print, then the buttons in the thumb's reach. The back
+  button is the round one on every page.
+- **A message** (toast) comes at the top where the bottom of a page is its buttons: in a question, and on every sign-in
+  page (3.21.0). It never lies over a button.
 - **Card**: `--surface`, 1 px `--line`, radius 24. The current item gets an orange border and a deep orange
   tint. A done item gets a green tick, and its label stays at full ink. A locked item is dimmed with a lock.
 - **Chips**: small CAPS labels, used for state only (TODAY'S PRACTICE, NEW).
@@ -198,8 +310,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 | Token | Duration | Curve | Use |
 |---|---|---|---|
-| press | 100–120 ms | ease-out | button sink, card press |
-| state | 150–220 ms | ease-out | colour/border changes, ticks, inactive → active |
+| press (`--t-press`) | 120 ms | swift | a finger down: a button sinks, a flat control gets 2 % smaller, words dim |
+| state (`--t-state`) | 180 ms | swift | one thing changes colour: focus, right, wrong, not ready → ready, a handle held |
+| fade (`--t-fade`) | 200 ms | standard (`--ease-std`, `cubic-bezier(.4,0,.2,1)`) | a thing appears or goes in place: the dim behind a sheet, a message |
 | pop (`--t-pop`, `--ease-pop`) | 250 ms | spring k 400, c 28, m 0.8: 1.9 % overshoot | a tapped option (out 3 % and back), the right answer's option |
 | sheet (`--t-sheet`, `--ease-sheet`) | 280 ms | spring k 400, c 35.8, m 0.8: critically damped, no bounce | sheets (from 100 % below), the brand above the sign-in sheet, the progress bar |
 | screen (`scr`) | 200 ms | swift (`--ease-swift`, `cubic-bezier(.25,1,.5,1)`) | a new screen comes in: from 35 % and 6 px below (never from 0, so a throttled WebView still shows it) |
@@ -273,3 +386,54 @@ Every moment goes through one table, `SENSE`, and one call, `sense('…')`, so a
 - Change `CONFIG.VERSION` and `sw.js` `VERSION` together. CI checks that they match.
 - Every UI change is screenshot before/after in dark and light, at 360 and 390 px, and goes to `main`
   through a PR.
+- `node .github/scripts/check.js --design` runs the checks that need no browser (ES5, versions, the design check of §10).
+
+## 10. The system keeps itself (3.21.0)
+
+A rule on paper is forgotten. So the check that runs on every pull request reads the style sheet and holds it to this
+file (`.github/scripts/check.js`, part 2b):
+
+- A token that is used must exist, and the light look may only redefine tokens of the dark look. (A mistyped
+  `var(--name)` draws nothing and says nothing.)
+- Whatever is written into a rule instead of coming from the system is **design debt**: a space off the 4 pt grid, a
+  colour, a corner, a time or a curve that is not a token, a text size outside the scale. Every such line that exists
+  today is listed in `.github/design-debt.txt` (3.21.0: 317 lines; the sign-in pages have none).
+- A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
+- The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
+  and curves are their own.
+- A new rule: use a token, or a value of the scale. If something truly must be written out, add it with
+  `node .github/scripts/check.js --write-debt` and say why in the pull request.
+
+## 11. Where the system is, and what is next
+
+The owner's directive names pages; these are IOPET's:
+
+| Directive | IOPET screens | State |
+|---|---|---|
+| Login, email login, registration, reset | `login` (+ its sheet), `signup`, `forgot`, `sent`, `verify`, `welcome` | on the system (3.21.0) |
+| Home | `home` | next |
+| Courses | `course` (the chooser), `topics` (subjects and chapters), `chapter` | next |
+| Premium | `pack`, `redeem` (and the pack card on Topics) | next (the other chat owns packs' content; the look is ours) |
+| Profile | `profile`, `account`, `goals`, `achievements`, `progress` | next |
+| Assessment | `practice`, `paper`, `paperres`, `summary`, `review` | next |
+| Settings and the rest | `settings`, `notifications`, `help`, `privacy`, `admin`, every sheet, the "please wait" card | next |
+
+Order of the app-wide pass (each step a release, before/after in both looks, the 93-screen walk after each):
+
+1. Lines to their kind (§1b): options, course rows and subject tiles to B; the old fields (`.input-wrap`, in the code
+   box and the account sheets) onto the sign-in field.
+2. One button family: every primary 56 px with its words in its middle, every second button `.btn-line`, one look for
+   "not ready" (Check before a choice is still a grey fill; sign-in is an outline).
+3. Press by kind, everywhere (§1c). Touch areas under 44 px: the segment buttons (37), "Why?" (40), text links (40).
+4. Times and curves to tokens (21 + 10 lines of debt); then spaces to the grid, page by page (202 lines).
+5. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
+   the reference.
+
+Open points (the owner decides):
+
+- The Terms of Service do not exist yet; the consent row waits for them. A child's tick is not a parent's consent:
+  the privacy policy already asks under-18s to use the app with a parent's permission.
+- The phone's own font-size setting is not followed (sizes are px). Following it means `rem` sizes and a pass over
+  every fixed height.
+- The reference pictures named in the directive (the approved login, the profile, the Brilliant quiz) did not arrive
+  with it; the work so far follows its words.

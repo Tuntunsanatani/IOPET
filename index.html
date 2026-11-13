@@ -31,7 +31,7 @@
   /* TYPE SCALE (3.11.0) — every text size of the app is one of these eight; nothing in between. The cap size is only for
      small CAPS labels (letter-spaced; 12 px since 3.14.0, 11 was too small on cheap screens); 16 px stays on text inputs
      (smaller makes iPhones zoom in). Icons keep their own sizes. */
-  --fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;
+  --fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;--fs-in:16px;   /* --fs-in: what is typed */
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.10.0 the brand: matte charcoal and the diya's flame. The chrome is plain grey (no tint, no haze, no gloss); a hue appears
      only where it means something, and each hue means one thing in both looks:
@@ -49,7 +49,7 @@
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--outline:#6B6B6B;--outline-bg:transparent;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --line:#2E2E2E;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -60,12 +60,12 @@
   /* 3.20.0 SIGN-IN, both looks (DESIGN.md §2b): the colours that were written into its rules are tokens now.
        --outline      the line round a control with no fill of its own: a field, the email button, a button not ready; 3:1 on
                       the page and on a sheet in both looks (light was #8F8F8F: 3.2 on white but 2.9 on the page)
-       --outline-bg   what the email button stands on: nothing on dark (the page shows), white on a light page
-       --g-*          the Google button: white with dark letters in both looks (Google's own light button); on a light page
-                      it needs a line and a soft shadow to stand off the page, on dark it needs neither
+       --g-*          the Google button: white with dark letters in both looks (Google's own light button). 3.21.0 the two
+                      ways are one family in both looks: Google is the filled one, email the same shape as a line on the
+                      page; on a light page Google has that same line (no shadow), on dark it needs none
        --scrim-soft   the dim behind the sign-in sheet: lighter than a dialog's, the brand stays readable above it
        --on-wrong     a glyph on the red mark;  --logo-flame  the diya's flame (deeper on a light page) */
-  --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--g-shadow:none;--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
+  --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--ink2);
   --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
@@ -91,6 +91,25 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
+  /* 3.21.0 THE SYSTEM IN NUMBERS (DESIGN.md §1b, the rulebook). One place for what was written into single rules:
+       lines     A a box that holds things     --line      1 px (--bw)        ~10 % of the way from the ground to ink
+                 B a control with its own fill --line-2    1 px               ~20 %
+                 B a control that is only a line --outline 1.5 px (--bw-ctl)  3 : 1, ~40 %: the line is all there is to see
+                 C in use (focus)              --outline-on, plus a 1 px ring (--ring): 6.4 : 1, ~65 %, never white
+                 a chosen answer keeps ink (§2): it is what the student said, the main thing on that screen
+       --ctl-on  the inside of a control in use: one step lighter than what it stands on (white on a light page)
+       sizes     --h-ctl a button or a field · --h-row a line to tap (words only) · --tap the least a finger needs
+                 --ic an icon · --ic-sm an icon inside a control · --ic-xs inside a chip
+       space     by what it separates (all on the 4 pt grid): --sp-icon a mark and its words · --sp-rel things of one group
+                 (field and field, button and button) · --sp-in words and the edge of their control · --sp-grp one group
+                 and the next · --sp-sec one section and the next
+       motion    --t-press a finger down · --t-state one thing changes colour (focus, right, wrong, ready) · --t-fade a
+                 thing appears or goes in place; --ease-swift what answers a touch, --ease-std a fade or a two-way move */
+  --outline-on:#A0A0A0;--ctl-on:#282828;
+  --bw:1px;--bw-ctl:1.5px;--ring:1px;
+  --h-ctl:56px;--h-row:48px;--tap:44px;--ic:24px;--ic-sm:20px;--ic-xs:16px;
+  --sp-icon:8px;--sp-rel:8px;--sp-in:16px;--sp-grp:16px;--sp-sec:24px;
+  --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
   --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
@@ -107,14 +126,14 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --line:#E3E3E3;--outline:#8A8A8A;--outline-bg:#FFFFFF;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
+  --line:#E3E3E3;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#5E5E5E;--ink3:#6A6A6A;--ink-deco:#A3A3A3;   /* 18.4, 6.5 and 5.4:1 on white */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
   --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--on-wrong:#FFFFFF;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
-  --g-line:#C7C7C7;--g-shadow:0 1px 2px rgba(20,20,20,.05),0 4px 12px rgba(20,20,20,.06);--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;
+  --g-line:var(--outline);--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;--outline-on:#5E5E5E;--ctl-on:#FFFFFF;
   --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
@@ -224,7 +243,7 @@ sub,sup{font-size:.72em;line-height:0}
 .card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .card>*+*{margin-top:12px}
 /* BUTTONS: one primary per screen — the ink pill (white in dark); others are a white pill or a text link. A press sinks 2px, no bounce. */
-.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform .12s ease-out,box-shadow .12s ease-out;margin-bottom:5px}
+.btn{display:block;width:100%;min-height:52px;padding:14px 20px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.5;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:5px}
 .btn:active{transform:translateY(2px)}
 .btn-primary{min-height:58px;padding:16px 22px;font-size:var(--fs-lg);line-height:26px;background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
 .btn-primary:active{box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
@@ -262,11 +281,11 @@ sub,sup{font-size:.72em;line-height:0}
 /* ── INPUTS ── */
 .input-wrap{display:flex;align-items:center;min-height:52px;background:var(--surface-2);border:1.5px solid var(--line);border-radius:var(--r-md);padding:0 14px}
 .input-wrap:focus-within{border-color:var(--purple);background:var(--pur-bg)}
-.input-wrap input{flex:1;min-width:0;width:100%;padding:13px 4px;font-size:16px;font-weight:600}
+.input-wrap input{flex:1;min-width:0;width:100%;padding:13px 4px;font-size:var(--fs-in);font-weight:600}
 .input-icon{flex:none;width:24px;display:flex;justify-content:center;color:var(--ink3);font-size:var(--fs-md)}
 .eye{flex:none;font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);padding:10px 4px}
 .field-lbl{display:block;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);letter-spacing:.4px;margin-bottom:6px}
-textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:12px;font-size:16px;line-height:1.45}
+textarea.ta{display:block;width:100%;min-height:110px;resize:none;background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-md);padding:12px;font-size:var(--fs-in);line-height:1.45}
 textarea.ta:focus{border-color:var(--purple)}
 input[type=date]{color-scheme:inherit}
 
@@ -350,88 +369,106 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .auth-logo-row .lg-n{margin-left:11px}
 .auth-title{font-size:var(--fs-2xl);font-weight:700;line-height:1.2}
 .auth-sub{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px !important}
-.auth-form{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2);border-radius:var(--r-xl);padding:22px;margin-top:18px !important}
-.auth-form>*+*{margin-top:10px}
 .auth-error{display:none;background:var(--bad-bg);border:1px solid var(--bad-line);border-radius:var(--r-md);padding:10px 12px;font-size:var(--fs-xs);font-weight:700;color:var(--bad-ink);line-height:1.45}
 .auth-error.show{display:block}
 .auth-switch{text-align:center;font-size:var(--fs-xs);color:var(--cream40)}
-.divider{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:700;color:var(--cream40);letter-spacing:.5px}
-.divider:before,.divider:after{content:'';flex:1;height:1px;background:var(--line-2)}
-.divider:before{margin-right:10px}
-.divider:after{margin-left:10px}
-.strength{height:4px;background:var(--fill-2);border-radius:4px;overflow:hidden;margin-top:6px !important}
-.strength>i{display:block;height:100%;width:0;border-radius:4px;transition:width .2s,background-color .2s}
-.hint{font-size:var(--fs-xs);color:var(--cream40);margin-top:5px !important;min-height:15px}
-.back-pill{display:inline-block;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:8px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-bottom:6px}
-.back-pill:active{background:var(--surface-3)}
+.strength{height:4px;background:transparent;border-radius:var(--r-pill);overflow:hidden;margin-top:8px !important;transition:background-color var(--t-state) var(--ease-swift)}
+.strength.on{background:var(--fill-2)}   /* 3.21.0 empty, it was a grey line under the field that said nothing: its track shows once something is typed */
+.strength>i{display:block;height:100%;width:0;border-radius:var(--r-pill);transition:width var(--t-fade) var(--ease-swift),background-color var(--t-fade) var(--ease-swift)}
 /* ── SIGN-IN, 3.11.0 ── Thumb first: the brand sits up top, every action within the thumb's reach at the bottom. One field
    style, one button behaviour on all three auth pages. The main button stays grey until what it needs is filled in right,
    then turns orange (still tappable before: a tap shows what is missing). Motion: the sheet rises (300 ms, emphasized
    decelerate), a field lights up on focus (150 ms), the button turns (220 ms). No motion with "Reduce animations". */
 .page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 16px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
 .au .btn{margin-bottom:0;-webkit-tap-highlight-color:transparent}
-.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform var(--t-sheet) var(--ease-sheet),opacity .2s ease-out}
+.au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform var(--t-sheet) var(--ease-sheet),opacity var(--t-fade) var(--ease-std)}
 .au.still .au-hero,.calm .au-hero{transition:none}
-.au-hero .lg{margin-bottom:22px}
+.au-hero .lg{margin-bottom:24px}
 .au-wm{display:block;width:150px;height:auto;color:var(--ink)}
-.au-tag{margin-top:14px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
+.au-tag{margin-top:16px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
 .au-tag.note{color:var(--ink2);font-weight:400}
-.au-dock>*+*{margin-top:8px}
+.au-dock>*+*{margin-top:var(--sp-rel)}
 /* 3.20.0 the ways to sign in are one column: each mark sits in the same 24 px box and each line of words starts at the
    same place (the words' box is as wide as the longest of them: its other label is in it, unseen), so the Google "G" and
    the envelope stand exactly under each other. The block of mark and words is in the middle of the button. */
-.au-g,.au-e{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;font-size:var(--fs-lg);font-weight:600;border:1.5px solid}
-.au-g{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:var(--g-shadow)}
-.au-e{background:var(--outline-bg);color:var(--ink);border-color:var(--outline);box-shadow:none}
-.au-ic{flex:none;width:24px;height:24px;display:grid;place-items:center}
-.au-ic>svg{display:block;width:20px;height:20px}
+.au-g,.au-e,.btn-line{display:flex;align-items:center;justify-content:center;gap:var(--sp-icon);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:600;border:var(--bw-ctl) solid}
+.au-g{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:none}
+.au-e,.btn-line{background:transparent;color:var(--ink);border-color:var(--outline);box-shadow:none}   /* .btn-line: the second button of a page, a line on what it stands on */
+/* on these pages the orange button is a control like the others: 56 px, its words in its middle */
+.au .btn-primary{display:flex;align-items:center;justify-content:center;min-height:var(--h-ctl);padding:0 24px;line-height:1.3}
+.au .btn-primary:active{transform:translateY(3px)}   /* onto its edge: the edge goes from 4 px to 1 */
+.au-ic{flex:none;width:var(--ic);height:var(--ic);display:grid;place-items:center}
+.au-ic>svg{display:block;width:var(--ic-sm);height:var(--ic-sm)}
 .au-lb{display:inline-grid;text-align:left;white-space:nowrap}
 .au-lb:after{content:attr(data-w);grid-area:1/1;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
-.au-g:active,.au-e:active{transform:scale(.98)}
-.au-ghost{display:block;width:100%;min-height:48px;text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
-.au-foot{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:8px !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink2)}
+/* 3.21.0 A PRESS, by what the thing is (DESIGN.md §7): a button that stands on an edge sinks onto it (.btn-primary,
+   .au-go.on); a flat control gets 2 % smaller; words alone dim. Each answers in --t-press. */
+.au-g:active,.au-e:active,.btn-line:active,.au-go.off:active{transform:scale(.98)}
+.au-ghost,.au-priv,.au-tos,.au-fgt button,.au-alt button{transition:opacity var(--t-press) var(--ease-swift)}
+.au-ghost:active,.au-priv:active,.au-tos:active,.au-fgt button:active,.au-alt button:active{opacity:.55}
+.au-ghost{display:block;width:100%;min-height:var(--h-row);text-align:center;font-size:var(--fs-md);font-weight:600;color:var(--ink2)}
+.au-foot{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:var(--sp-rel) !important;font-size:var(--fs-cap);font-weight:700;letter-spacing:1.2px;color:var(--ink2)}
+/* 3.21.0 CONSENT (see auConsent): one part, a box and its sentence, set off from the ways in above it and from the foot
+   below it by the gap between groups. The box is a control that is only a line (--outline) until it is ticked; ticked it
+   is filled like a switch that is on (--primary) with a dark tick. The sentence is secondary (--ink2, 13 px) on lines
+   as high as the box, so the box stands exactly beside its first line; "Terms of Service" is the accent. */
+.au-consent{display:flex;align-items:flex-start;gap:12px;margin-top:var(--sp-grp) !important;padding:0 4px;text-align:left}
+.au-cb{position:relative;flex:none;width:20px;height:20px;border-radius:calc(var(--r-sm) / 2);border:var(--bw-ctl) solid var(--outline);color:transparent;display:grid;place-items:center;transition:background-color var(--t-state) var(--ease-swift),border-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift)}
+.au-cb:after{content:'';position:absolute;top:-14px;right:-14px;bottom:-14px;left:-14px}   /* 20 px drawn, 48 px to touch */
+.au-cb svg{width:14px;height:14px}
+.au-cb[aria-checked="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-mark)}
+.au-consent.ask .au-cb{border-color:var(--field-bad);background:var(--bad-tint)}
+.au-ct{flex:1;min-width:0;font-size:var(--fs-xs);line-height:20px;color:var(--ink2)}
+.au-tos{position:relative;font:inherit;font-weight:600;color:var(--primary-ink)}
+.au-tos:after{content:'';position:absolute;top:-12px;right:-4px;bottom:-12px;left:-4px}   /* 44 px to touch */
+.au-consent+.au-foot{margin-top:var(--sp-grp) !important}
 /* 3.20.0 where it is made leads (ink2, bold); privacy follows, quieter: a small shield and the word (ink3, semibold), no
    frame round it. The shield keeps its green: the one mark of trust on the page. The touch area is still 48 px high. */
-.au-priv{position:relative;display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:0 4px;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--ink3)}
+.au-priv{position:relative;display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:0 4px;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--ink3)}
 .au-priv:after{content:'';position:absolute;top:-8px;right:-8px;bottom:-8px;left:-8px}
 .au-priv .chi{width:14px;height:14px;flex:none;margin-top:-1px}
-.au-priv:active{transform:scale(.97)}
-.au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;margin:0;z-index:2;background:var(--scrim-soft);opacity:0;pointer-events:none;transition:opacity .2s cubic-bezier(.4,0,.2,1)}
-.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;padding:0 16px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
+.au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;margin:0;z-index:2;background:var(--scrim-soft);opacity:0;pointer-events:none;transition:opacity var(--t-fade) var(--ease-std)}
+.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:0 var(--sp-in) calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
 .au.open .au-sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
 /* (3.20.0 the dim covers the whole page: as a later child of .page it had that rule's 12px top margin, so a strip at the
    very top stayed undimmed, a white strip in the light look) */
 /* 3.14.0 the grab strip is the sheet's one control (the owner: a title only repeated the button, and the line already says
-   "pull me down"). The whole width and 36 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
-   and the sheet goes down. */
-.au-grab{display:block;position:relative;width:calc(100% + 32px);height:32px;margin:0 -16px 0;background:none;touch-action:none;-webkit-tap-highlight-color:transparent}
-.au-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .18s var(--ease-swift)}   /* ≥ 3:1 in both looks */
-/* 3.17.1 the line answers the finger: 40 % wider (20 % each side) and a little thicker (5 → 6 px) while it is held, back when
-   let go. Transform only, so nothing around it moves; no bounce. The class is set on touch-down (onAuDown) and kept at least
-   180 ms, so a quick tap shows it too. */
-.au-grab.on:before{transform:scale(1.4,1.2)}
+   "pull me down"). The whole width and 40 px high, so it is easy to catch; drag it and the sheet follows the finger, tap it
+   and the sheet goes down.
+   3.21.0 (the owner: it was too loud and too near the first field) the line is a hint, not a headline: 36 x 4 px in the
+   grey of marks that are not text (--ink-deco, 2.5 : 1 in both looks, as on the phone's own sheets), and what is under it
+   starts 24 px below it (it was 15). The same line on every sheet (.m-grab). */
+.au-grab,.m-grab{display:block;height:40px;touch-action:none;-webkit-tap-highlight-color:transparent}
+.au-grab{position:relative;width:calc(100% + 32px);margin:0 -16px 0;background:none}
+.au-grab:before,.m-grab:before{content:'';position:absolute;left:calc(50% - 18px);top:12px;width:36px;height:4px;border-radius:var(--r-pill);background:var(--ink-deco);transition:transform var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+/* 3.17.1 the line answers the finger: 40 % wider (20 % each side), a little thicker (4 → 5 px) and one step brighter while
+   it is held, back when let go. Transform and colour only, so nothing around it moves; no bounce. The class is set on
+   touch-down (onAuDown) and kept at least 180 ms, so a quick tap shows it too. */
+.au-grab.on:before,.m-grab.on:before{transform:scale(1.4,1.25);background:var(--ink3)}
 .au-title{font-size:var(--fs-2xl);font-weight:700;letter-spacing:-.2px;line-height:1.25}
 .au-form>.auth-error{margin-bottom:12px}
-.au-fld+.au-fld{margin-top:8px}
+.au-fld+.au-fld{margin-top:var(--sp-rel)}
 /* 3.18.0 (the owner's refinement 02) a field is part of the surface it sits on: no fill of its own, only a border that can
-   be seen (--outline, 3:1 on the sheet in both looks). In use it answers like a chosen quiz option (.opt-btn.sel): the
-   border goes to ink with the same neutral ring, the inside lifts one step, and it pops out 1.5 % and back (onAuFocus).
-   Orange stays the button's. Colours fade in 180 ms; the pop is transform only, so nothing moves around it. */
-.au-iw{display:flex;align-items:center;min-height:56px;background:transparent;border:1.5px solid var(--outline);border-radius:14px;padding:0 8px 0 16px;transition:border-color .18s var(--ease-swift),background-color .18s var(--ease-swift),box-shadow .18s var(--ease-swift)}
-.au-iw>.li{width:20px;height:20px;color:var(--ink3);flex:none;transition:color .18s var(--ease-swift)}
-.au-iw input{flex:1;min-width:0;height:53px;margin-left:8px;padding:0;background:none;border:0;outline:0;font:inherit;font-size:16px;color:var(--ink)}
+   be seen (--outline, 3:1 on the sheet in both looks). Orange stays the button's. Colours fade in 180 ms; the pop is
+   transform only, so nothing moves around it.
+   3.21.0 (the owner: no aggressive white outlines) in use the border goes two steps up, not to ink: --outline-on with a
+   1 px ring of the same (2.5 px of line at 6.4 : 1; it was 3.5 px of white), the inside one step lighter (--ctl-on), the
+   icon in ink, and it still pops out 1.5 % and back (onAuFocus). Its corners are the button's (16; they were 14). */
+.au-iw{display:flex;align-items:center;min-height:var(--h-ctl);background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);padding:0 8px 0 var(--sp-in);transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift)}
+.au-iw>.li{width:var(--ic-sm);height:var(--ic-sm);color:var(--ink3);flex:none;transition:color var(--t-state) var(--ease-swift)}
+.au-iw input{flex:1;min-width:0;height:calc(var(--h-ctl) - 2 * var(--bw-ctl));margin-left:var(--sp-icon);padding:0;background:none;border:0;outline:0;font:inherit;font-size:var(--fs-in);color:var(--ink)}
 .au-iw input::placeholder{color:var(--ink3)}
-.au-fld.focus .au-iw{border-color:var(--ink);background:var(--surface-2);box-shadow:0 0 0 2px var(--ink)}
+.au-fld.focus .au-iw{border-color:var(--outline-on);background:var(--ctl-on);box-shadow:0 0 0 var(--ring) var(--outline-on)}
 .au-fld.focus .au-iw>.li{color:var(--ink)}
 /* 3.19.0 (the owner's refinement 03) a field has three states, told by its border and a faint tint, never by an icon:
    grey = not yet right, green = right, muted red = left wrong (never while typing). The ring's width still says which
    field is in use; its colour says the state. The red is kept quieter than the green. */
 .au-fld.ok .au-iw{border-color:var(--good);background:var(--ok-tint)}
-.au-fld.ok.focus .au-iw{box-shadow:0 0 0 2px var(--good)}
-.au-eye{width:44px;height:44px;display:grid;place-items:center;color:var(--ink3);border-radius:12px;flex:none}
-.au-eye svg{width:20px;height:20px}
+.au-fld.ok.focus .au-iw{box-shadow:0 0 0 var(--ring) var(--good)}
+.au-eye{width:var(--tap);height:var(--tap);display:grid;place-items:center;color:var(--ink3);border-radius:var(--r-sm);flex:none}
+.au-eye svg{width:var(--ic-sm);height:var(--ic-sm)}
 .au-eye[aria-pressed="true"]{color:var(--ink)}   /* 3.20.0 shown: brighter, not orange (orange is the button's) */
 .au-fld.bad .au-iw{border-color:var(--field-bad);background:var(--bad-tint);box-shadow:none}
 /* 3.14.0 calm errors (DESIGN.md §6): nothing moves and nothing shakes; the wrong field itself turns into the burgundy
@@ -447,8 +484,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fld .strength{margin-top:8px !important}
 /* a message about the whole form (wrong password, no internet, too many tries) floats just above the form, in space that
    is already empty: above the sheet, or above the form of the page. Nothing in the form moves. */
-.au-err{position:absolute;left:16px;right:16px;z-index:4;display:flex;align-items:flex-start;gap:8px;padding:16px;border-radius:var(--r-md);background:var(--wrong-soft);border:1px solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(6px);pointer-events:none;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s .2s}
-.au-err.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease-out,transform .2s cubic-bezier(.05,.7,.1,1),visibility 0s}
+.au-err{position:absolute;left:16px;right:16px;z-index:4;display:flex;align-items:flex-start;gap:8px;padding:16px;border-radius:var(--r-md);background:var(--wrong-soft);border:var(--bw) solid var(--bad-line);color:var(--ink);font-size:var(--fs-sm);font-weight:600;line-height:1.45;opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;transition:opacity var(--t-fade) var(--ease-std),transform var(--t-fade) var(--ease-sheet),visibility 0s var(--t-fade)}
+.au-err.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity var(--t-fade) var(--ease-std),transform var(--t-fade) var(--ease-sheet),visibility 0s}
 .au-err-ico{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--wrong);color:var(--on-wrong);margin-top:0}
 .au-err-ico .li{width:13px;height:13px}
 /* 3.16.0 SKELETON — content on its way: grey blocks in its shape, and one soft light passing over them (1.2 s; a loading
@@ -466,15 +503,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fgt{display:flex;justify-content:flex-end}
 .au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
-.au-go{margin-top:8px;min-height:56px;font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color .22s ease-out,color .22s ease-out,box-shadow .22s ease-out,transform .12s ease-out}
-.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 1.5px var(--outline)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
-.au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready .32s cubic-bezier(.2,0,0,1)}
+.au-go{margin-top:var(--sp-rel);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
+.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 var(--bw-ctl) var(--outline)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
+.au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready var(--t-pop) var(--ease-swift)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
-.au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
+.au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:var(--sp-rel)}
 .au-alt button{position:relative;font:inherit;font-weight:700;color:var(--primary-ink);min-height:40px;padding:0 4px}
 .au-note{font-size:var(--fs-sm);color:var(--ink2);line-height:1.5}
 .au-top{display:flex;align-items:center;min-height:44px}
-.au-body{margin-top:auto;padding-top:24px}
+.au-body{margin-top:auto;padding-top:var(--sp-sec)}
 .au-body>.au-title{margin-bottom:8px}
 .au-body>.au-note{margin-bottom:16px}
 @keyframes au-ready{0%{transform:scale(.97)}60%{transform:scale(1.015)}100%{transform:none}}
@@ -482,18 +519,26 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .au-go.on{animation:none}
 @media (prefers-reduced-motion:reduce){.au-sheet,.au-scrim,.au-err,.au-err.show{transition:none}.au-go.on{animation:none}}
 
-/* ── CONFIRM EMAIL / RESET LINK ── */
-.otp-icon{display:flex;justify-content:center;margin:0 auto;width:84px;height:84px;align-items:center;border-radius:50%;background:var(--primary-soft);color:var(--primary)}
-.em{color:var(--cream);word-break:break-all}
-.steps{font-size:var(--fs-xs);color:var(--cream60);line-height:1.75}
-.steps b{color:var(--cream);margin-right:4px}
-.note{background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:10px 12px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.45}   /* 3.10.0 information: no hue */
-.hint.center{text-align:center;line-height:1.5}
-
-/* ── WELCOME ── */
-.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.success-circle{width:90px;height:90px;border-radius:50%;background:var(--good);color:var(--on-cta);display:flex;align-items:center;justify-content:center}   /* 3.10.0 the tick is dark: white on green was 2.3:1 */
-.welcome .btn{max-width:280px;margin-top:26px}
+/* ── CONFIRM EMAIL / RESET LINK / ALL SET ── 3.21.0 the same page as Create account and Reset password (they were the
+   last three pages in the older look: a centred card with a shadow, a "← Back" pill, a filled second button, orange links).
+   Bottom-anchored, in the thumb's reach: a mark, the title, one line, the steps, the small print, then the buttons, the
+   one to press last but for the quiet ones. A message about the page floats above it, like on every sign-in page. */
+.em{color:var(--ink);overflow-wrap:anywhere}        /* an address goes to the next line whole; it is cut only when longer than a line (3.21.0: it was cut anywhere) */
+.au-mark{width:56px;height:56px;margin-bottom:16px;border-radius:50%;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary)}
+.au-mark .li{width:28px;height:28px}
+.au-steps{list-style:none;counter-reset:st;margin-bottom:16px;font-size:var(--fs-sm);line-height:1.5;color:var(--ink2)}
+.au-steps li{position:relative;padding-left:24px;counter-increment:st}
+.au-steps li+li{margin-top:4px}
+.au-steps li:before{content:counter(st) '.';position:absolute;left:0;top:0;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.au-fine{margin-bottom:16px;font-size:var(--fs-xs);line-height:1.5;color:var(--ink3)}
+.au-fine+.au-fine{margin-top:-8px}                 /* two notes are one block of small print: 8 px between them */
+.au-body>.btn+.btn{margin-top:12px}                 /* 8 px seen: the orange button's edge takes 4 */
+.au-body>.btn+.au-ghost{margin-top:var(--sp-rel)}
+/* "You're all set": the sign-in page's own shape, the tick where the brand is, the button where its buttons are */
+.success-circle{width:88px;height:88px;border-radius:50%;background:var(--good);color:var(--on-cta);display:flex;align-items:center;justify-content:center}   /* 3.10.0 the tick is dark: white on green was 2.3:1 */
+.au-hero .au-title{margin-top:var(--sp-sec);text-align:center}
+.au-hero .au-note{margin-top:8px;text-align:center}
+@media (max-height:640px){.au-mark{display:none}}   /* a short phone: the mark gives its room to the words and the buttons */
 
 /* ── HOME (3.9.0): greeting, one hero card, two small cards ── */
 .home>*+*{margin-top:24px}
@@ -748,7 +793,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-cap{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2);margin-top:24px !important}
 .sm-chips{display:flex;flex-wrap:wrap;justify-content:center;margin:12px -4px 0 !important}
 .sm-chip{display:inline-flex;align-items:center;margin:4px;padding:7px 12px 7px 9px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:var(--fs-sm);font-weight:600;line-height:1.3}
-.sm-chip .li{width:16px;height:16px;margin-right:6px;stroke-width:2.5;color:var(--ink2)}
+.sm-chip .li{width:var(--ic-xs);height:var(--ic-xs);margin-right:6px;stroke-width:2.5;color:var(--ink2)}
 .sm-chip.g .li{color:var(--good)}
 .sm-chip.y .li{color:var(--gold)}
 .sm2 .next-card{margin-top:8px !important}
@@ -979,7 +1024,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .course-tag{flex:1;min-width:0;margin-left:12px;text-align:right;line-height:1.35}   /* takes the room the title leaves; a long course name goes on two lines, nothing is cut */
 
 /* long email addresses and server messages must wrap instead of pushing the page sideways */
-.auth-error,.auth-sub,.auth-switch,.m-text,.m-err,.m-list-item,.note,.hint,.alert,.nudge,.toast>span,.busy-t,.small{word-wrap:break-word;word-break:break-word;overflow-wrap:anywhere}
+.auth-error,.auth-sub,.auth-switch,.m-text,.m-err,.m-list-item,.au-note,.au-fine,.au-steps,.alert,.nudge,.toast>span,.busy-t,.small{word-wrap:break-word;word-break:break-word;overflow-wrap:anywhere}
 
 /* ── ACCOUNT & BACKUP ── */
 .nudge{display:flex;align-items:flex-start;width:100%;text-align:left;background:var(--info-bg);border:1px solid var(--info-line);border-radius:var(--r-md);padding:12px 14px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.5}
@@ -1018,10 +1063,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .m-card>*+*{margin-top:12px}
 /* 3.14.0 every sheet's grab line is a real strip that follows the finger (as on the sign-in sheet); it stays on top when the
    sheet scrolls */
-.m-grab{display:block;position:sticky;top:-12px;z-index:1;width:calc(100% + 48px);height:28px;margin:-12px -24px 0;background:var(--modal);touch-action:none;-webkit-tap-highlight-color:transparent}
-.m-grab:before{content:'';position:absolute;left:50%;top:12px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--ink3);opacity:.75;transition:transform .15s ease-out}
-.m-grab:active:before{transform:scaleX(1.15)}
-.m-card>.m-grab+*{margin-top:4px}
+.m-grab{position:sticky;top:-12px;z-index:1;width:calc(100% + 48px);margin:-12px -24px 0;background:var(--modal)}   /* (its line: with .au-grab, above) */
+.m-card>.m-grab+*{margin-top:0}
 .m-emoji{font-size:40px;text-align:center;line-height:1.2;color:var(--ink2)}
 .m-emoji .li{width:40px;height:40px}
 .m-title{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
@@ -2724,7 +2767,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.20.0',
+  VERSION: '3.21.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -2750,6 +2793,12 @@ var CONFIG = {
   MAIL_WAIT_MS: 60000,                         // gap between two emails to the same address
   GOOGLE_CLIENT_ID: '833578570616-8vss4s5lj5jbjtf15bfg3oip8l5dmk7c.apps.googleusercontent.com',   // 3.11.0 Sign in with Google (public: a web client id is no secret)
   PASS_MIN: 8,                                 // shortest password the app accepts
+  /* 3.21.0 THE TERMS OF SERVICE. null = there are none yet: the sign-in page then asks for no agreement and nothing links
+     to a Terms page (a box that says "I agree to our Terms" must lead to terms that exist). Once the owner has written
+     them, put them here and the rest follows by itself: the sign-in page shows the box and the sentence (auConsent), the
+     three ways in wait for the box (auAgreed), "Terms of Service" opens SCREENS.terms, and the You tab lists them beside
+     the privacy policy. Shape: { updated: '14 November 2026', parts: [{ t: 'Using IOPET', d: 'Plain words …' }, …] } */
+  TERMS: null,
   KEEP_CHOSEN: 12                              // signed-out profiles that only hold a chosen course (no practice yet): the latest 12 are kept on a phone
 };
 /* 3.9.7 PLAY MODE — the same app, opened as the Google Play app: that app opens this page as …/?src=play.
@@ -4256,7 +4305,7 @@ function syncRun(pull, cb) {
    ════════════════════════════════════════════════════════════════════ */
 var SCREENS = {}, AFTER = {}, ACTIONS = {};
 var TABS = { home: 1, topics: 1, progress: 1, profile: 1 };
-var PUBLIC = { splash: 1, login: 1, signup: 1, forgot: 1, sent: 1, privacy: 1 };
+var PUBLIC = { splash: 1, login: 1, signup: 1, forgot: 1, sent: 1, privacy: 1, terms: 1 };
 var SESSION_SCREENS = { practice: 1, summary: 1, review: 1, paperres: 1 };
 var LIVE = { home: 1, topics: 1, chapter: 1, progress: 1, profile: 1, account: 1, goals: 1, achievements: 1, verify: 1, course: 1 };   // screens redrawn when cloud data arrives
 var NO_COURSE = { course: 1, verify: 1, welcome: 1 };          // screens a signed-in student may see before a course is chosen
@@ -4278,6 +4327,10 @@ function guard() {
       if (e.p && e.p.at && !courseStep(e.p.at)) { if (stack.length > 1) stack.pop(); else stack = [{ s: 'course', p: { must: e.p.must } }]; continue; }
     }
     if (e.s === 'signup' && e.p && e.p.restart && !restarting(e.p)) {                // "use another email", but that sign-up is no longer the one signed in
+      if (stack.length > 1) stack.pop(); else stack = [{ s: user ? 'home' : 'login' }];
+      continue;
+    }
+    if (e.s === 'terms' && !CONFIG.TERMS) {                                          // no terms to show (CONFIG.TERMS)
       if (stack.length > 1) stack.pop(); else stack = [{ s: user ? 'home' : 'login' }];
       continue;
     }
@@ -4499,9 +4552,11 @@ function formNote(msg) {
   if ($('err-sr')) $('err-sr').textContent = '';
   toast(msg);
 }
+/* 3.21.0 where the bottom of a page is its buttons (a quiz, every sign-in page), a message comes at the top: it never lies over a button */
+var TOAST_TOP = { practice: 1, login: 1, signup: 1, forgot: 1, verify: 1, sent: 1, welcome: 1 };
 function toast(msg, ico) {                                         // ico: a line icon (li()) before the words, or nothing
   elToast.innerHTML = '<span>' + (ico || '') + esc(msg) + '</span>';
-  elToast.classList.toggle('at-top', !!(stack.length && top().s === 'practice'));
+  elToast.classList.toggle('at-top', !!(stack.length && TOAST_TOP[top().s]));
   elToast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function () { elToast.classList.remove('show'); }, 2400);
@@ -4702,11 +4757,7 @@ SCREENS.splash = function () {
   '</div>';
 };
 
-function emailField(value, auto) {
-  return '<div class="input-wrap"><span class="input-icon">' + li('mail', 20) + '</span><input id="f-email" type="email" inputmode="email" autocomplete="' + auto +
-    '" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="100" placeholder="Email" aria-label="Email" value="' + esc(value || '') + '"></div>';
-}
-var BACK_PILL = '<button type="button" class="back-pill" data-act="back">← Back</button>';
+function backBtn() { return '<button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button>'; }   // 3.21.0 one back button on every page (the "← Back" words are gone)
 function moving(p) { return !!(p.adopt && user && user.guest); }       // a guest is creating / signing in to an account and takes the progress along
 /* "Use another email": still signed in to the unconfirmed sign-up, and creating the account that replaces it */
 function restarting(p) { return !!(p.restart && db.auth && !db.auth.verified && user && !user.guest && db.auth.uid === p.restart); }
@@ -4715,19 +4766,17 @@ function restarting(p) { return !!(p.restart && db.auth && !db.auth.verified && 
 
 /* Shown after sign-up, and from Account while the email is still unconfirmed. */
 SCREENS.verify = function (p) {
-  return '<div class="page bg-auth auth">' + (p.fresh ? '' : BACK_PILL) + '<div class="otp-icon">' + li('mail', 44) + '</div>' +
-    '<div class="auth-title center">Confirm your email</div>' +
-    '<div class="auth-sub center">We sent a link to <b class="em">' + esc(db.auth.email) + '</b></div>' +
-    '<div class="auth-form"><div class="auth-error" id="err" role="alert">' + esc(p.err || '') + '</div>' +
-    '<div class="steps"><div><b>1.</b> Open your email app. Look in Spam too.</div><div><b>2.</b> Tap the link in the email from IOPET.</div>' +
-    '<div><b>3.</b> Come back here and tap the button.</div></div>' +
+  return '<div class="page bg-auth auth au">' + (p.fresh ? '' : '<div class="au-top">' + backBtn() + '</div>') +
+    '<div class="au-body"><div class="au-mark">' + li('mail', 28) + '</div><h1 class="au-title">Confirm your email</h1>' +
+    '<div class="au-note">We sent a link to <b class="em">' + esc(db.auth.email) + '</b></div>' +
+    auSteps(['Open your email app. Look in Spam too.', 'Tap the link in the email from IOPET.', 'Come back here and tap the button.']) +
+    '<div class="au-fine">Until the email is confirmed, your progress stays on this phone only, and a forgotten password cannot be recovered if the address was typed wrong.</div>' +
     '<button type="button" class="btn btn-primary" data-act="verify-check">I have confirmed</button>' +
-    '<button type="button" class="btn btn-sec" data-act="verify-resend">Send the email again</button>' +
-    '<div class="center"><button type="button" class="link" data-act="verify-skip">' + (p.fresh ? 'Skip for now' : 'Do it later') + '</button></div></div>' +
-    '<div class="hint center">Until the email is confirmed, your progress stays on this phone only, and a forgotten password cannot be recovered if the address was typed wrong.</div>' +
-    '<div class="auth-switch">Typed the wrong address? <button type="button" class="link" data-act="verify-wrong">Use another email</button></div></div>';
+    '<button type="button" class="btn btn-line" data-act="verify-resend">Send the email again</button>' +
+    '<button type="button" class="au-ghost" data-act="verify-skip">' + (p.fresh ? 'Skip for now' : 'Do it later') + '</button>' +
+    '<div class="au-alt">Typed the wrong address? <button type="button" data-act="verify-wrong">Use another email</button></div></div>' + AU_ERR + '</div>';
 };
-AFTER.verify = function (sc) { var el = sc.querySelector('#err'); if (el && el.textContent) el.classList.add('show'); };
+AFTER.verify = function () { var e = top(); if (e && e.p && e.p.err) formErr(e.p.err); };   // (a redraw keeps its message: the same floating panel as on every sign-in page)
 
 
 /* ════════════════════════════════════════════════════════════════════
@@ -4754,6 +4803,7 @@ function auWordmark() {
   return '<svg class="au-wm" viewBox="0 0 ' + T.w + ' ' + T.h + '" role="img" aria-label="IOPET"><path fill="currentColor" fill-rule="evenodd" d="' + T.l.join('') + '"/></svg>';
 }
 /* 3.20.0 a way to sign in: its mark in the fixed box, its words; "other" is the other way's words (they share one width) */
+function auSteps(a) { var h = '', i; for (i = 0; i < a.length; i++) h += '<li>' + a[i] + '</li>'; return '<ol class="au-steps">' + h + '</ol>'; }   // 3.21.0 what to do, in order
 function auWay(cls, act, icon, label, other) {
   return '<button type="button" class="btn ' + cls + '" data-act="' + act + '"><span class="au-ic">' + icon + '</span><span class="au-lb" data-w="' + other + '">' + label + '</span></button>';
 }
@@ -4853,6 +4903,31 @@ function onAuFocus(ev) {
   f.classList.remove('focus');
   if (String(ev.target.value) && !fldOk(f)) fldBad(f, true);                        // left wrong: say so (never while typing)
 }
+/* 3.21.0 CONSENT (the owner's directive 9.6; shown only when there are terms: CONFIG.TERMS). One part: a box and the
+   sentence, between "Continue as guest" and the foot. The box starts empty at every visit to the page (the agreement is
+   that person's, that time; nothing is ticked for them and nothing is remembered on a phone that a brother or sister
+   may use next). Until it is ticked none of the three ways in goes on, guest included: the terms are about using the
+   app, not only about an account. A tap on a way then points at the box (auAgreed): it turns the muted red of a field
+   left wrong, moves once like one, and a line says what to do. The box or the sentence ticks it; "Terms of Service"
+   opens the terms and keeps the tick. A guest who signs in later has agreed already, so that page has no box. */
+function auConsent(p) {
+  return '<div class="au-consent" id="au-cs"><button type="button" class="au-cb" role="checkbox" aria-checked="' + (p.agree ? 'true' : 'false') + '" aria-labelledby="au-ct" data-act="consent">' + CHECK_SVG + '</button>' +
+    '<span class="au-ct" id="au-ct" data-act="consent">By continuing, you acknowledge that you have chosen to proceed and agree to our <button type="button" class="au-tos" data-act="go" data-to="terms">Terms of Service</button>.</span></div>';
+}
+ACTIONS.consent = function () {
+  var e = top(), row = $('au-cs'), box = row && row.querySelector('.au-cb');
+  if (!e || e.s !== 'login' || !box) return;
+  e.p = e.p || {}; e.p.agree = e.p.agree ? 0 : 1;
+  box.setAttribute('aria-checked', e.p.agree ? 'true' : 'false'); row.classList.remove('ask');
+  sense('select');
+};
+function auAgreed() {                                                 // may a way in go on? (always, where no box is shown)
+  var e = top(), row = $('au-cs');
+  if (!row || (e && e.p && e.p.agree)) return true;
+  if (!row.classList.contains('ask') && row.animate && !calmMotion()) { try { row.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)', offset: 0.2 }, { transform: 'translateX(3px)', offset: 0.45 }, { transform: 'translateX(-2px)', offset: 0.7 }, { transform: 'translateX(0)' }], { duration: 260, easing: 'cubic-bezier(.25,1,.5,1)' }); } catch (x) { /* */ } }
+  row.classList.add('ask'); sense('refuse'); toast('Tick the box to continue.');
+  return false;
+}
 var AU_ERR = '<div class="au-err" id="err" role="alert"></div>';
 /* 3.14.0 the foot of the sign-in and registration pages: where it is made, and privacy as a tag with its shield */
 function auFoot() { return '<div class="au-foot"><span>MADE IN INDIA</span><button type="button" class="au-priv" data-act="go" data-to="privacy">' + statIcon('shield', 14) + 'PRIVACY</button></div>'; }
@@ -4860,13 +4935,13 @@ function auFoot() { return '<div class="au-foot"><span>MADE IN INDIA</span><butt
 var AU_ERR_SHEET = '<div class="au-err" id="err" aria-hidden="true"></div>';
 SCREENS.login = function (p) {
   var mv = moving(p);
-  return '<div class="page bg-auth auth au' + (p.sheet ? ' open still' : '') + '">' + (mv ? '<div class="au-top">' + BACK_PILL + '</div>' : '') +
+  return '<div class="page bg-auth auth au' + (p.sheet ? ' open still' : '') + '">' + (mv ? '<div class="au-top">' + backBtn() + '</div>' : '') +
     '<div class="au-hero">' + logoMark(64) + auWordmark() +
       (mv ? '<div class="au-tag note">Sign in and your guest progress comes with you</div>' : '<div class="au-tag">Padho. Samjho. Aage badho.</div>') + '</div>' +
     '<div class="au-dock">' + auWay('au-g', 'google', G_LOGO, 'Continue with Google', 'Continue with email') +
       auWay('au-e', 'au-open', li('mail'), 'Continue with email', 'Continue with Google') +
       (mv ? '' : '<button type="button" class="au-ghost" data-act="guest">Continue as guest</button>') +
-      auFoot() + '</div>' +
+      (CONFIG.TERMS && !mv ? auConsent(p) : '') + auFoot() + '</div>' +
     '<div class="au-scrim" data-act="au-close"></div>' +
     '<div class="au-sheet" role="dialog" aria-modal="true" aria-label="Sign in"><button type="button" class="au-grab" data-act="au-close" aria-label="Close"></button>' +
       '<div class="au-sr" id="err-sr" role="alert"></div><div class="au-form" data-enter="login">' +
@@ -4878,7 +4953,7 @@ SCREENS.login = function (p) {
 };
 SCREENS.signup = function (p) {
   var mv = moving(p), rs = restarting(p), n = mv || rs ? user.answered : 0;
-  return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
+  return '<div class="page bg-auth auth au"><div class="au-top">' + backBtn() + '</div>' +
     '<div class="au-body"><h1 class="au-title">Create account</h1>' +
     '<div class="au-note">' + (rs ? 'This time with the right email address.' : n ? 'Your ' + (mv ? 'guest ' : '') + 'progress (' + plural(n, 'answer') + ') moves into this account.' : 'Free. Your progress stays safe in the cloud.') +
       ' We email you a link to confirm.</div>' +
@@ -4891,7 +4966,7 @@ SCREENS.signup = function (p) {
     auFoot() + '</div>' + AU_ERR + '</div>';
 };
 SCREENS.forgot = function (p) {
-  return '<div class="page bg-auth auth au"><div class="au-top"><button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button></div>' +
+  return '<div class="page bg-auth auth au"><div class="au-top">' + backBtn() + '</div>' +
     '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We email you a link to choose a new one. It goes only to that inbox.</div>' +
     '<div class="au-form" data-enter="forgot-send">' + auEmail(p.email, 'username') + auMsgRow('') + auGo('forgot-send', 'Send reset link') + '</div></div>' + AU_ERR + '</div>';
 };
@@ -4922,7 +4997,7 @@ function auFit() {
 }
 ACTIONS['au-open'] = function () {
   var e = top(), pg = elScreens.lastChild && elScreens.lastChild.querySelector('.au');
-  if (!e || e.s !== 'login' || !pg) return;
+  if (!e || e.s !== 'login' || !pg || !auAgreed()) return;
   e.p = e.p || {}; e.p.sheet = 1;
   pg.classList.remove('still'); pg.classList.add('open'); auFit();
   setTimeout(function () { var i = $('f-email'); if (i && top().p && top().p.sheet) { auQuiet = true; try { i.focus(); } catch (x) { /* */ } auQuiet = false; } }, 320);   // (the app's own focus: no pop)
@@ -4951,7 +5026,7 @@ function onAuDown(ev) {
   }
   d.g = g; d.id = ev.pointerId; d.y0 = d.y = ev.clientY; d.t = d.t0 = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
   auDrag = d;
-  if (!d.modal) { g.classList.add('on'); sense('select'); }           // 3.17.1 the sign-in sheet's line: felt, and it widens
+  g.classList.add('on'); sense('select');                             // 3.17.1 the line: felt, and it widens (3.21.0 on every sheet)
   try { g.setPointerCapture(ev.pointerId); } catch (x) { /* (an old browser: the tap still closes) */ }
 }
 function auDragSet(d, ty, ms, ease, dim) {                            // ty null: back to the style sheet; ms 0: at once
@@ -4980,7 +5055,7 @@ function onAuUp(ev) {
   var d = auDrag, ms, go, ease = 'cubic-bezier(.2,.7,.2,1)';
   if (!d || ev.pointerId !== d.id) return;
   auDrag = null;
-  if (!d.modal) setTimeout(function () { d.g.classList.remove('on'); }, Math.max(0, 180 - (Date.now() - d.t0)));   // (a quick tap shows it too)
+  setTimeout(function () { d.g.classList.remove('on'); }, Math.max(0, 180 - (Date.now() - d.t0)));   // (a quick tap shows it too)
   if (!d.moved) return;                                              // a tap: the strip's own click closes the sheet
   auDragEnd = Date.now();
   go = ev.type === 'pointerup' && (d.dy > d.h / 3 || (d.v > 0.5 && d.dy > 20));
@@ -5035,6 +5110,7 @@ function gisLoad(cb) {
 }
 ACTIONS.google = function () {
   var adopt = moving(top().p || {}), tc;
+  if (!auAgreed()) return;
   if (navigator.onLine === false) return toast('Google sign-in needs the internet. Connect and try again.');
   if (!gisReady()) {
     gisLoad(function (ok) { toast(ok ? 'Ready — tap “Continue with Google” again.' : 'Google could not be reached. Check the connection, or use email.'); });
@@ -5087,20 +5163,19 @@ function googleLink() {
 
 /* The same page whether or not an account exists for that address — so nobody can test which emails are registered. */
 SCREENS.sent = function (p) {
-  return '<div class="page bg-auth auth"><div class="otp-icon">' + li('mail', 44) + '</div><div class="auth-title center">Check your email</div>' +
-    '<div class="auth-sub center">If an account exists for <b class="em">' + esc(p.email || '') + '</b>, a reset link is on its way.</div>' +
-    '<div class="auth-form"><div class="steps"><div><b>1.</b> Open the email from IOPET. Look in Spam too.</div><div><b>2.</b> Tap the link and choose a new password.</div>' +
-    '<div><b>3.</b> Come back and sign in with the new password.</div></div>' +
-    '<button type="button" class="btn btn-primary" data-act="back">Back to sign in</button></div>' +
-    '<div class="hint center">No email after a few minutes? Check the address and ask again. If you have never created an account in this app, go back and tap “Create account” first — a reset link is sent only to an existing account.</div>' +
-    '<div class="hint center">Setting a new password signs you out on every other phone.</div></div>';
+  return '<div class="page bg-auth auth au"><div class="au-body"><div class="au-mark">' + li('mail', 28) + '</div><h1 class="au-title">Check your email</h1>' +
+    '<div class="au-note">If an account exists for <b class="em">' + esc(p.email || '') + '</b>, a reset link is on its way.</div>' +
+    auSteps(['Open the email from IOPET. Look in Spam too.', 'Tap the link and choose a new password.', 'Come back and sign in with the new password.']) +
+    '<div class="au-fine">No email after a few minutes? Check the address and ask again. If you have never created an account in this app, go back and tap “Create account” first — a reset link is sent only to an existing account.</div>' +
+    '<div class="au-fine">Setting a new password signs you out on every other phone.</div>' +
+    '<button type="button" class="btn btn-primary" data-act="back">Back to sign in</button></div></div>';
 };
 
 SCREENS.welcome = function () {
-  return '<div class="page bg-auth auth welcome"><div class="success-circle"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">' +
+  return '<div class="page bg-auth auth au"><div class="au-hero"><div class="success-circle"><svg width="40" height="40" viewBox="0 0 42 42" fill="none" aria-hidden="true">' +
     '<path d="M10 22l8 8 14-16" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
-    '<div class="auth-title" style="margin-top:18px">You’re all set!</div><div class="auth-sub">Welcome to IOPET, ' + esc(firstName(user.name)) + '</div>' +
-    '<button type="button" class="btn btn-primary" data-act="home">' + (courseOf(user) ? 'Get started' : 'Choose your course') + '</button></div>';
+    '<h1 class="au-title">You’re all set!</h1><div class="au-note">Welcome to IOPET, ' + esc(firstName(user.name)) + '</div></div>' +
+    '<div class="au-dock"><button type="button" class="btn btn-primary" data-act="home">' + (courseOf(user) ? 'Get started' : 'Choose your course') + '</button></div></div>';
 };
 
 /* ── COURSE — "what are you studying for?" Shown once after the first sign-in (p.must: there is no way round it),
@@ -5132,7 +5207,7 @@ SCREENS.course = function (p) {
     return html + '</div>';
   }
   t = stepTitle(at).map(esc);
-  html = '<div class="page ' + (must ? 'bg-auth auth">' + BACK_PILL + '<div class="auth-title">' + t[0] + '</div><div class="auth-sub">' + t[1] + '</div>'
+  html = '<div class="page ' + (must ? 'bg-auth auth"><div class="au-top">' + backBtn() + '</div><div class="auth-title">' + t[0] + '</div><div class="auth-sub">' + t[1] + '</div>'
                                      : 'bg-profile">' + subHead(t[0]) + '<div class="sub">' + t[1] + '</div>');
   if (at === 'c') {                                  // classes stay in their natural order
     html += '<div class="alert info">For ' + esc(BOARDS.map(function (b) { return b.name; }).join(', ')) + '. Class ' + STREAM_FROM + ' and ' + CLASSES[CLASSES.length - 1] +
@@ -6167,7 +6242,7 @@ SCREENS.account = function () {
       '<button class="btn btn-primary" data-act="adopt" data-to="signup">Create account &amp; back up</button>' +
       '<div class="center"><button class="link" data-act="adopt" data-to="login">I already have an account</button></div></div>' +
       menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) +
-      menuRow('data-act="go" data-to="privacy"', '🔒', 'Privacy policy', '') +
+      legalRows() +
       '<div class="tier-label">Danger zone</div>' +
       menuRow('data-act="delete-ask"', '❌', 'Delete guest data', '', ' danger') + '</div>';
   }
@@ -6179,7 +6254,7 @@ SCREENS.account = function () {
     (a.verified ? '<button class="btn btn-sec" id="sync-btn" data-act="sync-now"' + (sync.busy ? ' disabled' : '') + '>Back up now</button>' : '') + '</div>' +
     menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) +
     menuRow('data-act="pass-edit"', '🔑', 'Change password', '') +
-    menuRow('data-act="go" data-to="privacy"', '🔒', 'Privacy policy', '') +
+    legalRows() +
     '<div class="tier-label">Danger zone</div>' +
     menuRow('data-act="delete-ask"', '❌', 'Delete account', '', ' danger') +
     '<div class="foot-note">Your password is checked by Google Firebase and is never stored on this phone.</div></div>';
@@ -6266,6 +6341,16 @@ SCREENS.privacy = function () {
     '<div class="card"><div class="card-title">Contact</div><div class="small muted">' + (mail ? 'Write to ' + esc(mail) + '.' : 'Use Help &amp; Support → Send feedback.') + '</div></div></div>';
 };
 
+/* 3.21.0 the Terms of Service, from CONFIG.TERMS: the same page as the privacy policy (the guard keeps it shut while there are none) */
+SCREENS.terms = function () {
+  var T = CONFIG.TERMS, html = '<div class="page bg-profile policy">' + subHead('Terms of Service') + '<div class="small muted">IOPET · last updated ' + esc(T.updated) + '</div>';
+  T.parts.forEach(function (x) { html += '<div class="card"><div class="card-title">' + esc(x.t) + '</div><div class="small muted">' + esc(x.d) + '</div></div>'; });
+  return html + '</div>';
+};
+function legalRows() {                                               // the policy, and the terms once there are some
+  return menuRow('data-act="go" data-to="privacy"', '🔒', 'Privacy policy', '') + (CONFIG.TERMS ? menuRow('data-act="go" data-to="terms"', '📚', 'Terms of Service', '') : '');
+}
+
 SCREENS.help = function () {
   var u = user, mine = topicsOf(u), html = '<div class="page bg-profile">' + subHead('Help & Support') + '<div class="tier-label">Frequently asked</div>';
   FAQ.forEach(function (f, i) {
@@ -6276,7 +6361,7 @@ SCREENS.help = function () {
     menuRow('data-act="feedback"', '💬', 'Send feedback', u.feedback.length ? u.feedback.length + ' sent' : '') +
     menuRow('data-act="reports"', '🚩', 'Reported questions', String(u.reports.length)) +
     '<div class="tier-label">Privacy and safety</div>' +
-    menuRow('data-act="go" data-to="privacy"', '🔒', 'Privacy policy', '') +
+    legalRows() +
     (db.auth && db.auth.verified ? menuRow('data-act="sec-check"', '🔐', 'Check cloud security', '') : '') +
     '<div class="about">' + logoStack(19) + '<div class="about-full">Indian Online Platform of Educational Training</div>' +
     '<div class="about-sub">Made in India · ek private pahal</div></div>' +
@@ -6586,7 +6671,7 @@ function openAccount(fresh) {
 }
 ACTIONS.guest = function () {
   var u = has(db.users, 'guest') ? db.users.guest : null;
-  if (db.auth) return;
+  if (db.auth || !auAgreed()) return;
   if (!u) u = db.users.guest = fixUser({ id: 'guest', name: 'Guest', created: Date.now() });
   user = u; db.session = 'guest'; S = null; saveLocal(); applyPrefs();
   reset('home'); toast('Guest mode — progress is saved on this device.');
@@ -7272,7 +7357,7 @@ function onInput(ev) {
   if (fm) auCheck(fm);                                              // 3.11.0 ticks and the button follow the typing
   if (kind !== 'pass-new') return;
   s = passStrength(t.value); bar = $('st-bar'); txt = $('au-m');
-  if (bar) { bar.style.width = s.w + '%'; bar.style.backgroundColor = s.c; }
+  if (bar) { bar.style.width = s.w + '%'; bar.style.backgroundColor = s.c; bar.parentNode.classList.toggle('on', !!t.value); }   // (3.21.0 its track shows only with something typed)
   if (txt) { txt.setAttribute('data-hint', s.t); if (fm) auShowMsg(fm); }
 }
 function onKeyDown(ev) {
