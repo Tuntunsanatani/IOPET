@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.22.0)
+# IOPET design rules (v3, 3.23.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -9,7 +9,8 @@ measuring IOPET's own 77 screens. Brilliant is the reference for quality, not a 
 
 v3 (3.21.0, the owner's master directive) adds the rulebook in numbers (§1b), the states every part
 has (§1c), and the check that keeps the app on the system (§10). 3.22.0 puts the shared parts of every
-page on it: buttons, fields, lines, the press, touch areas, times and curves. §11 says what is next.
+page on it: buttons, fields, lines, the press, touch areas, times and curves. 3.23.0 puts every space
+on the grid. §11 says what is next.
 
 ## 1. Principles
 
@@ -91,6 +92,20 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
 
 - Things that belong together stand closer than things that do not. If two gaps look alike, the
   parts read as one group.
+- The same steps on every page (3.23.0; they were 3, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 22, 26, 30 px here
+  and there):
+
+| Between | Space |
+|---|---|
+| a small mark and its words inside a chip or a pill | 4 |
+| an icon and its words; a number and its label | 8 (4 under a big number) |
+| a picture tile (44–54 px) and its title | 12 |
+| rows of one list (settings, menu); options of a question; a label and what it names | 8 |
+| cards that stand alone (topic rows, course rows, stat boxes, badges, a pack) | 12 |
+| words and the edge of their row or card | 16 at the sides, 12 above and below (16 in a card that holds a block) |
+| one group and the next | 16 |
+| one section and the next; the big card's inside (hero) | 24 |
+| a page's opening picture and what follows; the end of a page | 32 |
 - Type does not grow or shrink with the screen: the eight sizes are the same on every phone, and
   the layout gives way instead (the brand above the sign-in sheet gets smaller, a short phone hides
   a page's mark, a title drops one step at 370 px and under). The phone's own font-size setting is
@@ -201,10 +216,13 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 - Page side padding 24 px (16 on the sign-in, registration and reset pages and in sheets). The gap between blocks is
   16 px, and 24 px between groups.
-- 8 pt grid (3.15.0, sign-in first): every margin and padding is a multiple of 8 (4 only inside a small component).
+- 8 pt grid (3.15.0, sign-in first; 3.23.0: every page): every margin and padding is a multiple of 4, and of 8
+  wherever it separates two parts (4 and 12 only inside a part or between small things).
   Fields 56 px high with 8 px between field rows; a form's message row 24 px; small links 40 px drawn, 48 px to touch.
   The scale: 4, 8, 12, 16, 24, 32, 48. 1 and 2 px are allowed as a nudge of the eye (an icon on its line, a title and
-  the line under it). Anything else is counted by the check (§10).
+  the line under it). Anything else is counted by the check (§10). Eight lines stay off it on purpose: the logo's own
+  lock-up, the figures inside questions (their wrapping belongs to the questions), and four that are half of a thing's
+  own size (they centre it) or the 3 px a pressed panel gives back.
 - Radius, one family: 12 (`--r-sm`, a small thing inside a control), 16 (`--r-btn`, every control: buttons and, since
   3.21.0, fields, which had 14), 18 (`--r-md`, options, rows, review cards), 24 (`--r-lg`, cards, panels, sheets),
   32 (`--r-xl`, the hero card), pill for chips, tags, handles and bars.
@@ -412,7 +430,8 @@ file (`.github/scripts/check.js`, part 2b):
   `var(--name)` draws nothing and says nothing.)
 - Whatever is written into a rule instead of coming from the system is **design debt**: a space off the 4 pt grid, a
   colour, a corner, a time or a curve that is not a token, a text size outside the scale. Every such line that exists
-  today is listed in `.github/design-debt.txt` (3.21.0: 317 lines; 3.22.0: 235; the sign-in pages have none).
+  today is listed in `.github/design-debt.txt` (3.21.0: 317 lines; 3.22.0: 235; 3.23.0: 68; the sign-in pages have
+  none).
 - A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
 - The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
   and curves are their own.
@@ -426,7 +445,7 @@ The owner's directive names pages; these are IOPET's:
 | Directive | IOPET screens | State |
 |---|---|---|
 | Login, email login, registration, reset | `login` (+ its sheet), `signup`, `forgot`, `sent`, `verify`, `welcome` | on the system (3.21.0) |
-| Home | `home` | shared parts on the system (3.22.0); its spaces next |
+| Home | `home` | shared parts (3.22.0) and spaces (3.23.0) on the system |
 | Courses | `course` (the chooser), `topics` (subjects and chapters), `chapter` | the same |
 | Premium | `pack`, `redeem` (and the pack card on Topics) | the same (the other chat owns packs' content; the look is ours) |
 | Profile | `profile`, `account`, `goals`, `achievements`, `progress` | the same |
@@ -437,13 +456,18 @@ Done in 3.22.0, on every page: one button family (56 px, the second button a lin
 the code box, the goal, the account sheets and the feedback box; the eye instead of the word "Show"), lines to their
 kind, the press by kind, touch areas of 44 px, every time and curve from the tokens, secondary text of the light look.
 
+Done in 3.23.0, on every page: every space on the 4 pt grid by what it separates (§1b): 167 lines of debt gone, 8 left
+on purpose. Rows keep their height to within 2 px (a menu row 64 px, a topic row 80, a FAQ row at least 48); every
+question has 0 to 8 px more room above the quiz dock on a small phone.
+
 Next (each step a release, before/after in both looks, the 80-screen walk after each):
 
-1. Spaces to the grid, page by page (175 lines of debt): Home and Topics first, then the quiz, then the rest.
-2. The colours still written into rules (23 lines): the switch's knob, the toast, the celebration, the streak moment.
-3. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
+1. What is still written into rules: 23 colours (the switch's knob, the toast, the celebration, the streak moment),
+   19 corners (bars, the nav's pill, small tiles), 16 text sizes (pictures and big numbers).
+2. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
    the reference.
-4. One header for the four tabs; squircle corners (both approved earlier, not built).
+3. One header for the four tabs; squircle corners (both approved earlier, not built).
+4. Each page against the owner's references (Home, Profile, the quiz), once they arrive.
 
 Open points (the owner decides):
 
