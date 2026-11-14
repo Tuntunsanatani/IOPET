@@ -48,8 +48,8 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
-  --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --bg:#141414;--bg-deep:#0E0E0E;--surface:#191919;--surface-2:#282828;--surface-3:#323232;
+  --line:#262626;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#A0A0A0;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -870,7 +870,21 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .progress>*+*,.profile>*+*{margin-top:var(--sp-sec)}   /* 3.24.0 a tab's sections: 24, as on Home */
 .next-step .ns-row{margin-top:12px}
 .ns-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
-.ns-l{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
+.ns-l{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px}
+.ns-mark{font-size:var(--fs-xs);font-weight:600;color:var(--ink3);margin-top:4px}
+/* 3.25.0 one thing per place (the owner, 14 Nov): no strings joined by dots; each value in its own column or line */
+.card-sub{font-size:var(--fs-xs);color:var(--ink3);margin-top:4px !important}
+.mk{font-size:var(--fs-xs);font-weight:600;color:var(--ink3);margin-left:8px}   /* a chapter's Mark: a quiet tag after its name, never joined with a dot */
+.mt-sep{margin-left:16px;color:var(--ink3)}   /* a second fact on the same line: space apart, quieter */
+.trow{display:grid;grid-template-columns:1fr 80px 64px;align-items:center;padding:12px 0;border-top:var(--bw) solid var(--line);font-size:var(--fs-sm)}
+.trow b{text-align:right;font-weight:700;font-size:var(--fs-md)}
+.trow.thead{border-top:0;padding:4px 0 0;font-size:var(--fs-xs);color:var(--ink3)}
+.trow.thead span{text-align:right}
+.sess{display:flex;align-items:center;padding:12px 0;border-top:var(--bw) solid var(--line)}
+.sess-t{font-size:var(--fs-md);font-weight:600}
+.sess-s{font-size:var(--fs-xs);color:var(--ink3);margin-top:4px}
+.sess-r{text-align:right;margin-left:12px}
+.sess-v{font-size:var(--fs-md);font-weight:700}
 .prog-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
 .prog-stat{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}
 .prog-stat .chi{display:block;margin-bottom:8px}
@@ -2751,7 +2765,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.24.3',
+  VERSION: '3.25.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3236,7 +3250,7 @@ function courseInfo(id) {
 }
 function courseName(id, brief) {
   var c = courseInfo(id);
-  return !c ? '' : c.exam ? c.exam.name + (c.lang ? ' · ' + (brief ? c.lang.short : c.lang.name) : '') : 'Class ' + c.cls + (c.stream ? ' · ' + c.stream.name : '') + ' · ' + (brief && c.board.short ? c.board.short : c.board.name);
+  return !c ? '' : c.exam ? c.exam.name + (c.lang ? ', ' + c.lang.short : '') : 'Class ' + c.cls + (c.stream ? ' ' + c.stream.name : '') + ', ' + (brief && c.board.short ? c.board.short : c.board.name);   // 3.25.0 words, not dot-joined labels
 }
 /* the same in fewer letters, for narrow places: "Class 11 · Science · BSEB" */
 function courseShort(id) { return courseName(id, true); }
@@ -5253,10 +5267,10 @@ function heroCard(u, t) {
   var st = topicStats(u, t), n = setSize(u, t), c = t.mark ? chapterOf(t) : null, art;
   art = t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 104) : '<span class="hero-emoji">' + esc(t.emoji || '') + '</span>';
   return '<div class="hero"><div class="hero-top"><div class="hero-txt"><div class="chips"><span class="cp hero-kick">Today’s practice</span></div>' +
-    (c && c.hi ? '<div class="hero-name" lang="hi">' + esc(c.hi) + '</div><div class="hero-en">' + esc(c.name) + (t.mark ? ' · M' + t.mark : '') + '</div>'
+    (c && c.hi ? '<div class="hero-name" lang="hi">' + esc(c.hi) + '</div><div class="hero-en">' + esc(c.name) + (t.mark ? '<span class="mk">M' + t.mark + '</span>' : '') + '</div>'
                : '<div class="hero-name">' + esc(c ? c.name : t.name) + '</div>') +
     '</div><div class="hero-art">' + art + '</div></div>' +
-    '<div class="hero-meta">' + li('clock', 18) + '<span>' + plural(n, 'question') + ' · about ' + aboutMin(u, n) + ' min</span></div>' +
+    '<div class="hero-meta">' + li('clock', 18) + '<span>About ' + aboutMin(u, n) + ' min</span><span class="mt-sep">' + plural(n, 'question') + '</span></div>' +
     '<button class="btn btn-primary btn-cta" data-act="start-smart" data-topic="' + t.id + '">' + (st.attempted ? 'Continue' : 'Start') + '</button></div>';
 }
 /* the card once today's set is finished: quiet, ticked, nothing to start by mistake — only a small link for more */
@@ -5287,7 +5301,7 @@ SCREENS.home = function () {
   html += '<div class="mini-row stats"><div class="mini streak-card">' + statIcon('flame', 40, u.lastDay === tk ? '' : 'off') + '<div class="mini-n num streak-count">' + st + '</div><div class="mini-l">day streak</div>' +
     (u.notif.streak && st > 0 && u.lastDay !== tk ? '<div class="mini-s warn">Ends at midnight</div>' : '') + '</div>' +
     '<div class="mini">' + statIcon('star', 40) + '<div class="mini-n num">' + wxp + '</div><div class="mini-l">XP this week</div>' +
-    (week.n ? '<div class="mini-s">' + plural(week.n, 'question') + ' · ' + pct(week.c, week.n) + '% right</div>' : '') + '</div></div>';
+    (week.n ? '<div class="mini-s">' + plural(week.n, 'question') + '</div><div class="mini-s">' + pct(week.c, week.n) + '% right</div>' : '') + '</div></div>';
   return html + '</div>';
 };
 
@@ -5301,7 +5315,7 @@ SCREENS.topics = function () {
     var st = topicStats(u, t), lk = isLocked(u, t), meta, rt;
     if (t.subject !== lastSubject) { html += '<div class="tier-label">' + t.subject + '</div>'; lastSubject = t.subject; }
     if (lk) { rt = topicById(t.req.topic); meta = 'Master ' + t.req.pct + '% of ' + rt.short + ' to unlock'; }
-    else meta = st.attempted ? st.mastered + ' of ' + st.total + ' mastered' : plural(st.total, 'question') + ' · not started';
+    else meta = st.attempted ? st.mastered + ' of ' + st.total + ' mastered' : 'Not started yet';
     html += '<button class="topic-row' + (lk ? ' locked' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + t.id + '">' +
       '<span class="topic-emoji-big" style="background:var(--t-violet)">' + t.emoji + '</span><span class="topic-info">' +
       '<span class="topic-row-name">' + t.name + '</span><span class="topic-row-meta">' + meta + '</span>' +
@@ -5316,7 +5330,7 @@ SCREENS.topics = function () {
    the only colours on a row are its state — violet on the go, green passed). */
 function markLockText(lk, t) {
   if (lk.kind === 'slots') return 'Opens when you finish one of the ' + plural(lk.wait.length, 'chapter') + ' on the go';
-  if (lk.kind === 'pass') return 'Pass ' + (lk.by.ch === t.ch ? 'Mark ' + lk.by.mark : esc(chapterOf(lk.by).name) + ' · Mark ' + lk.by.mark) + ' first';
+  if (lk.kind === 'pass') return 'Pass ' + (lk.by.ch === t.ch ? 'Mark ' + lk.by.mark : esc(chapterOf(lk.by).name) + ', Mark ' + lk.by.mark) + ' first';
   return 'Opens after Mark ' + (t.mark - 1) + ' of ' + plural(lk.need, 'more chapter');
 }
 /* where one chapter stands: { k: 'active' | 'revise' | 'ready' | 'locked' | 'done' | 'soon', t: the Mark a tap opens, next: the Mark that waits } */
@@ -5520,26 +5534,26 @@ SCREENS.chapter = function (p) {
   html += '<div class="steps-list" role="list">';
   marks.forEach(function (m, i) {
     var st = topicStats(u, m), ok = markPassed(u, m), lk = !ok && markLock(u, m), now = !ok && !lk, size = setSize(u, m), cls = ok ? 'done' : lk ? 'locked' : 'now', line, extra = '';
-    line = plural(size, 'question') + ' · about ' + aboutMin(u, size) + ' min · pass at ' + passPct(m) + '%';
+    line = plural(size, 'question') + ', about ' + aboutMin(u, size) + ' min<br>Pass at ' + passPct(m) + '%';
     if (now && st.attempted) extra = passBar(u, m);
     else if (lk) extra = '<span class="step-x">' + li('lock', 15) + markLockText(lk, m) + '</span>';
     else if (ok) extra = '<span class="step-x ok">' + li('check', 15) + 'Passed · ' + st.mastered + '/' + st.total + ' right</span>';
     if (m.mark === 3) extra += '<span class="cp v step-badge">' + li('medal', 15) + 'Mastery badge</span>';
     html += '<button type="button" role="listitem" class="step ' + cls + (t && t.id === m.id ? ' due' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + m.id + '">' +
       '<span class="step-dot">' + (ok ? li('check', 16) : lk ? li('lock', 15) : m.mark) + '</span>' +
-      '<span class="step-b"><span class="step-t">M' + m.mark + ' · ' + STEP_NAME[m.mark] + '</span><span class="step-l">' + line + '</span>' + extra + '</span></button>';
+      '<span class="step-b"><span class="step-t">' + STEP_NAME[m.mark] + '<span class="mk">M' + m.mark + '</span></span><span class="step-l">' + line + '</span>' + extra + '</span></button>';
   });
   /* the steps that have no questions yet still show, so the whole way (Learn, Revise, Master) is clear from the first day */
   for (var m2 = marks.length + 1; m2 <= 3; m2++)
-    html += '<div role="listitem" class="step locked soon"><span class="step-dot">' + m2 + '</span><span class="step-b"><span class="step-t">M' + m2 + ' · ' + STEP_NAME[m2] + '</span>' +
-      '<span class="step-l">Questions coming soon · pass at ' + PASS[m2] + '%</span>' + (m2 === 3 ? '<span class="cp v step-badge">' + li('medal', 15) + 'Mastery badge</span>' : '') + '</span></div>';
+    html += '<div role="listitem" class="step locked soon"><span class="step-dot">' + m2 + '</span><span class="step-b"><span class="step-t">' + STEP_NAME[m2] + '<span class="mk">M' + m2 + '</span></span>' +
+      '<span class="step-l">Questions coming soon<br>Pass at ' + PASS[m2] + '%</span>' + (m2 === 3 ? '<span class="cp v step-badge">' + li('medal', 15) + 'Mastery badge</span>' : '') + '</span></div>';
   html += '</div>';
   if (t) {
     n = setSize(u, t); opens = due.rev ? '' : markOpens(u, t);
     html += '<div class="chips chp-out">' + (opens ? '<span class="cp v">' + li('unlock', 15) + esc(opens) + '</span>' : '') +
       '<span class="cp">' + li('star', 15) + 'Up to +' + xpUpTo(u, t, n) + ' XP</span>' +
       (due.rev && due.wait ? '<span class="cp">' + li('lock', 15) + 'M' + due.wait.mark + ' ' + esc(markLockText(markLock(u, due.wait), due.wait).replace(/^Opens /, 'opens ')) + '</span>' : '') + '</div>' +
-      '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + t.id + '">' + (due.rev ? 'Revise M' + t.mark : (topicStats(u, t).attempted ? 'Continue' : 'Start') + ' M' + t.mark) + ' · ' + aboutMin(u, n) + ' min</button>';
+      '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + t.id + '">' + (due.rev ? 'Revise Mark ' + t.mark : (topicStats(u, t).attempted ? 'Continue Mark ' : 'Start Mark ') + t.mark) + '</button>';
   }
   return html + '</div>';
 };
@@ -5709,7 +5723,7 @@ SCREENS.practice = function () {
     '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + (pct(S.i, total) - 100) + '%;' : ' style="') + 'transform:translateX(' + (pct(S.i + (answered ? 1 : 0), total) - 100) + '%)"></i></div>' +
     '<div class="q-counter num">' + (S.i + 1) + '/' + total + '</div>' +
     (user.settings.timer ? '<div class="q-timer num" id="timer">' + fmtTime(sessionMs()) + '</div>' : '') + '</div>' +
-    '<div class="q-body"><div class="q-level">' + (t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 22) : '') + '<span>' + esc(t.short) + '</span></div><div class="q-text">' + figHtml(q.q) + '</div>' +
+    '<div class="q-body"><div class="q-level">' + (t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 22) : '') + '<span>' + esc(String(t.short).split(' · ')[0]) + '</span>' + (String(t.short).split(' · ')[1] ? '<span class="mk">' + esc(String(t.short).split(' · ')[1]) + '</span>' : '') + '</div><div class="q-text">' + figHtml(q.q) + '</div>' +
     '</div><div class="opts">';
   var sel = !answered && typeof it.sel === 'number' ? it.sel : -1;
   if (q.o.every(function (o) { return /^\[\[[a-z0-9]+:[^\[\]]*\]\]$/.test(o); })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid">';   /* four drawings: a 2 x 2 grid */
@@ -5758,14 +5772,14 @@ SCREENS.summary = function () {
     stat = function (ico, val, key) { return '<div class="sm-stat">' + statIcon(ico, 36) + '<div class="sm-v num">' + val + '</div><div class="sm-k">' + key + '</div></div>'; };
   html = '<div class="page bg-dash summary sm2"><div class="sm-top"><button type="button" class="icon-btn" data-act="home" aria-label="Close">' + li('close') + '</button></div>' +
     '<div class="sm-hero">' + (t.ch && has(ICONS, t.ch) ? '<div class="sm-art">' + chIcon(t.ch, 88) + '</div>' : '') +
-    '<div class="sm-title" role="heading" aria-level="1">' + (S.correct === n ? 'Perfect!' : good ? 'Well done!' : 'Set complete') + '</div><div class="sm-sub">' + esc(t.name) + '</div></div>' +
+    '<div class="sm-title" role="heading" aria-level="1">' + (S.correct === n ? 'Perfect!' : good ? 'Well done!' : 'Set complete') + '</div><div class="sm-sub">' + esc(String(t.name).split(' · ')[0]) + (t.mark ? '<span class="mk">Mark ' + t.mark + '</span>' : '') + '</div></div>' +
     /* 3.13.0 three blocks: how right (the share, and the count under it), how long, how much XP (it counts up) */
     '<div class="sm-stats">' + stat('tick', acc + '%', S.correct + '/' + n + ' right') + stat('clock', fmtTime(S.elapsed), 'time') +
       stat('star', '<span data-count="' + S.xp + '" data-pre="+">+' + S.xp + '</span>', 'XP earned') + '</div>';
   if (t.mark) {
     ts = topicStats(u, t);
     if (!S.passed0 && markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ' passed', 'g']);
-    else if (markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ' · ' + ts.mastered + '/' + ts.total, 'g']);
+    else if (markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ': ' + ts.mastered + ' of ' + ts.total, 'g']);
     else chips.push([li('target'), 'Mark ' + t.mark + ': ' + ts.mastered + ' of ' + passNeed(t) + ' to pass', '']);
   }
   S.unlocked.forEach(function (name) { chips.push([li('unlock'), /^You can/.test(name) ? 'New chapters open' : 'New: ' + name, '']); });
@@ -5777,10 +5791,10 @@ SCREENS.summary = function () {
   if (same) nx = t;
   nn2 = setSize(u, nx);
   html += '<div class="sm-cap">UP NEXT</div><div class="next-card">' + (nx.ch && has(ICONS, nx.ch) ? chTile(nx.ch, 40) : '') +
-    '<div class="grow"><div class="next-t"' + (nx.ch ? ' lang="hi"' : '') + '>' + esc(nx.ch ? (chapterOf(nx).hi || chapterOf(nx).name) : nx.name) + (nx.mark ? ' · M' + nx.mark : '') + '</div>' +
-    '<div class="next-l">' + plural(nn2, 'question') + ' · about ' + aboutMin(u, nn2) + ' min</div></div></div>' +
-    '<div class="sm-dock">' + (same ? '<button type="button" class="btn btn-primary" data-act="again">Next set · ' + aboutMin(u, nn2) + ' min</button>'
-          : '<button type="button" class="btn btn-primary" data-act="start" data-topic="' + nx.id + '">Start · ' + aboutMin(u, nn2) + ' min</button>') +
+    '<div class="grow"><div class="next-t"' + (nx.ch ? ' lang="hi"' : '') + '>' + esc(nx.ch ? (chapterOf(nx).hi || chapterOf(nx).name) : nx.name) + (nx.mark ? '<span class="mk">M' + nx.mark + '</span>' : '') + '</div>' +
+    '<div class="next-l">' + plural(nn2, 'question') + ', about ' + aboutMin(u, nn2) + ' min</div></div></div>' +
+    '<div class="sm-dock">' + (same ? '<button type="button" class="btn btn-primary" data-act="again">Next set</button>'
+          : '<button type="button" class="btn btn-primary" data-act="start" data-topic="' + nx.id + '">Start</button>') +
     '<div class="sm-links"><button type="button" class="link" data-act="review">Review answers</button>' +
     (same ? '' : '<i aria-hidden="true"></i><button type="button" class="link" data-act="again">Practice this again</button>') + '</div></div></div>';
   return html;
@@ -6151,10 +6165,11 @@ SCREENS.progress = function () {
     wt = weakestTopic(u) || recommendTopic(u);
     if (wt) {
       n = Math.min(5, setSize(u, wt)); ws = topicStats(u, wt);
-      html += '<div class="hero next-step"><div class="cp hero-kick">Next step</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
-        '<div class="grow"><div class="ns-name"' + (wt.ch ? ' lang="hi"' : '') + '>' + esc(wt.ch ? (chapterOf(wt).hi || chapterOf(wt).name) : wt.name) + (wt.mark ? ' · M' + wt.mark : '') + '</div>' +
-        '<div class="ns-l">' + (wt.mark ? ws.mastered + '/' + passNeed(wt) + ' to pass' : ws.pct + '% mastered') + ' · your weakest right now</div></div></div>' +
-        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice · ' + aboutMin(u, setSize(u, wt)) + ' min</button></div>';
+      html += '<div class="hero next-step"><div class="cp hero-kick">Your weakest chapter</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
+        '<div class="grow"><div class="ns-name"' + (wt.ch ? ' lang="hi"' : '') + '>' + esc(wt.ch ? (chapterOf(wt).hi || chapterOf(wt).name) : wt.name) + '</div>' +
+        (wt.mark ? '<div class="ns-mark">Mark ' + wt.mark + '</div>' : '') +
+        '<div class="ns-l">' + (wt.mark ? ws.mastered + ' of ' + passNeed(wt) + ' right to pass' : ws.pct + '% mastered') + '</div></div></div>' +
+        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice for ' + aboutMin(u, setSize(u, wt)) + ' min</button></div>';
     }
   }
   html += '<div class="prog-grid"><div class="prog-stat">' + statIcon('star', 40) + '<div class="prog-stat-val num">' + u.xp + '</div><div class="prog-stat-lbl">Total XP</div><div class="prog-stat-note">Level ' + lv.n + '</div></div>' +
@@ -6176,15 +6191,16 @@ SCREENS.progress = function () {
   if (u.notif.weekly) {
     wk = weekTotals(u, 0, 6); pw = weekTotals(u, 7, 13);
     html += '<div class="card"><div class="card-title">Weekly summary</div>' +
-      '<div class="srow"><span>Last 7 days</span><b>' + wk.n + ' Q · ' + pct(wk.c, wk.n) + '%</b></div>' +
-      '<div class="srow"><span>7 days before that</span><b>' + pw.n + ' Q · ' + pct(pw.c, pw.n) + '%</b></div>' +
+      '<div class="trow thead"><span></span><span>Questions</span><span>Right</span></div>' +
+      '<div class="trow"><span>Last 7 days</span><b class="num">' + wk.n + '</b><b class="num">' + pct(wk.c, wk.n) + '%</b></div>' +
+      '<div class="trow"><span>The week before</span><b class="num">' + pw.n + '</b><b class="num">' + pct(pw.c, pw.n) + '%</b></div>' +
       '<div class="small muted">' + (wk.n > pw.n ? '▲ ' + (wk.n - pw.n) + ' more questions than the week before.' : wk.n < pw.n ? '▼ ' + (pw.n - wk.n) + ' fewer questions than the week before.' : 'Same number of questions as the week before.') + '</div></div>';
   }
 
-  html += '<div class="card"><div class="row between"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="small muted course-tag">' + esc(courseName(courseOf(u))) + '</div></div>';
+  html += '<div class="card"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="card-sub">' + esc(courseName(courseOf(u)).split(' · ').slice(0, 2).join(', ')) + '</div>';
   topicsOf(u).forEach(function (t) {
     var s2 = topicStats(u, t), lk = isLocked(u, t);
-    html += '<div><div class="mrow' + (lk ? ' locked' : '') + '"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) + ' · M' + t.mark : t.name) + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
+    html += '<div><div class="mrow' + (lk ? ' locked' : '') + '"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) : t.name) + (t.ch && plan ? '<span class="mk">M' + t.mark + '</span>' : '') + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
       '<div class="pbar thin"><i style="width:' + s2.pct + '%"></i></div></div>';
   });
   html += '</div>';
@@ -6194,7 +6210,9 @@ SCREENS.progress = function () {
     html += '<div class="card"><div class="card-title">Recent sessions</div>';
     recent.forEach(function (r) {
       var t = topicById(r.topic);
-      html += '<div class="srow"><span>' + (t ? esc(t.short) : 'Session') + ' · ' + fmtShort(r.t) + '</span><b>' + nn(r.c) + '/' + nn(r.n) + ' · ' + fmtTime(nn(r.sec) * 1000) + '</b></div>';
+      var nm = (t ? t.short : 'Session').split(' · ');
+      html += '<div class="sess"><div class="grow"><div class="sess-t">' + esc(nm[0]) + '</div><div class="sess-s">' + (nm[1] ? esc(nm[1].replace(/^M(\d)$/, 'Mark $1')) + ', ' : '') + fmtShort(r.t) + '</div></div>' +
+        '<div class="sess-r"><div class="sess-v num">' + nn(r.c) + '/' + nn(r.n) + '</div><div class="sess-s">' + fmtTime(nn(r.sec) * 1000) + '</div></div></div>';
     });
     html += '</div>';
   }
@@ -6211,8 +6229,8 @@ SCREENS.profile = function () {
   var u = user, lv = levelOf(u.xp), left = examDaysLeft(u), got = achCount(u), need = CONFIG.LEVEL_XP - lv.into, per = xpPerSet(u), ring = pct(lv.into, CONFIG.LEVEL_XP), n = u.notif, on;
   on = ['streak', 'weekly'].filter(function (k) { return n[k]; }).length;      // (3.9.1 the daily-goal card left Home, and its switch with it)
   return '<div class="page bg-profile nav-pad profile"><div class="prof-header"><div class="prof-ring" style="--p:' + ring + '"><div class="prof-avatar">' + esc(initialOf(u.name)) + '</div></div>' +
-    '<div class="prof-name">' + esc(u.name) + '</div><div class="prof-email">' + (u.guest ? 'Guest · saved on this device only' : esc(u.email)) + '</div>' +
-    '<div class="prof-rank">' + li('star', 16) + 'Level ' + lv.n + ' · ' + lv.title + '</div>' +
+    '<div class="prof-name">' + esc(u.name) + '</div><div class="prof-email">' + (u.guest ? 'Saved on this phone only' : esc(u.email)) + '</div>' +
+    '<div class="prof-rank">' + li('star', 16) + 'Level ' + lv.n + '<span class="mt-sep">' + esc(lv.title) + '</span></div>' +
     '<div class="prof-next">Level ' + (lv.n + 1) + ' in <b>' + need + ' XP</b>' + (per ? ' · about ' + plural(Math.max(1, Math.ceil(need / per)), 'set') : '') + '</div></div>' +
     '<button class="ach-strip" data-act="go" data-to="achievements">' + statIcon('star', 40) + '<span class="grow"><span class="ach-strip-t">Achievements</span><span class="ach-strip-l">' + got + ' of ' + ACH.length + ' unlocked</span>' +
     '<span class="pbar thin"><i style="width:' + pct(got, ACH.length) + '%"></i></span></span><span class="menu-arrow">' + li('chev', 20) + '</span></button>' +
@@ -6384,9 +6402,9 @@ function showLocked(t) {
   if (lk) {
     bs = lk.by ? topicStats(user, lk.by) : null;
     showModal('<div class="m-icon">' + chIcon(t.ch, 72, 'dim') + '<span class="m-lock">' + li('lock', 16) + '</span></div><div class="m-title center">' +
-      esc(chapterOf(t).name) + ' · Mark ' + t.mark + ' is locked</div>' +
+      esc(chapterOf(t).name) + ', Mark ' + t.mark + ' is locked</div>' +
       '<div class="m-text center">' + (lk.kind === 'pass'
-        ? 'First pass <b>' + esc(chapterOf(lk.by).name) + ' · Mark ' + lk.by.mark + '</b>: answer ' + passNeed(lk.by) + ' of its ' + bs.total + ' questions right. You have ' + bs.mastered + ' so far.'
+        ? 'First pass <b>' + esc(chapterOf(lk.by).name) + ', Mark ' + lk.by.mark + '</b>: answer ' + passNeed(lk.by) + ' of its ' + bs.total + ' questions right. You have ' + bs.mastered + ' so far.'
         : 'It opens after you pass Mark ' + (t.mark - 1) + ' of ' + plural(lk.need, 'more chapter') + '. This gap is on purpose: coming back to a chapter a few days later fixes it in memory.') + '</div>' +
       '<div class="m-actions"><button class="btn btn-sec" data-act="modal-close">Close</button>' +
       (lk.by ? '<button class="btn btn-primary" data-act="start" data-topic="' + lk.by.id + '">Practice it</button>' : '') + '</div>');
