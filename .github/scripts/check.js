@@ -2,7 +2,8 @@
    Locally: npm install --no-save acorn playwright && npx playwright install chromium && node .github/scripts/check.js
    1. the app's code is ES5 (it must run on old phones);  2. index.html and sw.js carry the same version, and every file the
    service worker caches is in the repo;  3. the app opens and works in a real browser, dark and light: splash (with the name),
-   guest sign-in, course choice, the four tabs, a chapter, one question checked — with no script error on the way;
+   the terms box (it holds the ways in until ticked), guest sign-in, course choice, the four tabs, a chapter, one question
+   checked — with no script error on the way;
    2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token. */
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http');
@@ -107,6 +108,41 @@ const server = http.createServer((req, res) => {
   const { chromium } = require('playwright');
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const base = 'http://127.0.0.1:' + server.address().port + '/', browser = await chromium.launch();
+  /* 3.24.0 Phase 15: the geometry of the system, measured on every page the walk below opens (DESIGN.md §12). A page breaks it
+     when a button is not 56 px high with 16 px corners (44 for the small button inside a card), a block of the page does
+     not stand 24 px from both sides, the top-left button is not at 24,24, or a page's header is not 16 px over its first
+     block. Each rule was measured on all 74 states of the app before it was written down. */
+  const GEO = `(function () {
+    var out = [], vw = innerWidth, vh = innerHeight, cs = function (e) { return getComputedStyle(e); };
+    function shown(e) { var r = e.getBoundingClientRect(); if (r.width < 2 || r.height < 2 || r.bottom <= 0 || r.top >= vh) return false;
+      for (var p = e; p && p !== document.documentElement; p = p.parentElement) { var s = cs(p); if (s.display === 'none' || s.visibility === 'hidden' || +s.opacity < 0.05) return false; } return true; }
+    function name(e) { return '"' + (e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 22) + '"'; }
+    var root = document.querySelector('#modal.open') || document.querySelector('#screens > .screen') || document.body;
+    Array.prototype.forEach.call(root.querySelectorAll('.btn'), function (b) {
+      if (!shown(b)) return; var r = b.getBoundingClientRect(), want = b.classList.contains('sh-btn') ? 44 : 56;
+      if (Math.round(r.height) !== want) out.push('button ' + name(b) + ' is ' + Math.round(r.height) + ' px high, not ' + want);
+      if (cs(b).borderTopLeftRadius !== '16px') out.push('button ' + name(b) + ' has ' + cs(b).borderTopLeftRadius + ' corners, not 16px');
+    });
+    var page = root.querySelector('.page'), blocks = page ? Array.prototype.slice.call(page.children) : [];
+    Array.prototype.forEach.call(root.querySelectorAll('.au-sheet .au-iw, .au-sheet .btn, .au-dock'), function (e) { blocks.push(e); });
+    blocks.forEach(function (e) {
+      if (!shown(e) || parseFloat(cs(e).marginLeft) < 0) return;            // a gutter wrapper (margin -4 px): its chips stand on the line
+      var r = e.getBoundingClientRect(); if (r.width < vw * 0.5 || r.width > vw - 2) return;
+      var l = Math.round(r.left), g = Math.round(vw - r.right);
+      if (l !== 24 || g !== 24) out.push(String(e.className).split(' ')[0] + ' ' + name(e) + ' stands ' + l + ' / ' + g + ' px from the sides, not 24');
+    });
+    var back = root.querySelector('.sub-header [data-act=back], .au-top [data-act=back], .sm-top [data-act=home]');
+    if (back && shown(back)) { var br = back.getBoundingClientRect(); if (Math.round(br.left) !== 24 || Math.round(br.top) !== 24) out.push('the top-left button stands at ' + Math.round(br.left) + ',' + Math.round(br.top) + ', not 24,24'); }
+    var sh = root.querySelector('.sub-header');
+    if (sh && shown(sh)) { var n = sh.nextElementSibling; while (n && !shown(n)) n = n.nextElementSibling;
+      if (n && !n.classList.contains('sub')) { var gap = Math.round(n.getBoundingClientRect().top - sh.getBoundingClientRect().bottom); if (gap !== 16) out.push('the header is ' + gap + ' px over the first block, not 16'); } }
+    var chk = root.querySelector('.btn-check[disabled]');
+    if (chk && shown(chk)) { var t = document.createElement('i'); t.style.background = 'var(--surface-3)'; document.body.appendChild(t);
+      var want = cs(t).backgroundColor; t.remove(); if (cs(chk).backgroundColor !== want) out.push('the not-ready Check is ' + cs(chk).backgroundColor + ', not the one not-ready grey ' + want); }
+    Array.prototype.forEach.call(root.querySelectorAll('.q-dock .btn, .sm-dock .btn'), function (b) {
+      if (!shown(b)) return; var off = Math.round(vh - b.getBoundingClientRect().bottom); if (off !== 16) out.push('docked button ' + name(b) + ' is ' + off + ' px over the bottom, not 16'); });
+    return out;
+  })()`;
   for (const theme of ['dark', 'light']) {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: theme, serviceWorkers: 'block' });
     const page = await ctx.newPage(), errs = [];
@@ -120,18 +156,35 @@ const server = http.createServer((req, res) => {
       }
     };
     const click = async (sel, wait) => { await page.locator(sel).first().click({ timeout: 8000 }); await page.waitForTimeout(wait || 700); };
+    const geo = async where => { const bad = await page.evaluate(GEO); if (bad.length) throw new Error(where + ': ' + bad.join('; ')); };
     const go = await step('splash with the name', async () => { await page.goto(base + 'index.html'); await page.locator('.splash .sp-word').waitFor({ state: 'attached', timeout: 5000 }); })
       && await step('sign-in screen after the splash', async () => {
         await page.locator('.splash').waitFor({ state: 'detached', timeout: 8000 });      // gone, light and all (taps wait until then)
         await page.locator('[data-act=guest]').first().waitFor({ state: 'visible', timeout: 3000 }); await page.waitForTimeout(400);
+        await geo('the sign-in page');
+      })
+      && await step('the terms box holds the ways in until it is ticked', async () => {
+        if (!await page.locator('#au-cs .au-cb').count()) return;                       // no terms (CONFIG.TERMS null): no box
+        await click('[data-act=guest]', 600);
+        if (!await page.locator('#au-cs.ask').count()) throw new Error('a way in went on with the box empty');
+        await click('#au-cs .au-cb', 300);
+        if ((await page.locator('#au-cs .au-cb').getAttribute('aria-checked')) !== 'true') throw new Error('the box did not tick');
       })
       && await step('guest and course choice', async () => {
         await click('[data-act=guest]'); await click('[data-act=course-open][data-id=x]'); await click('[data-act=course-open][data-id=x-nmms]'); await click('[data-act=course-open][data-id=x-nmms-hi]', 1500);
         await page.locator('[data-act=tab][data-tab=topics]').first().waitFor({ state: 'visible', timeout: 8000 });
       })
-      && await step('the four tabs', async () => { for (const t of ['topics', 'progress', 'profile', 'home']) await click('[data-act=tab][data-tab=' + t + ']'); })
+      && await step('the four tabs, each in the system', async () => { for (const t of ['topics', 'progress', 'profile', 'home']) { await click('[data-act=tab][data-tab=' + t + ']'); await geo('the ' + t + ' tab'); } })
+      && await step('the pages behind the You tab, each in the system', async () => {
+        await click('[data-act=tab][data-tab=profile]');
+        for (const way of [['account'], ['account', 'privacy'], ['account', 'terms'], ['notifications'], ['settings'], ['help']]) {
+          for (const to of way) await click('[data-act=go][data-to=' + to + ']');
+          await geo('the ' + way[way.length - 1] + ' page');
+          for (let i = 0; i < way.length; i++) await click('[data-act=back]');
+        }
+      })
       && await step('a chapter and one question checked', async () => {
-        await click('[data-act=tab][data-tab=topics]'); await click('[data-act=chapter][data-ch=cl]'); await click('.chapter [data-act=start].btn', 1200);
+        await click('[data-act=tab][data-tab=topics]'); await click('[data-act=chapter][data-ch=cl]'); await geo('a chapter'); await click('.chapter [data-act=start].btn', 1200); await geo('a question before a choice');
         await click('[data-act=pick][data-i="0"]', 400); await click('[data-act=check]', 900);
         await page.locator('#fb').first().waitFor({ state: 'visible', timeout: 5000 });   // the answer's result (3.12.0: the result panel)
       });
