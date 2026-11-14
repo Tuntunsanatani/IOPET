@@ -48,8 +48,8 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
-  --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
-  --line:#2E2E2E;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
+  --bg:#141414;--bg-deep:#0E0E0E;--surface:#191919;--surface-2:#282828;--surface-3:#323232;
+  --line:#262626;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#A0A0A0;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -870,7 +870,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .progress>*+*,.profile>*+*{margin-top:var(--sp-sec)}   /* 3.24.0 a tab's sections: 24, as on Home */
 .next-step .ns-row{margin-top:12px}
 .ns-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
-.ns-l{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
+.ns-l{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px}
+.ns-mark{font-size:var(--fs-xs);font-weight:600;color:var(--ink3);margin-top:4px}
+/* 3.25.0 one thing per place (the owner, 14 Nov): no strings joined by dots; each value in its own column or line */
+.card-sub{font-size:var(--fs-xs);color:var(--ink3);margin-top:4px !important}
+.mk{font-size:var(--fs-xs);font-weight:600;color:var(--ink3);margin-left:8px}
+.trow{display:grid;grid-template-columns:1fr 80px 64px;align-items:center;padding:12px 0;border-top:var(--bw) solid var(--line);font-size:var(--fs-sm)}
+.trow b{text-align:right;font-weight:700;font-size:var(--fs-md)}
+.trow.thead{border-top:0;padding:4px 0 0;font-size:var(--fs-xs);color:var(--ink3)}
+.trow.thead span{text-align:right}
+.sess{display:flex;align-items:center;padding:12px 0;border-top:var(--bw) solid var(--line)}
+.sess-t{font-size:var(--fs-md);font-weight:600}
+.sess-s{font-size:var(--fs-xs);color:var(--ink3);margin-top:4px}
+.sess-r{text-align:right;margin-left:12px}
+.sess-v{font-size:var(--fs-md);font-weight:700}
 .prog-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
 .prog-stat{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}
 .prog-stat .chi{display:block;margin-bottom:8px}
@@ -2751,7 +2764,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.24.3',
+  VERSION: '3.25.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6151,10 +6164,11 @@ SCREENS.progress = function () {
     wt = weakestTopic(u) || recommendTopic(u);
     if (wt) {
       n = Math.min(5, setSize(u, wt)); ws = topicStats(u, wt);
-      html += '<div class="hero next-step"><div class="cp hero-kick">Next step</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
-        '<div class="grow"><div class="ns-name"' + (wt.ch ? ' lang="hi"' : '') + '>' + esc(wt.ch ? (chapterOf(wt).hi || chapterOf(wt).name) : wt.name) + (wt.mark ? ' · M' + wt.mark : '') + '</div>' +
-        '<div class="ns-l">' + (wt.mark ? ws.mastered + '/' + passNeed(wt) + ' to pass' : ws.pct + '% mastered') + ' · your weakest right now</div></div></div>' +
-        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice · ' + aboutMin(u, setSize(u, wt)) + ' min</button></div>';
+      html += '<div class="hero next-step"><div class="cp hero-kick">Your weakest chapter</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
+        '<div class="grow"><div class="ns-name"' + (wt.ch ? ' lang="hi"' : '') + '>' + esc(wt.ch ? (chapterOf(wt).hi || chapterOf(wt).name) : wt.name) + '</div>' +
+        (wt.mark ? '<div class="ns-mark">Mark ' + wt.mark + '</div>' : '') +
+        '<div class="ns-l">' + (wt.mark ? ws.mastered + ' of ' + passNeed(wt) + ' right to pass' : ws.pct + '% mastered') + '</div></div></div>' +
+        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice for ' + aboutMin(u, setSize(u, wt)) + ' min</button></div>';
     }
   }
   html += '<div class="prog-grid"><div class="prog-stat">' + statIcon('star', 40) + '<div class="prog-stat-val num">' + u.xp + '</div><div class="prog-stat-lbl">Total XP</div><div class="prog-stat-note">Level ' + lv.n + '</div></div>' +
@@ -6176,15 +6190,16 @@ SCREENS.progress = function () {
   if (u.notif.weekly) {
     wk = weekTotals(u, 0, 6); pw = weekTotals(u, 7, 13);
     html += '<div class="card"><div class="card-title">Weekly summary</div>' +
-      '<div class="srow"><span>Last 7 days</span><b>' + wk.n + ' Q · ' + pct(wk.c, wk.n) + '%</b></div>' +
-      '<div class="srow"><span>7 days before that</span><b>' + pw.n + ' Q · ' + pct(pw.c, pw.n) + '%</b></div>' +
+      '<div class="trow thead"><span></span><span>Questions</span><span>Right</span></div>' +
+      '<div class="trow"><span>Last 7 days</span><b class="num">' + wk.n + '</b><b class="num">' + pct(wk.c, wk.n) + '%</b></div>' +
+      '<div class="trow"><span>The week before</span><b class="num">' + pw.n + '</b><b class="num">' + pct(pw.c, pw.n) + '%</b></div>' +
       '<div class="small muted">' + (wk.n > pw.n ? '▲ ' + (wk.n - pw.n) + ' more questions than the week before.' : wk.n < pw.n ? '▼ ' + (pw.n - wk.n) + ' fewer questions than the week before.' : 'Same number of questions as the week before.') + '</div></div>';
   }
 
-  html += '<div class="card"><div class="row between"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="small muted course-tag">' + esc(courseName(courseOf(u))) + '</div></div>';
+  html += '<div class="card"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="card-sub">' + esc(courseName(courseOf(u)).split(' · ').slice(0, 2).join(', ')) + '</div>';
   topicsOf(u).forEach(function (t) {
     var s2 = topicStats(u, t), lk = isLocked(u, t);
-    html += '<div><div class="mrow' + (lk ? ' locked' : '') + '"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) + ' · M' + t.mark : t.name) + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
+    html += '<div><div class="mrow' + (lk ? ' locked' : '') + '"><div class="mrow-name"' + (t.ch ? ' lang="hi"' : '') + '>' + esc(t.ch && plan ? (chapterOf(t).hi || chapterOf(t).name) : t.name) + (t.ch && plan ? '<span class="mk">M' + t.mark + '</span>' : '') + '</div><div class="mrow-val">' + (lk ? li('lock', 16) : s2.mastered + '/' + s2.total) + '</div></div>' +
       '<div class="pbar thin"><i style="width:' + s2.pct + '%"></i></div></div>';
   });
   html += '</div>';
@@ -6194,7 +6209,9 @@ SCREENS.progress = function () {
     html += '<div class="card"><div class="card-title">Recent sessions</div>';
     recent.forEach(function (r) {
       var t = topicById(r.topic);
-      html += '<div class="srow"><span>' + (t ? esc(t.short) : 'Session') + ' · ' + fmtShort(r.t) + '</span><b>' + nn(r.c) + '/' + nn(r.n) + ' · ' + fmtTime(nn(r.sec) * 1000) + '</b></div>';
+      var nm = (t ? t.short : 'Session').split(' · ');
+      html += '<div class="sess"><div class="grow"><div class="sess-t">' + esc(nm[0]) + '</div><div class="sess-s">' + (nm[1] ? esc(nm[1].replace(/^M(\d)$/, 'Mark $1')) + ', ' : '') + fmtShort(r.t) + '</div></div>' +
+        '<div class="sess-r"><div class="sess-v num">' + nn(r.c) + '/' + nn(r.n) + '</div><div class="sess-s">' + fmtTime(nn(r.sec) * 1000) + '</div></div></div>';
     });
     html += '</div>';
   }
