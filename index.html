@@ -223,7 +223,6 @@ sub,sup{font-size:.72em;line-height:0}
 
 /* CHANGE #9: top padding 24px (28px on auth screens) — the fake status bar is gone (CHANGE #1) */
 .page{min-height:100%;padding:24px 24px 32px}
-.page.auth{padding-top:28px}
 .page.nav-pad{padding-bottom:148px;padding-bottom:calc(148px + env(safe-area-inset-bottom))}
 .page>*+*{margin-top:12px}
 /* 3.9.0 every screen has the same ground: a soft haze at the top that fades into the page colour (3.10.0: in dark the haze is the
@@ -255,7 +254,9 @@ sub,sup{font-size:.72em;line-height:0}
 .btn-primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
 .btn-sec,.btn-line,.q-skip{background:transparent;border:var(--bw-ctl) solid var(--outline);color:var(--ink);font-weight:600;box-shadow:none}
 .btn-danger{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad-ink)}
-.link{display:inline-block;color:var(--primary-ink);font-size:var(--fs-sm);font-weight:600;padding:12px 8px}   /* 44 px to touch (3.22.0: it was 40) */
+.link{display:inline-block;color:var(--ink2);font-size:var(--fs-md);font-weight:600;padding:12px 8px}   /* 3.24.0 one text action: grey, 15 px (orange was on Cancel, Close and Copy too); orange only where it moves you between accounts (.acc, the owner's "Create account") */
+.link.acc{color:var(--primary-ink)}
+.auth-switch .link{font-size:inherit;font-weight:700;padding:12px 4px}   /* inside a sentence: the sentence's size, bold; still 44 px to touch (3.22.0) */
 .link.block{display:block;width:100%;text-align:center}
 .pbar{height:8px;background:var(--fill-2);border-radius:var(--r-pill);overflow:hidden}
 .pbar>i{display:block;height:100%;border-radius:var(--r-pill);background:var(--primary)}
@@ -388,11 +389,12 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    style, one button behaviour on all three auth pages. The main button stays grey until what it needs is filled in right,
    then turns orange (still tappable before: a tap shows what is missing). Motion: the sheet rises (300 ms, emphasized
    decelerate), a field lights up on focus (150 ms), the button turns (220 ms). No motion with "Reduce animations". */
-.page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:16px 16px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
+.page.auth.au{position:relative;display:flex;flex-direction:column;min-height:100%;padding:24px 24px calc(16px + env(safe-area-inset-bottom));overflow:hidden}
 .au .btn{margin-bottom:0;-webkit-tap-highlight-color:transparent}
 .au-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 0 24px;transition:transform var(--t-sheet) var(--ease-sheet),opacity var(--t-fade) var(--ease-std)}
 .au.still .au-hero,.calm .au-hero{transition:none}
 .au-hero .lg{margin-bottom:24px}
+@media (max-height:600px){.au-hero{padding:24px 0 16px}.au-hero .lg{margin-bottom:16px}}   /* 3.24.0 on a very short phone the brand's own air gives way first, so the ways in, the terms box and the foot keep theirs (320×568: 5 px too tall with the terms on) */
 .au-wm{display:block;width:150px;height:auto;color:var(--ink)}
 .au-tag{margin-top:16px;font-size:var(--fs-md);font-weight:600;letter-spacing:.2px;color:var(--primary-ink);text-align:center}
 .au-tag.note{color:var(--ink2);font-weight:400}
@@ -434,7 +436,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-priv:after{content:'';position:absolute;top:-8px;right:-8px;bottom:-8px;left:-8px}
 .au-priv .chi{width:14px;height:14px;flex:none;margin-top:-1px}
 .au-scrim{position:absolute;top:0;right:0;bottom:0;left:0;margin:0;z-index:2;background:var(--scrim-soft);opacity:0;pointer-events:none;transition:opacity var(--t-fade) var(--ease-std)}
-.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:0 var(--sp-in) calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
+.au-sheet{position:absolute;left:0;right:0;bottom:0;z-index:3;max-height:100%;overflow-y:auto;background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:0 var(--sp-sec) calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);visibility:hidden;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s linear var(--t-sheet)}
 .au.open .au-scrim{opacity:1;pointer-events:auto}
 .au.open .au-sheet{transform:none;visibility:visible;transition:transform var(--t-sheet) var(--ease-sheet),visibility 0s}
 .au.still .au-sheet,.au.still .au-scrim{transition:none}
@@ -507,10 +509,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .skel-row{height:72px;margin-top:8px}
 .au-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}   /* heard, not seen */
 .au-fgt{display:flex;justify-content:flex-end}
-.au-fgt button{position:relative;font-size:var(--fs-sm);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
+.au-fgt button{position:relative;font-size:var(--fs-md);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
 .au-go{margin-top:var(--sp-rel);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
-.au-go.off{background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 var(--bw-ctl) var(--outline)}   /* 3.19.0 not ready: an outline on the sheet, like an empty field (text 5:1) */
+.au-go.off{background:var(--surface-3);color:var(--ink-off);box-shadow:inset 0 0 0 var(--bw) var(--line-2)}   /* 3.24.0 not ready: the one not-ready look (see .btn-primary[disabled]); the outline it wore (3.19.0) was the second button's look */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready var(--t-pop) var(--ease-swift)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
 .au-alt{text-align:center;font-size:var(--fs-sm);color:var(--ink2);margin-top:var(--sp-rel)}
@@ -594,7 +596,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .section-head-title{font-size:var(--fs-xs);font-weight:700;letter-spacing:1px}
 
 /* ── TOPICS ── */
-.tier-label{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:28px !important}
+.tier-label{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:var(--sp-sec) !important}
+.tier-label+*{margin-top:var(--sp-rel) !important}   /* 3.24.0 a label and what it names: 8 */
+.sub-header+:not(.sub){margin-top:var(--sp-grp) !important}   /* 3.24.0 a page's header and its first block: 16 on every page (a subtitle line under the title stays with it) */
 .topic-row{display:flex;align-items:center;width:100%;min-height:80px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;text-align:left;transition:transform var(--t-press) var(--ease-swift)}
 .topic-row:active{transform:scale(.98)}
 .topic-row.locked{opacity:.6}
@@ -678,7 +682,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @media (prefers-reduced-motion:reduce){.q-result.fresh{animation:qr-fade var(--t-fade) var(--ease-std)}}
 @keyframes qr-fade{from{opacity:0}to{opacity:1}}
 .btn-check{margin-top:20px !important}
-.btn.btn-check[disabled]{opacity:1;background:var(--surface-3);color:var(--ink-off);box-shadow:none}   /* Check before a choice cannot be pressed at all: a flat grey block with words that can be read (4.6–4.9:1). Not the outline of Sign in: that one answers a tap (DESIGN.md §1c) */
+.btn.btn-primary[disabled]{opacity:1;background:var(--surface-3);color:var(--ink-off);box-shadow:inset 0 0 0 var(--bw) var(--line-2)}   /* 3.24.0 ONE not-ready look for every primary button (Check before a choice, any other primary that waits): a flat grey block, a faint line, words that can be read (4.6–4.9:1), no edge. The sign-in buttons wear the same (.au-go.off). */
 
 /* ── FULL PAPER (3.9.6): taken like the exam — the count opens the grid, the clock runs down, Previous / Next, then the marks ── */
 .paper .p-count{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;color:var(--ink2);padding:8px 12px}
@@ -743,7 +747,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .stat-val{font-size:var(--fs-2xl);line-height:1.2;margin-top:8px}
 .stat-lbl{font-size:var(--fs-xs);color:var(--ink2)}
 .sum-mini{font-size:var(--fs-xs);color:var(--ink2);text-align:center;margin-top:8px !important}
-.sum-sec{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:28px !important}
+.sum-sec{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:var(--sp-sec) !important}
 .got-list,.summary .next-card{margin-top:8px !important}
 .badge-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-sm);font-weight:600;line-height:1.45}
 .badge-line+.badge-line{margin-top:8px}
@@ -760,7 +764,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── SET COMPLETE, 3.13.0 ── One moment: the chapter's art in a soft glow, one word (Perfect! / Well done! / Set complete),
    two big numbers (the XP counts up once, from 0), what the set earned as small chips, what comes next, and the dock:
    Review (outlined) + the next set (orange). ✕ = later. */
-.page.summary.sm2{display:flex;flex-direction:column;padding-top:16px}
+.page.summary.sm2{display:flex;flex-direction:column}
 .sm2>*+*{margin-top:16px}
 .sm-top{display:flex;min-height:44px}
 .sm-hero{text-align:center;margin-top:4px !important}
@@ -783,13 +787,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-chip.y .li{color:var(--gold)}
 .sm2 .next-card{margin-top:8px !important}
 /* the dock: the next set alone at full width (the one big target); Review and Again as quiet links under it */
-.sm-dock{position:sticky;bottom:0;z-index:5;margin:auto -24px -32px !important;padding:16px 24px 8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));background:var(--bg)}
+.sm-dock{position:sticky;bottom:0;z-index:5;margin:auto -24px -32px !important;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
 .sm-dock .btn{margin:0 !important}
 .sm-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px}
-.sm-links .link{min-height:44px;padding:12px;color:var(--ink2);font-size:var(--fs-md)}
+.sm-links .link{min-height:44px;padding:12px}
 .sm-links i{width:3px;height:3px;border-radius:50%;background:var(--ink3)}
 @media (max-height:700px){   /* a short phone (360 x 640): the art and the gaps give way, so UP NEXT shows above the dock */
   .page.summary.sm2{padding-top:8px}
+  .sm-dock{padding-top:8px}   /* 3.24.0 the dock keeps 16 px under its button (§12.2) and gives back 8 px above it */
   .sm2>*+*{margin-top:12px}
   .sm-top{min-height:40px}
   .sm-art{margin-bottom:4px}
@@ -862,7 +867,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .rv-card{transition:none}
 
 /* ── PROGRESS ── */
-.progress>*+*,.profile>*+*{margin-top:20px}
+.progress>*+*,.profile>*+*{margin-top:var(--sp-sec)}   /* 3.24.0 a tab's sections: 24, as on Home */
 .next-step .ns-row{margin-top:12px}
 .ns-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3}
 .ns-l{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
@@ -904,8 +909,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ach-strip-l{display:block;font-size:var(--fs-xs);color:var(--ink2)}
 .ach-strip .menu-arrow{margin-left:8px}
 .menu-group{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);overflow:hidden}
-.menu-group .menu-item{margin:0 !important;border:0;border-radius:0;box-shadow:none}
-.menu-group .menu-item+.menu-item{border-top:1px solid var(--line)}
+.menu-group>*{margin:0 !important;border:0 !important;border-radius:0 !important;box-shadow:none !important}
+.menu-group>*+*{border-top:var(--bw) solid var(--line) !important}
+.menu-group>.card{padding:12px 16px}   /* 3.24.0 a control in a group keeps the rows' edges */
 .menu-item{display:flex;align-items:center;width:100%;min-height:64px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important;text-align:left}
 .menu-item:active{background:var(--surface-2)}
 .menu-ico{flex:none;width:36px;height:36px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:18px;margin-right:12px;color:var(--ink2)}
@@ -1019,7 +1025,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .detail:empty{display:none}
 .btn[disabled]{opacity:.5}
 .btn[disabled]:active{transform:none}                 /* what cannot be pressed does not move under the finger */
-.btn-primary[disabled]:not(.btn-check):active{box-shadow:var(--shadow-cta)}
+.btn.btn-primary[disabled]:active{box-shadow:inset 0 0 0 var(--bw) var(--line-2)}
 .policy .card-title{margin-bottom:2px}
 
 /* ── BOTTOM NAV (CHANGE #6: solid background, no backdrop-filter) ── */
@@ -1180,7 +1186,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ch-card.k-soon .topic-info,.ch-card.k-soon .topic-row-meta{color:var(--ink3)}   /* dimmed by its ink, not by opacity: still 5.8:1 (3.10.0) */
 .ch-card.k-soon .ch-tile .chi{filter:grayscale(.8)}
 /* ── THE CHAPTER PAGE ── */
-.chapter>*+*{margin-top:20px}
+.chapter>*+*{margin-top:var(--sp-sec)}   /* 3.24.0 the sections of a chapter: 24 */
 .chp-head{text-align:center}
 .chp-art{display:flex;justify-content:center}
 .chp-art .chi{width:136px;height:136px}
@@ -1249,7 +1255,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── CELEBRATION (a Mark passed): the chapter's icon turns over in 3D and lands, rays turn behind it, confetti falls ──
    Only transform and opacity move (the phone's graphics chip does that work); the confetti is one small canvas that stops by itself.
    3.10.0 violet and gold rays (no colour per chapter) that turn for 4.5 s and come to rest — nothing on the screen moves for ever. */
-.cele{position:absolute;top:0;right:0;bottom:0;left:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;
+.cele{position:absolute;top:0;right:0;bottom:0;left:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 24px 88px;padding-bottom:calc(88px + env(safe-area-inset-bottom));text-align:center;
   background:var(--bg);background:radial-gradient(90% 55% at 50% 38%,var(--glow-a),transparent 75%),var(--bg);animation:cele-in .25s ease-out}
 /* 3.7.2 the phone's top bar and the app meet without a line: on a phone (the app fills the screen) its top 24px — the screens'
    own top margin — fade out of the bar's colour. It stays put while a screen scrolls under it, and lies over a dimmed screen
@@ -1272,7 +1278,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cele-t{font-size:var(--fs-3xl);font-weight:900;line-height:1.2;margin-top:24px;animation:rise .45s ease-out .55s both}
 .cele-s{font-size:var(--fs-md);font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
 .cele-s b{color:var(--ink)}
-.cele .btn{max-width:300px;margin-top:28px;animation:rise .45s ease-out .9s both}
+.cele .btn{position:absolute;left:24px;right:24px;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:auto;margin:0;animation:rise .45s ease-out .9s both}   /* 3.24.0 pinned where every docked button is (16 px over the bottom edge), as on the welcome page */
 @keyframes cele-in{from{opacity:0}to{opacity:1}}
 @keyframes rays{from{transform:rotate(-60deg)}to{transform:none}}
 @keyframes flip3d{0%{opacity:0;transform:translateY(60px) scale(.3) rotateY(-540deg) rotateX(25deg)}60%{opacity:1;transform:translateY(-14px) scale(1.12) rotateY(-30deg) rotateX(0)}
@@ -1288,7 +1294,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 }
 
 /* ── CHOOSE, THEN CHECK (3.6.0) ── the chosen option: a violet ring, a soft fill, a tick; CHECK wakes up only when something is chosen */
-.opt-btn.sel{border-color:var(--ink);background:var(--surface-2);box-shadow:0 0 0 2px var(--ink)}   /* 3.13.0 chosen = a neutral ring (orange is the Check button's) */
+.opt-btn.sel{border-color:var(--ink2);background:var(--ctl-on);box-shadow:0 0 0 var(--bw-ctl) var(--ink2)}   /* 3.24.0 the owner's choice C: a neutral grey ring, 3 px in all (orange is the Check button's) */
 .opt-btn.sel .opt-key{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 
 /* ── NON-VERBAL FIGURES ── ink on paper, like the exam; colour only in the explanation patches (H1–H4) */
@@ -2745,7 +2751,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.23.1',
+  VERSION: '3.24.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -2771,12 +2777,23 @@ var CONFIG = {
   MAIL_WAIT_MS: 60000,                         // gap between two emails to the same address
   GOOGLE_CLIENT_ID: '833578570616-8vss4s5lj5jbjtf15bfg3oip8l5dmk7c.apps.googleusercontent.com',   // 3.11.0 Sign in with Google (public: a web client id is no secret)
   PASS_MIN: 8,                                 // shortest password the app accepts
-  /* 3.21.0 THE TERMS OF SERVICE. null = there are none yet: the sign-in page then asks for no agreement and nothing links
+  /* 3.21.0 THE TERMS OF SERVICE (3.24.0: on). null = there are none: the sign-in page then asks for no agreement and nothing links
      to a Terms page (a box that says "I agree to our Terms" must lead to terms that exist). Once the owner has written
      them, put them here and the rest follows by itself: the sign-in page shows the box and the sentence (auConsent), the
      three ways in wait for the box (auAgreed), "Terms of Service" opens SCREENS.terms, and the You tab lists them beside
      the privacy policy. Shape: { updated: '14 November 2026', parts: [{ t: 'Using IOPET', d: 'Plain words …' }, …] } */
-  TERMS: null,
+  TERMS: { updated: '14 November 2026', parts: [                       // 3.24.0 switched on by the owner; every line is something the app really does
+    { t: 'What IOPET is', d: 'IOPET is a practice app for school students: questions for exams such as NMMS, with your answers checked and your record kept. It helps you study. It does not replace your school, your teacher or the official notices of the exam, and it cannot promise any result in an exam.' },
+    { t: 'Who can use it', d: 'Anyone can practise as a guest. If you are under 18, use IOPET with the permission of a parent or guardian, and read these terms with them.' },
+    { t: 'Your account', d: 'Sign up with your own email address and keep your password to yourself: what is done with your account is your responsibility. You can delete it at any time: You tab → Account & backup → Delete account.' },
+    { t: 'Using IOPET fairly', d: 'Do not copy, sell or share the questions, the explanations or the packs, and do not share or sell codes. Do not try to open other people’s accounts or the parts of the app that are not yours, and do not try to break or overload it. An account that does these things may be closed.' },
+    { t: 'Questions and answers', d: 'Every question and its answer are checked with care, but a mistake can still slip through. If you think one is wrong, tap the flag on that question and say what is wrong, so that it can be checked and fixed.' },
+    { t: 'Packs and payments', d: 'Some packs are paid. You pay by UPI, outside the app, and get a code (or your teacher gives you one); or your teacher unlocks the pack for your email address. A code works only once, and opens its pack for the account that uses it. Keep your payment screenshot. If a payment or a code does not work, write to iopetsupport@gmail.com.' },
+    { t: 'Your data', d: 'What the app keeps, where it is kept and who can see it is written in the Privacy policy. In guest mode your record stays on this phone only.' },
+    { t: 'When things change', d: 'Questions, packs and features change as the app gets better, and the app may sometimes be unavailable. When these terms change, the date at the top of this page changes.' },
+    { t: 'Limits', d: 'IOPET is offered as it is. As far as the law allows, IOPET is not responsible for losses that come from using it or from not being able to use it, for example a guest’s record lost when the phone is reset.' },
+    { t: 'Law and contact', d: 'These terms follow the laws of India. Questions about them: iopetsupport@gmail.com, or Help & Support → Send feedback.' }
+  ] },
   KEEP_CHOSEN: 12                              // signed-out profiles that only hold a chosen course (no practice yet): the latest 12 are kept on a phone
 };
 /* 3.9.7 PLAY MODE — the same app, opened as the Google Play app: that app opens this page as …/?src=play.
@@ -4622,6 +4639,7 @@ function toggleRow(group, key, on, label, desc) {
     '<button class="toggle' + (on ? ' on' : '') + '" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" aria-label="' + label +
     '" data-act="toggle" data-group="' + group + '" data-key="' + key + '"></button></div>';
 }
+function grp(h) { return '<div class="menu-group">' + h + '</div>'; }   // 3.24.0 the rows of one section in one box, hairlines between (as on the You tab)
 function menuRow(attrs, ico, label, meta, extra) {
   if (has(EMOJI_LI, ico)) ico = li(EMOJI_LI[ico], 22);
   return '<button class="menu-item' + (extra || '') + '" ' + attrs + '><span class="menu-ico">' + ico + '</span><span class="menu-lbl">' + label + '</span>' +
@@ -6218,11 +6236,10 @@ SCREENS.account = function () {
     return html + '<div class="card"><div class="card-title">Guest mode</div>' +
       '<div class="small muted">Your progress is saved only on this phone. If the phone is lost, reset or the app data is cleared, it cannot be brought back.</div>' +
       '<button class="btn btn-primary" data-act="adopt" data-to="signup">Create account &amp; back up</button>' +
-      '<div class="center"><button class="link" data-act="adopt" data-to="login">I already have an account</button></div></div>' +
-      menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) +
-      legalRows() +
+      '<div class="center"><button class="link acc" data-act="adopt" data-to="login">I already have an account</button></div></div>' +
+      grp(menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) + legalRows()) +
       '<div class="tier-label">Danger zone</div>' +
-      menuRow('data-act="delete-ask"', '❌', 'Delete guest data', '', ' danger') + '</div>';
+      grp(menuRow('data-act="delete-ask"', '❌', 'Delete guest data', '', ' danger')) + '</div>';
   }
   html += '<div class="card"><div class="lbl">Signed in as</div><div class="acct-email">' + esc(a.email) + '</div>' +
     '<div><span class="chip ' + (a.verified ? 'ok">✓ Email confirmed' : 'warn">Email not confirmed') + '</span></div>' +
@@ -6230,11 +6247,10 @@ SCREENS.account = function () {
     '<div class="card"><div class="card-title">Cloud backup</div><div class="small muted" id="sync-line">' + esc(syncText()) + '</div>' +
     '<div class="small detail" id="sync-detail">' + esc(sync.err && sync.detail ? sync.detail : '') + '</div>' +
     (a.verified ? '<button class="btn btn-sec" id="sync-btn" data-act="sync-now"' + (sync.busy ? ' disabled' : '') + '>Back up now</button>' : '') + '</div>' +
-    menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) +
-    menuRow('data-act="pass-edit"', '🔑', 'Change password', '') +
-    legalRows() +
+    grp(menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) +
+    menuRow('data-act="pass-edit"', '🔑', 'Change password', '') + legalRows()) +
     '<div class="tier-label">Danger zone</div>' +
-    menuRow('data-act="delete-ask"', '❌', 'Delete account', '', ' danger') +
+    grp(menuRow('data-act="delete-ask"', '❌', 'Delete account', '', ' danger')) +
     '<div class="foot-note">Your password is checked by Google Firebase and is never stored on this phone.</div></div>';
   return html;
 };
@@ -6276,8 +6292,8 @@ SCREENS.notifications = function () {
   var n = user.notif;
   return '<div class="page bg-profile">' + subHead('Notifications') +
     '<div class="alert info">These control the alerts and cards inside the app. Push notifications on the phone need a server and are not part of this build.</div>' +
-    toggleRow('notif', 'streak', n.streak, 'Streak alert', 'Warn on Home when your streak is about to end') +
-    toggleRow('notif', 'weekly', n.weekly, 'Weekly summary', 'Show the week-on-week card on Progress') + '</div>';
+    grp(toggleRow('notif', 'streak', n.streak, 'Streak alert', 'Warn on Home when your streak is about to end') +
+    toggleRow('notif', 'weekly', n.weekly, 'Weekly summary', 'Show the week-on-week card on Progress')) + '</div>';
 };
 
 SCREENS.settings = function () {
@@ -6285,22 +6301,22 @@ SCREENS.settings = function () {
   CONFIG.SESSION_SIZES.forEach(function (n) { seg += '<button class="seg-btn' + (s.size === n ? ' on' : '') + '" data-act="size" data-n="' + n + '">' + n + '</button>'; });
   return '<div class="page bg-profile">' + subHead('Settings') +
     '<div class="tier-label">Practice</div>' +
-    '<div class="card" style="margin-top:8px"><div class="toggle-label">Questions per session</div><div class="seg">' + seg + '</div></div>' +
+    grp('<div class="card"><div class="toggle-label">Questions per session</div><div class="seg">' + seg + '</div></div>' +
     toggleRow('settings', 'shuffle', s.shuffle, 'Shuffle options', '') +
-    toggleRow('settings', 'timer', s.timer, 'Show timer', '') +
+    toggleRow('settings', 'timer', s.timer, 'Show timer', '')) +
     '<div class="tier-label">Feedback</div>' +
-    toggleRow('settings', 'sound', s.sound, 'Sound effects', '') +
+    grp(toggleRow('settings', 'sound', s.sound, 'Sound effects', '') +
     toggleRow('settings', 'haptic', s.haptic, 'Vibration', '') +
-    toggleRow('settings', 'calm', s.calm, 'Reduce animations', 'For older phones. The opening logo still plays.') +
+    toggleRow('settings', 'calm', s.calm, 'Reduce animations', 'For older phones. The opening logo still plays.')) +
     '<div class="tier-label">Appearance</div>' +
-    '<div class="card" style="margin-top:8px"><div class="toggle-label">Theme</div><div class="seg">' +
+    '<div class="menu-group"><div class="card"><div class="toggle-label">Theme</div><div class="seg">' +
     [['system', 'Same as phone'], ['light', 'Light'], ['dark', 'Dark']].map(function (o) {
       return '<button class="seg-btn' + (s.theme === o[0] ? ' on' : '') + '" data-act="theme" data-v="' + o[0] + '" aria-pressed="' + (s.theme === o[0]) + '">' + o[1] + '</button>';
-    }).join('') + '</div></div>' +
+    }).join('') + '</div></div></div>' +
     '<div class="tier-label">Account</div>' +
-    menuRow('data-act="go" data-to="account"', '☁️', 'Account & backup', u.guest ? 'Guest' : esc(firstName(u.name))) +
+    grp(menuRow('data-act="go" data-to="account"', '☁️', 'Account & backup', u.guest ? 'Guest' : esc(firstName(u.name)))) +
     '<div class="tier-label">Data</div>' +
-    menuRow('data-act="reset-ask"', '🔄', 'Reset progress', '', ' danger') +
+    grp(menuRow('data-act="reset-ask"', '🔄', 'Reset progress', '', ' danger')) +
     '<div class="foot-note">IOPET v' + CONFIG.VERSION + (PLAY ? ' · Play' : '') + '<br>' + (!Store.persistent() ? 'Storage is blocked — data will not be saved.' :
       u.guest ? 'Data is saved on this phone only.' : 'Data is saved on this phone and backed up to your account.') + '</div></div>';
 };
@@ -6330,17 +6346,17 @@ function legalRows() {                                               // the poli
 }
 
 SCREENS.help = function () {
-  var u = user, mine = topicsOf(u), html = '<div class="page bg-profile">' + subHead('Help & Support') + '<div class="tier-label">Frequently asked</div>';
+  var u = user, mine = topicsOf(u), html = '<div class="page bg-profile">' + subHead('Help & Support') + '<div class="tier-label">Frequently asked</div><div class="menu-group">';
   FAQ.forEach(function (f, i) {
     html += '<div class="faq-item"><button class="faq-q" data-act="faq" data-i="' + i + '" aria-expanded="false"><span>' + f.q + '</span><span class="faq-chev">' + li('chev', 18) + '</span></button>' +
       '<div class="faq-a">' + f.a + '</div></div>';
   });
-  html += '<div class="tier-label">Contact</div>' +
-    menuRow('data-act="feedback"', '💬', 'Send feedback', u.feedback.length ? u.feedback.length + ' sent' : '') +
-    menuRow('data-act="reports"', '🚩', 'Reported questions', String(u.reports.length)) +
+  html += '</div><div class="tier-label">Contact</div>' +
+    grp(menuRow('data-act="feedback"', '💬', 'Send feedback', u.feedback.length ? u.feedback.length + ' sent' : '') +
+    menuRow('data-act="reports"', '🚩', 'Reported questions', String(u.reports.length))) +
     '<div class="tier-label">Privacy and safety</div>' +
-    legalRows() +
-    (db.auth && db.auth.verified ? menuRow('data-act="sec-check"', '🔐', 'Check cloud security', '') : '') +
+    grp(legalRows() +
+    (db.auth && db.auth.verified ? menuRow('data-act="sec-check"', '🔐', 'Check cloud security', '') : '')) +
     '<div class="about">' + logoStack(19) + '<div class="about-full">Indian Online Platform of Educational Training</div>' +
     '<div class="about-sub">Made in India · ek private pahal</div></div>' +
     '<div class="foot-note">IOPET v' + CONFIG.VERSION + ' · ' + esc(courseName(courseOf(u))) + ': ' + plural(mine.reduce(function (n, t) { return n + (BANK[t.id] || []).length; }, 0), 'question') + ' in ' + plural(mine.length, 'topic') + '</div></div>';
@@ -6453,7 +6469,7 @@ function celebrate(o) {
   celeEl.style.setProperty('--hl', o.hue.f);                    // the violet rays; the gold ones come from the CSS
   celeEl.innerHTML = '<canvas aria-hidden="true"></canvas><div class="cele-stage"><div class="cele-rays"></div><div class="cele-icon">' + chIcon(o.ch, 150) +
     '<span class="cele-badge">' + CHECK_SVG + '</span></div></div><div class="cele-t">' + esc(o.title) + '</div><div class="cele-s">' + o.sub + '</div>' +
-    '<button class="btn btn-primary" data-act="cele-close">Continue</button>';
+    '<button class="btn btn-neutral" data-act="cele-close">Continue</button>';   // 3.24.0 a reward moment's Continue is neutral (§5), as on the streak moment
   elPhone.appendChild(celeEl);
   lock(600);                                                  // the button cannot be hit by the same finger that ended the test
   sense('milestone');

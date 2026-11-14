@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.23.1)
+# IOPET design rules (v3, 3.24.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -57,14 +57,16 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
 | B, a control with its own fill | pills that act, steppers, round icon buttons (1 px); what can be chosen: options, course rows, subject tiles (1.5 px) | `--line-2` | 1 or 1.5 px | 1.5 : 1 | 1.7 : 1 | ~20 % |
 | B, a control that is only a line | every text field, every second button, a button not ready, a checkbox | `--outline` | 1.5 px (`--bw-ctl`) | 3.1 : 1 | 3.5 : 1 | ~40 % |
 | C, in use | the field with the cursor in it | `--outline-on` + a 1 px ring (`--ring`) | 2.5 px in all | 6.4 : 1 | 6.5 : 1 | ~65 % |
-| C, said by the student | the chosen answer of a question | `--ink` + a 2 px ring | 3.5 px | 14.9 : 1 | 18.4 : 1 | 100 % |
+| C, said by the student | the chosen answer of a question | `--ink2` + a 1.5 px ring (`--bw-ctl`) on `--ctl-on` | 3 px | 8.0 : 1 | 8.4 : 1 | ~55 % |
 
 - Why a control that is only a line is brighter than the directive's 20–30 %: it has no fill, so the
   line is all there is to see, and under 3 : 1 a field cannot be found (WCAG 1.4.11).
 - Why focus is not ink: a white outline shouts. 6.4 : 1 with one more pixel is twice the line at rest
   and reads as "here" at once. Its colour also says the state: green when right, muted red when wrong.
-- Why the chosen answer keeps ink: it is what the student said, the main thing on that screen before
-  Check. It is the one line in the app that is as strong as text.
+- Why the chosen answer is grey, not ink (the owner chose C, 14 Nov 2026): it is what the student said, so it must be the
+  strongest frame on the page (8 : 1, more than any field in use), but its words must read before its frame: an ink ring
+  as strong as the text made the frame louder than the answer. The letter key stays ink-filled, so "chosen" is still
+  told by more than a line.
 - State colours replace the grey, never add to it: right `--good`, wrong `--field-bad` (a quieter red
   than `--wrong`), current or on `--primary`.
 - No glow anywhere. A shadow only in light, and only under a card or an option (`--shadow-1`, `--shadow-2`);
@@ -153,7 +155,7 @@ Every part that can be touched has these, in both looks, from tokens only:
   Coloured text is only for links (`--primary-ink`) and the meanings above.
 - Glyphs on a coloured fill use dark ink `#141414` (contrast). The one exception is the light theme's red, where the ✕ is
   white: 4.8 : 1, against 3.8 : 1 for dark ink. On the dark theme's red, dark ink stays (5.4 : 1).
-- A chosen option (before Check) is a neutral ring: white in dark, black in light. It is never orange, because orange is
+- A chosen option (before Check) is a neutral grey ring (`--ink2`, 3.24.0). It is never orange, because orange is
   the action (the Check button). The ✕ / ✓ marks carry the meaning for colour-blind students.
 - A wrong answer sits on a burgundy panel in dark (`#2C1A1A`) and a soft pink one in light (`#FDECEA`), never on a brown
   or yellow tint. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
@@ -237,11 +239,13 @@ Dark and light are the same design. Neither is made from the other by turning co
 | Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Check, Next set, Create account |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words, semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
-| Not ready (§1c) | forms: an outline that answers a tap. Check before a choice: a flat grey block, no edge (`--surface-3`, words `--ink-off`). Any other button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
-| Text link | `--ink2` or `--primary-ink`, no underline unless inside a sentence | Forgot password? |
+| Not ready (§1c, §12.7) | one look for every primary button that cannot go on yet (3.24.0): a flat grey block (`--surface-3`), a faint `--line-2` line, `--ink-off` words, no edge. A sign-in button in that state still answers a tap (it says what is missing). A second button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
+| Text link (§12.6) | `--ink2`, 15 px, semibold, 44 px to touch, no underline; inside a sentence it takes the sentence's size, bold. Orange (`--primary-ink`, `.link.acc`) only where it moves you between accounts (3.24.0: it was on Cancel, Close and Copy too) | Forgot password?, Continue as guest, Review answers; orange: Create account, Sign in, I already have an account |
 | Icon button | 44 px circle, `--line-2`, no shadow | ✕ close, ‹ back, flag (report), − + |
 
-- At most one primary per screen. A secondary sits left of the primary (about 1/3 width) or below it, 12 px from it
+- At most one primary per screen. In a pair the way back stands left and the way forward right (§12.2: Skip | Check,
+  Keep going | Quit, Cancel | Delete); the orange goes to the one the app recommends. In a dock the minor one takes about 1/3;
+  in a dialog both halves are equal. Stacked: the primary on top, the second under it, text actions last, 12 px from it
   (3.22.0: Skip and Check touched; a stronger rule had set the gap to 0 since 3.12.0).
 - Every button is 56 px with its words in its middle (3.22.0: they were 53.5, 56 and 58). Small buttons inside a card
   (Share, the pay buttons) are 44.
@@ -434,6 +438,11 @@ file (`.github/scripts/check.js`, part 2b):
   pages have none). What is left is there on purpose: the figures' four patches, the splash, the celebrations' light,
   the sizes of pictures and big numbers, a chart bar's shape, and the eight spaces of §4.
 - A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
+- 3.24.0: CI also measures the geometry of the pages it opens, in both looks (the sign-in page, the four tabs, Account,
+  Privacy, Terms, Notifications, Settings, Help, a chapter, a question before a choice): every button 56 px with 16 px
+  corners (44 for the small one in a card), every block 24 px from both sides, the top-left button at 24,24, a header
+  16 px over its first block, the one not-ready look, docked buttons 16 px over the bottom (§12). It was proved to
+  fail: with the sign-in pages put back on 16 px sides, it stopped the build on both looks.
 - The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
   and curves are their own.
 - A new rule: use a token, or a value of the scale. If something truly must be written out, add it with
@@ -450,7 +459,7 @@ The owner's directive names pages; these are IOPET's:
 | Courses | `course` (the chooser), `topics` (subjects and chapters), `chapter` | the same |
 | Premium | `pack`, `redeem` (and the pack card on Topics) | the same (the other chat owns packs' content; the look is ours) |
 | Profile | `profile`, `account`, `goals`, `achievements`, `progress` | the same |
-| Assessment | `practice`, `paper`, `paperres`, `summary`, `review` | the same; the chosen option waits for the owner |
+| Assessment | `practice`, `paper`, `paperres`, `summary`, `review` | the same; the chosen option is the owner's C (3.24.0) |
 | Settings and the rest | `settings`, `notifications`, `help`, `privacy`, `admin`, every sheet, the "please wait" card | the same |
 
 Done in 3.22.0, on every page: one button family (56 px, the second button a line), one field (the sign-in field in
@@ -461,12 +470,17 @@ Done in 3.23.0, on every page: every space on the 4 pt grid by what it separates
 on purpose. Rows keep their height to within 2 px (a menu row 64 px, a topic row 80, a FAQ row at least 48); every
 question has 0 to 8 px more room above the quiz dock on a small phone.
 
-Next (each step a release, before/after in both looks, the 80-screen walk after each):
+Done in 3.24.0 (the owner's Phase 15): the whole app measured, state by state, and the outliers brought onto one system
+(§12): one not-ready look, one place for the top-left button, one place for a docked button, one text-link look, the
+sign-in pages on the same 24 px sides, the rows of a section in one box, the steps of space between header, labels,
+cards and sections. CI now measures that geometry on every push. The quiz's chosen option is the owner's C.
 
-1. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
-   the reference.
-2. One header for the four tabs; squircle corners (both approved earlier, not built).
-3. Each page against the owner's references (Home, Profile, the quiz), once they arrive.
+Next (each step a release, before/after in both looks, the walk after each):
+
+1. One header for the four tabs (the owner's Zone 1: still while the tabs change): its contents need the owner's word.
+2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics like the Courses tab (subject strip, one card
+   height, the path), Home's one card with its action inside, the You tab's stat cards.
+3. Line icons onto three sizes (§12.9 L1); squircle corners (approved earlier, not built).
 
 (3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
 the message and the glyph on the red mark take their colours from tokens. Nothing looks different: 26 pictures of nine
@@ -474,9 +488,117 @@ pages are the same pixel for pixel in both looks.)
 
 Open points (the owner decides):
 
-- The Terms of Service do not exist yet; the consent row waits for them. A child's tick is not a parent's consent:
-  the privacy policy already asks under-18s to use the app with a parent's permission.
+- The Terms of Service are on (3.24.0, the owner's word "on kar do"): every line says only what the app does. What
+  only the owner can add: who runs IOPET (a name), the refund rule for paid packs, the city for disputes; and a lawyer's
+  reading. A child's tick is not a parent's consent: the terms and the privacy policy ask under-18s to use the app with
+  a parent's permission.
 - The phone's own font-size setting is not followed (sizes are px). Following it means `rem` sizes and a pass over
   every fixed height.
-- The reference pictures named in the directive (the approved login, the profile, the Brilliant quiz) did not arrive
-  with it; the work so far follows its words.
+- The reference pictures arrived on 14 Nov 2026 (about 80 Brilliant screens; notes kept with the work). Brilliant is
+  the benchmark, not a template: where the owner's directive says otherwise (the sign-in page: brand above the sheet,
+  "Forgot password?" under the password field, "Create account" in orange) the directive wins.
+
+## 12. Composition and consistency (3.24.0, the owner's Phase 15)
+
+Made by measuring, not by looking: a script walks all 74 states of the app (every page, sheet, dialog, toast and moment),
+in both looks, and records where each header, button, card, field, row, link and gap sits and how it is drawn. Every
+rule below was checked against that record; §12.9 is what it found. CI measures the same geometry on the pages it opens
+on every push (`check.js`, "each in the system"), so a page cannot drift off the system unnoticed.
+
+### 12.1 The regions of a page
+
+| Region | Rule |
+|---|---|
+| 1. The phone's own bar | the app's top 24 px fade out of the bar's colour (3.7.2) |
+| 2. Header | sub-page: the back button (44 px) at 24,24, the title (24 px bold) beside it at x = 80. Tab: its title block at 24 (still uneven, §12.9 L2). A moment or the summary: the close button at 24,24 |
+| 3. Content | every block 24 px from both sides, on every page, the sign-in sheet included |
+| 4. The action | where its kind says (§12.2) |
+| 5. Bottom bar or dock | the tab bar on the four tabs; a dock where the page's action is docked |
+| 6. Bottom safe area | docks and the tab bar add `env(safe-area-inset-bottom)` |
+
+### 12.2 Where the action goes: one place per kind of page
+
+| Pattern | When | Where | Pages |
+|---|---|---|---|
+| A, docked | the page is there to do one thing next | pinned at the bottom, 16 px over the edge (+ safe area); a text action may sit under it | quiz (Skip, Check, the result's Continue), summary, review, welcome, forgot, the Mark celebration, the streak moment |
+| B, after the content | a short form or a short page | right under the last field or paragraph, full width | sign in, create account, redeem, pack, goals, confirm your email |
+| C, in its card | the action belongs to one card | inside that card, at its foot | Home (Start), Progress (Practice), Account (Create account & back up), Share |
+| D, dangerous | it deletes or resets | the last section ("Danger zone"), a red row, then a dialog in which the safe choice is the orange one | Delete account, Delete guest data, Reset progress |
+
+- Pairs: the way back on the left, the way forward on the right (Skip | Check; Keep going | Quit; Cancel | Delete),
+  as the phone's own dialogs do. Orange marks the choice the app recommends: forward in a flow, back in a warning. In a
+  dock the minor action takes about a third; in a dialog both halves are equal (two real choices).
+- Stacks: the primary on top, a second button 8 px under it, text actions last and centred.
+- Measured before 3.24.0: the moments put Continue in the middle of the screen (225 and 195 px over the edge) while the
+  welcome page docked it; Review docked "Done" 8 px over the edge, the quiz 16. Now every A sits 16 px over the edge.
+
+### 12.3 The thumb
+
+The bottom third is where the thumb rests, so every docked action (A) and the tab bar are there. Actions in a card (C)
+sit in the first screenful of their tab, reached without a scroll. Nothing to press is closer than 16 px to the bottom
+edge (the gesture bar). Every target is at least 44 px. A form's button (B) follows its last field, so the keyboard
+never covers it.
+
+### 12.4 Component geometry (measured, all pages)
+
+| Component | Height | Corners | Line | Inside | Note |
+|---|---|---|---|---|---|
+| Button, every kind | 56 | 16 | none, or 1.5 px `--outline` for a second button | 8 24 | the small button inside a card: 44 |
+| Field | 56 | 16 | 1.5 px `--outline` | 0 16 | |
+| Option of a question | 72 and up | 18 | 1.5 px `--line-2` | 12 8 (grid) / 12 16 | |
+| Row (menu, switch, FAQ) | 64 (FAQ 48 and up) | the group's 24 | a hairline between rows | 12 16 | the rows of a section sit in ONE box (3.24.0) |
+| Card | its content | 24 | 1 px `--line` | 20 | |
+| Topic row | 136 | 24 | 1 px, a 2 px foot | 24 | |
+| Page header | 44 | | | | back button at 24,24 |
+
+Corners grow with the box: 16 for what you press, 18 for options and alerts, 24 for cards and groups.
+
+### 12.5 Space (adds to §1b)
+
+| Between | Space |
+|---|---|
+| a page's header and its first block (a subtitle line under the title stays with the title) | 16 |
+| a section label and what it names | 8 |
+| above a section label | 24 (16 right under the header) |
+| cards that stand alone | 12 |
+| the sections of a tab (Home, Progress, You) and of a chapter | 24 |
+| rows of one section | none: one box, hairlines |
+
+### 12.6 Text actions
+
+One look: `--ink2`, 15 px, semibold, 44 px to touch, no underline. Inside a sentence it takes the sentence's size, bold.
+Orange only where it moves you between accounts (Create account, Sign in, I already have an account) and for "Terms of
+Service" in the consent sentence: the owner's rules for the sign-in page (directive 9.6, 10), carried to every page. Before 3.24.0 Cancel, Close, Copy, Done, Sign out and Practice more were
+orange too, and links came in 14 and 15 px.
+
+### 12.7 Not ready
+
+One look for every primary button that cannot go on yet: flat `--surface-3`, a faint `--line-2` line, `--ink-off`
+words, no edge. Measured before 3.24.0: the not-ready Sign in, Create account and Send reset link wore the outline of a
+second button, the same picture as "Quit" in a dialog, while Check wore the grey block. A second button that cannot be
+pressed is dimmed to 50 %.
+
+### 12.8 Levels of importance (one logic, every page)
+
+1. Primary: the page's title (28 px on a tab, 24 px beside the back button), the one orange button.
+2. Secondary: card titles (17 px bold), the second button (a line), `--ink` words.
+3. Tertiary: `--ink2` words, text actions, section labels (14 px semibold).
+4. Decoration: `--ink-deco`, pictures, glows; never needed to understand the page.
+
+### 12.9 The matrix: what the walk found (3.23.1) and what 3.24.0 did
+
+| | Found | Done |
+|---|---|---|
+| Critical | none | |
+| High H1 | the not-ready sign-in buttons looked like a second button | one not-ready look (§12.7) |
+| High H2 | the moments' Continue: orange on one, neutral on the other, both in the middle of the screen | both neutral (as §5 says), both docked |
+| High H3 | the top-left button at 16,16 (sign-up, forgot), 24,28 (course chooser), 24,16 (summary), 24,24 (all other pages) | 24,24 everywhere |
+| High H4 | orange on Cancel, Close, Copy, Done, Sign out, Practice more | one text-link look (§12.6) |
+| Medium M1 | the sign-in pages and sheet 16 px from the sides (358 px wide), every other page 24 (342) | 24 |
+| Medium M2 | Review's Done 8 px over the edge, every other dock 16 | 16 |
+| Medium M3 | header → first block 2 to 20 px; label → rows 8 or 12; 28 above a label; tab and chapter sections 20 | §12.5 |
+| Medium M4 | Account, Settings, Notifications and Help drew each row as its own box; You drew a section as one box | one box per section |
+| Low L1 | line icons in 7 sizes (14 to 22 px) where the tokens give 16 / 20 / 24 | written down; next |
+| Low L2 | tab tops: Home 20 px, Progress 28 px, You 24 px, Topics none | next: one header for the four tabs |
+| Low L3 | corners 16 / 18 / 24 | kept: they grow with the box |
+| Consistent already | side margins 24 on every page; every button 56 px with 16 px corners; dialog pairs in the phone's order | kept, and now guarded by CI |
