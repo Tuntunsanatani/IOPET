@@ -22,35 +22,10 @@ rawColor  .lvl-track>i { background:hsl(var(--h),90%,52%) }
 rawColor  .sp-kin { background:radial-gradient(closest-side,rgba(255,181,71,.30),rgba(255,181,71,.12) 45%,rgba(255,181,71,0)) }
 rawColor  .sp-sun { background:radial-gradient(closest-side,#FFF8E7 58%,rgba(255,248,231,0)) }
 rawColor  .splash { background:#100F1C }
-rawColor  .toast .li { color:#FFD84D }
-rawColor  .toast>span { border:1px solid rgba(255,255,255,.12) }
-rawColor  .toast>span { color:#FFFFFF }
-rawColor  .toggle:after { background:#fff }
-rawColor  .toggle:after { box-shadow:0 2px 4px rgba(0,0,0,.3) }
-rawColor  .xp-fly { color:var(--gold,#FFB020) }
 rawColor  [data-theme="light"] .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,196,0,.20),transparent 75%),var(--bg) }
 rawColor  [data-theme="light"] .lvl-track>i { background:hsl(var(--h),85%,38%) }
-rawColor  [data-theme="light"] .q-result.bad .fb-ico,[data-theme="light"] .opt-btn.wrong .opt-key,[data-theme="light"] .rv-dot.bad { color:#FFFFFF }
 rawEase   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }
 rawRadius  .bar { border-radius:8px 8px 3px 3px }
-rawRadius  .ch-bar { border-radius:8px }
-rawRadius  .ch-bar>i { border-radius:8px }
-rawRadius  .co-row.big .co-ico { border-radius:14px }
-rawRadius  .lvl-track { border-radius:4px }
-rawRadius  .lvl-track>i { border-radius:4px }
-rawRadius  .nav-ic { border-radius:20px }
-rawRadius  .nav-item { border-radius:16px }
-rawRadius  .pack-ico { border-radius:12px }
-rawRadius  .pay-qr { border-radius:12px }
-rawRadius  .pbar { border-radius:8px }
-rawRadius  .pbar>i { border-radius:8px }
-rawRadius  .pg-cell { border-radius:12px }
-rawRadius  .pg-key { border-radius:4px }
-rawRadius  .q-progress { border-radius:10px }
-rawRadius  .q-progress>i { border-radius:10px }
-rawRadius  .skel-line { border-radius:7px }
-rawRadius  .toggle { border-radius:26px }
-rawRadius  @media (max-width:340px) .nav-ic { border-radius:18px }
 rawSize   .ach-emoji { font-size:30px }
 rawSize   .co-ico b { font-size:18px }
 rawSize   .co-ico { font-size:21px }

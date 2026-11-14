@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.23.0)
+# IOPET design rules (v3, 3.23.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -430,8 +430,9 @@ file (`.github/scripts/check.js`, part 2b):
   `var(--name)` draws nothing and says nothing.)
 - Whatever is written into a rule instead of coming from the system is **design debt**: a space off the 4 pt grid, a
   colour, a corner, a time or a curve that is not a token, a text size outside the scale. Every such line that exists
-  today is listed in `.github/design-debt.txt` (3.21.0: 317 lines; 3.22.0: 235; 3.23.0: 68; the sign-in pages have
-  none).
+  today is listed in `.github/design-debt.txt` (3.21.0: 317 lines; 3.22.0: 235; 3.23.0: 68; 3.23.1: 43; the sign-in
+  pages have none). What is left is there on purpose: the figures' four patches, the splash, the celebrations' light,
+  the sizes of pictures and big numbers, a chart bar's shape, and the eight spaces of §4.
 - A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
 - The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
   and curves are their own.
@@ -462,12 +463,14 @@ question has 0 to 8 px more room above the quiz dock on a small phone.
 
 Next (each step a release, before/after in both looks, the 80-screen walk after each):
 
-1. What is still written into rules: 23 colours (the switch's knob, the toast, the celebration, the streak moment),
-   19 corners (bars, the nav's pill, small tiles), 16 text sizes (pictures and big numbers).
-2. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
+1. The quiz's chosen option against §1b, shown to the owner before it changes: it is the one place the owner named as
    the reference.
-3. One header for the four tabs; squircle corners (both approved earlier, not built).
-4. Each page against the owner's references (Home, Profile, the quiz), once they arrive.
+2. One header for the four tabs; squircle corners (both approved earlier, not built).
+3. Each page against the owner's references (Home, Profile, the quiz), once they arrive.
+
+(3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
+the message and the glyph on the red mark take their colours from tokens. Nothing looks different: 26 pictures of nine
+pages are the same pixel for pixel in both looks.)
 
 Open points (the owner decides):
 
