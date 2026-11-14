@@ -489,7 +489,7 @@ pages are the same pixel for pixel in both looks.)
 Open points (the owner decides):
 
 - The Terms of Service are on (3.24.0, the owner's word "on kar do"): every line says only what the app does. What
-  only the owner can add: who runs IOPET (a name), the refund rule for paid packs, the city for disputes; and a lawyer's
+  only the owner can add: who runs IOPET (a name), the refund rule for paid packs (the city for disputes is Patna, Bihar: 3.24.1); and a lawyer's
   reading. A child's tick is not a parent's consent: the terms and the privacy policy ask under-18s to use the app with
   a parent's permission.
 - The phone's own font-size setting is not followed (sizes are px). Following it means `rem` sizes and a pass over
