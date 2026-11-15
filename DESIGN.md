@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.26.0)
+# IOPET design rules (v3, 3.27.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -478,8 +478,8 @@ cards and sections. CI now measures that geometry on every push. The quiz's chos
 Next (each step a release, before/after in both looks, the walk after each):
 
 1. One header for the four tabs (the owner's Zone 1: still while the tabs change): its contents need the owner's word.
-2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics done in 3.26.0 (§12.10); next the chapter page
-   like Brilliant's course page, Home's one card with its action inside, the You tab's stat cards.
+2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics done in 3.26.0 (§12.10), the chapter page in
+   3.27.0 (§12.11); next Home's one card with its action inside, the You tab's stat cards.
 3. Line icons onto three sizes (§12.9 L1); squircle corners (approved earlier, not built).
 
 (3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
@@ -520,7 +520,7 @@ on every push (`check.js`, "each in the system"), so a page cannot drift off the
 
 | Pattern | When | Where | Pages |
 |---|---|---|---|
-| A, docked | the page is there to do one thing next | pinned at the bottom, 16 px over the edge (+ safe area); a text action may sit under it | quiz (Skip, Check, the result's Continue), summary, review, welcome, forgot, the Mark celebration, the streak moment |
+| A, docked | the page is there to do one thing next | pinned at the bottom, 16 px over the edge (+ safe area); a text action may sit under it | quiz (Skip, Check, the result's Continue), summary, review, a chapter (3.27.0), welcome, forgot, the Mark celebration, the streak moment |
 | B, after the content | a short form or a short page | right under the last field or paragraph, full width | sign in, create account, redeem, pack, goals, confirm your email |
 | C, in its card | the action belongs to one card | inside that card, at its foot | Home (Start), Progress (Practice), Account (Create account & back up), Share |
 | D, dangerous | it deletes or resets | the last section ("Danger zone"), a red row, then a dialog in which the safe choice is the orange one | Delete account, Delete guest data, Reset progress |
@@ -629,4 +629,20 @@ subject to its chapters, the line joining the cards. Not taken: the frame and li
 the course colour behind the header (no extra colours), the pinned subject strip (one subject is open; pinning costs
 about 120 px at every scroll, so it comes when the SAT subjects open), the "..." cut of a long sentence (ours is
 written to fit).
+
+### 12.11 A chapter: like a course in Brilliant (3.27.0)
+
+From the owner's two recordings of a Brilliant course (14 Nov 2026): a big picture, the name, one sentence, the steps
+as points on one line, and the action pinned at the bottom.
+
+- Head, centred, the levels of a chapter on Topics: picture 120 px (88 on a phone under 700 px tall), the English name
+  a 14 px grey label, the Hindi name 28 px, one sentence 17 px ("In NMMS, about 7 questions per paper.").
+- The three Marks: a 48 px point each on one 2 px line, 32 px apart; no box, no lines between rows, no chips. Each:
+  MARK N in small capitals, its name 20 px, then what it asks (questions and minutes; the pass mark) in 14 px grey, then
+  one line of where it stands (the bar on the way; Passed in green; the lock and why; for Mark 3 the badge it earns).
+  The Mark to do is the orange point with a soft ring; a passed one the green ring with a tick; one that waits grey.
+- The one button (Start, Continue or Revise the Mark that is due) is docked (§12.2 A), so it is in reach on every phone;
+  before 3.27.0 it sat after the content and on a 390 x 844 phone half of it was below the screen.
+- Gone: the framed "In NMMS" box, the framed list, the chips (XP, what passing opens: the next Mark's own line says it).
+- Not taken: the card that follows the scroll (a chapter has three Marks; all of them fit on one screen).
 
