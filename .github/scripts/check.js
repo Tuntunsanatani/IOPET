@@ -2,7 +2,7 @@
    Locally: npm install --no-save acorn playwright && npx playwright install chromium && node .github/scripts/check.js
    1. the app's code is ES5 (it must run on old phones);  2. index.html and sw.js carry the same version, and every file the
    service worker caches is in the repo;  3. the app opens and works in a real browser, dark and light: splash (with the name),
-   the terms box (it holds the ways in until ticked), guest sign-in, course choice, the four tabs, a chapter, one question
+   the terms box (it holds the ways in until ticked), guest sign-in, course choice, the four tabs, Home's button on two phones, a chapter, one question
    checked — with no script error on the way;
    2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token. */
 'use strict';
@@ -175,6 +175,16 @@ const server = http.createServer((req, res) => {
         await page.locator('[data-act=tab][data-tab=topics]').first().waitFor({ state: 'visible', timeout: 8000 });
       })
       && await step('the four tabs, each in the system', async () => { for (const t of ['topics', 'progress', 'profile', 'home']) { await click('[data-act=tab][data-tab=' + t + ']'); await geo('the ' + t + ' tab'); } })
+      && await step("Home's one button clear of the bar, on a tall phone and a short one", async () => {   // 3.28.0: the card is at the bottom
+        const vp = page.viewportSize();
+        for (const [w, h] of [[390, 844], [360, 640]]) {
+          await page.setViewportSize({ width: w, height: h }); await page.waitForTimeout(300);
+          const m = await page.evaluate(() => { const b = document.querySelector('.hm-card .btn, .hm-more .link'), n = document.querySelector('.bottom-nav'); return b && n ? [b.getBoundingClientRect().bottom, n.getBoundingClientRect().top] : null; });
+          if (!m) throw new Error('Home has no button');
+          if (m[0] > m[1] - 28) throw new Error(w + 'x' + h + ': the button ends at ' + Math.round(m[0]) + ' px, the bar (with its 28 px fade) starts at ' + Math.round(m[1] - 28));
+        }
+        await page.setViewportSize(vp); await page.waitForTimeout(300);
+      })
       && await step('the pages behind the You tab, each in the system', async () => {
         await click('[data-act=tab][data-tab=profile]');
         for (const way of [['account'], ['account', 'privacy'], ['account', 'terms'], ['notifications'], ['settings'], ['help']]) {

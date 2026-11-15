@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.27.0)
+# IOPET design rules (v3, 3.28.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -479,7 +479,7 @@ Next (each step a release, before/after in both looks, the walk after each):
 
 1. One header for the four tabs (the owner's Zone 1: still while the tabs change): its contents need the owner's word.
 2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics done in 3.26.0 (§12.10), the chapter page in
-   3.27.0 (§12.11); next Home's one card with its action inside, the You tab's stat cards.
+   3.27.0 (§12.11), Home in 3.28.0 (§12.12); next the You tab's stat cards.
 3. Line icons onto three sizes (§12.9 L1); squircle corners (approved earlier, not built).
 
 (3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
@@ -645,4 +645,30 @@ as points on one line, and the action pinned at the bottom.
   before 3.27.0 it sat after the content and on a 390 x 844 phone half of it was below the screen.
 - Gone: the framed "In NMMS" box, the framed list, the chips (XP, what passing opens: the next Mark's own line says it).
 - Not taken: the card that follows the scroll (a chapter has three Marks; all of them fit on one screen).
+
+### 12.12 Home: one thing to do (3.28.0)
+
+From the owner's Brilliant Home pictures: the counts at the top, the course in the middle with its picture big, and
+one card at the bottom holding the next steps and the button. IOPET's page, top to bottom:
+
+- Two counts, each a pill (surface, no frame), 44 px tall: the streak (the flame lit once today's set is done) on the
+  left, the XP of the last 7 days on the right. A tap opens Progress, where both are explained.
+- The nudges that matter (storage blocked, confirm your email, back up a guest's progress) under them, as before.
+- Today's chapter, centred, in the free space: its picture (160 px, smaller on shorter phones, see below), the English
+  name a 14 px grey label, the Hindi name 28 px. A tap opens the chapter's page.
+- One grey line only when something is at stake: "Practise today to keep your 3-day streak."
+- The card (surface, 24 px corners, no frame): the Mark as on the chapter page (the orange point, MARK 1, Learn, what
+  it asks), the bar once started, and the button inside (Start or Continue), in the thumb's reach.
+- Done for today: the lit flame, "Today's practice done", when to come back; "Practice more" as a quiet link where the
+  button was, so nothing starts by mistake.
+
+Gone: the greeting ("Good morning, Hi, Guest"), the two stat boxes (this week's questions and per cent right are on
+Progress), the "Today's practice" tag, the dashed frame of the done card, the gold frames of the reward.
+
+Short phones: the picture is a decoration (§12.8), so it gives way first: 160 px from 780 px tall, then smaller (100 vh
+- 620 px, at least 64), hidden under a nudge below 760 px and everywhere below 600 px, where the English name goes too.
+The card's button stays clear of the bar (and its 28 px fade) on every phone from 320 x 568 to 412 x 915; CI checks it
+on 390 x 844 and 360 x 640.
+
+Not taken: the course carousel (one chapter is today's; the others are on Topics), keys and leagues (IOPET has none).
 
