@@ -1096,6 +1096,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 @media (max-width:340px){
   .page{padding-left:16px;padding-right:16px}
+  .sm-dock{margin-left:-16px !important;margin-right:-16px !important;padding-left:16px;padding-right:16px}   /* 3.27.0 the dock keeps the page's sides */
   .stat-grid{grid-template-columns:1fr 1fr}
   }
 /* ── FIGURES in questions (drawn by figHtml) ── lines and numbers take the colour of the text around them; a "?" takes the action
@@ -1199,40 +1200,40 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ch-card.k-soon .ch-tile{opacity:.55}
 .ch-card.k-soon .topic-info,.ch-card.k-soon .topic-row-meta{color:var(--ink3)}   /* dimmed by its ink, not by opacity: still 5.8:1 (3.10.0) */
 .ch-card.k-soon .ch-tile .chi{filter:grayscale(.8)}
-/* ── THE CHAPTER PAGE ── */
+/* ── THE CHAPTER PAGE (3.27.0: like a course in Brilliant, with only the chapter on it) ── */
+.page.chapter.ch2{display:flex;flex-direction:column}
 .chapter>*+*{margin-top:var(--sp-sec)}   /* 3.24.0 the sections of a chapter: 24 */
 .chp-head{text-align:center}
 .chp-art{display:flex;justify-content:center}
-.chp-art .chi{width:136px;height:136px}
+.chp-art .chi{width:120px;height:120px}
+/* the same levels as a chapter on Topics (§12.10): the English name a grey label over the Hindi one, then one sentence */
+.chp-en{font-size:var(--fs-sm);font-weight:600;color:var(--ink3);line-height:1.3;margin-top:16px}
 .chp-name{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;margin-top:8px}
-.chp-en{font-size:var(--fs-md);color:var(--ink2);margin-top:2px}
-/* the exam weight is information (3.10.0): a plain card, a grey icon, the number in bold ink — no violet, which means "current" */
-.chp-why{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-sm);color:var(--ink)}
-.chp-why .li{margin-right:8px;color:var(--ink2)}
-.chp-why b{font-weight:700}
-.steps-list{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:8px 0}
-.step{position:relative;display:flex;align-items:flex-start;width:100%;padding:12px 16px;text-align:left}
-.step+.step{border-top:1px solid var(--line)}
-.step:active{background:var(--surface-2)}
-.step-dot{flex:none;width:32px;height:32px;margin-right:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;background:var(--fill-2);color:var(--ink2)}
-/* 3.10.0 the step to do is its violet dot (a dark number on it, 5.8:1) and its bold title — the row itself is not filled */
-.step.now .step-dot{background:var(--primary);color:var(--on-mark)}
-.step.done .step-dot{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}   /* done: a green ring; only the current step is filled */
-.step.locked .step-dot{background:var(--surface-2);color:var(--ink3)}
-.step-b{flex:1;min-width:0;display:block}
-.step-t{display:block;font-size:var(--fs-lg);font-weight:700}
-.step-l{display:block;font-size:var(--fs-xs);color:var(--ink2);margin-top:1px}
-.step-x{display:flex;align-items:center;font-size:var(--fs-xs);color:var(--ink2);margin-top:4px}
-.step-x .li{margin-right:4px}
-.step-x.ok{color:var(--good-ink);font-weight:600}
-.step .ch-prog{margin-top:8px}
-.step-badge{margin-top:8px}
-.step.locked .step-t,.step.locked .step-l{color:var(--ink3)}
-.step.locked .step-t{font-weight:400}
-.cp.v.step-badge{color:var(--ink2)}   /* a badge still to earn has no hue (3.10.0: shade = state) */
-.step.soon .step-badge{color:var(--ink3)}
-.chp-out{margin-top:24px}
-.chapter .btn-cta{margin-top:16px}
+.chp-why{font-size:var(--fs-lg);color:var(--ink3);line-height:1.45;margin-top:8px}
+/* the three Marks: points on one line, no box and no lines between rows; the one to do is the orange point with a soft ring */
+.chapter>.mp{margin-top:40px}
+.mp-n{position:relative;display:flex;align-items:flex-start;width:100%;padding:0;background:none;border:0;text-align:left;color:var(--ink)}
+.mp-n+.mp-n{margin-top:32px}
+.mp-n:not(:last-child):after{content:'';position:absolute;left:23px;top:56px;bottom:-24px;width:2px;border-radius:var(--r-pill);background:var(--line)}
+.mp-dot{flex:none;width:48px;height:48px;margin-right:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-lg);font-weight:700;background:var(--fill-2);color:var(--ink3);transition:transform var(--t-press) var(--ease-swift)}
+.mp-n.now .mp-dot{background:var(--primary);color:var(--on-mark)}
+.mp-n.done .mp-dot{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}
+.mp-n.locked .mp-dot{background:var(--surface-2)}
+.mp-n.now.due .mp-dot{box-shadow:0 0 0 6px var(--primary-soft)}
+.mp-n.done.due .mp-dot{box-shadow:inset 0 0 0 2px var(--good),0 0 0 6px var(--good-soft)}
+.mp-n.now:active .mp-dot,.mp-n.done:active .mp-dot,.mp-n.locked:active .mp-dot{transform:scale(.94)}
+.mp-b{flex:1;min-width:0;display:block}
+.mp-k{display:block;font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);line-height:1.4}
+.mp-t{display:block;font-size:var(--fs-xl);font-weight:700;line-height:1.3;margin-top:4px}
+.mp-l{display:block;font-size:var(--fs-sm);color:var(--ink3);line-height:1.45}
+.mp-t+.mp-l{margin-top:4px}
+.mp-x{display:flex;align-items:flex-start;font-size:var(--fs-sm);color:var(--ink2);line-height:1.45;margin-top:8px}
+.mp-x .li{flex:none;width:var(--ic-xs);height:var(--ic-xs);margin:2px 8px 0 0}
+.mp-x.ok{color:var(--good-ink);font-weight:600}
+.mp-n .ch-prog{margin-top:12px}
+.mp-n.locked .mp-t,.mp-n.soon .mp-t{color:var(--ink3)}
+@media (max-height:700px){   /* a short phone: the picture and the gap give way, so the Mark to do shows above the dock */
+  .chp-art .chi{width:88px;height:88px}.chp-en{margin-top:12px}.chapter>.mp{margin-top:24px}}
 .sheet-list .topic-row{box-shadow:none}
 .m-actions.col{display:block}
 .m-actions.col .btn,.m-actions.col .link{margin:0}
@@ -2765,7 +2766,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.26.0',
+  VERSION: '3.27.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5523,38 +5524,37 @@ function chapterDue(u, marks) {
   return { t: last, rev: true };
 }
 SCREENS.chapter = function (p) {
-  var u = user, plan = planOf(courseOf(u)), c = plan && p && p.ch ? byId(plan.chapters, p.ch) : null, mine = topicsOf(u), marks, due, html, t, n, w, opens;
+  var u = user, plan = planOf(courseOf(u)), c = plan && p && p.ch ? byId(plan.chapters, p.ch) : null, mine = topicsOf(u), marks, due, html, t, w;
   marks = c ? [1, 2, 3].map(function (m) { return markTopic(mine, c.id, m); }).filter(Boolean) : [];
   if (!marks.length) return '<div class="page bg-topics">' + subHead('Chapter') + '<div class="empty"><div class="empty-t">This chapter is not in your course</div></div></div>';
   due = chapterDue(u, marks); t = due.t;
   w = chWeight(c);
-  html = '<div class="page bg-topics chapter">' + subHead('') +
-    '<div class="chp-head"><div class="chp-art">' + chIcon(c.id, 136) + '</div><div class="chp-name" lang="hi" role="heading" aria-level="1">' + esc(c.hi) + '</div><div class="chp-en">' + esc(c.name) + '</div></div>';
-  if (w || c.why) html += '<div class="chp-why">' + li('target', 20) + '<span>' + (w ? 'In NMMS: <b>' + w + '</b>' : esc(c.why)) + '</span></div>';
-  html += '<div class="steps-list" role="list">';
-  marks.forEach(function (m, i) {
-    var st = topicStats(u, m), ok = markPassed(u, m), lk = !ok && markLock(u, m), now = !ok && !lk, size = setSize(u, m), cls = ok ? 'done' : lk ? 'locked' : 'now', line, extra = '';
-    line = plural(size, 'question') + ', about ' + aboutMin(u, size) + ' min<br>Pass at ' + passPct(m) + '%';
+  /* 3.27.0 like a course in Brilliant, with only the chapter on the page: its picture, its English name over its Hindi
+     one, one sentence; the three Marks as points on one line (no box, no lines between rows, no chips); and the one
+     button docked at the bottom, so it is always in reach (§12.2 A) */
+  html = '<div class="page bg-topics chapter ch2">' + subHead('') +
+    '<div class="chp-head"><div class="chp-art">' + chIcon(c.id, 120) + '</div><div class="chp-en">' + esc(c.name) + '</div>' +
+    '<div class="chp-name" lang="hi" role="heading" aria-level="1">' + esc(c.hi) + '</div>' +
+    (w || c.why ? '<div class="chp-why">' + (w ? 'In NMMS, ' + w + '.' : esc(c.why)) + '</div>' : '') + '</div>';
+  html += '<div class="mp" role="list">';
+  marks.forEach(function (m) {
+    var st = topicStats(u, m), ok = markPassed(u, m), lk = !ok && markLock(u, m), now = !ok && !lk, size = setSize(u, m), cls = ok ? 'done' : lk ? 'locked' : 'now', extra = '';
     if (now && st.attempted) extra = passBar(u, m);
-    else if (lk) extra = '<span class="step-x">' + li('lock', 15) + markLockText(lk, m) + '</span>';
-    else if (ok) extra = '<span class="step-x ok">' + li('check', 15) + 'Passed · ' + st.mastered + '/' + st.total + ' right</span>';
-    if (m.mark === 3) extra += '<span class="cp v step-badge">' + li('medal', 15) + 'Mastery badge</span>';
-    html += '<button type="button" role="listitem" class="step ' + cls + (t && t.id === m.id ? ' due' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + m.id + '">' +
-      '<span class="step-dot">' + (ok ? li('check', 16) : lk ? li('lock', 15) : m.mark) + '</span>' +
-      '<span class="step-b"><span class="step-t">' + STEP_NAME[m.mark] + '<span class="mk">M' + m.mark + '</span></span><span class="step-l">' + line + '</span>' + extra + '</span></button>';
+    else if (lk) extra = '<span class="mp-x">' + li('lock', 16) + '<span>' + markLockText(lk, m) + '</span></span>';
+    else if (ok) extra = '<span class="mp-x ok">' + li('check', 16) + '<span>Passed' + (st.attempted ? ', ' + st.mastered + ' of ' + st.total + ' right' : '') + '</span></span>';
+    if (m.mark === 3) extra += '<span class="mp-x">' + li('medal', 16) + '<span>Earns the Mastery badge</span></span>';
+    html += '<button type="button" role="listitem" class="mp-n ' + cls + (t && t.id === m.id ? ' due' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + m.id + '">' +
+      '<span class="mp-dot">' + (ok ? li('check', 20) : lk ? li('lock', 18) : m.mark) + '</span>' +
+      '<span class="mp-b"><span class="mp-k">Mark ' + m.mark + '</span><span class="mp-t">' + STEP_NAME[m.mark] + '</span>' +
+      '<span class="mp-l">' + plural(size, 'question') + ', about ' + aboutMin(u, size) + ' min</span><span class="mp-l">Pass at ' + passPct(m) + '%</span>' + extra + '</span></button>';
   });
-  /* the steps that have no questions yet still show, so the whole way (Learn, Revise, Master) is clear from the first day */
+  /* the Marks that have no questions yet still show, so the whole way (Learn, Revise, Master) is clear from the first day */
   for (var m2 = marks.length + 1; m2 <= 3; m2++)
-    html += '<div role="listitem" class="step locked soon"><span class="step-dot">' + m2 + '</span><span class="step-b"><span class="step-t">' + STEP_NAME[m2] + '<span class="mk">M' + m2 + '</span></span>' +
-      '<span class="step-l">Questions coming soon<br>Pass at ' + PASS[m2] + '%</span>' + (m2 === 3 ? '<span class="cp v step-badge">' + li('medal', 15) + 'Mastery badge</span>' : '') + '</span></div>';
+    html += '<div role="listitem" class="mp-n soon"><span class="mp-dot">' + m2 + '</span><span class="mp-b"><span class="mp-k">Mark ' + m2 + '</span><span class="mp-t">' + STEP_NAME[m2] + '</span>' +
+      '<span class="mp-l">Questions coming soon</span><span class="mp-l">Pass at ' + PASS[m2] + '%</span>' + (m2 === 3 ? '<span class="mp-x">' + li('medal', 16) + '<span>Earns the Mastery badge</span></span>' : '') + '</span></div>';
   html += '</div>';
-  if (t) {
-    n = setSize(u, t); opens = due.rev ? '' : markOpens(u, t);
-    html += '<div class="chips chp-out">' + (opens ? '<span class="cp v">' + li('unlock', 15) + esc(opens) + '</span>' : '') +
-      '<span class="cp">' + li('star', 15) + 'Up to +' + xpUpTo(u, t, n) + ' XP</span>' +
-      (due.rev && due.wait ? '<span class="cp">' + li('lock', 15) + 'M' + due.wait.mark + ' ' + esc(markLockText(markLock(u, due.wait), due.wait).replace(/^Opens /, 'opens ')) + '</span>' : '') + '</div>' +
-      '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + t.id + '">' + (due.rev ? 'Revise Mark ' + t.mark : (topicStats(u, t).attempted ? 'Continue Mark ' : 'Start Mark ') + t.mark) + '</button>';
-  }
+  if (t) html += '<div class="sm-dock"><button type="button" class="btn btn-primary" data-act="start" data-topic="' + t.id + '">' +
+    (due.rev ? 'Revise Mark ' + t.mark : (topicStats(u, t).attempted ? 'Continue Mark ' : 'Start Mark ') + t.mark) + '</button></div>';
   return html + '</div>';
 };
 
