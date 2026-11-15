@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.29.0)
+# IOPET design rules (v3, 3.29.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -53,7 +53,8 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
 
 | Kind | For | Token | Width | Dark | Light | Share |
 |---|---|---|---|---|---|---|
-| A, a box that holds things | cards, panels, rows of a list, stat blocks | `--line` | 1 px (`--bw`) | 1.2 : 1 | 1.3 : 1 | ~10 % |
+| A0, a panel's own edge (3.29.1) | every card, panel, notice, chip, stat block | `--edge` | 1 px | a hair darker than the ground (−1.2 L*) | the same (−1.8 L*) | below the ground |
+| A, a line inside or between | the rules of a list or table, the path joining chapters or Marks | `--line` | 1 px (`--bw`), 2 px for a path | 1.2 : 1 | 1.3 : 1 | ~10 % |
 | B, a control with its own fill | pills that act, steppers, round icon buttons (1 px); what can be chosen: options, course rows, subject tiles (1.5 px) | `--line-2` | 1 or 1.5 px | 1.5 : 1 | 1.7 : 1 | ~20 % |
 | B, a control that is only a line | every text field, every second button, a button not ready, a checkbox | `--outline` | 1.5 px (`--bw-ctl`) | 3.1 : 1 | 3.5 : 1 | ~40 % |
 | C, in use | the field with the cursor in it | `--outline-on` + a 1 px ring (`--ring`) | 2.5 px in all | 6.4 : 1 | 6.5 : 1 | ~65 % |
@@ -551,7 +552,7 @@ never covers it.
 | Field | 56 | 16 | 1.5 px `--outline` | 0 16 | |
 | Option of a question | 72 and up | 18 | 1.5 px `--line-2` | 12 8 (grid) / 12 16 | |
 | Row (menu, switch, FAQ) | 64 (FAQ 48 and up) | the group's 24 | a hairline between rows | 12 16 | the rows of a section sit in ONE box (3.24.0) |
-| Card | its content | 24 | 1 px `--line` | 20 | |
+| Card | its content | 24 | 1 px `--edge` | 20 | |
 | Topic row | 136 | 24 | 1 px, a 2 px foot | 24 | |
 | Page header | 44 | | | | back button at 24,24 |
 
@@ -709,12 +710,31 @@ answer in a set and on Progress (the toothed seal was the one decorated mark). L
 chapter and on a pack. The streak's flame has one rule on Home and on Progress: lit once today's practice is done,
 grey until then (Progress showed it lit at 0 days).
 
-**Panels**: one look on every page, in both looks: the panel colour, a 1 px `--line`, no shadow.
+**Panels** (3.29.1, the owner's refined brief: visible without asking for attention; content first, actions second,
+structure third, the ground last): one look on every page, in both looks: the panel colour, a 1 px `--edge`, no shadow.
+A panel is told by its tone; its edge only makes the boundary crisp.
 
-| | Ground | Panel | Lightness apart (CIELAB L*) | Line |
-|---|---|---|---|---|
-| Light | `#F2F2F2` (95.5) | `#FFFFFF` (100) | 4.5 | `#E3E3E3` (90.2) |
-| Dark | `#141414` (6.3) | `#1E1E1E` (11.3) | 4.9 | `#262626` (15.2) |
+| | Ground | Edge (`--edge`) | Panel | Panel apart from the ground (L*) | Strongest step at the boundary |
+|---|---|---|---|---|---|
+| Light | `#F0F0F0` (94.8) | `#EBEBEB` (93.0) | `#FFFFFF` (100) | 5.2 | 7.0, edge to panel |
+| Dark | `#141414` (6.3) | `#111111` (5.1) | `#1F1F1F` (11.8) | 5.5 | 6.7, edge to panel |
+
+What 3.29.1 found in 3.29.0: the fill was right (4.5 and 4.9 apart), but the line round each panel was the strongest
+thing at its boundary, twice the fill step: on light 9.8 darker than the panel and darker than the ground too (a drawn
+outline); on dark 8.8 brighter than the ground and brighter than the panel too (a lit frame). That outline, not the
+fill, made a panel look pasted on. Now the fill carries the panel (5.2 and 5.5, inside the owner's 5–6 %), the edge is
+a hair darker than the ground in both looks (the same rule, like a faint contact edge), and the strongest step at a
+boundary is about 1.3 times the fill step, not 2. Text on a panel stays 18.4 : 1 (light) and 14.9 : 1 (dark): the words
+lead by far. Chosen from candidates drawn on Progress, You, Topics, Settings and Home in both looks, at phone size and as a squint
+(blurred) picture: light 3.29.0 (4.5 / outline), 5.2 with the soft edge (taken), 5.6 with the soft edge (the panels
+start to lead the page), 5.2 with no line (it reads, but the owner keeps the grey line); dark 3.29.0, 5.5 with a light
+rim one step above the panel, 5.5 with the edge below the ground (taken: the same rule as light), 5.5 with no line.
+Then every page was walked again in both looks with the chosen values.
+
+Four kinds of line, so one change cannot break another: `--edge` (a panel's boundary), `--line` (the rules inside a
+list or table and the path joining chapters or Marks: these stay as they were, a hair-thin edge would make the path
+vanish on dark), `--line-2` and `--outline` (controls: what can be pressed or chosen is always drawn more strongly than
+a panel, so actions come before structure).
 
 Measured before 3.29.0: on light the panel was already 4.5 apart, but every panel cast two shadows that darkened the
 ground round it to 225–240 (7–10 % below the ground); that halo, not the white, made the panels jump. Dark had two panel

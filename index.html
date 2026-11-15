@@ -48,7 +48,8 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
-  --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
+  --bg:#141414;--bg-deep:#0E0E0E;--surface:#1F1F1F;--surface-2:#282828;--surface-3:#323232;
+  --edge:#111111;   /* 3.29.1 a panel's own line: a hair darker than the ground (5.1 against 6.3 L*), so the panel is told by its tone, not drawn round */
   --line:#262626;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#A0A0A0;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
@@ -82,10 +83,10 @@
   --green:var(--good);--amber:var(--ink2);--red:var(--wrong-ink);--blue:#8CC4FF;--orange:var(--primary);
   --ok-bg:var(--good-soft);--ok-line:#1F5A47;--ok-ink:var(--good-ink);--ok-lip:transparent;
   --bad-bg:var(--wrong-soft);--bad-line:#6B2A27;--bad-ink:var(--wrong-ink);--bad-lip:transparent;
-  --warn-bg:var(--surface);--warn-line:var(--line);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own; 3.29.0 a panel like any other */
-  --info-bg:var(--surface);--info-line:var(--line);--info-ink:var(--ink2);
+  --warn-bg:var(--surface);--warn-line:var(--edge);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own; 3.29.0 a panel like any other */
+  --info-bg:var(--surface);--info-line:var(--edge);--info-ink:var(--ink2);
   --pur-bg:var(--primary-soft);--pur-line:var(--line-2);
-  --nav:#141414;--nav-0:rgba(20,20,20,0);--flash:#FFFFFF;--flash-glow:rgba(255,255,255,.55);--lock:#B4B4B4;--lock-hi:#FFFFFF;--navsel:#2C2C2C;--pn:var(--surface);--pn-line:var(--line);
+  --nav:#141414;--nav-0:rgba(20,20,20,0);--flash:#FFFFFF;--flash-glow:rgba(255,255,255,.55);--lock:#B4B4B4;--lock-hi:#FFFFFF;--navsel:#2C2C2C;--pn:var(--surface);--pn-line:var(--edge);
   --pn-on:#241D12;--pn-on-line:#4A3A1F;   /* a chapter on the go or passed: a faint warmth of the flame on its panel */
   --ripple:rgba(255,255,255,.14);--tap-line:var(--primary);--tap-tint:rgba(255,159,10,.14);--tap-ring:rgba(255,159,10,.34);   /* a touch on a chapter: the course colour (green is for "right") */
   --modal:var(--surface);--scrim:rgba(0,0,0,.66);--toast:#2A2A2A;--shadow:rgba(0,0,0,.5);
@@ -94,7 +95,8 @@
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
   /* 3.21.0 THE SYSTEM IN NUMBERS (DESIGN.md §1b, the rulebook). One place for what was written into single rules:
-       lines     A a box that holds things     --line      1 px (--bw)        ~10 % of the way from the ground to ink
+       lines     A0 a panel's own edge         --edge      1 px               a hair darker than the ground (3.29.1): the panel is told by its tone
+                 A a line inside or between      --line      1 px (--bw)        ~10 % of the way from the ground to ink (a list's rules, the path)
                  B a control with its own fill --line-2    1 px               ~20 %
                  B a control that is only a line --outline 1.5 px (--bw-ctl)  3 : 1, ~40 %: the line is all there is to see
                  C in use (focus)              --outline-on, plus a 1 px ring (--ring): 6.4 : 1, ~65 %, never white
@@ -127,7 +129,8 @@
 [data-theme="light"]{
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
-  --bg:#F2F2F2;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
+  --bg:#F0F0F0;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
+  --edge:#EBEBEB;   /* 3.29.1 a hair darker than the ground (93.0 against 94.8 L*) */
   --line:#E3E3E3;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#6A6A6A;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
@@ -146,11 +149,11 @@
   --shadow-sheet:0 -10px 40px rgba(20,20,20,.10);
   --purple-dark:#A35200;
   --green:var(--good-ink);--red:var(--wrong-ink);--blue:#1F58CC;--orange:var(--primary-ink);
-  --ok-line:#B4E6D3;--bad-line:#F5C2BD;--warn-bg:var(--surface);--warn-line:var(--line);--warn-ink:var(--ink);--info-bg:var(--surface);--info-line:var(--line);--info-ink:var(--ink2);--pur-line:var(--line-2);
-  --nav:#F2F2F2;--nav-0:rgba(242,242,242,0);--flash:#141414;--flash-glow:rgba(20,20,20,.16);--lock:#141414;--lock-hi:#FF9F0A;--navsel:#E3E3E3;--pn:var(--surface);--pn-line:var(--line);--pn-on:#FFF6E8;--pn-on-line:#F5D3A3;
+  --ok-line:#B4E6D3;--bad-line:#F5C2BD;--warn-bg:var(--surface);--warn-line:var(--edge);--warn-ink:var(--ink);--info-bg:var(--surface);--info-line:var(--edge);--info-ink:var(--ink2);--pur-line:var(--line-2);
+  --nav:#F0F0F0;--nav-0:rgba(240,240,240,0);--flash:#141414;--flash-glow:rgba(20,20,20,.16);--lock:#141414;--lock-hi:#FF9F0A;--navsel:#E3E3E3;--pn:var(--surface);--pn-line:var(--edge);--pn-on:#FFF6E8;--pn-on-line:#F5D3A3;
   --ripple:rgba(20,20,20,.09);--tap-line:var(--primary);--tap-tint:rgba(255,159,10,.10);--tap-ring:rgba(255,159,10,.26);--scrim:rgba(20,20,20,.40);--toast:#141414;--shadow:rgba(20,20,20,.14);
   --glow-a:rgba(255,159,10,.14);--glow-b:rgba(255,216,77,.12);--glow-c:rgba(255,159,10,.10);
-  --bar:#F2F2F2;
+  --bar:#F0F0F0;
   --ic-p:#FFFFFF;--ic-ps:#CFCFCF;--ic-pes:#8E8E8E;--ic-pef:#E4E4E4;--ic-pedge:#B5B5B5;   /* 3.29.0 neutral: the light look has no warm grey */
   color-scheme:light;
 }
@@ -240,7 +243,7 @@ sub,sup{font-size:.72em;line-height:0}
 .num{font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums}
 .muted{color:var(--ink2)}
 .small{font-size:var(--fs-xs);line-height:1.5}
-.card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
+.card{background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .card>*+*{margin-top:12px}
 /* BUTTONS: one primary per screen — the ink pill (white in dark); others are a white pill or a text link. A press sinks 2px, no bounce. */
 /* 3.22.0 ONE BUTTON FAMILY (DESIGN.md §5, §1c). Every button is 56 px (--h-ctl) with its words in its middle; they were
@@ -274,7 +277,7 @@ sub,sup{font-size:.72em;line-height:0}
 /* CHIPS: a fact in a few words (time, reward, what opens) */
 .chips{display:flex;flex-wrap:wrap;margin:-4px}
 .chips>.cp{margin:4px}
-.cp{display:inline-flex;align-items:center;min-height:28px;padding:2px 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:var(--fs-xs);font-weight:600;line-height:1.3;color:var(--ink2);white-space:nowrap}
+.cp{display:inline-flex;align-items:center;min-height:28px;padding:2px 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--edge);font-size:var(--fs-xs);font-weight:600;line-height:1.3;color:var(--ink2);white-space:nowrap}
 .cp svg{flex:none;width:15px;height:15px;margin-right:4px}
 .cp b{color:var(--ink);font-weight:700;margin-right:4px}
 .cp.v{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}
@@ -553,7 +556,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .home>.alert,.home>.nudge{margin-top:16px}
 .dash-header{display:flex;align-items:flex-start;justify-content:space-between}
 /* 3.10.0 the avatar is a neutral disc with an ink letter (white on violet was 2.1-3.1:1); light keeps its violet disc */
-.hero{position:relative;border-radius:var(--r-xl);padding:24px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--line)}
+.hero{position:relative;border-radius:var(--r-xl);padding:24px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--edge)}
 .hero-top{display:flex;align-items:flex-start}
 .hero-txt{flex:1;min-width:0}
 .hero-kick{background:var(--primary-soft);border-color:transparent;color:var(--primary-ink)}   /* "Next up" / "Continue": a state, in violet text */
@@ -584,7 +587,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .tier-label{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:var(--sp-sec) !important}
 .tier-label+*{margin-top:var(--sp-rel) !important}   /* 3.24.0 a label and what it names: 8 */
 .sub-header+:not(.sub){margin-top:var(--sp-grp) !important}   /* 3.24.0 a page's header and its first block: 16 on every page (a subtitle line under the title stays with it) */
-.topic-row{display:flex;align-items:center;width:100%;min-height:80px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;text-align:left;transition:transform var(--t-press) var(--ease-swift)}
+.topic-row{display:flex;align-items:center;width:100%;min-height:80px;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;text-align:left;transition:transform var(--t-press) var(--ease-swift)}
 .topic-row:active{transform:scale(.98)}
 .topic-row.locked{opacity:.6}
 .topic-emoji-big{flex:none;width:54px;height:54px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:24px;margin-right:12px}
@@ -602,7 +605,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-timer{flex:none;min-width:44px;text-align:right;font-size:var(--fs-md);color:var(--ink2)}   /* 3.10.0 the clock is information, not an alarm */
 .q-progress{height:10px;background:var(--fill-2);border-radius:var(--r-pill);overflow:hidden}
 .q-progress>i{display:block;height:100%;border-radius:var(--r-pill);background:var(--primary)}   /* full width, slid in from the left (transform, 3.10.0) */
-.q-card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
+.q-card{background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:20px}
 .practice .q-card{margin-top:20px}
 .q-level{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:600;color:var(--ink2);margin-bottom:8px}
 .q-level .chi{margin-right:8px}
@@ -697,7 +700,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pi-kick{font-size:var(--fs-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
 .pi-name{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1.25;margin-top:4px}
 .pi-facts{display:flex}
-.pi-fact{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 8px;text-align:center}
+.pi-fact{flex:1;min-width:0;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 8px;text-align:center}
 .pi-fact+.pi-fact{margin-left:12px}
 .pi-fact b{display:block;font-size:var(--fs-2xl);line-height:1.2}
 .pi-fact span{font-size:var(--fs-xs);color:var(--ink2)}
@@ -726,7 +729,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sum-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.2}
 .summary-label{font-size:var(--fs-md);color:var(--ink2);margin-top:4px}
 .stat-grid{display:flex}
-.stat-box{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 8px;text-align:center}
+.stat-box{flex:1;min-width:0;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 8px;text-align:center}
 .stat-box+.stat-box{margin-left:12px}
 .stat-box .chi{margin:0 auto}
 .stat-val{font-size:var(--fs-2xl);line-height:1.2;margin-top:8px}
@@ -734,14 +737,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sum-mini{font-size:var(--fs-xs);color:var(--ink2);text-align:center;margin-top:8px !important}
 .sum-sec{font-size:var(--fs-sm);font-weight:600;color:var(--ink2);margin-top:var(--sp-sec) !important}
 .got-list,.summary .next-card{margin-top:8px !important}
-.badge-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-sm);font-weight:600;line-height:1.45}
+.badge-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-sm);font-weight:600;line-height:1.45}
 .badge-line+.badge-line{margin-top:8px}
 .bl-ico{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:12px;background:var(--fill);color:var(--ink2)}
 .bl-ico .li{width:20px;height:20px}
 .badge-line.g .bl-ico{background:var(--good-soft);color:var(--green)}
 .badge-line.v .bl-ico{background:var(--primary-soft);color:var(--primary)}
 .badge-line.y .bl-ico{background:var(--gold-soft);color:var(--gold)}   /* 3.10.0 the streak and achievements: gold */
-.next-card{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px}
+.next-card{display:flex;align-items:center;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px}
 .next-t{font-size:var(--fs-lg);font-weight:700}
 .next-l{font-size:var(--fs-xs);color:var(--ink2)}
 .summary .btn-primary{margin-top:20px}
@@ -759,14 +762,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.2}
 .sm-sub{font-size:var(--fs-md);color:var(--ink2);margin-top:4px}
 .sm-stats{display:flex}
-.sm-stat{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 4px;text-align:center}
+.sm-stat{flex:1;min-width:0;background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-lg);padding:12px 4px;text-align:center}
 .sm-stat+.sm-stat{margin-left:12px}
 .sm-stat .chi{margin:0 auto}
 .sm-v{font-size:var(--fs-2xl);font-weight:700;line-height:1.2;margin-top:8px;font-variant-numeric:tabular-nums}
 .sm-k{font-size:var(--fs-cap);font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink2);margin-top:2px}
 .sm-cap{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2);margin-top:24px !important}
 .sm-chips{display:flex;flex-wrap:wrap;justify-content:center;margin:12px -4px 0 !important}
-.sm-chip{display:inline-flex;align-items:center;margin:4px;padding:8px 12px 8px 8px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:var(--fs-sm);font-weight:600;line-height:1.3}
+.sm-chip{display:inline-flex;align-items:center;margin:4px;padding:8px 12px 8px 8px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--edge);font-size:var(--fs-sm);font-weight:600;line-height:1.3}
 .sm-chip .li{width:var(--ic-xs);height:var(--ic-xs);margin-right:4px;stroke-width:2.5;color:var(--ink2)}
 .sm-chip.g .li{color:var(--good)}
 .sm-chip.y .li{color:var(--gold)}
@@ -826,7 +829,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .rv-c.bad .li{color:var(--wrong)}
 .rv-c.skip .li{color:var(--ink3)}
 .rv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:12px;gap:12px}
-.rv-card{display:flex;flex-direction:column;min-height:116px;padding:12px;text-align:left;background:var(--surface);border:1px solid var(--line);border-bottom:4px solid var(--line-2);border-radius:var(--r-md);transition:transform var(--t-press) var(--ease-swift),border-bottom-width var(--t-press) var(--ease-swift)}
+.rv-card{display:flex;flex-direction:column;min-height:116px;padding:12px;text-align:left;background:var(--surface);border:1px solid var(--edge);border-bottom:4px solid var(--line-2);border-radius:var(--r-md);transition:transform var(--t-press) var(--ease-swift),border-bottom-width var(--t-press) var(--ease-swift)}
 .rv-card.ok{border-bottom-color:var(--good)}
 .rv-card.bad{border-bottom-color:var(--wrong)}
 .rv-card:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
@@ -871,7 +874,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sess-r{text-align:right;margin-left:12px}
 .sess-v{font-size:var(--fs-md);font-weight:700}
 .prog-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
-.prog-stat{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}
+.prog-stat{background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}
 .prog-stat .chi{display:block;margin-bottom:8px}
 .prog-stat-val{font-size:var(--fs-3xl);line-height:1.1}
 .prog-stat-lbl{font-size:var(--fs-sm);font-weight:600;margin-top:2px}
@@ -902,16 +905,16 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .prof-rank .li{margin:0 4px 0 -2px;color:var(--gold)}   /* 3.10.0 the level: a neutral pill, its star gold (a reward) */
 .prof-next{font-size:var(--fs-sm);color:var(--ink2);margin-top:8px}
 .prof-next b{color:var(--ink);font-weight:700}
-.ach-strip{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px;text-align:left}
+.ach-strip{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px;text-align:left}
 .ach-strip .chi{margin-right:12px}
 .ach-strip-t{display:block;font-size:var(--fs-lg);font-weight:700}
 .ach-strip-l{display:block;font-size:var(--fs-xs);color:var(--ink2)}
 .ach-strip .menu-arrow{margin-left:8px}
-.menu-group{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);overflow:hidden}
+.menu-group{background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);overflow:hidden}
 .menu-group>*{margin:0 !important;border:0 !important;border-radius:0 !important;box-shadow:none !important}
 .menu-group>*+*{border-top:var(--bw) solid var(--line) !important}
 .menu-group>.card{padding:12px 16px}   /* 3.24.0 a control in a group keeps the rows' edges */
-.menu-item{display:flex;align-items:center;width:100%;min-height:64px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important;text-align:left}
+.menu-item{display:flex;align-items:center;width:100%;min-height:64px;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important;text-align:left}
 .menu-item:active{background:var(--surface-2)}
 .menu-ico{flex:none;width:36px;height:36px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:18px;margin-right:12px;color:var(--ink2)}
 .menu-lbl{flex:1;min-width:0;font-size:var(--fs-md);font-weight:600}
@@ -924,7 +927,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
 .sub-title{font-size:var(--fs-2xl);font-weight:700;margin-left:12px}
-.toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important}
+.toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important}
 .toggle-info{flex:1;min-width:0;padding-right:12px}
 .toggle-label{font-size:var(--fs-md);font-weight:600}
 .toggle-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:2px;line-height:1.45}
@@ -941,7 +944,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .step-btn:active{background:var(--surface-2)}
 .step-val{flex:1;text-align:center;font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700}
 .step-val small{display:block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;color:var(--cream60)}
-.goal-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
+.goal-card{background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-lg);padding:16px}
 .goal-exam{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;word-break:break-word}
 .goal-date{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px}
 .goal-countdown{display:flex;background:var(--fill);border-radius:var(--r-md);padding:12px 8px;margin-top:16px}
@@ -949,7 +952,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cd-num{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1}
 .cd-lbl{font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-top:4px;letter-spacing:.6px}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
-.ach-card{display:flex;flex-direction:column;justify-content:flex-start;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px 8px;text-align:center;transition:transform var(--t-press) var(--ease-swift)}
+.ach-card{display:flex;flex-direction:column;justify-content:flex-start;background:var(--surface);border:1px solid var(--edge);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px 8px;text-align:center;transition:transform var(--t-press) var(--ease-swift)}
 .ach-card:active{transform:scale(.98)}
 .ach-card.earned{background:var(--surface)}   /* 3.10.0 earned: the icon in full colour and an ink name; no violet frame */
 .ach-card.locked .ach-name{color:var(--ink3);font-weight:400}
@@ -965,7 +968,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ach-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px;line-height:1.35}
 .ach-card .pbar{margin-top:auto}   /* 3.29.0 the bars of a row on one line, at the foot */
 .ach-card.locked .ach-desc{margin-bottom:8px}
-.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);margin-top:8px !important;overflow:hidden}
+.faq-item{background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-md);margin-top:8px !important;overflow:hidden}
 .faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:var(--h-row);padding:12px 16px;font-size:var(--fs-xs);font-weight:700;line-height:1.4}
 .faq-chev{flex:none;margin-left:8px;color:var(--cream40);font-size:var(--fs-xs);transition:transform var(--t-state) var(--ease-swift)}
 .faq-chev .li{transform:rotate(90deg)}
@@ -1001,7 +1004,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .co-state:before{content:'';display:inline-block;width:7px;height:7px;border:1.5px solid currentColor;border-radius:50%;margin-right:4px}   /* the dot and the arrow below are drawn, not letters: no phone can lack them */
 .co-state.on:before{background:currentColor}
 .co-right{flex:none;display:flex;align-items:center;margin-left:8px}
-.co-soon{font-size:var(--fs-xs);font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 8px;white-space:nowrap}
+.co-soon{font-size:var(--fs-xs);font-weight:600;letter-spacing:.3px;color:var(--ink3);background:none;border:1px solid var(--edge);border-radius:var(--r-pill);padding:4px 8px;white-space:nowrap}
 .co-cur{font-size:var(--fs-xs);font-weight:700;color:var(--primary-ink);margin-right:8px;white-space:nowrap}
 .course-pill{position:relative;flex:none;max-width:100%;display:inline-flex;align-items:center;background:var(--surface);border:var(--bw) solid var(--line-2);border-radius:var(--r-pill);padding:8px 12px;font-size:var(--fs-xs);font-weight:700;white-space:nowrap}
 .course-pill:before{content:'';position:absolute;top:-8px;right:0;bottom:-8px;left:0}   /* a taller tap area for the small pill */
@@ -1328,7 +1331,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
 .pay-or{margin:8px 2px 0}.adm-sub{margin-top:16px}
-.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--line);box-shadow:none;border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
+.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--edge);box-shadow:none;border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
 .pack-card:active{transform:scale(.98)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
@@ -1375,7 +1378,7 @@ a.link{text-decoration:none}
 .page.home.hm{display:flex;flex-direction:column;padding-bottom:calc(112px + env(safe-area-inset-bottom))}   /* the bar (94) and 16 */
 .hm>*+*{margin-top:var(--sp-grp)}
 .hm-top{display:flex;justify-content:space-between;align-items:center}
-.hm-pill{display:inline-flex;align-items:center;height:var(--tap);padding:0 16px 0 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);color:var(--ink);font-size:var(--fs-lg);font-weight:700}
+.hm-pill{display:inline-flex;align-items:center;height:var(--tap);padding:0 16px 0 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--edge);color:var(--ink);font-size:var(--fs-lg);font-weight:700}
 .hm-pill .chi{display:block;width:24px;height:24px;margin-right:8px}
 .chi.off{filter:grayscale(1);opacity:.55}   /* 3.29.0 one rule for the flame, on Home and on Progress: lit once today's practice is done, grey until then */
 [data-theme="light"] .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
@@ -1391,7 +1394,7 @@ a.link{text-decoration:none}
 .hm-mid:active .hm-art{transform:scale(.97)}
 .hm-art{transition:transform var(--t-press) var(--ease-swift)}
 .hm-line{font-size:var(--fs-md);color:var(--ink2);text-align:center}
-.hm-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+.hm-card{background:var(--surface);border:1px solid var(--edge);border-radius:var(--r-lg);padding:24px}
 .hm-row{display:flex;align-items:flex-start}
 .hm-dot{background:var(--primary);color:var(--on-mark)}
 .hm-card .ch-prog{margin-top:16px}
@@ -1402,7 +1405,7 @@ a.link{text-decoration:none}
 @media (max-height:600px){.hm-art,.hm-en,.hm .nudge~.hm-line{display:none}.hm-name{margin-top:0}}   /* a short phone keeps the card and its button above the bar */
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
 .path .ch-panel{position:relative;display:flex;align-items:center;min-height:120px;border-radius:var(--r-lg);
-  background:var(--surface);border:1px solid var(--line);box-shadow:none}   /* 3.26.0 only the syllabus: no lip; every card the same height. 3.29.0 the faint line every panel has */
+  background:var(--surface);border:1px solid var(--edge);box-shadow:none}   /* 3.26.0 only the syllabus: no lip; every card the same height. 3.29.0 the faint line every panel has */
 .path .ch-panel:first-child{margin-top:0 !important}
 .path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-24px;width:2px;height:24px;margin-left:-1px;background:var(--line)}
 .path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
@@ -2806,7 +2809,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.29.0',
+  VERSION: '3.29.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3597,7 +3600,7 @@ var barHold = false;                      // the splash is fading out: the phone
    dark ground, the manifest's theme_color = its background_color, 3.7.3) to the last screen.
    On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
    the frame, not the app: there it keeps the plain ground colours it always had. */
-var BAR = { dark: '#141414', light: '#F2F2F2' }, BAR_FRAMED = { dark: '#0E0E0E', light: '#E6E6E6' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
+var BAR = { dark: '#141414', light: '#F0F0F0' }, BAR_FRAMED = { dark: '#0E0E0E', light: '#E6E6E6' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
 function framed() {
   try { if (!frameMq && window.matchMedia) frameMq = window.matchMedia(FRAME_MQ); } catch (e) { frameMq = null; }
   return !!(frameMq && frameMq.matches);
