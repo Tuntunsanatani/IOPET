@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.29.1)
+# IOPET design rules (v3, 3.30.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -53,7 +53,7 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
 
 | Kind | For | Token | Width | Dark | Light | Share |
 |---|---|---|---|---|---|---|
-| A0, a panel's own edge (3.29.1) | every card, panel, notice, chip, stat block | `--edge` | 1 px | a hair darker than the ground (−1.2 L*) | the same (−1.8 L*) | below the ground |
+| A0, a panel's own edge (3.30.0, Brilliant's) | every card, panel, notice, chip, stat block | `--edge` + `--edge-in` | 2.33 px (7 px at 3x) | `#2C2C2C` on `#141414` | `#E5E5E5` on white | the panel is the page's colour |
 | A, a line inside or between | the rules of a list or table, the path joining chapters or Marks | `--line` | 1 px (`--bw`), 2 px for a path | 1.2 : 1 | 1.3 : 1 | ~10 % |
 | B, a control with its own fill | pills that act, steppers, round icon buttons (1 px); what can be chosen: options, course rows, subject tiles (1.5 px) | `--line-2` | 1 or 1.5 px | 1.5 : 1 | 1.7 : 1 | ~20 % |
 | B, a control that is only a line | every text field, every second button, a button not ready, a checkbox | `--outline` | 1.5 px (`--bw-ctl`) | 3.1 : 1 | 3.5 : 1 | ~40 % |
@@ -552,7 +552,7 @@ never covers it.
 | Field | 56 | 16 | 1.5 px `--outline` | 0 16 | |
 | Option of a question | 72 and up | 18 | 1.5 px `--line-2` | 12 8 (grid) / 12 16 | |
 | Row (menu, switch, FAQ) | 64 (FAQ 48 and up) | the group's 24 | a hairline between rows | 12 16 | the rows of a section sit in ONE box (3.24.0) |
-| Card | its content | 24 | 1 px `--edge` | 20 | |
+| Card | its content | 24 | 2.33 px `--edge` | 20 | |
 | Topic row | 136 | 24 | 1 px, a 2 px foot | 24 | |
 | Page header | 44 | | | | back button at 24,24 |
 
@@ -710,39 +710,24 @@ answer in a set and on Progress (the toothed seal was the one decorated mark). L
 chapter and on a pack. The streak's flame has one rule on Home and on Progress: lit once today's practice is done,
 grey until then (Progress showed it lit at 0 days).
 
-**Panels** (3.29.1, the owner's refined brief: visible without asking for attention; content first, actions second,
-structure third, the ground last): one look on every page, in both looks: the panel colour, a 1 px `--edge`, no shadow.
-A panel is told by its tone; its edge only makes the boundary crisp.
+**Panels** (3.30.0, the owner: "follow Brilliant's rule, no compromise"): the panel is the page's own colour, and its
+border alone shows it. Measured on the owner's phone (3 px to a CSS px) from the owner's Brilliant pictures (Home, You, Premium, in
+both looks) and matched to the pixel:
 
-| | Ground | Edge (`--edge`) | Panel | Panel apart from the ground (L*) | Strongest step at the boundary |
+| | Page | Panel | Border | Border width | Inside fill (a button in a panel) |
 |---|---|---|---|---|---|
-| Light | `#F0F0F0` (94.8) | `#EBEBEB` (93.0) | `#FFFFFF` (100) | 5.2 | 7.0, edge to panel |
-| Dark | `#141414` (6.3) | `#111111` (5.1) | `#1F1F1F` (11.8) | 5.5 | 6.7, edge to panel |
+| Light | `#FFFFFF` | `#FFFFFF` | `#E5E5E5` | 7 px at 3x = 2.33 CSS px | `#F2F2F2` |
+| Dark | `#141414` | `#141414` | `#2C2C2C` | the same | `#202020` |
 
-What 3.29.1 found in 3.29.0: the fill was right (4.5 and 4.9 apart), but the line round each panel was the strongest
-thing at its boundary, twice the fill step: on light 9.8 darker than the panel and darker than the ground too (a drawn
-outline); on dark 8.8 brighter than the ground and brighter than the panel too (a lit frame). That outline, not the
-fill, made a panel look pasted on. Now the fill carries the panel (5.2 and 5.5, inside the owner's 5–6 %), the edge is
-a hair darker than the ground in both looks (the same rule, like a faint contact edge), and the strongest step at a
-boundary is about 1.3 times the fill step, not 2. Text on a panel stays 18.4 : 1 (light) and 14.9 : 1 (dark): the words
-lead by far. Chosen from candidates drawn on Progress, You, Topics, Settings and Home in both looks, at phone size and as a squint
-(blurred) picture: light 3.29.0 (4.5 / outline), 5.2 with the soft edge (taken), 5.6 with the soft edge (the panels
-start to lead the page), 5.2 with no line (it reads, but the owner keeps the grey line); dark 3.29.0, 5.5 with a light
-rim one step above the panel, 5.5 with the edge below the ground (taken: the same rule as light), 5.5 with no line.
-Then every page was walked again in both looks with the chosen values.
+A browser draws a border only in whole CSS px (2.34 px comes out as 2), so a panel's border is `--bw-edge` (2 px) and
+`--edge-in`, the same colour 0.34 px inside it, makes the 7th pixel: measured 7 px at 3x in both looks, the same as
+Brilliant. Every panel, notice and chip carries both (27 rules); the rules of a list stay 1 px (`--line`, the same
+colour), as Brilliant's dividers are. Things to press keep their stronger lines (`--line-2`, `--outline`).
 
-Four kinds of line, so one change cannot break another: `--edge` (a panel's boundary), `--line` (the rules inside a
-list or table and the path joining chapters or Marks: these stay as they were, a hair-thin edge would make the path
-vanish on dark), `--line-2` and `--outline` (controls: what can be pressed or chosen is always drawn more strongly than
-a panel, so actions come before structure).
+Before (3.29.0–3.29.1) a panel was a lighter tone on a grey page (5 L* apart) with a faint edge; 3.30.0 drops the tone
+for Brilliant's border. Every page was walked in both looks and checked by script for a rounded box the page's colour
+with no border (it would vanish): one was found and fixed, the chapter on the way on Topics, which had its border taken
+off in 3.26.0 and was only told by its tone.
 
-Measured before 3.29.0: on light the panel was already 4.5 apart, but every panel cast two shadows that darkened the
-ground round it to 225–240 (7–10 % below the ground); that halo, not the white, made the panels jump. Dark had two panel
-tones (`#191919` on most pages, 2.4 apart; `#1E1E1E` on Topics, 4.9). Now: no shadow on a page (only a sheet or the busy
-card, which float, cast one); one panel tone, about 5 apart in both looks; the same faint line on the panels that had
-none (Topics' chapters and pack, Home's pills and card), on the goal card (it had the control's darker line) and on
-notices (they had the control's line or no fill). The chosen segment of a switch row carries the panel's line instead
-of a shadow. Achievement cards are a column from the top, so the drawings of a row, and their bars, stand on one line.
-
-Not taken: Brilliant's white page with white cards (the owner asked for a small step, not none) and its bottom lip on
-each card (the owner: no frames on Topics; the lip stays for things to press).
+Not taken: Brilliant's bottom lip on the course cards it lists (a thicker border at the foot): 3.26.0 took the lip off
+IOPET's chapter cards on the owner's word; it waits for the owner's call.
