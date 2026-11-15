@@ -49,6 +49,7 @@
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
+  --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;   /* 3.31.0 a finished chapter: the flame's tint, its border and lip in the flame (Brilliant's finished course card) */
   --edge:#2C2C2C;--bw-edge:2px;--edge-in:inset 0 0 0 .34px var(--edge);   /* 3.30.0 Brilliant's rule, measured on the owner's phone: the panel IS the ground and its border
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
@@ -132,7 +133,7 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --edge:#E5E5E5;   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
+  --edge:#E5E5E5;--done-bg:#FFF5E7;   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
   --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);
   --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#6A6A6A;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
@@ -772,7 +773,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-cap{font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;color:var(--ink2);margin-top:24px !important}
 .sm-chips{display:flex;flex-wrap:wrap;justify-content:center;margin:12px -4px 0 !important}
 .sm-chip{display:inline-flex;align-items:center;margin:4px;padding:8px 12px 8px 8px;border-radius:var(--r-pill);background:var(--surface);border:var(--bw-edge) solid var(--edge);font-size:var(--fs-sm);font-weight:600;line-height:1.3;box-shadow:var(--edge-in)}
-.sm-chip .li{width:var(--ic-xs);height:var(--ic-xs);margin-right:4px;stroke-width:2.5;color:var(--ink2)}
+.sm-chip .li,.sm-chip>svg{width:var(--ic-xs);height:var(--ic-xs);margin-right:4px;stroke-width:2.5;color:var(--ink2)}
 .sm-chip.g .li{color:var(--good)}
 .sm-chip.y .li{color:var(--gold)}
 .sm2 .next-card{margin-top:8px !important}
@@ -1021,6 +1022,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── ACCOUNT & BACKUP ── */
 .nudge{display:flex;align-items:flex-start;width:100%;text-align:left;background:var(--info-bg);border:var(--bw-edge) solid var(--info-line);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-xs);font-weight:600;color:var(--info-ink);line-height:1.5;box-shadow:var(--edge-in)}
 .nudge .li{margin:0 8px 0 0}
+.nudge .li.nudge-go{margin:0 0 0 auto;color:var(--ink3)}   /* 3.31.0 the row is the button: a chevron instead of "Tap here" */
 .nudge:active{transform:scale(.98)}
 .acct-email{font-size:var(--fs-md);font-weight:700;word-break:break-all;margin-top:4px !important}
 .chip{display:inline-block;border-radius:var(--r-pill);padding:4px 8px;font-size:var(--fs-cap);font-weight:700;letter-spacing:.8px;text-transform:uppercase}   /* 3.11.0 a small label: CAPS, spaced */
@@ -1159,8 +1161,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .subj-row{display:flex;overflow-x:auto;margin:0 -24px;padding:8px 24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subj-row::-webkit-scrollbar{display:none}
 .subj{flex:none;width:112px;margin-right:16px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
-.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:var(--bw-ctl) solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
-.subj.on .subj-ico{border:2px solid var(--primary);background:var(--primary-soft)}
+.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:var(--bw-edge) solid var(--edge);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--edge-in)}
+.subj.on .subj-ico{border-color:var(--done-line);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--done-line)}
 .subj-t{font-size:var(--fs-sm);font-weight:600;margin-top:8px;line-height:1.2;white-space:nowrap}
 .subj.on .subj-t{color:var(--ink);font-weight:700}
 .subj.soon .subj-ico .chi{opacity:.45;filter:grayscale(.85)}
@@ -1203,26 +1205,26 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .chp-why{font-size:var(--fs-lg);color:var(--ink3);line-height:1.45;margin-top:8px}
 /* the three Marks: points on one line, no box and no lines between rows; the one to do is the orange point with a soft ring */
 .chapter>.mp{margin-top:40px}
-.mp-n{position:relative;display:flex;align-items:flex-start;width:100%;padding:0;background:none;border:0;text-align:left;color:var(--ink)}
+.mp-n{position:relative;display:flex;align-items:center;width:100%;padding:0;background:none;border:0;text-align:left;color:var(--ink)}
 .mp-n+.mp-n{margin-top:32px}
-.mp-n:not(:last-child):after{content:'';position:absolute;left:23px;top:56px;bottom:-24px;width:2px;border-radius:var(--r-pill);background:var(--line)}
-.mp-dot{flex:none;width:48px;height:48px;margin-right:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-lg);font-weight:700;background:var(--fill-2);color:var(--ink3);transition:transform var(--t-press) var(--ease-swift)}
+.mp-n:not(:last-child):after{content:'';position:absolute;left:26.5px;top:calc(50% + 36px);bottom:-28px;width:3px;border-radius:var(--r-pill);background:var(--line)}
+.mp-dot{flex:none;width:56px;height:56px;margin-right:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-lg);font-weight:700;background:var(--fill-2);color:var(--ink3);transition:transform var(--t-press) var(--ease-swift)}
 .mp-n.now .mp-dot{background:var(--primary);color:var(--on-mark)}
-.mp-n.done .mp-dot{background:var(--good-soft);color:var(--good-ink);box-shadow:inset 0 0 0 2px var(--good)}
+.mp-n.done .mp-dot{background:var(--done-line);color:var(--on-mark)}   /* 3.31.0 a passed Mark in the flame, as a finished chapter */
 .mp-n.locked .mp-dot{background:var(--surface-2)}
-.mp-n.now.due .mp-dot{box-shadow:0 0 0 6px var(--primary-soft)}
-.mp-n.done.due .mp-dot{box-shadow:inset 0 0 0 2px var(--good),0 0 0 6px var(--good-soft)}
+.mp-n.now.due .mp-dot{box-shadow:0 0 0 6px var(--done-bg)}
+.mp-n.done.due .mp-dot{box-shadow:0 0 0 6px var(--done-bg)}
 .mp-n.now:active .mp-dot,.mp-n.done:active .mp-dot,.mp-n.locked:active .mp-dot{transform:scale(.94)}
 .mp-b{flex:1;min-width:0;display:block}
 .mp-k{display:block;font-size:var(--fs-cap);font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);line-height:1.4}
-.mp-t{display:block;font-size:var(--fs-xl);font-weight:700;line-height:1.3;margin-top:4px}
+.mp-t{display:block;font-size:var(--fs-xl);font-weight:700;line-height:1.3}
 .mp-l{display:block;font-size:var(--fs-sm);color:var(--ink3);line-height:1.45}
 .mp-t+.mp-l{margin-top:4px}
 .mp-x{display:flex;align-items:flex-start;font-size:var(--fs-sm);color:var(--ink2);line-height:1.45;margin-top:8px}
 .mp-x .li{flex:none;width:var(--ic-xs);height:var(--ic-xs);margin:2px 8px 0 0}
 .mp-x.ok{color:var(--good-ink);font-weight:600}
 .mp-n .ch-prog{margin-top:12px}
-.mp-n.locked .mp-t,.mp-n.soon .mp-t{color:var(--ink3)}
+.mp-n.locked .mp-t,.mp-n.soon .mp-t,.mp-n.done:not(.due) .mp-t{color:var(--ink3);font-weight:600}   /* 3.31.0 what is behind or ahead is quiet; the Mark to do now is the one in ink */
 @media (max-height:700px){   /* a short phone: the picture and the gap give way, so the Mark to do shows above the dock */
   .chp-art .chi{width:88px;height:88px}.chp-en{margin-top:12px}.chapter>.mp{margin-top:24px}}
 .sheet-list .topic-row{box-shadow:none}
@@ -1335,7 +1337,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pay-or{margin:8px 2px 0}.adm-sub{margin-top:16px}
 .pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
-.pack-card:active{transform:scale(.98)}
+.pack-card{border-bottom-width:var(--lip)}
+.pack-card:active{transform:translateY(4px);border-bottom-width:2px;margin-bottom:4px}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
 .pack-card:not(.own) .pack-ico{color:var(--ink3)}
 .pack-name{display:block;font-size:var(--fs-md);font-weight:700}
@@ -1406,12 +1409,12 @@ a.link{text-decoration:none}
 @media (max-height:700px){.hm-mid{padding:0}.hm-art{margin-bottom:12px}}
 @media (max-height:600px){.hm-art,.hm-en,.hm .nudge~.hm-line{display:none}.hm-name{margin-top:0}}   /* a short phone keeps the card and its button above the bar */
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
-.path .ch-panel{position:relative;display:flex;align-items:center;min-height:120px;border-radius:var(--r-lg);
+.path .ch-panel{position:relative;display:flex;align-items:center;min-height:112px;border-radius:var(--r-lg);border-bottom-width:var(--lip) !important;
   background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in)}   /* 3.26.0 only the syllabus: no lip; every card the same height. 3.29.0 the faint line every panel has */
 .path .ch-panel:first-child{margin-top:0 !important}
-.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-24px;width:2px;height:24px;margin-left:-1px;background:var(--line)}
-.path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
-.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:scale(.98);
+.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-18px;width:3px;height:16px;margin-left:-1.5px;background:var(--line)}
+.path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-bottom-width var(--t-press) var(--ease-swift),margin-bottom var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
+.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(4px);border-bottom-width:2px !important;margin-bottom:4px;
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
 .chp-ic{flex:none;width:72px;height:72px;margin-right:20px}
 .chp-ic .chi{display:block}
@@ -1434,9 +1437,8 @@ a.link{text-decoration:none}
 .page>.mat-hero{margin-top:72px}
 .mat-hero .lvl{margin-top:32px}
 .page>.path{margin-top:60px}
-.path .ch-panel{min-height:120px;padding:24px;margin-top:28px !important;background:var(--pn);border-color:var(--pn-line)}
-.path .ch-panel+.ch-panel:before{top:-31px;height:28px}
-.ch-badge.done{width:28px;height:28px;right:14px;top:14px;background:none;color:var(--good)}
+.path .ch-panel{min-height:112px;padding:20px 24px;margin-top:16px !important;background:var(--pn);border-color:var(--pn-line)}
+.ch-badge.done{width:28px;height:28px;right:14px;top:14px;background:none;color:var(--done-line)}
 .ch-badge .seal{display:block;width:28px;height:28px}
 /* 3.26.0 every mark of where a chapter stands (passed, locked, to come) sits in one place, the top right corner, clear of the names */
 .path .k-done .topic-info,.path .k-locked .topic-info,.path .k-soon .topic-info{padding-right:24px}
@@ -1463,7 +1465,8 @@ a.link{text-decoration:none}
 @keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(2.6);opacity:0}}
 /* 3.9.1 purple belongs to the syllabus: only a chapter passed or on the go has a light purple ground (the one on the go also its
    strong edge); a chapter not started and a locked one stay neutral */
-.path .k-done,.path .k-active,.path .k-revise{background:var(--surface)}   /* 3.26.0 no warm tint: the bar and the seal tell the state */
+.path .k-active,.path .k-revise{background:var(--surface)}
+.path .k-done{background:var(--done-bg);border-color:var(--done-line);box-shadow:inset 0 0 0 .34px var(--done-line)}   /* 3.31.0 Brilliant's finished card, in the flame (3.26.0 had no tint) */
 /* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
 @media (max-width:370px){.nav-lbl{font-size:var(--fs-lg)}}
 @media (max-width:340px){.nav-ic{width:60px;height:36px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:var(--fs-md)}}
@@ -2811,7 +2814,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.30.0',
+  VERSION: '3.31.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5319,15 +5322,13 @@ function homeToday(u, t, line) {
   return (c ? '<button type="button" class="hm-mid" data-act="chapter" data-ch="' + esc(c.id) + '" aria-label="' + esc(c.name) + ', open the chapter">' + mid + '</button>'
             : '<div class="hm-mid">' + mid + '</div>') + (line || '') +
     '<div class="hm-card"><div class="hm-row"><span class="mp-dot hm-dot">' + (t.mark || li('play', 18)) + '</span><span class="mp-b">' +
-    (t.mark ? '<span class="mp-k">Mark ' + t.mark + '</span><span class="mp-t">' + STEP_NAME[t.mark] + '</span>' : '<span class="mp-k">Today’s practice</span><span class="mp-t">' + esc(t.short || t.name) + '</span>') +
-    '<span class="mp-l">' + plural(n, 'question') + ', about ' + aboutMin(u, n) + ' min</span></span></div>' +
+    '<span class="mp-t">' + (t.mark ? STEP_NAME[t.mark] : esc(t.short || t.name)) + '</span></span></div>' +   /* 3.31.0 the point says the Mark; the name says the step */
     (t.mark && st.attempted ? passBar(u, t) : '') +
     '<button class="btn btn-primary" data-act="start-smart" data-topic="' + t.id + '">' + (st.attempted ? 'Continue' : 'Start') + '</button></div>';
 }
 /* once today's set is finished: the lit flame is the reward; nothing to start by mistake, only a quiet link for more */
 function homeDone(u, st) {
-  return '<div class="hm-mid"><span class="hm-art">' + statIcon('flame', 120) + '</span><span class="hm-name">Today’s practice done</span>' +
-    '<span class="hm-s">' + (st > 0 ? 'Come back tomorrow for a ' + (st + 1) + '-day streak.' : 'Come back tomorrow.') + '</span></div>' +
+  return '<div class="hm-mid"><span class="hm-art">' + statIcon('flame', 120) + '</span><span class="hm-name">Done for today</span></div>' +
     '<div class="hm-more"><button class="link" data-act="start-smart">Practice more</button></div>';
 }
 /* today's goal as a ring: violet while on the way, green when done */
@@ -5341,12 +5342,12 @@ SCREENS.home = function () {
   var u = user, tk = todayKey(), st = liveStreak(u), done = setsToday(u) > 0, html, t, wxp = 0, i;
   for (i = 0; i < 7; i++) wxp += dayRec(u, dayKey(addDays(now(), -i))).xp;
   html = '<div class="page bg-dash nav-pad home hm' + (done ? ' is-done' : '') + '">' + homeTop(u, st, wxp);
-  if (!Store.persistent()) html += '<div class="alert warn">Storage is blocked in this browser, so your progress will be lost when the app closes.</div>';
-  if (db.auth && !db.auth.verified) html += '<button class="nudge" data-act="go" data-to="verify">' + li('mail', 18) + '<span>Confirm your email to switch on cloud backup. Tap here.</span></button>';
-  else if (u.guest && u.answered >= 20) html += '<button class="nudge" data-act="go" data-to="account">' + li('cloud', 18) + '<span>Your progress is only on this phone. Create a free account to back it up. Tap here.</span></button>';
+  if (!Store.persistent()) html += '<div class="alert warn">This browser blocks saving: progress is lost on close</div>';
+  if (db.auth && !db.auth.verified) html += '<button class="nudge" data-act="go" data-to="verify">' + li('mail', 18) + '<span>Confirm your email to back up</span>' + li('chev', 18, 'nudge-go') + '</button>';
+  else if (u.guest && u.answered >= 20) html += '<button class="nudge" data-act="go" data-to="account">' + li('cloud', 18) + '<span>Back up your progress</span>' + li('chev', 18, 'nudge-go') + '</button>';
   t = recommendTopic(u);
   if (done) html += homeDone(u, st);
-  else if (t) html += homeToday(u, t, st > 0 && u.lastDay !== tk ? '<div class="hm-line">Practise today to keep your ' + st + '-day streak.</div>' : '');
+  else if (t) html += homeToday(u, t, st > 0 && u.lastDay !== tk ? '<div class="hm-line">Practise today to keep your streak</div>' : '');
   else html += '<div class="hm-mid"><span class="hm-name">Choose a chapter</span></div><div class="hm-card"><button class="btn btn-primary" data-act="tab" data-tab="topics">Open Topics</button></div>';
   return html + '</div>';
 };
@@ -5534,7 +5535,7 @@ function markTopics(u, plan) {
   html += '<div class="mat-hero"><div class="mh-row"><div class="grow">' +
     '<div class="mh-kick">NMMS Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">' + li('info', 20) + '</button></div>' +
     '<div class="mh-title" lang="hi" role="heading" aria-level="1">मानसिक योग्यता</div>' +
-    '<div class="mh-desc">Mental Ability: reasoning with letters, numbers and figures.</div></div>' +
+    '<div class="mh-desc">Mental Ability</div></div>' +
     '<span class="mh-art">' + subjIcon('mat', 96) + '</span></div></div>';   // 3.26.0 only the syllabus: the medal line left (each chapter shows its own progress)
   html += packSection(u);                                            // 3.8.0 the full papers (or the locked pack), right under the course
   /* one path, in the order of study — a chapter keeps its place; where it stands is shown on its own panel */
@@ -5583,26 +5584,25 @@ SCREENS.chapter = function (p) {
   html = '<div class="page bg-topics chapter ch2">' + subHead('') +
     '<div class="chp-head"><div class="chp-art">' + chIcon(c.id, 120) + '</div><div class="chp-en">' + esc(c.name) + '</div>' +
     '<div class="chp-name" lang="hi" role="heading" aria-level="1">' + esc(c.hi) + '</div>' +
-    (w || c.why ? '<div class="chp-why">' + (w ? 'In NMMS, ' + w + '.' : esc(c.why)) + '</div>' : '') + '</div>';
+    (w || c.why ? '<div class="chp-why">' + (w ? w.charAt(0).toUpperCase() + w.slice(1) : esc(c.why)) + '</div>' : '') + '</div>';
   html += '<div class="mp" role="list">';
   marks.forEach(function (m) {
-    var st = topicStats(u, m), ok = markPassed(u, m), lk = !ok && markLock(u, m), now = !ok && !lk, size = setSize(u, m), cls = ok ? 'done' : lk ? 'locked' : 'now', extra = '';
-    if (now && st.attempted) extra = passBar(u, m);
-    else if (lk) extra = '<span class="mp-x">' + li('lock', 16) + '<span>' + markLockText(lk, m) + '</span></span>';
-    else if (ok) extra = '<span class="mp-x ok">' + li('check', 16) + '<span>Passed' + (st.attempted ? ', ' + st.mastered + ' of ' + st.total + ' right' : '') + '</span></span>';
-    if (m.mark === 3) extra += '<span class="mp-x">' + li('medal', 16) + '<span>Earns the Mastery badge</span></span>';
-    html += '<button type="button" role="listitem" class="mp-n ' + cls + (t && t.id === m.id ? ' due' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + m.id + '">' +
-      '<span class="mp-dot">' + (ok ? li('check', 20) : lk ? li('lock', 18) : m.mark) + '</span>' +
-      '<span class="mp-b"><span class="mp-k">Mark ' + m.mark + '</span><span class="mp-t">' + STEP_NAME[m.mark] + '</span>' +
-      '<span class="mp-l">' + plural(size, 'question') + ', about ' + aboutMin(u, size) + ' min</span><span class="mp-l">Pass at ' + passPct(m) + '%</span>' + extra + '</span></button>';
+    /* 3.31.0 a Mark is its point and its name, as a lesson in Brilliant: the point says its number, passed (tick) or locked (lock);
+       the bar shows the way to its pass. The words that said the same again (questions, minutes, pass mark, "Passed", the badge)
+       are gone; a tap on a locked Mark still says why. */
+    var st = topicStats(u, m), ok = markPassed(u, m), lk = !ok && markLock(u, m), now = !ok && !lk, cls = ok ? 'done' : lk ? 'locked' : 'now';
+    html += '<button type="button" role="listitem" class="mp-n ' + cls + (t && t.id === m.id ? ' due' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + m.id + '"' +
+      ' aria-label="Mark ' + m.mark + ', ' + STEP_NAME[m.mark] + (ok ? ', passed' : lk ? ', locked' : '') + '">' +
+      '<span class="mp-dot">' + (ok ? li('check', 22) : lk ? li('lock', 20) : m.mark) + '</span>' +
+      '<span class="mp-b"><span class="mp-t">' + STEP_NAME[m.mark] + '</span>' + (now && st.attempted ? passBar(u, m) : '') + '</span></button>';
   });
   /* the Marks that have no questions yet still show, so the whole way (Learn, Revise, Master) is clear from the first day */
   for (var m2 = marks.length + 1; m2 <= 3; m2++)
-    html += '<div role="listitem" class="mp-n soon"><span class="mp-dot">' + m2 + '</span><span class="mp-b"><span class="mp-k">Mark ' + m2 + '</span><span class="mp-t">' + STEP_NAME[m2] + '</span>' +
-      '<span class="mp-l">Questions coming soon</span><span class="mp-l">Pass at ' + PASS[m2] + '%</span>' + (m2 === 3 ? '<span class="mp-x">' + li('medal', 16) + '<span>Earns the Mastery badge</span></span>' : '') + '</span></div>';
+    html += '<div role="listitem" class="mp-n soon" aria-label="Mark ' + m2 + ', ' + STEP_NAME[m2] + ', coming soon"><span class="mp-dot">' + li('clock', 20) + '</span><span class="mp-b"><span class="mp-t">' + STEP_NAME[m2] + '</span></span></div>';
   html += '</div>';
   if (t) html += '<div class="sm-dock"><button type="button" class="btn btn-primary" data-act="start" data-topic="' + t.id + '">' +
-    (due.rev ? 'Revise Mark ' + t.mark : (topicStats(u, t).attempted ? 'Continue Mark ' : 'Start Mark ') + t.mark) + '</button></div>';
+    (due.rev ? 'Practice' : topicStats(u, t).attempted ? 'Continue' : 'Start') + '</button></div>';   /* 3.31.0 the Mark to do is the one ringed above; a passed one
+     due again is practised (Brilliant's word): "Revise" alone read as Mark 2, which is called Revise */
   return html + '</div>';
 };
 
@@ -5817,21 +5817,21 @@ SCREENS.restoring = function () {
 SCREENS.summary = function () {
   var u = user, n = S.items.length, st = liveStreak(u), t = topicById(S.topic), html, chips = [], nx, nn2, same, ts, good = S.correct * 10 >= n * 6, achs,
     acc = n ? Math.round(S.correct * 100 / n) : 0,
-    stat = function (ico, val, key) { return '<div class="sm-stat">' + statIcon(ico, 36) + '<div class="sm-v num">' + val + '</div><div class="sm-k">' + key + '</div></div>'; };
+    stat = function (ico, val, key) { return '<div class="sm-stat">' + statIcon(ico, 36) + '<div class="sm-v num">' + val + '</div>' + (key ? '<div class="sm-k">' + key + '</div>' : '') + '</div>'; };
   html = '<div class="page bg-dash summary sm2"><div class="sm-top"><button type="button" class="icon-btn" data-act="home" aria-label="Close">' + li('close') + '</button></div>' +
     '<div class="sm-hero">' + (t.ch && has(ICONS, t.ch) ? '<div class="sm-art">' + chIcon(t.ch, 88) + '</div>' : '') +
     '<div class="sm-title" role="heading" aria-level="1">' + (S.correct === n ? 'Perfect!' : good ? 'Well done!' : 'Set complete') + '</div><div class="sm-sub">' + esc(String(t.name).split(' · ')[0]) + (t.mark ? '<span class="mk">Mark ' + t.mark + '</span>' : '') + '</div></div>' +
     /* 3.13.0 three blocks: how right (the share, and the count under it), how long, how much XP (it counts up) */
-    '<div class="sm-stats">' + stat('tick', acc + '%', S.correct + '/' + n + ' right') + stat('clock', fmtTime(S.elapsed), 'time') +
-      stat('star', '<span data-count="' + S.xp + '" data-pre="+">+' + S.xp + '</span>', 'XP earned') + '</div>';
+    '<div class="sm-stats">' + stat('tick', acc + '%', S.correct + '/' + n) + stat('clock', fmtTime(S.elapsed), '') +
+      stat('star', '<span data-count="' + S.xp + '" data-pre="+">+' + S.xp + '</span>', 'XP') + '</div>';
   if (t.mark) {
     ts = topicStats(u, t);
     if (!S.passed0 && markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ' passed', 'g']);
-    else if (markPassed(u, t)) chips.push([li('check'), 'Mark ' + t.mark + ': ' + ts.mastered + ' of ' + ts.total, 'g']);
-    else chips.push([li('target'), 'Mark ' + t.mark + ': ' + ts.mastered + ' of ' + passNeed(t) + ' to pass', '']);
+    else if (markPassed(u, t)) chips.push([li('check'), ts.mastered + '/' + ts.total, 'g']);
+    else chips.push([FLAG_SVG, ts.mastered + '/' + passNeed(t), '']);   /* 3.31.0 the flag is the pass, as at the end of every bar */
   }
   S.unlocked.forEach(function (name) { chips.push([li('unlock'), /^You can/.test(name) ? 'New chapters open' : 'New: ' + name, '']); });
-  if (st > 0) chips.push([li('flame'), plural(st, 'day') + ' streak', 'y']);
+  if (st > 0) chips.push([li('flame'), String(st), 'y']);
   achs = S.newAch.map(function (id) { return ACH.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
   achs.forEach(function (a) { chips.push([li('star'), a.n, 'y']); });
   if (chips.length) html += '<div class="sm-chips">' + chips.map(function (c) { return '<span class="sm-chip' + (c[2] ? ' ' + c[2] : '') + '">' + c[0] + c[1] + '</span>'; }).join('') + '</div>';
@@ -5840,7 +5840,7 @@ SCREENS.summary = function () {
   nn2 = setSize(u, nx);
   html += '<div class="sm-cap">UP NEXT</div><div class="next-card">' + (nx.ch && has(ICONS, nx.ch) ? chTile(nx.ch, 40) : '') +
     '<div class="grow"><div class="next-t"' + (nx.ch ? ' lang="hi"' : '') + '>' + esc(nx.ch ? (chapterOf(nx).hi || chapterOf(nx).name) : nx.name) + (nx.mark ? '<span class="mk">M' + nx.mark + '</span>' : '') + '</div>' +
-    '<div class="next-l">' + plural(nn2, 'question') + ', about ' + aboutMin(u, nn2) + ' min</div></div></div>' +
+    '</div></div>' +
     '<div class="sm-dock">' + (same ? '<button type="button" class="btn btn-primary" data-act="again">Next set</button>'
           : '<button type="button" class="btn btn-primary" data-act="start" data-topic="' + nx.id + '">Start</button>') +
     '<div class="sm-links"><button type="button" class="link" data-act="review">Review answers</button>' +
@@ -6213,23 +6213,22 @@ SCREENS.progress = function () {
     wt = weakestTopic(u) || recommendTopic(u);
     if (wt) {
       n = Math.min(5, setSize(u, wt)); ws = topicStats(u, wt);
-      html += '<div class="hero next-step"><div class="cp hero-kick">Your weakest chapter</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
+      html += '<div class="hero next-step"><div class="cp hero-kick">Weakest</div><div class="row ns-row">' + (wt.ch && has(ICONS, wt.ch) ? chTile(wt.ch, 40) : '') +
         '<div class="grow"><div class="ns-name"' + (wt.ch ? ' lang="hi"' : '') + '>' + esc(wt.ch ? (chapterOf(wt).hi || chapterOf(wt).name) : wt.name) + '</div>' +
-        (wt.mark ? '<div class="ns-mark">Mark ' + wt.mark + '</div>' : '') +
-        '<div class="ns-l">' + (wt.mark ? ws.mastered + ' of ' + passNeed(wt) + ' right to pass' : ws.pct + '% mastered') + '</div></div></div>' +
-        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice for ' + aboutMin(u, setSize(u, wt)) + ' min</button></div>';
+        (wt.mark ? passBar(u, wt) : '<div class="ns-l">' + ws.pct + '% mastered</div>') + '</div></div>' +
+        '<button class="btn btn-primary btn-cta" data-act="start" data-topic="' + wt.id + '">Practice</button></div>';
     }
   }
-  html += '<div class="prog-grid"><div class="prog-stat">' + statIcon('star', 40) + '<div class="prog-stat-val num">' + u.xp + '</div><div class="prog-stat-lbl">Total XP</div><div class="prog-stat-note">Level ' + lv.n + '</div></div>' +
-    '<div class="prog-stat">' + statIcon('flame', 40, u.lastDay === todayKey() ? '' : 'off') + '<div class="prog-stat-val num">' + st + '</div><div class="prog-stat-lbl">Day streak</div><div class="prog-stat-note">Best ' + u.bestStreak + '</div></div>' +
-    '<div class="prog-stat">' + statIcon('tick', 40) + '<div class="prog-stat-val num">' + pct(u.correct, u.answered) + '%</div><div class="prog-stat-lbl">Accuracy</div><div class="prog-stat-note">' + u.correct + '/' + u.answered + ' right</div></div>' +
-    '<div class="prog-stat">' + statIcon('clock', 40) + '<div class="prog-stat-val num">' + u.answered + '</div><div class="prog-stat-lbl">Questions</div><div class="prog-stat-note">Best run ' + u.bestRun + '</div></div></div>';
+  html += '<div class="prog-grid"><div class="prog-stat">' + statIcon('star', 40) + '<div class="prog-stat-val num">' + u.xp + '</div><div class="prog-stat-lbl">XP</div></div>' +
+    '<div class="prog-stat">' + statIcon('flame', 40, u.lastDay === todayKey() ? '' : 'off') + '<div class="prog-stat-val num">' + st + '</div><div class="prog-stat-lbl">Streak</div></div>' +
+    '<div class="prog-stat">' + statIcon('tick', 40) + '<div class="prog-stat-val num">' + pct(u.correct, u.answered) + '%</div><div class="prog-stat-lbl">Accuracy</div></div>' +
+    '<div class="prog-stat">' + statIcon('clock', 40) + '<div class="prog-stat-val num">' + u.answered + '</div><div class="prog-stat-lbl">Questions</div></div></div>';
 
   if (u.answered) {                               // 3.9.6 the week as one WhatsApp message, for a parent (or the teacher)
-    html += '<div class="card share-card"><div class="grow"><div class="card-title">This week, for your parents</div><div class="small muted">Days practised, questions, marks: one WhatsApp message.</div></div>' +
+    html += '<div class="card share-card"><div class="grow"><div class="card-title">For your parents</div></div>' +
       '<button type="button" class="btn btn-sec sh-btn" data-act="share-week">' + li('share', 18) + '<span>Share</span></button></div>';
   }
-  html += '<div class="card"><div class="row between"><div class="card-title">Questions per day</div><div class="small muted">last 7 days</div></div><div class="bars-row">';
+  html += '<div class="card"><div class="row between"><div class="card-title">Questions per day</div></div><div class="bars-row">';
   days.forEach(function (d) {
     html += '<div class="bar-col' + (d.today ? ' today' : '') + '"><div class="bar-num">' + (d.today ? d.n : '') + '</div><div class="bar-track"><div class="bar" style="height:' +
       Math.round(d.n * 78 / max) + 'px"></div></div><div class="bar-lbl">' + d.lbl + '</div></div>';
@@ -6240,9 +6239,9 @@ SCREENS.progress = function () {
     wk = weekTotals(u, 0, 6); pw = weekTotals(u, 7, 13);
     html += '<div class="card"><div class="card-title">Weekly summary</div>' +
       '<div class="trow thead"><span></span><span>Questions</span><span>Right</span></div>' +
-      '<div class="trow"><span>Last 7 days</span><b class="num">' + wk.n + '</b><b class="num">' + pct(wk.c, wk.n) + '%</b></div>' +
+      '<div class="trow"><span>Last 7 days</span><b class="num">' + (wk.n > pw.n ? li('up', 16, 'trend') : wk.n < pw.n ? li('down', 16, 'trend') : '') + wk.n + '</b><b class="num">' + pct(wk.c, wk.n) + '%</b></div>' +
       '<div class="trow"><span>The week before</span><b class="num">' + pw.n + '</b><b class="num">' + pct(pw.c, pw.n) + '%</b></div>' +
-      '<div class="small muted">' + (wk.n > pw.n ? li('up', 16, 'trend') + (wk.n - pw.n) + ' more questions than the week before.' : wk.n < pw.n ? li('down', 16, 'trend') + (pw.n - wk.n) + ' fewer questions than the week before.' : 'Same number of questions as the week before.') + '</div></div>';
+      '</div>';   /* 3.31.0 the arrow by this week's count says what the sentence under the table said again */
   }
 
   html += '<div class="card"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="card-sub">' + esc(courseName(courseOf(u)).split(' · ').slice(0, 2).join(', ')) + '</div>';
@@ -6277,10 +6276,10 @@ SCREENS.profile = function () {
   var u = user, lv = levelOf(u.xp), left = examDaysLeft(u), got = achCount(u), need = CONFIG.LEVEL_XP - lv.into, per = xpPerSet(u), ring = pct(lv.into, CONFIG.LEVEL_XP), n = u.notif, on;
   on = ['streak', 'weekly'].filter(function (k) { return n[k]; }).length;      // (3.9.1 the daily-goal card left Home, and its switch with it)
   return '<div class="page bg-profile nav-pad profile"><div class="prof-header"><div class="prof-ring" style="--p:' + ring + '"><div class="prof-avatar">' + esc(initialOf(u.name)) + '</div></div>' +
-    '<div class="prof-name">' + esc(u.name) + '</div><div class="prof-email">' + (u.guest ? 'Saved on this phone only' : esc(u.email)) + '</div>' +
+    '<div class="prof-name">' + esc(u.name) + '</div>' + (u.guest ? '' : '<div class="prof-email">' + esc(u.email) + '</div>') +
     '<div class="prof-rank">' + li('star', 16) + 'Level ' + lv.n + '<span class="mt-sep">' + esc(lv.title) + '</span></div>' +
-    '<div class="prof-next">Level ' + (lv.n + 1) + ' in <b>' + need + ' XP</b>' + (per ? ' · about ' + plural(Math.max(1, Math.ceil(need / per)), 'set') : '') + '</div></div>' +
-    '<button class="ach-strip" data-act="go" data-to="achievements">' + statIcon('star', 40) + '<span class="grow"><span class="ach-strip-t">Achievements</span><span class="ach-strip-l">' + got + ' of ' + ACH.length + ' unlocked</span>' +
+    '<div class="prof-next">Level ' + (lv.n + 1) + ' in <b>' + need + ' XP</b></div></div>' +
+    '<button class="ach-strip" data-act="go" data-to="achievements">' + statIcon('star', 40) + '<span class="grow"><span class="ach-strip-t">Achievements</span><span class="ach-strip-l num">' + got + '/' + ACH.length + '</span>' +
     '<span class="pbar thin"><i style="width:' + pct(got, ACH.length) + '%"></i></span></span><span class="menu-arrow">' + li('chev', 20) + '</span></button>' +
     '<div class="menu-group">' +
     menuRow('data-act="go" data-to="course"', '📚', 'Course', esc(courseName(courseOf(u))), ' wrap') +
@@ -6344,7 +6343,7 @@ SCREENS.goals = function () {
 
 SCREENS.achievements = function () {
   var u = user, got = achCount(u), html;
-  html = '<div class="page bg-profile">' + subHead('Achievements') + '<div class="center small muted">' + got + ' of ' + ACH.length + ' unlocked</div><div class="ach-grid">';
+  html = '<div class="page bg-profile">' + subHead('Achievements') + '<div class="center small muted num">' + got + '/' + ACH.length + '</div><div class="ach-grid">';
   ACH.forEach(function (a) {
     var earned = !!u.ach[a.id], v = Math.min(a.val(u), a.goal);
     html += '<button class="ach-card ' + (earned ? 'earned' : 'locked') + '" data-act="ach" data-id="' + a.id + '"><span class="ach-emoji">' + achIcon(a, 48) + '</span>' +
@@ -6523,8 +6522,10 @@ function celebrateMark() {
   var t = S && topicById(S.topic), c, free, lines;
   if (!t || !user) return;
   c = chapterOf(t); free = S.unlocked.filter(function (x) { return /^You can/.test(x); }).length;
-  lines = free ? 'Now you can start <b>any new chapter</b>.' : S.unlocked.length ? 'Opened: <b>' + S.unlocked.map(esc).join('</b>, <b>') + '</b>.' : 'Keep it fresh: come back to it in a few days.';
-  celebrate({ ch: t.ch, title: 'Mark ' + t.mark + ' passed!', sub: '<b lang="hi">' + esc(c.hi || c.name) + '</b> · ' + esc(c.name) + '<br>' + lines, hue: chHue(t.ch) });
+  /* 3.31.0 the picture and the title say it; only news (a chapter opened) is worth a line. The two names joined by a dot and the
+     "come back in a few days" reminder (the chapter page rings a Mark when it is due) are gone */
+  lines = free ? 'Any new chapter is open' : S.unlocked.length ? 'Opened: <b>' + S.unlocked.map(esc).join('</b>, <b>') + '</b>' : '';
+  celebrate({ ch: t.ch, title: 'Mark ' + t.mark + ' passed!', sub: '<b lang="hi">' + esc(c.hi || c.name) + '</b>' + (lines ? '<br>' + lines : ''), hue: chHue(t.ch) });
 }
 function celebrate(o) {
   var still = calmMotion();
