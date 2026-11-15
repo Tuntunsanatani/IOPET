@@ -4,7 +4,6 @@ offGrid   .auth-logo-row .lg-n { margin-left:11px }
 offGrid   .fig { margin:4px 6px }
 offGrid   .fig-wide { margin:6px 0 }
 offGrid   .figs { margin:10px 0 2px }
-offGrid   .lock-mid { margin:-20px 0 0 -18px }
 offGrid   .lvl-medal { margin:-18px 0 0 -15px }
 offGrid   .ripple { margin:-22px 0 0 -22px }
 rawColor  .cele-icon .chi { filter:drop-shadow(0 12px 14px rgba(0,0,0,.35)) }
