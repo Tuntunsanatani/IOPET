@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.31.0)
+# IOPET design rules (v3, 3.32.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -140,8 +140,9 @@ Every part that can be touched has these, in both looks, from tokens only:
   with an edge, and shrinking it would shrink the edge too. Rows and options used to sink 2 px with no edge to
   sink onto.)
 - Two things look alike only if they do alike. Sign in before its fields are right is an outline because a tap on it
-  answers (it shows what is missing). Check before a choice cannot be pressed at all, so it stays a grey block:
-  an outline there would look like Skip's twin and do nothing.
+  answers (it shows what is missing). Check before a choice cannot be pressed at all, so it lies flat and faint
+  (3.32.0, Brilliant's: `--off`, words `--ink-off`, no line, no edge; WCAG exempts inactive controls from contrast), and
+  rises when there is a choice.
 
 ## 2. Colour roles (tokens in `index.html`, `:root` and `[data-theme="light"]`)
 
@@ -157,10 +158,13 @@ Every part that can be touched has these, in both looks, from tokens only:
   Coloured text is only for links (`--primary-ink`) and the meanings above.
 - Glyphs on a coloured fill use dark ink `#141414` (contrast). The one exception is the light theme's red, where the ✕ is
   white: 4.8 : 1, against 3.8 : 1 for dark ink. On the dark theme's red, dark ink stays (5.4 : 1).
-- A chosen option (before Check) is a neutral grey ring (`--ink2`, 3.24.0). It is never orange, because orange is
-  the action (the Check button). The ✕ / ✓ marks carry the meaning for colour-blind students.
-- A wrong answer sits on a burgundy panel in dark (`#2C1A1A`) and a soft pink one in light (`#FDECEA`), never on a brown
-  or yellow tint. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
+- A chosen option (before Check) is the flame: its border and `--done-bg` tint (3.32.0, the owner's word; 3.24.0 had a grey
+  ring because orange was Check's, and Check is the neutral ink now). The ✕ / ✓ marks carry the meaning for colour-blind
+  students.
+- A wrong answer is shown on the option (its red border and ✕); the sheet under it is neutral grey (3.32.0, as Brilliant's
+  "Incorrect"), never red or amber. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
+- A right answer's sheet is the one vivid moment of a set (3.32.0, measured on Brilliant: light `#D3F5DD` with a
+  `#29CC57` button, dark `#0D3A1B` with `#2DCC5A`), dark ink on the button (8 : 1).
 - The action orange stays `#FF9F0A`, the logo's flame. A suggested `#FFAB00` measured ΔE 2.9 from it, which is the same
   colour to the eye, and it sits closer to the reward gold.
 - Gradients are not used, except the splash light and the skeleton's passing light.
@@ -239,7 +243,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 | Kind | Look | Examples |
 |---|---|---|
-| Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Check, Next set, Create account |
+| Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Next set, Create account (3.32.0: Check is the neutral ink, §12.15) |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
 | Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words, semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
 | Not ready (§1c, §12.7) | one look for every primary button that cannot go on yet (3.24.0): a flat grey block (`--surface-3`), a faint `--line-2` line, `--ink-off` words, no edge. A sign-in button in that state still answers a tap (it says what is missing). A second button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
@@ -382,8 +386,9 @@ Dark and light are the same design. Neither is made from the other by turning co
     first frame is the old page and the last the new one; between them only the page colour; no other colour anywhere.
 - Anything that answers a touch is done in 300 ms or less.
 - Only `transform` and `opacity` animate, except colour transitions on one element.
-- Nothing shakes, with one exception the owner asked for (3.19.0): a sign-in field that turns wrong is nudged 4 px once. A quiz answer never moves. A mistake is shown in place (colour, ✕, a few words), never by moving things (3.14.0: the sign-in
-  field shake and the wrong-option shake were removed).
+- Two things shake, both asked for by the owner: a sign-in field that turns wrong is nudged 4 px once (3.19.0), and a
+  wrong quiz option shakes once, 6 px and less, 360 ms, with two quick knocks of the motor (3.32.0). Nothing else moves to
+  show a mistake (3.14.0).
 - Nothing loops forever except loading indicators (the spinner, the skeleton's light). 3.16.0: the locked chapter's lock
   no longer shines every 2 s; it shines once, in 300 ms, when tapped.
 - "Reduce animations" (in-app `.calm`) and the phone's reduce-motion turn movement off and keep fades.
@@ -778,4 +783,47 @@ again ("Revise" alone read as Mark 2, which is called Revise).
 
 Kept: the names of things, numbers, the one action, warnings, and the words that say how to earn an achievement.
 Not changed: the questions, the packs' own texts (the content's owners write those), the help, privacy and terms pages.
+
+### 12.15 The quiz on Brilliant's rules (3.32.0)
+
+The owner (15 Nov 2026), after the side-by-side: practice is a game, not a test (no A B C D, no clock: both stay in the
+full paper, which is the real test); Check in the neutral ink and the choice in the flame; every change animated in an
+order, short, as in Brilliant; the right answer's sheet vivid; a wrong one shaken, felt, and given one more try with the
+wrong option faded out; Check before a choice lighter still. Studied from the owner's two Brilliant recordings, frame by
+frame (50 frames a second), and their screenshots, measured at 3x.
+
+**Why IOPET did not look like Brilliant though it copied it**: Brilliant's loudness follows the moment (an option at rest
+is as quiet as a panel; the student's choice is coloured; the next step appears only when it is possible), and five of
+IOPET's own rules said the opposite (controls darker than panels, a readable not-ready button, orange for the button to
+press, a grey choice, letters and a clock). Those rules are changed here, not only the pixels.
+
+| | Brilliant (measured) | IOPET 3.32.0 |
+|---|---|---|
+| Bar above the question | grey X, grey dots, no clock | a plain grey X (no ring), the line, a grey count; no clock, no chapter name |
+| Where the answers are | the lower third, ~89 px above the buttons | pushed down to the buttons, the free space above them |
+| An option at rest | 2 px `#E5E5E5`, regular weight, no letter | the panel's edge (`--edge`), regular, no A B C D |
+| The choice | blue border and tint, at once | the flame's border and tint, in one `--t-state` |
+| Check | not ready: `#F2F2F2` / `#C2C2C2`, flat; ready: charcoal `#383838` with a 4 px edge | `--off` / `--ink-off`, flat; ready: `--neutral` (light `#363636`, dark `#E6E6E6`) rising in 180 ms |
+| Skip | 2 px border and a 2 px lip | the same, `--edge` |
+| After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order (`--q-ans` 60, `--q-mark` 140, `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms) |
+| The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
+| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | `--win-sheet`, `--win` with `--win-lip`, the XP as words (no pill), no icon by "Correct!" |
+| Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
+| The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:76px`); the sheet slides up inside it over the buttons it replaces |
+
+**One more try**: a first wrong answer gets "Not quite" and Try again (no "Why?": it would give the answer away). The
+wrong option stays out (faded, a grey ✕, not tappable); a second Check shows the result and the right answer; Skip on the
+second try shows it too. Only the first answer counts: XP, the right answers that pass a Mark, mastery, the set's score,
+the review. Counting the second try would let two guesses out of four pass a Mark.
+
+**The sheet** is one height in every state (the explanation is one tap away, "Why?", on a right, a final wrong or a
+skip), so the answers never move when it comes; the page never scrolls under it. Opening "Why?" grows it, on the
+student's own tap.
+
+**Not taken**: Brilliant's mascot and its help chat; the progress dots (a set of 12 keeps its line); amber for a miss
+(too close to the flame, which is now the choice).
+
+**Next (the owner's idea, not built)**: practice as a game, where the student arranges, matches, fixes or builds the
+answer (Brilliant's scales, number lines, letter tiles), not only picks one of four. That needs new question kinds in the
+engine (this chat) and questions written for them (the questions chat).
 
