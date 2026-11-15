@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.30.0)
+# IOPET design rules (v3, 3.31.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -731,3 +731,51 @@ off in 3.26.0 and was only told by its tone.
 
 Not taken: Brilliant's bottom lip on the course cards it lists (a thicker border at the foot): 3.26.0 took the lip off
 IOPET's chapter cards on the owner's word; it waits for the owner's call.
+
+### 12.14 Brilliant's cards, and fewer words (3.31.0)
+
+The owner's word: the lip on the cards (yes), Brilliant's tactics without compromise, and as few words as possible:
+no text that says again what a picture, a number, a bar, a colour or a place already says. Words cost a student's
+attention, so every word left has a job.
+
+**The course card** (measured on the owner's Brilliant pictures at 3x):
+
+| | Brilliant | IOPET |
+|---|---|---|
+| Card | 2 px border, a 6 px lip at its foot, 112 px tall | `.path .ch-panel`, the pack card: the same (`--lip`) |
+| Press | the card sinks onto its lip | `translateY(4px)`, lip 2 px, the space kept (no jump below) |
+| Gap and path | 16 px apart, a 3 px line between | the same (`--line`) |
+| Finished | the course colour's tint, its border and lip, a tick in a disc in the corner | the flame: `--done-bg`, `--done-line`, the tick dark on the flame |
+| Subject tile | 2 px border; the chosen one in the course colour with its tint | the same, in the flame |
+
+3.26.0 had no tint on a finished chapter; the owner's newer word (Brilliant's tactics) brings it back, in the flame only.
+
+**The chapter page** is Brilliant's course path: each Mark is its point and its name. The point says the number, a tick
+(passed) or a lock; the bar under the Mark on the way says how far to its pass; the ring says which Mark is due; what is
+behind or ahead is grey. Gone: "MARK 1" (the point says it), the questions and minutes, "Pass at 60 %" (the flag ends the
+bar), "Passed, x of y right", the lock's sentence (a tap still says why), "Questions coming soon" (a clock in the point),
+"Earns the Mastery badge". The docked button is one word: Start, Continue, or Practice for a passed Mark that is due
+again ("Revise" alone read as Mark 2, which is called Revise).
+
+**Words cut elsewhere**:
+
+| Page | Before | After |
+|---|---|---|
+| Home card | MARK 1, Learn, "12 questions, about 9 min" | the point (1) and Learn |
+| Home line | "Practise today to keep your 3-day streak." | "Practise today to keep your streak" (the count is in the pill) |
+| Home, done | "Today's practice done" + "Come back tomorrow for a 2-day streak." | "Done for today" |
+| Nudges | "Your progress is only on this phone. Create a free account to back it up. Tap here." | "Back up your progress" + a chevron |
+| Topics | "Mental Ability: reasoning with letters, numbers and figures." | "Mental Ability" |
+| Chapter | "In NMMS, about 7 questions per paper." | "About 7 questions per paper" |
+| Progress | "Your weakest chapter", Mark 1, "13 of 16 right to pass", "Practice for 9 min" | "Weakest", the bar with its flag, "Practice" |
+| Progress stats | Total XP + Level 4, Day streak + Best 7, 82/175 right, Best run 12 | XP, Streak, Accuracy, Questions |
+| Progress | "This week, for your parents" + "Days practised, questions, marks: one WhatsApp message." | "For your parents" + Share |
+| Progress | "last 7 days" by the chart (the days are under it); the sentence under the week table | gone; an arrow by this week's count |
+| You | "Saved on this phone only" (the backup row says it); "about 2 sets" | gone |
+| Achievements | "10 of 12 unlocked" | 10/12 |
+| Set done | "5/12 right", "time", "XP earned"; "Mark 1: 5 of 16 to pass"; "1 day streak"; "12 questions, about 2 min" | 5/12, the clock, XP; the flag and 5/16; the flame and 1; gone |
+| Mark passed | the two names joined by a dot, "Keep it fresh: come back to it in a few days." | the Hindi name; a line only when a chapter opens |
+
+Kept: the names of things, numbers, the one action, warnings, and the words that say how to earn an achievement.
+Not changed: the questions, the packs' own texts (the content's owners write those), the help, privacy and terms pages.
+
