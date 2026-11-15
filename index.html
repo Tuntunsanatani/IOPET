@@ -1148,9 +1148,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .mh-row{display:flex;align-items:center}
 .mh-art{flex:none;margin:0 -8px 0 12px}
 .mh-art .chi{width:96px;height:96px}
-.mh-kick{display:flex;align-items:center;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);letter-spacing:.3px}
-.mh-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:2px}
-.mh-desc{font-size:var(--fs-md);color:var(--ink2);line-height:1.45;margin-top:4px}
+.mh-kick{display:flex;align-items:center;font-size:var(--fs-cap);font-weight:700;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.mh-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:16px}
+.mh-desc{font-size:var(--fs-lg);color:var(--ink3);line-height:1.45;margin-top:8px}
 .mh-info{flex:none;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink3);font-family:Georgia,serif;font-style:italic;font-size:var(--fs-xs);font-weight:700;line-height:21px;text-align:center;padding:0;position:relative}
 .mh-info:before{content:'';position:absolute;top:-10px;right:-10px;bottom:-10px;left:-10px}
 .mh-info:active{background:var(--fill-2)}
@@ -1167,10 +1167,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .subj-row{display:flex;overflow-x:auto;margin:0 -24px;padding:8px 24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subj-row::-webkit-scrollbar{display:none}
 .subj{flex:none;width:112px;margin-right:16px;display:flex;flex-direction:column;align-items:center;padding:0;background:none;border:0;color:var(--ink)}
-.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:var(--bw-ctl) solid var(--line-2);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
+.subj-ico{position:relative;width:112px;height:80px;border-radius:var(--r-lg);border:var(--bw-ctl) solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-1)}
 .subj.on .subj-ico{border:2px solid var(--primary);background:var(--primary-soft)}
 .subj-t{font-size:var(--fs-sm);font-weight:600;margin-top:8px;line-height:1.2;white-space:nowrap}
-.subj.on .subj-t{color:var(--primary-ink);font-weight:700}
+.subj.on .subj-t{color:var(--ink);font-weight:700}
 .subj.soon .subj-ico .chi{opacity:.45;filter:grayscale(.85)}
 .subj.soon .subj-t{color:var(--ink3)}
 .subj-clock{position:absolute;right:-5px;top:-5px;width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);color:var(--ink2);display:flex;align-items:center;justify-content:center}
@@ -1341,13 +1341,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
 .pay-or{margin:8px 2px 0}.adm-sub{margin-top:16px}
-.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1.5px dashed var(--pur-line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;text-align:left}
+.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:0;box-shadow:none;border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
 .pack-card:active{transform:scale(.98)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
 .pack-card:not(.own) .pack-ico{color:var(--ink3)}
-.pack-name{display:block;font-size:var(--fs-sm);font-weight:700}
-.pack-sub{display:block;font-size:var(--fs-xs);color:var(--cream60);margin-top:2px}
+.pack-name{display:block;font-size:var(--fs-md);font-weight:700}
+.pack-sub{display:block;font-size:var(--fs-sm);color:var(--ink3);line-height:1.4;margin-top:4px}
 .pack-price{flex:none;margin-left:8px;font-family:var(--font-display);font-size:var(--fs-lg);font-weight:700;color:var(--primary-ink)}
 .pack-hero{text-align:center;padding:8px 0 4px}
 .pack-hero-ico{font-size:40px;line-height:1.2}
@@ -1395,51 +1395,52 @@ a.link{text-decoration:none}
 .done-s{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px}
 .done-card .link{margin-top:4px}
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
-.path .ch-panel{position:relative;display:flex;align-items:center;border-radius:var(--r-lg);
-  background:var(--surface);border:1.5px solid var(--line);border-bottom-width:5px;box-shadow:none}
+.path .ch-panel{position:relative;display:flex;align-items:center;min-height:120px;border-radius:var(--r-lg);
+  background:var(--surface);border:0;box-shadow:none}   /* 3.26.0 only the syllabus: no frame, no lip; every card the same height */
 .path .ch-panel:first-child{margin-top:0 !important}
-.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-25px;width:2px;height:22px;margin-left:-1px;background:var(--line-2)}
+.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-24px;width:2px;height:24px;margin-left:-1px;background:var(--line)}
 .path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
-.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(3px);border-bottom-width:2px;margin-bottom:3px;border-color:var(--tap-line);
+.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:scale(.98);
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
-.chp-ic{flex:none;width:80px;height:80px;margin-right:20px}
+.chp-ic{flex:none;width:72px;height:72px;margin-right:20px}
 .chp-ic .chi{display:block}
-.ch-en{display:block;font-size:var(--fs-md);font-weight:600;color:var(--ink3);letter-spacing:.2px;line-height:1.3}
-.path .ch-name{font-size:var(--fs-xl);font-weight:700;line-height:1.35;margin-top:2px}
-.path .ch-prog{margin-top:8px}
+.ch-en{display:block;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);line-height:1.3}
+.path .ch-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3;margin-top:8px}
+.path .ch-prog{margin-top:12px}
 .path .ch-bar{height:6px}
-.path .k-active,.path .k-revise{border-color:var(--primary);border-width:2px;border-bottom-width:5px}
-.ch-badge{position:absolute;right:14px;bottom:12px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+.path .k-active,.path .k-revise{border:0}   /* 3.26.0 the card on the way is told by its own bar, not an orange frame */
+.ch-badge{position:absolute;right:16px;top:16px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
 .ch-badge .li{stroke-width:2.6}
 .ch-badge.done{background:var(--good);color:var(--on-mark)}
 .path .k-locked,.path .k-soon{border-style:solid}
 .path .k-locked .chp-ic,.path .k-locked .topic-info,.path .k-soon .chp-ic,.path .k-soon .topic-info{opacity:.45}
 .path .k-locked .chp-ic .chi,.path .k-soon .chp-ic .chi{filter:grayscale(.7)}
-@media (max-width:370px){.chp-ic{width:68px;height:68px;margin-right:16px}.chp-ic .chi{width:68px;height:68px}.path .ch-panel{padding:20px}.path .ch-name{font-size:var(--fs-xl)}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:var(--fs-3xl)}}
+@media (max-width:370px){.chp-ic{width:64px;height:64px;margin-right:16px}.chp-ic .chi{width:64px;height:64px}.path .ch-panel{padding:20px}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:var(--fs-3xl)}}
 /* 3.9.1 room to breathe: the subject tiles on top, then a wide gap — the subject's name and its line sit just above the middle of
    the screen — then another gap, then the chapters, each with space around it */
 .subj-row:after{content:'';flex:none;width:8px}
 .page>.mat-hero{margin-top:72px}
 .mat-hero .lvl{margin-top:32px}
 .page>.path{margin-top:60px}
-.path .ch-panel{min-height:136px;padding:24px;margin-top:28px !important;background:var(--pn);border-color:var(--pn-line)}
+.path .ch-panel{min-height:120px;padding:24px;margin-top:28px !important;background:var(--pn);border-color:var(--pn-line)}
 .path .ch-panel+.ch-panel:before{top:-31px;height:28px}
-.ch-badge.done{width:34px;height:34px;right:12px;bottom:10px;background:none;color:var(--good)}
-.ch-badge .seal{display:block;width:34px;height:34px}
+.ch-badge.done{width:28px;height:28px;right:14px;top:14px;background:none;color:var(--good)}
+.ch-badge .seal{display:block;width:28px;height:28px}
+/* 3.26.0 every mark of where a chapter stands (passed, locked, to come) sits in one place, the top right corner, clear of the names */
+.path .k-done .topic-info,.path .k-locked .topic-info,.path .k-soon .topic-info{padding-right:24px}
 /* 3.9.1 a tap on the bottom bar: the icon and the name brighten at once, then settle (not with "Reduce animations") */
 .nav-item.flash .nav-ic,.nav-item.flash .nav-lbl{animation:navflash var(--t-pop) var(--ease-swift)}
 @keyframes navflash{0%{color:var(--flash);filter:drop-shadow(0 0 6px var(--flash-glow))}100%{filter:drop-shadow(0 0 0 transparent)}}
-/* a locked chapter (3.9.1): the panel a little dimmer but fully readable; in its middle a flat, see-through lock (no ring, no 3D).
-   Every 2 s a light runs across the lock and it turns a little less see-through for that moment — the words behind stay readable.
-   A tap makes it shine at once. Only the lock moves; the panel stays still. */
+/* a locked chapter (3.9.1): the panel a little dimmer but fully readable; a flat lock (no ring, no 3D) — since 3.26.0 small, in the
+   top right corner with the other marks, never over the names. A tap makes a light run across it once. Only the lock moves. */
 .path .k-locked .chp-ic,.path .k-locked .topic-info{opacity:.55}
 .path .k-locked .chp-ic .chi{filter:grayscale(.5)}
-.lock-mid{position:absolute;left:50%;top:50%;width:36px;height:40px;margin:-20px 0 0 -18px;pointer-events:none;
+.lock-mid{position:absolute;right:18px;top:16px;width:20px;height:22px;pointer-events:none;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1' fill='none' stroke='%23000' stroke-width='2.7' stroke-linecap='round'/%3E%3Crect x='3.4' y='10.4' width='17.2' height='13.6' rx='3.4'/%3E%3C/svg%3E") center/contain no-repeat;
   background:var(--lock);background:linear-gradient(110deg,var(--lock) 38%,var(--lock-hi) 50%,var(--lock) 62%);background-size:320% 100%;background-position:100% 0;
-  opacity:.3}   /* 3.16.0 no loop: it shines once, when tapped */
-@keyframes lockshine{0%{background-position:100% 0;opacity:.3}50%{opacity:.6}100%{background-position:0 0;opacity:.3}}
+  opacity:.6}   /* 3.16.0 no loop: it shines once, when tapped */
+@keyframes lockshine{0%{background-position:100% 0;opacity:.6}50%{opacity:.9}100%{background-position:0 0;opacity:.6}}
 .ch-panel.tap .lock-mid{animation:lockshine .3s ease-in-out 1}
 .calm .nav-item.flash .nav-ic,.calm .nav-item.flash .nav-lbl,.calm .lock-mid,.calm .ch-panel.tap .lock-mid{animation:none}
 @media (prefers-reduced-motion:reduce){.nav-item.flash .nav-ic,.nav-item.flash .nav-lbl,.lock-mid,.ch-panel.tap .lock-mid{animation:none}}
@@ -1450,8 +1451,7 @@ a.link{text-decoration:none}
 @keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(2.6);opacity:0}}
 /* 3.9.1 purple belongs to the syllabus: only a chapter passed or on the go has a light purple ground (the one on the go also its
    strong edge); a chapter not started and a locked one stay neutral */
-.path .k-done,.path .k-active,.path .k-revise{background:var(--pn-on)}
-.path .k-done{border-color:var(--pn-on-line)}
+.path .k-done,.path .k-active,.path .k-revise{background:var(--surface)}   /* 3.26.0 no warm tint: the bar and the seal tell the state */
 .path .k-active,.path .k-revise{border-color:var(--primary)}
 /* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
 @media (max-width:370px){.nav-lbl{font-size:var(--fs-lg)}}
@@ -2765,7 +2765,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.25.0',
+  VERSION: '3.26.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5428,12 +5428,12 @@ function chCard(u, v) {
     bar = '<span class="ch-prog"><span class="ch-bar"><i style="width:' + Math.min(100, pct(st.mastered, need)) + '%"></i></span></span>';
   }
   if (k === 'done') badge = '<span class="ch-badge ch-st done" aria-hidden="true">' + SEAL_TICK + '</span>';
-  else if (k === 'locked') badge = '<span class="lock-mid" aria-hidden="true"></span>';     // a see-through lock in the middle; the names stay readable behind it
+  else if (k === 'locked') badge = '<span class="lock-mid" aria-hidden="true"></span>';     // a small lock in the top right corner, clear of the names
   else if (k === 'soon') badge = '<span class="ch-badge soon" aria-hidden="true">' + li('clock', 16) + '</span>';
   act = k === 'soon' ? 'ch-soon' : k === 'locked' ? 'locked' : 'chapter';
   return '<button type="button" class="topic-row ch-card ch-panel k-' + k + (k === 'locked' ? ' locked' : '') + '" data-act="' + act + '" data-ch="' + esc(c.id) + '"' + (t ? ' data-topic="' + t.id + '"' : '') +
     ' aria-label="' + esc(c.name) + (t && k !== 'soon' ? ', Mark ' + t.mark : '') + (k === 'soon' ? ', coming soon' : k === 'done' ? ', passed' : k === 'locked' ? ', locked' : '') + '">' +
-    '<span class="chp-ic">' + chIcon(c.id, 80) + '</span><span class="topic-info"><span class="ch-en">' + esc(c.name) + '</span>' +
+    '<span class="chp-ic">' + chIcon(c.id, 72) + '</span><span class="topic-info"><span class="ch-en">' + esc(c.name) + '</span>' +
     '<span class="topic-row-name ch-name" lang="hi">' + esc(c.hi) + '</span>' + bar + '</span>' + badge + '</button>';
 }
 var PLAY_SVG = '<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M3 1.6v8.8L10.4 6z" fill="currentColor"/></svg>';
@@ -5483,10 +5483,10 @@ function markTopics(u, plan) {
   /* 3.9.1 the subject's own header, like a book's cover: a small label, its name big, one line of what it is, its picture —
      then the thin progress line with the three medals. No panel around it, no counts to read. */
   html += '<div class="mat-hero"><div class="mh-row"><div class="grow">' +
-    '<div class="mh-kick">NMMS · Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">i</button></div>' +
+    '<div class="mh-kick">NMMS Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">i</button></div>' +
     '<div class="mh-title" lang="hi" role="heading" aria-level="1">मानसिक योग्यता</div>' +
-    '<div class="mh-desc">Mental Ability · reasoning with letters, numbers and figures</div></div>' +
-    '<span class="mh-art">' + subjIcon('mat', 96) + '</span></div>' + levelLine(subjectProgress(u, plan)) + '</div>';
+    '<div class="mh-desc">Mental Ability: reasoning with letters, numbers and figures.</div></div>' +
+    '<span class="mh-art">' + subjIcon('mat', 96) + '</span></div></div>';   // 3.26.0 only the syllabus: the medal line left (each chapter shows its own progress)
   html += packSection(u);                                            // 3.8.0 the full papers (or the locked pack), right under the course
   /* one path, in the order of study — a chapter keeps its place; where it stands is shown on its own panel */
   html += '<div class="ch-list path">' + views.map(function (v) { return chCard(u, v); }).join('') + '</div>';
@@ -7923,7 +7923,7 @@ function packCard(u, p) {
   var own = canSeePack(u, p.id), n = packTopics(p.id).length;
   return '<button type="button" class="pack-card' + (own ? ' own' : '') + '" data-act="pack" data-id="' + p.id + '" aria-label="' + esc(p.name) + (own ? ', unlocked' : ', locked, ' + p.price + ' rupees') + '">' +
     '<span class="pack-ico">' + (own ? p.emoji : LOCK_SVG) + '</span><span class="grow"><span class="pack-name">' + esc(p.name) + '</span>' +
-    '<span class="pack-sub">' + (own ? (n ? plural(n, 'paper') + ' below' : 'Downloading…') : esc(p.sub)) + (p.live || PLAY ? '' : ' · not for sale yet') + '</span></span>' +
+    '<span class="pack-sub">' + (own ? (n ? plural(n, 'paper') + ' below' : 'Downloading…') : esc(String(p.sub).replace(/ · /g, ', '))) + (p.live || PLAY ? '' : ', not for sale yet') + '</span></span>' +
     (own ? '<span class="chip ok">Unlocked</span>' : '<span class="pack-price">' + rupees(p.price) + '</span>') + '</button>';
 }
 /* the topics of the packs he has, on the Topics page */
@@ -7963,7 +7963,7 @@ SCREENS.pack = function (p) {
   var k = packById(p.id), u = user, pay = CONFIG.PAY, html, link;
   if (!k || (PLAY && !canSeePack(u, k.id))) return '<div class="page bg-profile">' + subHead('Unlock') + '<div class="empty"><div class="empty-t">This pack is not available.</div></div></div>';
   html = '<div class="page bg-profile">' + subHead('Unlock') + '<div class="pack-hero"><div class="pack-hero-ico">' + k.emoji + '</div>' +
-    '<div class="pack-hero-name">' + esc(k.name) + '</div><div class="small muted">' + esc(k.sub) + '</div><div class="pack-hero-price">' + rupees(k.price) + '</div></div>' +
+    '<div class="pack-hero-name">' + esc(k.name) + '</div><div class="small muted">' + esc(String(k.sub).replace(/ · /g, ', ')) + '</div><div class="pack-hero-price">' + rupees(k.price) + '</div></div>' +
     '<div class="card"><div class="card-title">What you get</div><ul class="pack-list">' + k.items.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
   if (canSeePack(u, k.id)) return html + '<div class="alert info">You have this pack. Its papers are on the Topics page.</div></div>';
   if (!signedUser(u)) {

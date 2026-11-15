@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.24.0)
+# IOPET design rules (v3, 3.26.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -478,8 +478,8 @@ cards and sections. CI now measures that geometry on every push. The quiz's chos
 Next (each step a release, before/after in both looks, the walk after each):
 
 1. One header for the four tabs (the owner's Zone 1: still while the tabs change): its contents need the owner's word.
-2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics like the Courses tab (subject strip, one card
-   height, the path), Home's one card with its action inside, the You tab's stat cards.
+2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics done in 3.26.0 (§12.10); next the chapter page
+   like Brilliant's course page, Home's one card with its action inside, the You tab's stat cards.
 3. Line icons onto three sizes (§12.9 L1); squircle corners (approved earlier, not built).
 
 (3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
@@ -581,7 +581,7 @@ pressed is dimmed to 50 %.
 ### 12.8 Levels of importance (one logic, every page)
 
 1. Primary: the page's title (28 px on a tab, 24 px beside the back button), the one orange button.
-2. Secondary: card titles (17 px bold), the second button (a line), `--ink` words.
+2. Secondary: card titles (17 px bold; a chapter on Topics 20 px, §12.10), the second button (a line), `--ink` words.
 3. Tertiary: `--ink2` words, text actions, section labels (14 px semibold).
 4. Decoration: `--ink-deco`, pictures, glows; never needed to understand the page.
 
@@ -602,3 +602,31 @@ pressed is dimmed to 50 %.
 | Low L2 | tab tops: Home 20 px, Progress 28 px, You 24 px, Topics none | next: one header for the four tabs |
 | Low L3 | corners 16 / 18 / 24 | kept: they grow with the box |
 | Consistent already | side margins 24 on every page; every button 56 px with 16 px corners; dialog pairs in the phone's order | kept, and now guarded by CI |
+
+### 12.10 Topics: only the syllabus (3.26.0)
+
+The owner's brief (15 Nov 2026): the page shows only the syllabus, with no frames, lines or extra colours, and every
+word sits on its own level. Checked against Brilliant's Courses tab (14 pictures and 2 recordings the owner sent).
+
+| Level | On Topics | Size / weight / colour |
+|---|---|---|
+| Display | the subject's name (मानसिक योग्यता) | 28 / 700 / `--ink` |
+| Card title | a chapter's Hindi name | 20 / 700 / `--ink` |
+| Subtitle | the subject's one sentence | 17 / 400 / `--ink3`, written to fit two lines from 320 to 412 px |
+| Small title | the pack's name | 15 / 700 / `--ink` |
+| Label | a chapter's English name (600); the pack's line (400) | 14 / `--ink3` |
+| Caps | the exam above the subject (NMMS BIHAR) | 12 / 700 / `--ink3`, capitals |
+
+The step from the subject (28) to a chapter (20) is 1.4x, so the subject leads and each chapter reads as one item of it.
+The English name is a label above the Hindi one (bold and grey), not body text.
+
+Cards: one height (120 px), a 72 px picture, no frame, no lip, no tint, no shadow; the pack card the same. Where a
+chapter stands is told by its own bar (on the way) or by one mark in the top right corner: the green seal (passed), a
+lock (waits for a free place), a clock (questions to come). The names keep clear of the mark.
+
+Taken from Brilliant: the label above the title, one card height, the mark in the corner, the big step from the
+subject to its chapters, the line joining the cards. Not taken: the frame and lip of each card (the owner: no frames),
+the course colour behind the header (no extra colours), the pinned subject strip (one subject is open; pinning costs
+about 120 px at every scroll, so it comes when the SAT subjects open), the "..." cut of a long sentence (ours is
+written to fit).
+
