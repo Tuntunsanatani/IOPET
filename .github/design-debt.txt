@@ -38,6 +38,5 @@ rawSize   .pack-ico { font-size:21px }
 rawSize   .pr-big { font-size:64px }
 rawSize   .prof-avatar { font-size:36px }
 rawSize   .sk-n { font-size:72px }
-rawSize   .step-btn { font-size:20px }
 rawSize   .topic-emoji-big { font-size:24px }
 rawTime   input:-webkit-autofill { transition:background-color 99999s ease-out 0s }

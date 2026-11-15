@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.28.0)
+# IOPET design rules (v3, 3.29.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -69,8 +69,9 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
   told by more than a line.
 - State colours replace the grey, never add to it: right `--good`, wrong `--field-bad` (a quieter red
   than `--wrong`), current or on `--primary`.
-- No glow anywhere. A shadow only in light, and only under a card or an option (`--shadow-1`, `--shadow-2`);
-  no button has one (3.22.0: the second button, the round buttons and the course pill had).
+- No glow anywhere. No shadow on a page in either look (3.29.0: `--shadow-1` and `--shadow-2` are `none` on light
+  too; a panel is its colour and its faint line, §12.13); no button has one (3.22.0: the second button, the round
+  buttons and the course pill had).
 
 **Sizes.**
 
@@ -228,8 +229,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 - Radius, one family: 12 (`--r-sm`, a small thing inside a control), 16 (`--r-btn`, every control: buttons and, since
   3.21.0, fields, which had 14), 18 (`--r-md`, options, rows, review cards), 24 (`--r-lg`, cards, panels, sheets),
   32 (`--r-xl`, the hero card), pill for chips, tags, handles and bars.
-- Depth comes from a 3–5 px darker bottom lip on pressable things (buttons, path panels). Pressing
-  sinks it (translateY 3 px, lip 1 px). There are no drop shadows in dark.
+- Depth comes from a 3–5 px darker bottom lip on pressable things (buttons). Pressing
+  sinks it (translateY 3 px, lip 1 px). There are no drop shadows on a page, in either look (3.29.0, §12.13);
+  only what floats over the page (a sheet, the busy card) casts one.
 - Touch targets are ≥ 44 × 44 px (`--tap`). 3.22.0: the segment buttons (37), text links (40) and "Why?" (40) are 44 now.
 
 ## 5. Buttons (the ladder)
@@ -481,6 +483,8 @@ Next (each step a release, before/after in both looks, the walk after each):
 2. Each page against the owner's Brilliant pictures (14 Nov 2026): Topics done in 3.26.0 (§12.10), the chapter page in
    3.27.0 (§12.11), Home in 3.28.0 (§12.12); next the You tab's stat cards.
 3. Line icons onto three sizes (§12.9 L1); squircle corners (approved earlier, not built).
+4. 3.29.0, the owner's UI/UX Phase 1: the icons and the panels (§12.13). Typography (Phase 1, priority 3) waits for
+   the owner's word on these two.
 
 (3.23.1: every bar, track, switch and the bar's pill take the pill corner, small tiles the small one; the switch's knob,
 the message and the glyph on the red mark take their colours from tokens. Nothing looks different: 26 pictures of nine
@@ -620,8 +624,9 @@ word sits on its own level. Checked against Brilliant's Courses tab (14 pictures
 The step from the subject (28) to a chapter (20) is 1.4x, so the subject leads and each chapter reads as one item of it.
 The English name is a label above the Hindi one (bold and grey), not body text.
 
-Cards: one height (120 px), a 72 px picture, no frame, no lip, no tint, no shadow; the pack card the same. Where a
-chapter stands is told by its own bar (on the way) or by one mark in the top right corner: the green seal (passed), a
+Cards: one height (120 px), a 72 px picture, no lip, no tint, no shadow; the pack card the same. 3.29.0: the faint
+line every panel has (§12.13; the owner's later brief, one panel look on every page). Where a
+chapter stands is told by its own bar (on the way) or by one mark in the top right corner: the green tick (passed), a
 lock (waits for a free place), a clock (questions to come). The names keep clear of the mark.
 
 Taken from Brilliant: the label above the title, one card height, the mark in the corner, the big step from the
@@ -651,13 +656,13 @@ as points on one line, and the action pinned at the bottom.
 From the owner's Brilliant Home pictures: the counts at the top, the course in the middle with its picture big, and
 one card at the bottom holding the next steps and the button. IOPET's page, top to bottom:
 
-- Two counts, each a pill (surface, no frame), 44 px tall: the streak (the flame lit once today's set is done) on the
+- Two counts, each a pill (surface, the panel's faint line since 3.29.0), 44 px tall: the streak (the flame lit once today's set is done) on the
   left, the XP of the last 7 days on the right. A tap opens Progress, where both are explained.
 - The nudges that matter (storage blocked, confirm your email, back up a guest's progress) under them, as before.
 - Today's chapter, centred, in the free space: its picture (160 px, smaller on shorter phones, see below), the English
   name a 14 px grey label, the Hindi name 28 px. A tap opens the chapter's page.
 - One grey line only when something is at stake: "Practise today to keep your 3-day streak."
-- The card (surface, 24 px corners, no frame): the Mark as on the chapter page (the orange point, MARK 1, Learn, what
+- The card (surface, 24 px corners, the panel's faint line since 3.29.0): the Mark as on the chapter page (the orange point, MARK 1, Learn, what
   it asks), the bar once started, and the button inside (Start or Continue), in the thumb's reach.
 - Done for today: the lit flame, "Today's practice done", when to come back; "Practice more" as a quiet link where the
   button was, so nothing starts by mistake.
@@ -672,3 +677,52 @@ on 390 x 844 and 360 x 640.
 
 Not taken: the course carousel (one chapter is today's; the others are on Topics), keys and leagues (IOPET has none).
 
+### 12.13 Icons and panels (3.29.0, the owner's UI/UX Phase 1)
+
+The owner's brief (15 Nov 2026): every icon precise and consistent, with Brilliant's drawings as the reference (no
+cheap, cartoon or decorative look); and panels that sit in the page, about 5–6 % apart in brightness, with their grey
+lines kept faint, on every page.
+
+**Drawings** (chapters, subjects, the stat and achievement pictures, the pack): drawn in a 64 box, by five rules
+(written at `FLAT` in `index.html`):
+
+1. A solid is one flat face over its side: the same shape `IC_D` = 4 units lower, in the darker tone of its colour. A
+   part 8 units across or less (a bead, a bubble, a pivot) stands `IC_DS` = 2 off. Before: depths of 1.5 to 5.
+2. No shine (the white blobs on the flame, star, target, medal, moon, shield, tick, bulb, globe), no gradient, no soft
+   ground under a drawing.
+3. Colours: the theme's grey body and one accent: the flame (orange) for the course, the streak and what a chapter
+   asks; gold for something earned; green only for right and safe. Gold's side is a clear deeper gold (`#D99E0B`), not
+   the olive it was. On light, paper is neutral grey (it was the only warm grey in that look).
+4. Marks drawn on a solid (letters, a tick, a bull's-eye, the compass needle, the ring on the calendar) are flat.
+5. One drawing, one meaning. The achievements had the flag twice, the star three times and the flame twice; now each
+   has its own: flag, pencil, trophy, bolt, target, crown, flame, torch, star, medal, sun, moon. The pack is a drawing
+   (papers with a passed mark), not the 📝 emoji.
+
+**Line icons** (`li()`, the bottom bar): 24 grid, 2 units of stroke, round ends and joins, at 24 / 20 / 16 px. Fixed:
+Settings showed rays round a ring (it read as the sun, the Light look), now a six-tooth cog; the book read as a tablet,
+now a closed book with its pages (Course, Terms, the Topics tab); the Progress tab's bars were 2.4, now 2; the ticket's
+dotted line was noise at 16 px. Letters used as icons are line icons now: the stepper's − and +, the week's ▲ ▼, the
+serif italic "i" on Topics.
+
+**Status marks are solid, things to tap are lines.** Passed: a green disc with a dark tick, the same mark as a right
+answer in a set and on Progress (the toothed seal was the one decorated mark). Locked: one solid lock, the same on a
+chapter and on a pack. The streak's flame has one rule on Home and on Progress: lit once today's practice is done,
+grey until then (Progress showed it lit at 0 days).
+
+**Panels**: one look on every page, in both looks: the panel colour, a 1 px `--line`, no shadow.
+
+| | Ground | Panel | Lightness apart (CIELAB L*) | Line |
+|---|---|---|---|---|
+| Light | `#F2F2F2` (95.5) | `#FFFFFF` (100) | 4.5 | `#E3E3E3` (90.2) |
+| Dark | `#141414` (6.3) | `#1E1E1E` (11.3) | 4.9 | `#262626` (15.2) |
+
+Measured before 3.29.0: on light the panel was already 4.5 apart, but every panel cast two shadows that darkened the
+ground round it to 225–240 (7–10 % below the ground); that halo, not the white, made the panels jump. Dark had two panel
+tones (`#191919` on most pages, 2.4 apart; `#1E1E1E` on Topics, 4.9). Now: no shadow on a page (only a sheet or the busy
+card, which float, cast one); one panel tone, about 5 apart in both looks; the same faint line on the panels that had
+none (Topics' chapters and pack, Home's pills and card), on the goal card (it had the control's darker line) and on
+notices (they had the control's line or no fill). The chosen segment of a switch row carries the panel's line instead
+of a shadow. Achievement cards are a column from the top, so the drawings of a row, and their bars, stand on one line.
+
+Not taken: Brilliant's white page with white cards (the owner asked for a small step, not none) and its bottom lip on
+each card (the owner: no frames on Topics; the lip stays for things to press).

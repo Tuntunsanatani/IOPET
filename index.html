@@ -48,7 +48,7 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
-  --bg:#141414;--bg-deep:#0E0E0E;--surface:#191919;--surface-2:#282828;--surface-3:#323232;
+  --bg:#141414;--bg-deep:#0E0E0E;--surface:#1E1E1E;--surface-2:#282828;--surface-3:#323232;
   --line:#262626;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#A0A0A0;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
@@ -82,10 +82,10 @@
   --green:var(--good);--amber:var(--ink2);--red:var(--wrong-ink);--blue:#8CC4FF;--orange:var(--primary);
   --ok-bg:var(--good-soft);--ok-line:#1F5A47;--ok-ink:var(--good-ink);--ok-lip:transparent;
   --bad-bg:var(--wrong-soft);--bad-line:#6B2A27;--bad-ink:var(--wrong-ink);--bad-lip:transparent;
-  --warn-bg:#262626;--warn-line:var(--line-2);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own */
-  --info-bg:transparent;--info-line:var(--line);--info-ink:var(--ink2);
+  --warn-bg:var(--surface);--warn-line:var(--line);--warn-ink:var(--ink);   /* a warning or an info box has no hue of its own; 3.29.0 a panel like any other */
+  --info-bg:var(--surface);--info-line:var(--line);--info-ink:var(--ink2);
   --pur-bg:var(--primary-soft);--pur-line:var(--line-2);
-  --nav:#141414;--nav-0:rgba(20,20,20,0);--flash:#FFFFFF;--flash-glow:rgba(255,255,255,.55);--lock:#B4B4B4;--lock-hi:#FFFFFF;--navsel:#2C2C2C;--pn:#1E1E1E;--pn-line:#2E2E2E;
+  --nav:#141414;--nav-0:rgba(20,20,20,0);--flash:#FFFFFF;--flash-glow:rgba(255,255,255,.55);--lock:#B4B4B4;--lock-hi:#FFFFFF;--navsel:#2C2C2C;--pn:var(--surface);--pn-line:var(--line);
   --pn-on:#241D12;--pn-on-line:#4A3A1F;   /* a chapter on the go or passed: a faint warmth of the flame on its panel */
   --ripple:rgba(255,255,255,.14);--tap-line:var(--primary);--tap-tint:rgba(255,159,10,.14);--tap-ring:rgba(255,159,10,.34);   /* a touch on a chapter: the course colour (green is for "right") */
   --modal:var(--surface);--scrim:rgba(0,0,0,.66);--toast:#2A2A2A;--shadow:rgba(0,0,0,.5);
@@ -140,19 +140,18 @@
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
   --t-violet:#F2F2F2;--t-blue:#F2F2F2;--t-teal:#F2F2F2;--t-green:#F2F2F2;--t-pink:#F2F2F2;--t-yellow:#F2F2F2;--t-orange:#F2F2F2;
-  --shadow-1:0 1px 2px rgba(20,20,20,.04),0 6px 20px rgba(20,20,20,.06);
-  --shadow-2:0 2px 6px rgba(20,20,20,.05),0 18px 40px rgba(20,20,20,.09);
+  --shadow-1:none;--shadow-2:none;   /* 3.29.0 as on dark: a panel is its white and its faint line; the shadow only darkened the page round it (to 7–10 % below the ground) */
   --shadow-cta:0 4px 0 #C77700;
   --shadow-nav:0 14px 34px rgba(20,20,20,.13),0 2px 6px rgba(20,20,20,.05);
   --shadow-sheet:0 -10px 40px rgba(20,20,20,.10);
   --purple-dark:#A35200;
   --green:var(--good-ink);--red:var(--wrong-ink);--blue:#1F58CC;--orange:var(--primary-ink);
-  --ok-line:#B4E6D3;--bad-line:#F5C2BD;--warn-bg:var(--surface-2);--warn-line:var(--line-2);--warn-ink:var(--ink);--info-bg:var(--surface-2);--info-line:var(--line-2);--info-ink:var(--ink2);--pur-line:var(--line-2);
-  --nav:#F2F2F2;--nav-0:rgba(242,242,242,0);--flash:#141414;--flash-glow:rgba(20,20,20,.16);--lock:#141414;--lock-hi:#FF9F0A;--navsel:#E3E3E3;--pn:#FFFFFF;--pn-line:#E3E3E3;--pn-on:#FFF6E8;--pn-on-line:#F5D3A3;
+  --ok-line:#B4E6D3;--bad-line:#F5C2BD;--warn-bg:var(--surface);--warn-line:var(--line);--warn-ink:var(--ink);--info-bg:var(--surface);--info-line:var(--line);--info-ink:var(--ink2);--pur-line:var(--line-2);
+  --nav:#F2F2F2;--nav-0:rgba(242,242,242,0);--flash:#141414;--flash-glow:rgba(20,20,20,.16);--lock:#141414;--lock-hi:#FF9F0A;--navsel:#E3E3E3;--pn:var(--surface);--pn-line:var(--line);--pn-on:#FFF6E8;--pn-on-line:#F5D3A3;
   --ripple:rgba(20,20,20,.09);--tap-line:var(--primary);--tap-tint:rgba(255,159,10,.10);--tap-ring:rgba(255,159,10,.26);--scrim:rgba(20,20,20,.40);--toast:#141414;--shadow:rgba(20,20,20,.14);
   --glow-a:rgba(255,159,10,.14);--glow-b:rgba(255,216,77,.12);--glow-c:rgba(255,159,10,.10);
   --bar:#F2F2F2;
-  --ic-p:#FFFFFF;--ic-ps:#CFCABC;--ic-pes:#8E8E8E;--ic-pef:#E6E2D6;--ic-pedge:#B8B3A6;
+  --ic-p:#FFFFFF;--ic-ps:#CFCFCF;--ic-pes:#8E8E8E;--ic-pef:#E4E4E4;--ic-pedge:#B5B5B5;   /* 3.29.0 neutral: the light look has no warm grey */
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -259,6 +258,7 @@ sub,sup{font-size:.72em;line-height:0}
 .auth-switch .link{font-size:inherit;font-weight:700;padding:12px 4px}   /* inside a sentence: the sentence's size, bold; still 44 px to touch (3.22.0) */
 .link.block{display:block;width:100%;text-align:center}
 .pbar{height:8px;background:var(--fill-2);border-radius:var(--r-pill);overflow:hidden}
+.li.trend{margin:-2px 4px 0 0}   /* 3.29.0 the week-on-week arrow before its words */
 .pbar>i{display:block;height:100%;border-radius:var(--r-pill);background:var(--primary)}
 .pbar.thin{height:6px;margin-top:8px}
 .icon-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
@@ -562,7 +562,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .hero-art{flex:none;margin:-8px -8px 0 8px}
 .hero-art .chi{width:104px;height:104px}
 .hero-emoji{display:block;font-size:56px;line-height:1}
-.hero-emoji,.topic-emoji-big,.pack-hero-ico{filter:grayscale(1);opacity:.85}   /* 3.10.0 a picture without a meaning carries no hue */
+.hero-emoji,.topic-emoji-big{filter:grayscale(1);opacity:.85}   /* 3.10.0 a picture without a meaning carries no hue */
 .hero-meta{display:flex;align-items:center;margin-top:16px;font-size:var(--fs-sm);font-weight:600;color:var(--ink2)}
 .hero-meta .li{margin-right:8px}
 .hero-prog{display:flex;align-items:center;margin-top:16px}
@@ -935,27 +935,27 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .toggle.on:after{transform:translateX(20px)}
 .seg{display:flex;background:var(--fill);border-radius:var(--r-md);padding:4px}
 .seg-btn{flex:1;display:flex;align-items:center;justify-content:center;min-height:var(--tap);padding:0 4px;border-radius:calc(var(--r-md) - 4px);font-size:var(--fs-xs);font-weight:700;text-align:center;color:var(--ink2);transition:background-color var(--t-state) var(--ease-swift)}   /* 3.22.0 44 px to touch (it was 37) */
-.seg-btn.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1)}
+.seg-btn.on{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}   /* 3.29.0 the chosen part: a panel's own line, not a shadow */
 .stepper{display:flex;align-items:center}
-.step-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:20px;font-weight:700;line-height:1;text-align:center}
+.step-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);color:var(--ink)}
 .step-btn:active{background:var(--surface-2)}
 .step-val{flex:1;text-align:center;font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700}
 .step-val small{display:block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;color:var(--cream60)}
-.goal-card{background:var(--pur-bg);border:1px solid var(--pur-line);border-radius:var(--r-lg);padding:16px}
+.goal-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
 .goal-exam{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;word-break:break-word}
 .goal-date{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px}
-.goal-countdown{display:flex;background:var(--surface);border-radius:var(--r-md);padding:12px 8px;margin-top:16px}
+.goal-countdown{display:flex;background:var(--fill);border-radius:var(--r-md);padding:12px 8px;margin-top:16px}
 .cd-cell{flex:1;text-align:center}
 .cd-num{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1}
 .cd-lbl{font-size:var(--fs-xs);font-weight:700;color:var(--cream60);margin-top:4px;letter-spacing:.6px}
 .ach-grid{display:grid;grid-template-columns:1fr 1fr;grid-gap:12px;gap:12px}
-.ach-card{display:block;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px 8px;text-align:center;transition:transform var(--t-press) var(--ease-swift)}
+.ach-card{display:flex;flex-direction:column;justify-content:flex-start;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px 8px;text-align:center;transition:transform var(--t-press) var(--ease-swift)}
 .ach-card:active{transform:scale(.98)}
 .ach-card.earned{background:var(--surface)}   /* 3.10.0 earned: the icon in full colour and an ink name; no violet frame */
 .ach-card.locked .ach-name{color:var(--ink3);font-weight:400}
 .ach-card.locked .ach-desc{color:var(--ink3)}
 .ach-card.locked .pbar{height:5px}
-.ach-card>span{display:block}
+.ach-card>span{display:block}   /* 3.29.0 a column from the top: the drawings of a row stand on one line (a button centred them by their text) */
 .ach-emoji{font-size:30px;line-height:1.2}
 .ach-card.locked .ach-emoji{opacity:.4;filter:grayscale(.9)}
 .ach-emoji .chi{margin:0 auto}
@@ -963,7 +963,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .ach-big.off .chi{opacity:.4;filter:grayscale(.9)}
 .ach-name{font-size:var(--fs-xs);font-weight:700;margin-top:8px}
 .ach-desc{font-size:var(--fs-xs);color:var(--cream60);margin-top:4px;line-height:1.35}
-.ach-card .pbar{margin-top:8px}
+.ach-card .pbar{margin-top:auto}   /* 3.29.0 the bars of a row on one line, at the foot */
+.ach-card.locked .ach-desc{margin-bottom:8px}
 .faq-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);margin-top:8px !important;overflow:hidden}
 .faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:var(--h-row);padding:12px 16px;font-size:var(--fs-xs);font-weight:700;line-height:1.4}
 .faq-chev{flex:none;margin-left:8px;color:var(--cream40);font-size:var(--fs-xs);transition:transform var(--t-state) var(--ease-swift)}
@@ -1137,7 +1138,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .mh-kick{display:flex;align-items:center;font-size:var(--fs-cap);font-weight:700;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
 .mh-title{font-size:var(--fs-3xl);font-weight:700;line-height:1.25;letter-spacing:-.2px;margin-top:16px}
 .mh-desc{font-size:var(--fs-lg);color:var(--ink3);line-height:1.45;margin-top:8px}
-.mh-info{flex:none;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;border:1.5px solid var(--line-2);color:var(--ink3);font-family:Georgia,serif;font-style:italic;font-size:var(--fs-xs);font-weight:700;line-height:21px;text-align:center;padding:0;position:relative}
+.mh-info{flex:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin:-4px 0 -4px 8px;border-radius:50%;color:var(--ink3);padding:0;position:relative}   /* 3.29.0 the line icon "info" (was a serif italic i in a ring) */
 .mh-info:before{content:'';position:absolute;top:-10px;right:-10px;bottom:-10px;left:-10px}
 .mh-info:active{background:var(--fill-2)}
 .lvl{margin-top:24px;padding:0 16px 0 0}
@@ -1327,7 +1328,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
 .pay-or{margin:8px 2px 0}.adm-sub{margin-top:16px}
-.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:0;box-shadow:none;border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
+.pack-card{display:flex;align-items:center;width:100%;background:var(--surface);border:1px solid var(--line);box-shadow:none;border-radius:var(--r-lg);padding:16px;margin-top:12px !important;text-align:left}
 .pack-card.own{border-style:solid;border-color:var(--line)}
 .pack-card:active{transform:scale(.98)}
 .pack-ico{flex:none;margin-right:12px;width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:21px;background:var(--pur-bg);color:var(--purple)}
@@ -1336,7 +1337,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pack-sub{display:block;font-size:var(--fs-sm);color:var(--ink3);line-height:1.4;margin-top:4px}
 .pack-price{flex:none;margin-left:8px;font-family:var(--font-display);font-size:var(--fs-lg);font-weight:700;color:var(--primary-ink)}
 .pack-hero{text-align:center;padding:8px 0 4px}
-.pack-hero-ico{font-size:40px;line-height:1.2}
+.pack-hero-ico .chi{display:block;margin:0 auto}   /* 3.29.0 the pack's drawing (was an emoji) */
 .pack-hero-name{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;margin-top:4px !important}
 .pack-hero-price{display:inline-block;margin-top:8px !important;background:var(--primary-soft);color:var(--primary-ink);border-radius:var(--r-pill);padding:4px 16px;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;box-shadow:0 3px 0 var(--brand-lip)}   /* 3.10.0 violet text, 7.2:1 (white on violet was 3.1:1) */
 .pack-list{margin:8px 0 0;padding-left:20px;font-size:var(--fs-xs);line-height:1.6;color:var(--ink2)}
@@ -1374,10 +1375,10 @@ a.link{text-decoration:none}
 .page.home.hm{display:flex;flex-direction:column;padding-bottom:calc(112px + env(safe-area-inset-bottom))}   /* the bar (94) and 16 */
 .hm>*+*{margin-top:var(--sp-grp)}
 .hm-top{display:flex;justify-content:space-between;align-items:center}
-.hm-pill{display:inline-flex;align-items:center;height:var(--tap);padding:0 16px 0 12px;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);font-size:var(--fs-lg);font-weight:700}
+.hm-pill{display:inline-flex;align-items:center;height:var(--tap);padding:0 16px 0 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);color:var(--ink);font-size:var(--fs-lg);font-weight:700}
 .hm-pill .chi{display:block;width:24px;height:24px;margin-right:8px}
-.hm-pill .chi.off{filter:grayscale(1);opacity:.55}
-[data-theme="light"] .hm-pill .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
+.chi.off{filter:grayscale(1);opacity:.55}   /* 3.29.0 one rule for the flame, on Home and on Progress: lit once today's practice is done, grey until then */
+[data-theme="light"] .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
 .hm-u{font-size:var(--fs-sm);font-weight:600;color:var(--ink3);margin-left:4px}
 .hm-pill:active{transform:scale(.96)}
 .hm-mid{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;padding:24px 0;background:none;border:0;color:var(--ink);text-align:center}
@@ -1390,7 +1391,7 @@ a.link{text-decoration:none}
 .hm-mid:active .hm-art{transform:scale(.97)}
 .hm-art{transition:transform var(--t-press) var(--ease-swift)}
 .hm-line{font-size:var(--fs-md);color:var(--ink2);text-align:center}
-.hm-card{background:var(--surface);border-radius:var(--r-lg);padding:24px}
+.hm-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
 .hm-row{display:flex;align-items:flex-start}
 .hm-dot{background:var(--primary);color:var(--on-mark)}
 .hm-card .ch-prog{margin-top:16px}
@@ -1401,7 +1402,7 @@ a.link{text-decoration:none}
 @media (max-height:600px){.hm-art,.hm-en,.hm .nudge~.hm-line{display:none}.hm-name{margin-top:0}}   /* a short phone keeps the card and its button above the bar */
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
 .path .ch-panel{position:relative;display:flex;align-items:center;min-height:120px;border-radius:var(--r-lg);
-  background:var(--surface);border:0;box-shadow:none}   /* 3.26.0 only the syllabus: no frame, no lip; every card the same height */
+  background:var(--surface);border:1px solid var(--line);box-shadow:none}   /* 3.26.0 only the syllabus: no lip; every card the same height. 3.29.0 the faint line every panel has */
 .path .ch-panel:first-child{margin-top:0 !important}
 .path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-24px;width:2px;height:24px;margin-left:-1px;background:var(--line)}
 .path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
@@ -1476,11 +1477,11 @@ a.link{text-decoration:none}
           <span class="nav-lbl">Home</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="topics">
-          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></span>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18.5V6a2.5 2.5 0 0 1 2.5-2.5H19v17H7.5a2.5 2.5 0 0 1 0-5H19"/></svg></span>
           <span class="nav-lbl">Topics</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="progress">
-          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></span>
+          <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></span>
           <span class="nav-lbl">Progress</span>
         </button>
         <button class="nav-item" data-act="tab" data-tab="profile">
@@ -2383,32 +2384,38 @@ var IC = {
 };
 /* FLAT (3.10.0): a face is one flat colour over its darker side, as in Brilliant's drawings. The 3.9.0 gloss (a gradient from
    the light tone down, and a shine bar on every block) read as plastic, and its light top fell under 3:1 on the light plate.
-   Only the soft ground an icon stands on is defined once for the page (ICON_DEFS, put in by the app at start). */
+   3.29.0 THE DRAWING RULES (the owner's icon brief, Brilliant's drawings as the reference):
+   1. a solid is one flat face over its side: the same shape, IC_D (4) units lower, in the darker tone of the same colour.
+      A small part (8 units across or less: a bead, a bubble, a pivot) stands IC_DS (2) off. No other depth anywhere.
+   2. no shine (no white blobs), no gradient, no soft ground under a drawing: the drawing sits on the page like the text does.
+   3. colours: the theme's grey body, and ONE accent — the flame (orange) for the course, the streak and what a chapter asks;
+      gold for something earned; green only for "right" / "safe". Paper only where the thing is paper (a page, a card).
+   4. marks drawn ON a solid (letters, a tick, a bull's-eye, an inlay) are flat: no side of their own.
+   5. one drawing, one meaning: no two achievements share a drawing. */
 function icFill(fill) {
   return fill.charAt(0) === '.' ? ' class="' + fill.slice(1) + '"' : ' fill="' + fill + '"';
 }
-var ICON_DEFS = (function () {
-  var g = '';
-  g += '<radialGradient id="icg-ground"><stop offset="0" stop-color="#15132B" stop-opacity=".22"/><stop offset="1" stop-color="#15132B" stop-opacity="0"/></radialGradient>';
-  return '<svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"><defs>' + g + '</defs></svg>';
-})();
 function icR(x, y, w, h, r, fill, extra) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + r + '"' + icFill(fill) + (extra || '') + '/>'; }
 function icC(cx, cy, r, fill, extra) { return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '"' + icFill(fill) + (extra || '') + '/>'; }
 function icP(d, fill, extra) { return '<path d="' + d + '"' + icFill(fill) + (extra || '') + '/>'; }
-/* the soft shadow an icon stands on */
-var IC_GROUND = '<ellipse cx="32" cy="61.5" rx="22" ry="3" fill="url(#icg-ground)"/>';
-/* a block: its side (the darker copy, d lower) and its flat face (3.10.0: no shine bar) */
-function icBlk(x, y, w, h, r, c, d) {
+/* 3.29.0 the one depth (rule 1): IC_D for a part, IC_DS for a small one (8 units across or less); icSide() is the same as a
+   transform, for the drawn paths */
+var IC_D = 4, IC_DS = 2;
+function icDep(size) { return size < 9 ? IC_DS : IC_D; }
+function icSide(size) { return ' transform="translate(0 ' + icDep(size === undefined ? 99 : size) + ')"'; }
+/* a block: its side (the darker copy, one depth lower) and its flat face (3.10.0: no shine bar). The old last argument (each
+   drawing's own depth, 1.5 to 5) is not read any more: the depth comes from the size */
+function icBlk(x, y, w, h, r, c) {
   var s = c === 'paper' ? '.ps' : c.s, f = c === 'paper' ? '.p' : c.f;
-  return icR(x, y + d, w, h, r, s) + icR(x, y, w, h, r, f);
+  return icR(x, y + icDep(Math.max(w, h)), w, h, r, s) + icR(x, y, w, h, r, f);
 }
-function icDisc(cx, cy, r, c, d) { return icC(cx, cy + d, r, c === 'paper' ? '.ps' : c.s) + icC(cx, cy, r, c === 'paper' ? '.p' : c.f); }
+function icDisc(cx, cy, r, c) { return icC(cx, cy + icDep(2 * r), r, c === 'paper' ? '.ps' : c.s) + icC(cx, cy, r, c === 'paper' ? '.p' : c.f); }
 function icT(x, y, t, size, fill, weight) {
   return '<text x="' + x + '" y="' + y + '" dy=".36em" text-anchor="middle" font-size="' + size + '" font-weight="' + (weight || 900) + '"' +
     (fill.charAt(0) === '.' ? ' class="' + fill.slice(1) + '"' : ' fill="' + fill + '"') + '>' + t + '</text>';
 }
 function icPerson(cx, top, c) {        /* a person seen from the front: head and shoulders */
-  return icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.s, ' transform="translate(0 3)"') +
+  return icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.s, icSide()) +
     icP('M' + (cx - 10) + ' ' + (top + 25) + 'v-3a10 8 0 0 1 20 0v3z', c.f) + icDisc(cx, top + 6.5, 6, c, 3);
 }
 /* THE BODY OF A DRAWING (3.10.0): the brand is matte grey and the diya's flame, so a drawing's body is grey and only its one idea
@@ -2437,13 +2444,13 @@ var ICONS = (function () {
     ab: function () {
       return icBlk(5, 31, 24, 24, 5, V, 5) + icT(17, 43, 'A', 16, '@vg') +
         icBlk(35, 31, 24, 24, 5, V, 5) + icT(47, 43, 'B', 16, '@vg') +
-        '<g transform="translate(0 5)"><g transform="rotate(-8 32 19)">' + icR(20, 6, 24, 24, 5, G.s) + '</g></g>' +
+        '<g' + icSide() + '><g transform="rotate(-8 32 19)">' + icR(20, 6, 24, 24, 5, G.s) + '</g></g>' +
         '<g transform="rotate(-8 32 19)">' + icR(20, 6, 24, 24, 5, G.f) + icT(32, 18, 'C', 16, GI) + '</g>';
     },
     /* Classification — three alike, the odd one gold */
     cl: function () {
       return icDisc(17, 18, 10, V, 3.5) + icDisc(45, 18, 10, V, 3.5) + icDisc(17, 45, 10, V, 3.5) +
-        icP('M45 30.5L57.5 51.5H32.5Z', G.s, ' transform="translate(0 3.5)" stroke="' + G.s + '" stroke-width="3" stroke-linejoin="round"') +
+        icP('M45 30.5L57.5 51.5H32.5Z', G.s, icSide() + ' stroke="' + G.s + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M45 30.5L57.5 51.5H32.5Z', G.f, ' stroke="' + G.f + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M56 27l3-3M58.5 33h3.5M51 24.5l.5-4', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"');
     },
@@ -2460,7 +2467,7 @@ var ICONS = (function () {
     /* Analogy — a balanced scale, small : big on one pan, small : ? on the other ("the same relation on both sides", for
        number, letter and word analogies alike); the answer gold. No digits: they were 5 px at 40 px */
     an: function () {
-      var pan = function (x) { var d = 'M' + x + ' 33h28c0 5-6 8.5-14 8.5S' + x + ' 38 ' + x + ' 33z'; return icP(d, V.s, ' transform="translate(0 3)"') + icP(d, V.f); };
+      var pan = function (x) { var d = 'M' + x + ' 33h28c0 5-6 8.5-14 8.5S' + x + ' 38 ' + x + ' 33z'; return icP(d, V.s, icSide()) + icP(d, V.f); };
       return icR(29, 42, 6, 12, 2, V.s) + icBlk(19, 53, 26, 5, 2.5, V, 3) +
         icBlk(10, 39, 44, 5.5, 2.75, V, 3) + icDisc(32, 41.7, 3.6, 'paper', 1.5) +
         pan(2) + pan(34) +
@@ -2478,7 +2485,7 @@ var ICONS = (function () {
     cd: function () {
       return icBlk(4, 5, 21, 21, 5, 'paper', 4) + icT(14.5, 15.5, 'A', 14, V.s) + arrowR(28, 15.5, 7) +
         icBlk(39, 5, 21, 21, 5, G, 4) + icT(49.5, 15.5, 'D', 14, GI) +
-        icC(17, 47, 10.5, V.s) + icR(24, 43.5, 34, 9, 3, V.s) + icR(46, 48, 5, 9.5, 1.5, V.s) + icR(53, 48, 5, 7.5, 1.5, V.s) +
+        icC(17, 48, 10.5, V.s) + icR(24, 44.5, 34, 9, 3, V.s) + icR(46, 49, 5, 9.5, 1.5, V.s) + icR(53, 49, 5, 7.5, 1.5, V.s) +
         icC(17, 44, 10.5, V.f) + icR(24, 40.5, 34, 9, 3, V.f) + icR(46, 45, 5, 9.5, 1.5, V.f) + icR(53, 45, 5, 7.5, 1.5, V.f) +
         icC(16, 44, 4, V.d);
     },
@@ -2508,19 +2515,19 @@ var ICONS = (function () {
       o += icR(6, 9, 7, 38, 2, V.s) + icR(51, 9, 7, 38, 2, V.s) + icR(7.5, 9, 5.5, 38, 2, V.f) + icR(51, 9, 5.5, 38, 2, V.f) +
         icBlk(4, 5, 56, 7, 3, V, 3.5) + icBlk(4, 44, 56, 7, 3, V, 3.5);
       for (i = 0; i < 3; i++) for (k = 0; k < 4; k++)
-        o += icC(rows[i][k], ry[i] + 1.5, 3.7, i === 1 ? G.s : V.s) + icC(rows[i][k], ry[i], 3.7, i === 1 ? G.f : V.f);
+        o += icC(rows[i][k], ry[i] + IC_DS, 3.7, i === 1 ? G.s : V.s) + icC(rows[i][k], ry[i], 3.7, i === 1 ? G.f : V.f);
       return o;
     },
     /* Direction sense — the compass on a four-point rose (so its outline is not a plain disc); the north needle gold */
     di: function () {
       var rose = 'M32 1L38.5 23.5L61 30L38.5 36.5L32 59L25.5 36.5L3 30L25.5 23.5Z';
-      return icP(rose, V.d, ' transform="translate(0 3)"') + icP(rose, V.s) +
+      return icP(rose, V.d, icSide()) + icP(rose, V.s) +
         icDisc(32, 30, 21, V, 3.5) + icC(32, 30, 15.5, '.p') +
-        icP('M32 16.5l5 13.5h-10z', G.s, ' transform="translate(0 1.5)"') + icP('M32 16.5l5 13.5h-10z', G.f) + icP('M32 43.5l5-13.5h-10z', '.ps') + icC(32, 30, 3, V.s);
+        icP('M32 16.5l5 13.5h-10z', G.f) + icP('M32 43.5l5-13.5h-10z', '.ps') + icC(32, 30, 3, V.s);
     },
     /* Dictionary order — an open book from A to Z; the bookmark gold */
     dc: function () {
-      return icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.s, ' transform="translate(0 4)"') +
+      return icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.s, icSide()) +
         icP('M4 18q14-4 28 2q14-6 28-2v34q-14-4-28 2q-14-6-28-2z', V.f) +
         icP('M8 15q12-3 22 2v31q-10-4-22-1z', '.p') + icP('M56 15q-12-3-22 2v31q10-4 22-1z', '.p') +
         icT(18.5, 29, 'A', 14, V.s) + icT(45.5, 29, 'Z', 14, V.s) +
@@ -2531,25 +2538,25 @@ var ICONS = (function () {
        the gold arrow is the order itself. Few parts and big numerals, so it still reads at 40 px. */
     ws: function () {
       var bank = 'M3 45h58v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z', arc = 'M6 27C9 13 22 6 36 8', head = 'M30 2.5L36.5 8L30 13.5';
-      return icP(bank, V.s, ' transform="translate(0 3)"') + icP(bank, V.f) +
-        '<ellipse cx="12" cy="42.4" rx="5.2" ry="3.8" class="ps"/><ellipse cx="12" cy="41" rx="5.2" ry="3.8" class="p"/>' +
+      return icP(bank, V.s, icSide()) + icP(bank, V.f) +
+        '<ellipse cx="12" cy="43" rx="5.2" ry="3.8" class="ps"/><ellipse cx="12" cy="41" rx="5.2" ry="3.8" class="p"/>' +
         icP('M31 45V34', 'none', ' stroke="' + V.f + '" stroke-width="3.6" stroke-linecap="round"') +
         icP('M31 37c-1-5-5-8-10-7 0 5 4 8 10 7z', V.f) + icP('M31 35c1-5 5-8 10-7 0 5-4 8-10 7z', V.f) +
-        icR(49, 28, 6, 17, 3, V.f) + icC(47.5, 27.5, 6.5, V.s) + icC(56.5, 27.5, 6.5, V.s) + icC(52, 19.5, 8, V.s) +
+        icR(49, 28, 6, 17, 3, V.f) + icC(47.5, 29, 6.5, V.s) + icC(56.5, 29, 6.5, V.s) + icC(52, 21, 8, V.s) +
         icC(47.5, 25, 6.5, V.f) + icC(56.5, 25, 6.5, V.f) + icC(52, 17, 8, V.f) +
         icT(12, 51.5, '1', 10.5, '@vg') + icT(31, 51.5, '2', 10.5, '@vg') + icT(52, 51.5, '3', 10.5, '@vg') +
-        icP(arc, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" transform="translate(0 1.8)"') +
-        icP(head, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.8)"') +
+        icP(arc, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" transform="translate(0 ' + IC_DS + ')"') +
+        icP(head, 'none', ' stroke="' + G.s + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 ' + IC_DS + ')"') +
         icP(arc, 'none', ' stroke="' + G.f + '" stroke-width="4.4" stroke-linecap="round"') +
         icP(head, 'none', ' stroke="' + G.f + '" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"');
     },
     /* Calendar — a page with a violet header, the asked day ringed in gold; the folded corner keeps the outline off a plain square */
     ca: function () {
       var page = 'M14 9h36a7 7 0 0 1 7 7v30L45 58H14a7 7 0 0 1-7-7V16a7 7 0 0 1 7-7z', o, r, c;
-      o = icP(page, '.ps', ' transform="translate(0 4)"') + icP(page, '.p') + icP('M7 16a7 7 0 0 1 7-7h36a7 7 0 0 1 7 7v7H7z', V.f) +
+      o = icP(page, '.ps', icSide()) + icP(page, '.p') + icP('M7 16a7 7 0 0 1 7-7h36a7 7 0 0 1 7 7v7H7z', V.f) +
         icP('M57 46L45 58v-7a5 5 0 0 1 5-5z', '.ps');
       for (r = 0; r < 3; r++) for (c = 0; c < 4; c++) if (!(r === 2 && c === 3)) o += icR(13.5 + c * 10, 29 + r * 8, 6, 4.5, 1.3, r === 1 && c === 2 ? 'none' : '.pe-f');
-      return o + icC(36.5, 40.8, 6.4, 'none', ' stroke="' + G.s + '" stroke-width="3.2"') + icC(36.5, 39.3, 6.4, 'none', ' stroke="' + G.f + '" stroke-width="3.2"') + icC(36.5, 39.3, 2.6, G.s) +
+      return o + icC(36.5, 39.3, 6.4, 'none', ' stroke="' + G.f + '" stroke-width="3.2"') + icC(36.5, 39.3, 2.6, G.s) +
         icR(18, 4, 5, 11, 2.5, '.pe-s') + icR(41, 4, 5, 11, 2.5, '.pe-s');
     },
     /* Venn diagram — three thick violet rings; the part common to all three is gold. It is drawn between the rings' sides and
@@ -2557,8 +2564,8 @@ var ICONS = (function () {
     vn: function () {
       var cs = [[26, 22], [38, 22], [32, 32.39]], o = '', i;
       var g = 'M21.23 19.24A17 17 0 0 1 42.77 19.24A17 17 0 0 1 32 37.91A17 17 0 0 1 21.23 19.24Z';
-      for (i = 0; i < 3; i++) o += icC(cs[i][0], cs[i][1] + 3, 17, 'none', ' stroke="' + V.s + '" stroke-width="4.5"');
-      o += icP(g, G.s, ' transform="translate(0 2)"') + icP(g, G.f);
+      for (i = 0; i < 3; i++) o += icC(cs[i][0], cs[i][1] + IC_D, 17, 'none', ' stroke="' + V.s + '" stroke-width="4.5"');
+      o += icP(g, G.s, icSide()) + icP(g, G.f);
       for (i = 0; i < 3; i++) o += icC(cs[i][0], cs[i][1], 17, 'none', ' stroke="' + V.f + '" stroke-width="4.5"');
       return o;
     },
@@ -2567,7 +2574,7 @@ var ICONS = (function () {
       return icBlk(3, 38, 17, 17, 4, V, 3.5) + icT(11.5, 46.5, 'W', 11, '@vg') +
         icBlk(23.5, 38, 17, 17, 4, V, 3.5) + icT(32, 46.5, 'O', 11, '@vg') +
         icBlk(44, 38, 17, 17, 4, V, 3.5) + icT(52.5, 46.5, 'R', 11, '@vg') +
-        '<g transform="translate(0 3.5)"><g transform="rotate(14 44 15)">' + icR(35, 6, 18, 18, 4.5, G.s) + '</g></g>' +
+        '<g' + icSide() + '><g transform="rotate(14 44 15)">' + icR(35, 6, 18, 18, 4.5, G.s) + '</g></g>' +
         '<g transform="rotate(14 44 15)">' + icR(35, 6, 18, 18, 4.5, G.f) + icT(44, 15, 'D', 12, GI) + '</g>' +
         icP('M16 22h10M12 28h8', 'none', ' class="pe-s" stroke-width="3" stroke-linecap="round"');
     },
@@ -2575,7 +2582,7 @@ var ICONS = (function () {
        three gold dots */
     sc: function () {
       var b = 'M10 3h34a7 7 0 0 1 7 7v19a7 7 0 0 1-7 7H25l-9 8v-8h-6a7 7 0 0 1-7-7V10a7 7 0 0 1 7-7z';
-      return icP(b, V.s, ' transform="translate(0 3.5)"') + icP(b, V.f) +
+      return icP(b, V.s, icSide()) + icP(b, V.f) +
         icR(10.5, 11, 33, 5, 2.5, '.p') + icR(10.5, 21.5, 22, 5, 2.5, '.p') +
         icDisc(48.5, 42.5, 5.2, G, 3) + icDisc(41.5, 54, 5.2, G, 3) + icDisc(55.5, 54, 5.2, G, 3);
     },
@@ -2587,7 +2594,7 @@ var ICONS = (function () {
       for (i = 0; i < 4; i++) {
         x = xs[i]; c = i === 2 ? G : V;
         b = 'M' + (x - 6.5) + ' 44v-8a6.5 6.5 0 0 1 13 0v8z';
-        o += icP(b, c.s, ' transform="translate(0 3)"') + icP(b, c.f) + icDisc(x, 21, 5.5, c, 3);
+        o += icP(b, c.s, icSide()) + icP(b, c.f) + icDisc(x, 21, 5.5, c);
       }
       return o;
     },
@@ -2606,27 +2613,27 @@ var ICONS = (function () {
         icP('M6.5 23L14.5 9.5 22.5 23z', '@vg', ' stroke="@vg" stroke-width="2" stroke-linejoin="round"') +
         icP('M27.5 9.5h16l-8 13.5z', '@vg', ' stroke="@vg" stroke-width="2" stroke-linejoin="round"') +
         icBlk(16, 34, 46, 24, 7, V, 4) + icP('M20.5 50.5a8.5 8.5 0 0 1 17 0z', '@vg') +
-        icP('M41.5 41.5a8.5 8.5 0 0 0 17 0z', G.s, ' transform="translate(0 2)"') + icP('M41.5 41.5a8.5 8.5 0 0 0 17 0z', G.f);
+        icP('M41.5 41.5a8.5 8.5 0 0 0 17 0z', G.f);
     },
     /* Counting figures — how many triangles hide in one? The hidden one gold */
     cf: function () {
-      return icP('M32 6L60 54H4z', V.s, ' transform="translate(0 4)" stroke="' + V.s + '" stroke-width="3" stroke-linejoin="round"') +
+      return icP('M32 6L60 54H4z', V.s, icSide() + ' stroke="' + V.s + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M32 6L60 54H4z', V.f, ' stroke="' + V.f + '" stroke-width="3" stroke-linejoin="round"') +
         icP('M18 30h28L32 54z', G.f) + icP('M18 30h28L32 54z', 'none', ' stroke="@vg" stroke-width="3.2" stroke-linejoin="round"');
     },
     /* Mirror and water image — a bold F, a silver mirror, and its reflection in gold (the image is the answer) */
     mi: function () {
       var f = 'M4 13h19v7.5H12v6h9v7h-9V51H4z';
-      return icP(f, V.s, ' transform="translate(0 3.5)"') + icP(f, V.f) +
+      return icP(f, V.s, icSide()) + icP(f, V.f) +
         icBlk(28, 5, 8, 51, 4, 'paper', 3.5) + icP('M30 22l4-5M30 31l4-5', 'none', ' class="pe-f" stroke-width="1.8" stroke-linecap="round"') +
-        '<g transform="translate(64 0) scale(-1 1)">' + icP(f, G.s, ' transform="translate(0 3.5)"') + icP(f, G.f) + '</g>';
+        '<g transform="translate(64 0) scale(-1 1)">' + icP(f, G.s, icSide()) + icP(f, G.f) + '</g>';
     },
     /* Figure from pieces — a square of four pieces; the gold one is lifted out and turned, so its empty place shows */
     fp: function () {
       var base = 'M5 18h20v5.5a4.5 4.5 0 0 0 0 9V38h5.5a4.5 4.5 0 0 1 9 0H45v20H11a6 6 0 0 1-6-6z';
       var piece = 'M25 18h14a6 6 0 0 1 6 6v14h-5.5a4.5 4.5 0 0 0-9 0H25v-5.5a4.5 4.5 0 0 1 0-9z';
-      return icP(base, V.s, ' transform="translate(0 4)"') + icP(base, V.f) +
-        '<g transform="translate(0 3.5)"><g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.s) + '</g></g>' +
+      return icP(base, V.s, icSide()) + icP(base, V.f) +
+        '<g' + icSide() + '><g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.s) + '</g></g>' +
         '<g transform="translate(14 -12) rotate(16 35 28)">' + icP(piece, G.f) + '</g>';
     }
   };
@@ -2636,26 +2643,24 @@ var ICONS = (function () {
 var SUBJ_ICONS = {
   /* MAT — mental ability: a bulb, an idea — lit with the flame */
   mat: function () {
-    return icDisc(32, 25, 18, IC.orange, 4) + icC(25, 18, 5, '#fff', ' opacity=".45"') +
+    return icDisc(32, 25, 18, IC.orange) +
       icP('M27 37v-7l2.5-3 2.5 3 2.5-3 2.5 3v7', 'none', ' stroke="' + IC.orange.d + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"') +
       icBlk(23, 45, 18, 6, 3, IC_V, 3) + icBlk(26, 54, 12, 5, 2.5, IC_V, 2.5);
   },
   /* Science — a flask with something bubbling in it (one bubble the flame) */
   sci: function () {
     var body = 'M26 8h12v15l13 24a6 6 0 0 1-5.3 9H18.3a6 6 0 0 1-5.3-9l13-24z';
-    return icP(body, IC_V.s, ' transform="translate(0 4)"') + icP(body, '.p') +
+    return icP(body, IC_V.s, icSide()) + icP(body, '.p') +
       icP('M18 39h28l5.2 9.6a4 4 0 0 1-3.5 5.9H16.3a4 4 0 0 1-3.5-5.9z', IC_V.f) +
-      icC(26, 48, 2.6, '#fff', ' opacity=".6"') + icDisc(36, 44.5, 4, IC.orange, 1.5) +
+      icC(26, 48, 2.6, '.p') + icDisc(36, 44.5, 4, IC.orange) +
       icBlk(23, 4, 18, 6, 3, IC_V, 2.5);
   },
   /* Social science — the globe on its stand: paper land on a grey sea, a pin of the flame on it ("where") */
   sst: function () {
     return icDisc(32, 26, 20, IC_V, 4) +
       icP('M19 17c5-5 12-4 14 1s-3 6-1 10-4 8-8 5-7-9-5-16z', '.p') + icP('M40 30c4-2 9 0 9 5s-5 9-8 8-4-10-1-13z', '.p') +
-      icC(25, 16, 4, '#fff', ' opacity=".35"') +
-      icP('M26 29s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z', IC.orange.s, ' transform="translate(0 1.5)"') +
       icP('M26 29s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z', IC.orange.f) + icC(26, 18.8, 2.3, '#2A1A00') +
-      icR(29, 49, 6, 6, 1, IC_V.s) + icBlk(18, 54, 28, 6, 3, IC_V, 2.5);
+      icR(29, 48, 6, 6, 1, IC_V.s) + icBlk(18, 53, 28, 6, 3, IC_V);
   },
   /* Maths — the four signs: three grey tiles, the + the flame */
   math: function () {
@@ -2673,87 +2678,118 @@ var ICON_HUE = {};
 (function () { for (var k in ICONS) if (Object.prototype.hasOwnProperty.call(ICONS, k)) ICON_HUE[k] = 'orange'; })();
 function chIcon(ch, size, cls) {
   if (!has(ICONS, ch)) return '';
-  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + icBody(ICONS[ch]()) + '</svg>';
+  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + icBody(ICONS[ch]()) + '</svg>';
 }
 /* a glyph drawn ON a coloured fill (the tick on green): dark ink, never white (3.10.0) */
 var IC_INK = '#141414';
-/* STAT ICONS (3.9.0) — the same glossy recipe for the few numbers that are about the student himself.
-   3.10.0 coloured by meaning: gold = something earned (XP, streak, a run, a medal), green = right answers, the clock neutral. */
+/* STAT ICONS — the drawings for the numbers about the student and for the achievements. 3.29.0 redrawn to the drawing rules
+   (see FLAT above): the theme's grey body and one accent, one depth, no shine and no ground. Gold = earned (XP, achievements),
+   the flame = the streak, green = right / safe; the clock is grey. Each achievement has a drawing of its own (ACH_ICON). */
+var IC_GOLD = { f: '#FFD84D', s: '#D99E0B' };   /* 3.29.0 the gold's side: a clear deeper gold (the old #C9A12B / #9C7A12 read olive) */
+var IC_FLAME_D = 'M32 5c3 9 12 15 16 24 6 13-2 30-16 30S10 46 15 32c2-6 6-9 8-14 1 6 3 9 6 10-1-8 0-16 3-23z';
+var IC_STAR_D = 'M32 7l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 45.8l-15.2 8 2.9-16.9-12.3-12 17-2.5z';
+/* a shape with soft corners: its own colour drawn round it (the star and the bolt, which would be needle-sharp) */
+function icSoft(d, fill, extra) { return icP(d, fill, ' stroke="' + fill + '" stroke-width="3.5" stroke-linejoin="round"' + (extra || '')); }
+/* the flame (streak), as a solid: its side is the round bowl only, so no dark sliver shows in the notch between the tongues */
+function icFlame(tf) {
+  var t = tf ? ' transform="' + tf + '"' : '';
+  return '<g' + t + '>' + icC(32, 42 + IC_D, 16.5, IC.orange.s) + icP(IC_FLAME_D, IC.orange.f) +
+    icP('M32 31c4 5 9 9 9 15a9 9 0 0 1-18 0c0-6 5-9 9-15z', IC_GOLD.f) + '</g>';
+}
 var STAT_ICONS = {
-  /* the streak: the diya's own flame — the flame outside, its gold heart inside (3.10.0) */
-  flame: function () {
-    var o = 'M32 5c3 9 12 15 16 24 6 13-2 30-16 30S10 46 15 32c2-6 6-9 8-14 1 6 3 9 6 10-1-8 0-16 3-23z';
-    return icP(o, IC.orange.d, ' transform="translate(0 3)"') + icP(o, IC.orange.f) +
-      icP('M32 31c4 5 9 9 9 15a9 9 0 0 1-18 0c0-6 5-9 9-15z', IC.yellow.f) +
-      '<ellipse cx="22" cy="30" rx="3.2" ry="7" transform="rotate(24 22 30)" fill="#fff" opacity=".5"/>';
-  },
-  /* XP: a star */
-  star: function () {
-    var d = 'M32 6l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 44.8l-15.2 8 2.9-16.9-12.3-12 17-2.5z';
-    return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="20" rx="3" ry="6" transform="rotate(30 27 20)" fill="#fff" opacity=".5"/>';
-  },
-  /* time: a clock — neutral (3.10.0): a paper face in a grey rim, dark hands */
+  /* the streak: the diya's own flame, its gold heart inside */
+  flame: function () { return icFlame(); },
+  /* XP: a gold star with soft points */
+  star: function () { return icSoft(IC_STAR_D, IC_GOLD.s, icSide()) + icSoft(IC_STAR_D, IC_GOLD.f); },
+  /* time: a clock — the grey body round a paper face, grey hands */
   clock: function () {
-    return icDisc(32, 30, 23, 'paper', 4) + icC(32, 30, 19.5, 'none', ' class="pe-s" stroke-width="3"') +
-      icP('M32 17v13l8.5 5.5', 'none', ' stroke="' + IC_INK + '" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"') + icC(32, 30, 3, IC_INK);
+    return icDisc(32, 30, 24, IC_V) + icC(32, 30, 18, '.p') +
+      icP('M32 18v12l8 5', 'none', ' stroke="' + IC_V.f + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"') + icC(32, 30, 3, IC_V.f);
   },
-  /* a run of right answers: a lightning bolt */
+  /* a run of right answers (Hot Hand): a lightning bolt */
   bolt: function () {
-    var d = 'M37 4L14 36h15l-4 24 25-34H35z';
-    return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="27" cy="19" rx="2.6" ry="6" transform="rotate(35 27 19)" fill="#fff" opacity=".5"/>';
+    var d = 'M37 6L16 35h14l-4 21 23-30H35z';
+    return icSoft(d, IC_GOLD.s, icSide()) + icSoft(d, IC_GOLD.f);
   },
-  /* a hit: a gold target (3.10.0: an achievement is a reward), a dark bull's-eye */
+  /* a hit (Sharpshooter): the grey target, a gold bull's-eye */
   target: function () {
-    return icDisc(32, 30, 24, IC.yellow, 4) + icC(32, 30, 17, '.p') + icC(32, 30, 11, IC.yellow.f) + icC(32, 30, 5.5, IC_INK) +
-      '<ellipse cx="20" cy="17" rx="3" ry="5.5" transform="rotate(40 20 17)" fill="#fff" opacity=".5"/>';
+    return icDisc(32, 30, 24, IC_V) + icC(32, 30, 17, '@vg') + icC(32, 30, 12, IC_V.f) + icC(32, 30, 6.5, IC_GOLD.f);
   },
-  /* a gold medal on its paper ribbon */
+  /* Topic Master: a gold medal on two grey ribbons, its star pressed in */
   medal: function () {
-    return icP('M20 4h9l6 18h-9z', '.pe-f') + icP('M44 4h-9l-6 18h9z', '.ps') + icDisc(32, 38, 18, IC.yellow, 4) + icC(32, 38, 11, IC.yellow.s) +
-      icP('M32 31l2.4 4.8 5.3.8-3.9 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.9-3.7 5.3-.8z', '#fff', ' opacity=".9"') + '<ellipse cx="22" cy="29" rx="2.6" ry="5" transform="rotate(40 22 29)" fill="#fff" opacity=".5"/>';
+    return icP('M18 4h10l7 20H25z', IC_V.f) + icP('M46 4H36l-7 20h10z', IC_V.s) + icDisc(32, 38, 18, IC_GOLD) + icC(32, 38, 11.5, IC_GOLD.s) +
+      icP('M32 30.5l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z', IC_GOLD.f, ' stroke="' + IC_GOLD.f + '" stroke-width="1.5" stroke-linejoin="round"');
   },
-  /* the night: a gold moon and one paper star */
+  /* the night (Night Owl): a gold moon and one small grey star */
   moon: function () {
-    var d = 'M40 6a24 24 0 1 0 18 34A20 20 0 0 1 40 6z', s = 'M50 9l2.2 5.3 5.3 2.2-5.3 2.2L50 24l-2.2-5.3-5.3-2.2 5.3-2.2z';
-    return icP(d, IC.yellow.d, ' transform="translate(0 3)"') + icP(d, IC.yellow.f) + '<ellipse cx="17" cy="24" rx="3" ry="7" transform="rotate(20 17 24)" fill="#fff" opacity=".45"/>' +
-      icP(s, '.ps', ' transform="translate(0 1.5)"') + icP(s, '.p');
+    var d = 'M38 7a24 24 0 1 0 19 32A19 19 0 0 1 38 7z', st = 'M51 6l2 5.2 5.2 2-5.2 2L51 20.4l-2-5.2-5.2-2 5.2-2z';
+    return icP(d, IC_GOLD.s, icSide()) + icP(d, IC_GOLD.f) + icP(st, IC_V.f, ' stroke="' + IC_V.f + '" stroke-width="1.5" stroke-linejoin="round"');
   },
-  /* 3.14.0 privacy: a green shield with a dark tick (safe), drawn like the icons around it */
+  /* 3.14.0 privacy: a green shield with a dark tick (safe) */
   shield: function () {
     var d = 'M32 5l20 7.5V28c0 13.5-8.5 24-20 29-11.5-5-20-15.5-20-29V12.5z';
-    return icP(d, IC.green.d, ' transform="translate(0 3)"') + icP(d, IC.green.f) +
-      icP('M22.5 30.5l6.5 6.5 12.5-13', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"') +
-      '<ellipse cx="21.5" cy="17" rx="2.8" ry="6" transform="rotate(35 21.5 17)" fill="#fff" opacity=".5"/>';
+    return icP(d, IC.green.s, icSide()) + icP(d, IC.green.f) +
+      icP('M22.5 30.5l6.5 6.5 12.5-13', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"');
   },
-  /* right answers: a green disc with a dark tick (3.10.0: a white tick on green is too faint) */
+  /* right answers: a green disc with a dark tick */
   tick: function () {
-    return icDisc(32, 30, 23, IC.green, 4) + icP('M21 31l7.5 7.5L44 23', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"') +
-      '<ellipse cx="21" cy="17" rx="3" ry="5.5" transform="rotate(40 21 17)" fill="#fff" opacity=".5"/>';
+    return icDisc(32, 30, 24, IC.green) + icP('M20.5 31l8 8L44 23', 'none', ' stroke="' + IC_INK + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"');
   },
-  /* 3.10.0 for achievements, which are all rewards (gold): a milestone flag on its pole (questions answered) */
+  /* First Step: a gold flag on a grey pole */
   flag: function () {
-    var f = 'M24 9c8-4 14 4 23 0v20c-9 4-15-4-23 0z';
-    return icR(17, 6, 6, 51, 3, '.ps') + icR(17, 5, 4.5, 51, 2.25, '.pe-f') +
-      icP(f, IC.yellow.s, ' transform="translate(0 3.5)"') + icP(f, IC.yellow.f) + icBlk(10, 53, 20, 6, 3, 'paper', 2.5);
+    var f = 'M25.5 8c9-4.5 16 4.5 26 0v23c-10 4.5-17-4.5-26 0z';
+    return icBlk(12.5, 50, 22, 7, 3.5, IC_V) + icR(19.5, 5, 6, 47, 3, IC_V.s) + icR(19.5, 5, 4.5, 47, 2.25, IC_V.f) +
+      icP(f, IC_GOLD.s, icSide()) + icP(f, IC_GOLD.f);
   },
-  /* ... and the sun coming up over the hills (an answer before 7 in the morning) */
+  /* Getting Serious (25 answers): a pencil writing — gold body, grey cap, a paper point with a grey lead */
+  pencil: function () {
+    var all = 'M4 32l14-9h36a6 6 0 0 1 6 6v6a6 6 0 0 1-6 6H18z', rot = ' transform="rotate(-45 32 32)"';
+    var face = icP('M18 23h28v18H18z', IC_GOLD.f) +
+      icP('M46 23h8a6 6 0 0 1 6 6v6a6 6 0 0 1-6 6h-8z', IC_V.f) + icP('M4 32l14-9v18z', '.p') + icP('M4 32l5.6-3.6v7.2z', IC_V.f);
+    return '<g' + icSide() + '><g' + rot + '>' + icP(all, IC_V.s) + '</g></g><g' + rot + '>' + face + '</g>';
+  },
+  /* Centurion (100 answers): a gold cup on a grey stand */
+  trophy: function () {
+    var cup = 'M17 8h30v15a15 15 0 0 1-30 0z';
+    return icP('M17 13H9.5v3.5A9 9 0 0 0 18.5 25.5M47 13h7.5v3.5A9 9 0 0 1 45.5 25.5', 'none', ' stroke="' + IC_GOLD.s + '" stroke-width="4" stroke-linecap="round"') +
+      icP(cup, IC_GOLD.s, icSide()) + icP(cup, IC_GOLD.f) + icR(28.5, 37, 7, 9, 2, IC_GOLD.s) + icBlk(19, 45, 26, 9, 3.5, IC_V);
+  },
+  /* Perfect Round: a gold crown, one grey stone in its band */
+  crown: function () {
+    var d = 'M9 20l12 11 11-17 11 17 12-11-5 29H14z';
+    return icSoft(d, IC_GOLD.s, icSide()) + icSoft(d, IC_GOLD.f) + icR(14, 40, 36, 3.5, 1.75, IC_GOLD.s) +
+      icC(9, 19, 3.5, IC_GOLD.f) + icC(32, 13, 3.5, IC_GOLD.f) + icC(55, 19, 3.5, IC_GOLD.f) + icC(32, 33, 3.5, IC_V.f);
+  },
+  /* Week Warrior (7 days): the streak carried for a week — a torch, its flame lit */
+  torch: function () {
+    var cup = 'M17 25h30l-5 10H22z', grip = 'M24 35h16l-4 19.5a3 3 0 0 1-3 2.5h-2a3 3 0 0 1-3-2.5z';
+    return icP(grip, IC_V.s, icSide()) + icP(grip, IC_V.f) + icP(cup, IC_GOLD.s, icSide()) + icP(cup, IC_GOLD.f) +
+      icFlame('translate(17.28 1.4) scale(.46)');
+  },
+  /* 3.29.0 a pack: papers to practise, the top one passed (the flame's disc with a dark tick). It was a 📝 emoji */
+  papers: function () {
+    var rot = ' transform="rotate(8 36 30)"';
+    return '<g' + icSide() + '><g' + rot + '>' + icR(20, 6, 32, 46, 5, '.ps') + '</g></g><g' + rot + '>' + icR(20, 6, 32, 46, 5, '.p') + '</g>' +
+      icBlk(12, 8, 32, 46, 5, 'paper') + icR(18, 17, 20, 4, 2, IC_V.f) + icR(18, 25, 20, 4, 2, IC_V.f) + icR(18, 33, 12, 4, 2, IC_V.f) +
+      icDisc(45, 46, 10, IC.orange) + icP('M40 46.5l3.5 3.5 6.5-7', 'none', ' stroke="#2A1A00" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"');
+  },
+  /* Early Bird: the sun coming up over a grey hill */
   sun: function () {
-    var hill = 'M2 54c6-8 14-12 22-12 7 0 11 3 15 3s9-5 15-5c4 0 7 2 8 4v10a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z';
-    return icP('M32 6v6M13.6 13.6l4.3 4.3M50.4 13.6l-4.3 4.3M6 32h6M52 32h6', 'none', ' stroke="' + IC.yellow.s + '" stroke-width="4" stroke-linecap="round"') +
-      icDisc(32, 34, 15, IC.yellow, 3) + icP(hill, '.ps', ' transform="translate(0 3)"') + icP(hill, '.pe-f');
+    var hill = 'M4 47c6-8 14-12 22-12 7 0 11 3 15 3s9-5 15-5c4 0 6 2 6 4v14a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z';
+    return icP('M32 6v6M13.6 13.6l4.3 4.3M50.4 13.6l-4.3 4.3M5 31h6M53 31h6', 'none', ' stroke="' + IC_GOLD.s + '" stroke-width="4" stroke-linecap="round"') +
+      icDisc(32, 32, 15, IC_GOLD) + icP(hill, IC_V.s, icSide()) + icP(hill, IC_V.f);
   }
 };
-/* LEVEL MEDALS (3.9.1) — the three steps of a subject on its progress line: a gold medal on two ribbons (orange and green, the
-   colours of the line itself), its number in the middle. One that is not reached yet is shown grey by the style sheet. */
+/* LEVEL MEDALS (3.9.1) — the three steps of a subject on its progress line (levelLine: not on a page at present). 3.29.0 to the
+   drawing rules: a gold medal on two grey ribbons, its number in the middle, no shine, no ground. */
 function medalIcon(n, size, cls) {
-  var body = icP('M21 3h9l5.5 17h-9z', IC.orange.f) + icP('M43 3h-9l-5.5 17h9z', IC.green.f) +
-    icDisc(32, 38, 20, IC.yellow, 3) + icC(32, 38, 14.5, IC.yellow.s) + icC(32, 37.2, 13.6, IC.yellow.f) +
-    icT(32, 37.4, String(n), 19, '#7A4A00', 900) + '<ellipse cx="22.5" cy="28" rx="2.6" ry="5.2" transform="rotate(40 22.5 28)" fill="#fff" opacity=".55"/>';
-  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + body + '</svg>';
+  var body = icP('M20 3h9l5.5 17h-9z', IC_V.f) + icP('M44 3h-9l-5.5 17h9z', IC_V.s) +
+    icDisc(32, 38, 20, IC_GOLD) + icC(32, 38, 14.5, IC_GOLD.s) + icT(32, 38.2, String(n), 19, '#2A1A00', 900);
+  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + icBody(body) + '</svg>';
 }
 function statIcon(id, size, cls) {
   if (!has(STAT_ICONS, id)) return '';
-  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + IC_GROUND + icBody(STAT_ICONS[id]()) + '</svg>';
+  return '<svg class="chi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" aria-hidden="true" focusable="false">' + icBody(STAT_ICONS[id]()) + '</svg>';
 }
 function chHue(ch) { return IC[has(ICON_HUE, ch) ? ICON_HUE[ch] : 'violet']; }
 
@@ -2770,7 +2806,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.28.0',
+  VERSION: '3.29.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5368,11 +5404,15 @@ var LI_PATHS = {
   cloud: '<path d="M7 18.5h10a4 4 0 0 0 .6-8A5.5 5.5 0 0 0 7 9.6a4.5 4.5 0 0 0 0 8.9z"/>',
   alert: '<path d="M12 4l9 16H3z"/><path d="M12 10v4.5M12 17.2v.1"/>',
   flame: '<path d="M12 3.5c1.2 3.4 5.5 5.6 5.5 10.5a5.5 5.5 0 0 1-11 0c0-2.6 1.3-4 2.4-5.4.4 2 1.3 2.9 2.1 3.2-.4-3 .1-5.9 1-8.3z"/>',
-  book: '<path d="M5 4.5h11a3 3 0 0 1 3 3v12H8a3 3 0 0 1-3-3z"/><path d="M5 16.5a3 3 0 0 1 3-3h11"/>',
+  book: '<path d="M5 18.5V6a2.5 2.5 0 0 1 2.5-2.5H19v17H7.5a2.5 2.5 0 0 1 0-5H19"/>',   /* 3.29.0 a closed book with its pages (it read as a tablet) */
   medal: '<circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.8L6 3.5h4l2 4 2-4h4l-2.5 6.3"/>',
   bell: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5h4"/>',
-  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6 6l1.6 1.6M16.4 16.4L18 18M6 18l1.6-1.6M16.4 7.6L18 6"/>',
-  ticket: '<path d="M4 7.5h16v3a1.5 1.5 0 0 0 0 3v3H4v-3a1.5 1.5 0 0 0 0-3z"/><path d="M14 7.5v9" stroke-dasharray="2 2"/>',
+  gear: (function () {           /* 3.29.0 a cog with six teeth (the rays round a ring read as the sun, the Light look) */
+    var d = '', i, a, pt = function (deg, r) { var t = deg * Math.PI / 180; return (12 + r * Math.cos(t)).toFixed(2) + ' ' + (12 + r * Math.sin(t)).toFixed(2); };
+    for (i = 0; i < 6; i++) { a = i * 60 - 90; d += (i ? 'L' : 'M') + pt(a - 17, 6.6) + 'L' + pt(a - 10, 9.4) + 'L' + pt(a + 10, 9.4) + 'L' + pt(a + 17, 6.6); }
+    return '<path d="' + d + 'z"/><circle cx="12" cy="12" r="3"/>';
+  })(),
+  ticket: '<path d="M4 7.5h16v3a1.5 1.5 0 0 0 0 3v3H4v-3a1.5 1.5 0 0 0 0-3z"/><path d="M14 10v4"/>',
   key: '<circle cx="8" cy="14" r="4"/><path d="M11 11.2L19 4M16 7l2.5 2.5M14.2 8.8l1.8 1.8"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .9-1 1.6v.6M12 17v.1"/>',
   edit: '<path d="M4.5 19.5l1-4L15.5 5.5l3 3-10 10z"/><path d="M13.5 7.5l3 3"/>',
@@ -5382,19 +5422,26 @@ var LI_PATHS = {
   sync: '<path d="M19 9a7 7 0 0 0-12.5-2.5M5 15a7 7 0 0 0 12.5 2.5"/><path d="M6 3.5v3.2h3.2M18 20.5v-3.2h-3.2"/>',
   flag: '<path d="M6 21V4.5"/><path d="M6 4.5h11l-2.5 4 2.5 4H6"/>',
   logout: '<path d="M14 4.5H6.5v15H14"/><path d="M10.5 12h9M16.5 8.5L20 12l-3.5 3.5"/>',
-  chart: '<path d="M5 20V11M12 20V4M19 20v-6"/>'
+  chart: '<path d="M5 20V11M12 20V4M19 20v-6"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',                                 /* 3.29.0 the stepper, which wrote "+" and "−" as letters */
+  minus: '<path d="M5 12h14"/>',
+  up: '<path d="M12 19V5M6 11l6-6 6 6"/>',                               /* 3.29.0 week on week (was the letter ▲) */
+  down: '<path d="M12 5v14M6 13l6 6 6-6"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/>'   /* 3.29.0 "how the tests work" (was a serif italic i) */
 };
 /* the menus were written with small pictures; each is drawn as its line icon instead (3.9.0) */
-/* each achievement is drawn with a glossy stat icon (3.9.0), not its emoji. 3.10.0 an achievement is a reward, so its icon is
-   gold: the questions answered get the flag (the green tick means "right"), the early bird the sun (the clock is grey now) */
-var ACH_ICON = { first: 'flag', q25: 'flag', q100: 'star', run5: 'bolt', run10: 'target', perfect: 'star', d3: 'flame', d7: 'flame', xp500: 'star', master: 'medal', early: 'sun', night: 'moon' };
+/* each achievement is drawn with a stat drawing (3.9.0), not its emoji. 3.10.0 an achievement is a reward, so its accent is
+   gold (the streak ones keep the flame). 3.29.0 every achievement has its own drawing */
+var ACH_ICON = { first: 'flag', q25: 'pencil', q100: 'trophy', run5: 'bolt', run10: 'target', perfect: 'crown', d3: 'flame', d7: 'torch', xp500: 'star', master: 'medal', early: 'sun', night: 'moon' };   /* 3.29.0 one drawing each (rule 5): the flag, the star and the flame were used two and three times */
 function achIcon(a, size) { return statIcon(has(ACH_ICON, a.id) ? ACH_ICON[a.id] : 'medal', size); }
 var EMOJI_LI = { '✉': 'mail', '📨': 'mail', '📬': 'mail', '⚠️': 'alert', '⚠': 'alert', '👤': 'edit', '✏': 'edit', '📚': 'book', '☁️': 'cloud', '🎯': 'target', '🏆': 'medal', '🔔': 'bell', '⚙️': 'gear', '🎫': 'ticket', '🔑': 'key', '❓': 'help', '✏️': 'edit',
   '🔒': 'shield', '🔐': 'key', '❌': 'trash', '💬': 'chat', '🔄': 'sync', '🚩': 'flag' };
 function li(name, size, cls) {
   return '<svg class="li' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24"' + (size ? ' style="width:' + size + 'px;height:' + size + 'px"' : '') + ' aria-hidden="true" focusable="false">' + LI_PATHS[name] + '</svg>';
 }
-var LOCK_SVG = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3.2" fill="currentColor"/></svg>';
+/* a status mark is solid (the locked chapter's lock, the passed tick); a thing to tap is a line icon (li). 3.29.0 the pack's lock is
+   the same drawing as the locked chapter's (.lock-mid) */
+var LOCK_SVG = '<svg viewBox="0 0 24 26" width="16" height="17" aria-hidden="true"><path d="M6.6 11.2V8.1a5.4 5.4 0 0 1 10.8 0v3.1" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/><rect x="3.4" y="10.4" width="17.2" height="13.6" rx="3.4" fill="currentColor"/></svg>';
 var CHECK_SVG = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 /* the bar under a Mark (3.7.0): the way to the pass — its end IS the pass, a small flag marks it, and the count sits after it */
 var FLAG_SVG = '<svg viewBox="0 0 12 14" width="11" height="13" aria-hidden="true"><path d="M2 13V1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M2.6 1.6h7.6l-2 2.9 2 2.9H2.6z" fill="currentColor"/></svg>';
@@ -5414,16 +5461,10 @@ function chWeight(c) {
   if (!c.per) return '';
   return c.per < 1.5 ? 'about 1 question per paper' : 'about ' + Math.round(c.per) + ' questions per paper';
 }
-/* the "passed" seal (3.9.1): flat, one deep green, a ring of small triangular teeth like a gear, a white tick — no shine, no 3D */
-var SEAL_TICK = (function () {
-  var n = 16, R = 16.6, r = 13.9, pts = [], i, a, d;
-  for (i = 0; i < 2 * n; i++) {
-    a = Math.PI * i / n - Math.PI / 2; d = i % 2 ? r : R;
-    pts.push((17 + d * Math.cos(a)).toFixed(2) + ',' + (17 + d * Math.sin(a)).toFixed(2));
-  }
-  return '<svg class="seal" viewBox="0 0 34 34" width="34" height="34" aria-hidden="true" focusable="false"><polygon points="' + pts.join(' ') + '" fill="currentColor"/>' +
-    '<path d="M10.6 17.4l4.3 4.3 8.6-8.9" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';   // 3.10.0 a dark tick on the green: 9.6:1
-})();
+/* the "passed" mark (3.9.1 a toothed seal; 3.29.0 a plain green disc with the dark tick, the same mark as a right answer in the
+   quiz and on Progress: one "right" mark in the app) */
+var SEAL_TICK = '<svg class="seal" viewBox="0 0 34 34" width="34" height="34" aria-hidden="true" focusable="false"><circle cx="17" cy="17" r="15" fill="currentColor"/>' +
+  '<path d="M10.6 17.4l4.3 4.3 8.6-8.9" fill="none" stroke="#141414" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';   // a dark tick on the green: 9.6:1
 /* one chapter panel (3.9.1): a big icon with room around it, the English name small and grey, the Hindi name — and nothing else.
    Where it stands is shown, not written: a thin bar while it is on the go, a green tick when it is passed, a lock or a clock. */
 function chCard(u, v) {
@@ -5441,8 +5482,6 @@ function chCard(u, v) {
     '<span class="chp-ic">' + chIcon(c.id, 72) + '</span><span class="topic-info"><span class="ch-en">' + esc(c.name) + '</span>' +
     '<span class="topic-row-name ch-name" lang="hi">' + esc(c.hi) + '</span>' + bar + '</span>' + badge + '</button>';
 }
-var PLAY_SVG = '<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M3 1.6v8.8L10.4 6z" fill="currentColor"/></svg>';
-var TROPHY_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3h10v6a5 5 0 0 1-10 0z" fill="#FFC233"/><path d="M7 5H3.5v1.5A3.5 3.5 0 0 0 7 10M17 5h3.5v1.5A3.5 3.5 0 0 1 17 10" fill="none" stroke="#CF8E00" stroke-width="1.8"/>' +
   '<path d="M10.5 13.5h3v3.5h-3z" fill="#CF8E00"/><rect x="7" y="17" width="10" height="3.6" rx="1.4" fill="#9E6C00"/></svg>';
 /* the subjects of the NMMS course: MAT has its chapters; the SAT parts come later */
 var SUBJECTS = [{ id: 'mat', name: 'MAT', open: true }, { id: 'sci', name: 'विज्ञान', en: 'Science' }, { id: 'sst', name: 'सामाजिक', en: 'Social science' }, { id: 'math', name: 'गणित', en: 'Maths' }];
@@ -5488,7 +5527,7 @@ function markTopics(u, plan) {
   /* 3.9.1 the subject's own header, like a book's cover: a small label, its name big, one line of what it is, its picture —
      then the thin progress line with the three medals. No panel around it, no counts to read. */
   html += '<div class="mat-hero"><div class="mh-row"><div class="grow">' +
-    '<div class="mh-kick">NMMS Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">i</button></div>' +
+    '<div class="mh-kick">NMMS Bihar<button type="button" class="mh-info" data-act="topics-info" aria-label="How the tests work">' + li('info', 20) + '</button></div>' +
     '<div class="mh-title" lang="hi" role="heading" aria-level="1">मानसिक योग्यता</div>' +
     '<div class="mh-desc">Mental Ability: reasoning with letters, numbers and figures.</div></div>' +
     '<span class="mh-art">' + subjIcon('mat', 96) + '</span></div></div>';   // 3.26.0 only the syllabus: the medal line left (each chapter shows its own progress)
@@ -6177,7 +6216,7 @@ SCREENS.progress = function () {
     }
   }
   html += '<div class="prog-grid"><div class="prog-stat">' + statIcon('star', 40) + '<div class="prog-stat-val num">' + u.xp + '</div><div class="prog-stat-lbl">Total XP</div><div class="prog-stat-note">Level ' + lv.n + '</div></div>' +
-    '<div class="prog-stat">' + statIcon('flame', 40) + '<div class="prog-stat-val num">' + st + '</div><div class="prog-stat-lbl">Day streak</div><div class="prog-stat-note">Best ' + u.bestStreak + '</div></div>' +
+    '<div class="prog-stat">' + statIcon('flame', 40, u.lastDay === todayKey() ? '' : 'off') + '<div class="prog-stat-val num">' + st + '</div><div class="prog-stat-lbl">Day streak</div><div class="prog-stat-note">Best ' + u.bestStreak + '</div></div>' +
     '<div class="prog-stat">' + statIcon('tick', 40) + '<div class="prog-stat-val num">' + pct(u.correct, u.answered) + '%</div><div class="prog-stat-lbl">Accuracy</div><div class="prog-stat-note">' + u.correct + '/' + u.answered + ' right</div></div>' +
     '<div class="prog-stat">' + statIcon('clock', 40) + '<div class="prog-stat-val num">' + u.answered + '</div><div class="prog-stat-lbl">Questions</div><div class="prog-stat-note">Best run ' + u.bestRun + '</div></div></div>';
 
@@ -6198,7 +6237,7 @@ SCREENS.progress = function () {
       '<div class="trow thead"><span></span><span>Questions</span><span>Right</span></div>' +
       '<div class="trow"><span>Last 7 days</span><b class="num">' + wk.n + '</b><b class="num">' + pct(wk.c, wk.n) + '%</b></div>' +
       '<div class="trow"><span>The week before</span><b class="num">' + pw.n + '</b><b class="num">' + pct(pw.c, pw.n) + '%</b></div>' +
-      '<div class="small muted">' + (wk.n > pw.n ? '▲ ' + (wk.n - pw.n) + ' more questions than the week before.' : wk.n < pw.n ? '▼ ' + (pw.n - wk.n) + ' fewer questions than the week before.' : 'Same number of questions as the week before.') + '</div></div>';
+      '<div class="small muted">' + (wk.n > pw.n ? li('up', 16, 'trend') + (wk.n - pw.n) + ' more questions than the week before.' : wk.n < pw.n ? li('down', 16, 'trend') + (pw.n - wk.n) + ' fewer questions than the week before.' : 'Same number of questions as the week before.') + '</div></div>';
   }
 
   html += '<div class="card"><div class="card-title">' + (plan ? 'Chapter mastery' : 'Topic mastery') + '</div><div class="card-sub">' + esc(courseName(courseOf(u)).split(' · ').slice(0, 2).join(', ')) + '</div>';
@@ -6290,9 +6329,9 @@ SCREENS.goals = function () {
     '<div class="goal-card"><div class="goal-exam">' + esc(goalOf(u).exam) + '</div><div class="goal-date">' + fmtDate(parseDay(goalOf(u).date)) + '</div>' + cd + '</div>' +
     (u.goal.custom ? '' : '<div class="alert info">' + esc(courseGoal(courseOf(u)).note) + '</div>') +
     '<button class="btn btn-sec" data-act="goal-edit">Change exam and date</button>' +
-    '<div class="card"><div class="lbl">Daily target</div><div class="stepper"><button class="step-btn" data-act="daily-step" data-d="-5" aria-label="Decrease daily target">−</button>' +
+    '<div class="card"><div class="lbl">Daily target</div><div class="stepper"><button class="step-btn" data-act="daily-step" data-d="-5" aria-label="Decrease daily target">' + li('minus', 20) + '</button>' +
     '<div class="step-val">' + u.goal.daily + '<small>questions a day</small></div>' +
-    '<button class="step-btn" data-act="daily-step" data-d="5" aria-label="Increase daily target">+</button></div>' +
+    '<button class="step-btn" data-act="daily-step" data-d="5" aria-label="Increase daily target">' + li('plus', 20) + '</button></div>' +
     '<div class="row between small"><span class="muted">Today</span><b class="num">' + td.n + '/' + u.goal.daily + '</b></div>' +
     '<div class="pbar"><i style="width:' + Math.min(100, pct(td.n, u.goal.daily)) + '%' + (td.n >= u.goal.daily ? ';background:var(--green)' : '') + '"></i></div>' +
     '<div class="small muted">Target met on ' + met + ' of the last 7 days.</div></div></div>';
@@ -7926,7 +7965,7 @@ var PAY_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true
 function packCard(u, p) {
   var own = canSeePack(u, p.id), n = packTopics(p.id).length;
   return '<button type="button" class="pack-card' + (own ? ' own' : '') + '" data-act="pack" data-id="' + p.id + '" aria-label="' + esc(p.name) + (own ? ', unlocked' : ', locked, ' + p.price + ' rupees') + '">' +
-    '<span class="pack-ico">' + (own ? p.emoji : LOCK_SVG) + '</span><span class="grow"><span class="pack-name">' + esc(p.name) + '</span>' +
+    '<span class="pack-ico">' + (own ? statIcon('papers', 30) : LOCK_SVG) + '</span><span class="grow"><span class="pack-name">' + esc(p.name) + '</span>' +
     '<span class="pack-sub">' + (own ? (n ? plural(n, 'paper') + ' below' : 'Downloading…') : esc(String(p.sub).replace(/ · /g, ', '))) + (p.live || PLAY ? '' : ', not for sale yet') + '</span></span>' +
     (own ? '<span class="chip ok">Unlocked</span>' : '<span class="pack-price">' + rupees(p.price) + '</span>') + '</button>';
 }
@@ -7966,7 +8005,7 @@ ACTIONS.pack = function (el) {
 SCREENS.pack = function (p) {
   var k = packById(p.id), u = user, pay = CONFIG.PAY, html, link;
   if (!k || (PLAY && !canSeePack(u, k.id))) return '<div class="page bg-profile">' + subHead('Unlock') + '<div class="empty"><div class="empty-t">This pack is not available.</div></div></div>';
-  html = '<div class="page bg-profile">' + subHead('Unlock') + '<div class="pack-hero"><div class="pack-hero-ico">' + k.emoji + '</div>' +
+  html = '<div class="page bg-profile">' + subHead('Unlock') + '<div class="pack-hero"><div class="pack-hero-ico">' + statIcon('papers', 72) + '</div>' +
     '<div class="pack-hero-name">' + esc(k.name) + '</div><div class="small muted">' + esc(String(k.sub).replace(/ · /g, ', ')) + '</div><div class="pack-hero-price">' + rupees(k.price) + '</div></div>' +
     '<div class="card"><div class="card-title">What you get</div><ul class="pack-list">' + k.items.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
   if (canSeePack(u, k.id)) return html + '<div class="alert info">You have this pack. Its papers are on the Topics page.</div></div>';
@@ -8223,7 +8262,6 @@ ACTIONS['adm-gdrop-yes'] = function (el) {
 
 function boot() {
   elPhone = $('phone'); elScreens = $('screens'); elNav = $('nav'); elModal = $('modal'); elToast = $('toast'); elBusy = $('busy');
-  elPhone.insertAdjacentHTML('afterbegin', ICON_DEFS);         // 3.9.0 the soft ground every icon stands on, once for the page
   elPhone.setAttribute('data-net', '0');
   try { if (window.history.state && window.history.state.iopetTrap) hist.armed = true; } catch (e) { hist.ok = false; }
   document.addEventListener('click', armBack, true);
