@@ -552,9 +552,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .home>*+*{margin-top:24px}
 .home>.alert,.home>.nudge{margin-top:16px}
 .dash-header{display:flex;align-items:flex-start;justify-content:space-between}
-.dash-hello{flex:1;min-width:0;padding-right:12px}
-.greeting-badge{font-size:var(--fs-sm);font-weight:600;color:var(--ink2)}
-.greeting-name{font-size:var(--fs-xl);font-weight:700;letter-spacing:-.3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}   /* 3.10.0 (was 30px) a greeting, not the focus: under the hero card's chapter name (24px) */
 /* 3.10.0 the avatar is a neutral disc with an ink letter (white on violet was 2.1-3.1:1); light keeps its violet disc */
 .hero{position:relative;border-radius:var(--r-xl);padding:24px;background:var(--hero-1);background:linear-gradient(150deg,var(--hero-1),var(--hero-2) 60%,var(--hero-3));box-shadow:var(--shadow-2);border:1px solid var(--line)}
 .hero-top{display:flex;align-items:flex-start}
@@ -574,24 +571,12 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .hero-note{font-size:var(--fs-xs);color:var(--ink2);margin-top:4px}
 .hero-out{margin-top:16px}
 .hero .btn-cta{margin:16px 0 0}
-.mini-row{display:flex}
-.mini{flex:1;min-width:0;background:transparent;border:1px solid var(--line);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:16px}   /* 3.10.0 dark: outlined — the hero card above is the one filled box */
-[data-theme="light"] .mini{background:var(--surface)}
-.mini+.mini{margin-left:12px}
-.mini .chi,.mini .ring{display:block}
-.mini-n{font-size:var(--fs-2xl);line-height:1.1;margin-top:8px}
-.mini-l{font-size:var(--fs-sm);font-weight:600}
-.mini-s{font-size:var(--fs-xs);color:var(--ink2);margin-top:2px}
-.mini-s.warn{color:var(--ink);font-weight:700}
-.mini .chi.off{filter:grayscale(1);opacity:.55}   /* 3.10.0 the streak flame is lit (gold) only once today's practice is done */
-[data-theme="light"] .mini .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
-.mini-s.ok{color:var(--green);font-weight:600}
 .ring{fill:none;stroke-width:5}
 .ring-t{stroke:var(--mark-off)}
 .ring-v{stroke:var(--primary);stroke-linecap:round}
 .ring.done .ring-v{stroke:var(--good)}
 .ring-k{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:var(--fs-xl)}.greeting-name{font-size:var(--fs-xl)}}
+@media (max-width:370px){.hero-art .chi{width:84px;height:84px}.hero-name{font-size:var(--fs-xl)}}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-top:16px !important}
 .section-head-title{font-size:var(--fs-xs);font-weight:700;letter-spacing:1px}
 
@@ -1385,16 +1370,35 @@ a.link{text-decoration:none}
 .pay-app svg{margin-right:8px}
 /* narrow phones (340 px wide or less): the side margin is 16px, so the full-width rows pull back by 16px only (last in the file: it must win) */
 @media (max-width:340px){.subj-row{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}}
-/* 3.9.1 HOME: before today's set the stats are quiet; after it, the practice card goes quiet and the stats are the reward */
-.home .stats{opacity:.55;transition:opacity var(--t-fade) var(--ease-std)}
-.home.is-done .stats{opacity:1}
-.home.is-done .stats .mini{border-color:var(--gold);box-shadow:var(--shadow-2)}   /* 3.10.0 the reward's colour, gold (orange is for what to do) */
-.done-card{text-align:center;background:var(--surface);box-shadow:none;border:1px dashed var(--line-2)}
-.done-tick{width:64px;height:64px;margin:0 auto;border-radius:50%;background:var(--good);color:var(--on-mark);display:flex;align-items:center;justify-content:center}
-.done-tick .li{stroke-width:3}
-.done-t{font-size:var(--fs-xl);font-weight:700;margin-top:12px}
-.done-s{font-size:var(--fs-sm);color:var(--ink2);margin-top:4px}
-.done-card .link{margin-top:4px}
+/* 3.28.0 HOME (§12.12): the counts at the top, today's chapter in the middle, one card at the bottom with its button inside */
+.page.home.hm{display:flex;flex-direction:column;padding-bottom:calc(112px + env(safe-area-inset-bottom))}   /* the bar (94) and 16 */
+.hm>*+*{margin-top:var(--sp-grp)}
+.hm-top{display:flex;justify-content:space-between;align-items:center}
+.hm-pill{display:inline-flex;align-items:center;height:var(--tap);padding:0 16px 0 12px;border-radius:var(--r-pill);background:var(--surface);color:var(--ink);font-size:var(--fs-lg);font-weight:700}
+.hm-pill .chi{display:block;width:24px;height:24px;margin-right:8px}
+.hm-pill .chi.off{filter:grayscale(1);opacity:.55}
+[data-theme="light"] .hm-pill .chi.off{opacity:1;filter:grayscale(1) brightness(.68)}
+.hm-u{font-size:var(--fs-sm);font-weight:600;color:var(--ink3);margin-left:4px}
+.hm-pill:active{transform:scale(.96)}
+.hm-mid{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;padding:24px 0;background:none;border:0;color:var(--ink);text-align:center}
+.hm-art{display:block;margin-bottom:24px}
+.hm-art .chi{display:block;width:clamp(64px,calc(100vh - 620px),160px);height:clamp(64px,calc(100vh - 620px),160px)}   /* a picture: it gives way first */
+.hm-en{display:block;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);line-height:1.3}
+.hm-name{display:block;font-size:var(--fs-3xl);font-weight:700;line-height:1.25;margin-top:8px}
+.hm-art+.hm-name{margin-top:0}
+.hm-s{display:block;font-size:var(--fs-lg);color:var(--ink3);line-height:1.45;margin-top:8px}
+.hm-mid:active .hm-art{transform:scale(.97)}
+.hm-art{transition:transform var(--t-press) var(--ease-swift)}
+.hm-line{font-size:var(--fs-md);color:var(--ink2);text-align:center}
+.hm-card{background:var(--surface);border-radius:var(--r-lg);padding:24px}
+.hm-row{display:flex;align-items:flex-start}
+.hm-dot{background:var(--primary);color:var(--on-mark)}
+.hm-card .ch-prog{margin-top:16px}
+.hm-card .btn{margin-top:24px}
+.hm-more{display:flex;justify-content:center}
+@media (max-height:760px){.hm .alert~.hm-mid .hm-art,.hm .nudge~.hm-mid .hm-art{display:none}}
+@media (max-height:700px){.hm-mid{padding:0}.hm-art{margin-bottom:12px}}
+@media (max-height:600px){.hm-art,.hm-en,.hm .nudge~.hm-line{display:none}.hm-name{margin-top:0}}   /* a short phone keeps the card and its button above the bar */
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
 .path .ch-panel{position:relative;display:flex;align-items:center;min-height:120px;border-radius:var(--r-lg);
   background:var(--surface);border:0;box-shadow:none}   /* 3.26.0 only the syllabus: no frame, no lip; every card the same height */
@@ -2766,7 +2770,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.27.0',
+  VERSION: '3.28.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4660,13 +4664,6 @@ function menuRow(attrs, ico, label, meta, extra) {
   return '<button class="menu-item' + (extra || '') + '" ' + attrs + '><span class="menu-ico">' + ico + '</span><span class="menu-lbl">' + label + '</span>' +
     (meta ? '<span class="menu-meta">' + meta + '</span>' : '') + '<span class="menu-arrow">' + li('chev', 20) + '</span></button>';
 }
-function greeting() {
-  var h = now().getHours();
-  if (h < 5) return { e: '🌙', t: 'Studying late' };
-  if (h < 12) return { e: '🌅', t: 'Good morning' };
-  if (h < 17) return { e: '☀️', t: 'Good afternoon' };
-  return { e: h < 21 ? '🌆' : '🌙', t: 'Good evening' };
-}
 /* the bar's colour says the one thing that matters (3.10.0): vermilion while the password would be refused or is weak, green when
    it is strong, grey in between — the theme's own colours, never red */
 function passStrength(p) {
@@ -5264,21 +5261,33 @@ function markOpens(u, t) {
 }
 /* 3.9.1 "today's practice" is ONE whole set: done once a set was finished today (the sessions log keeps only finished sets) */
 function setsToday(u) { var tk = todayKey(); return u.sessions.filter(function (r) { return dayKey(new Date(r.t)) === tk; }).length; }
-function heroCard(u, t) {
-  var st = topicStats(u, t), n = setSize(u, t), c = t.mark ? chapterOf(t) : null, art;
-  art = t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 104) : '<span class="hero-emoji">' + esc(t.emoji || '') + '</span>';
-  return '<div class="hero"><div class="hero-top"><div class="hero-txt"><div class="chips"><span class="cp hero-kick">Today’s practice</span></div>' +
-    (c && c.hi ? '<div class="hero-name" lang="hi">' + esc(c.hi) + '</div><div class="hero-en">' + esc(c.name) + (t.mark ? '<span class="mk">M' + t.mark + '</span>' : '') + '</div>'
-               : '<div class="hero-name">' + esc(c ? c.name : t.name) + '</div>') +
-    '</div><div class="hero-art">' + art + '</div></div>' +
-    '<div class="hero-meta">' + li('clock', 18) + '<span>About ' + aboutMin(u, n) + ' min</span><span class="mt-sep">' + plural(n, 'question') + '</span></div>' +
-    '<button class="btn btn-primary btn-cta" data-act="start-smart" data-topic="' + t.id + '">' + (st.attempted ? 'Continue' : 'Start') + '</button></div>';
+/* 3.28.0 HOME, like Brilliant's (the owner's pictures): the counts at the top, the chapter of today in the middle (its
+   names, its picture big), and one card at the bottom, where the thumb is, with today's set and its button inside.
+   Nothing else: what was done this week is on the Progress tab. */
+function homeTop(u, st, wxp) {
+  return '<div class="hm-top"><button type="button" class="hm-pill" data-act="tab" data-tab="progress" aria-label="' + plural(st, 'day') + ' streak">' +
+    statIcon('flame', 24, u.lastDay === todayKey() ? '' : 'off') + '<span class="num">' + st + '</span></button>' +
+    '<button type="button" class="hm-pill" data-act="tab" data-tab="progress" aria-label="' + wxp + ' XP this week">' + statIcon('star', 24) +
+    '<span class="num">' + wxp + '</span><span class="hm-u">XP</span></button></div>';
 }
-/* the card once today's set is finished: quiet, ticked, nothing to start by mistake — only a small link for more */
-function doneCard(u, st) {
-  return '<div class="hero done-card"><div class="done-tick">' + li('check', 34) + '</div><div class="done-t">Today’s practice done</div>' +
-    '<div class="done-s">' + (st > 0 ? 'Come back tomorrow for a ' + (st + 1) + '-day streak.' : 'Come back tomorrow.') + '</div>' +
-    '<button class="link" data-act="start-smart">Practice more</button></div>';
+function homeToday(u, t, line) {
+  var st = topicStats(u, t), n = setSize(u, t), c = t.mark ? chapterOf(t) : null, art, mid;
+  art = t.ch && has(ICONS, t.ch) ? chIcon(t.ch, 160) : '<span class="hero-emoji">' + esc(t.emoji || '') + '</span>';
+  mid = '<span class="hm-art">' + art + '</span>' + (c && c.hi ? '<span class="hm-en">' + esc(c.name) + '</span><span class="hm-name" lang="hi">' + esc(c.hi) + '</span>'
+    : '<span class="hm-name">' + esc(c ? c.name : t.name) + '</span>');
+  return (c ? '<button type="button" class="hm-mid" data-act="chapter" data-ch="' + esc(c.id) + '" aria-label="' + esc(c.name) + ', open the chapter">' + mid + '</button>'
+            : '<div class="hm-mid">' + mid + '</div>') + (line || '') +
+    '<div class="hm-card"><div class="hm-row"><span class="mp-dot hm-dot">' + (t.mark || li('play', 18)) + '</span><span class="mp-b">' +
+    (t.mark ? '<span class="mp-k">Mark ' + t.mark + '</span><span class="mp-t">' + STEP_NAME[t.mark] + '</span>' : '<span class="mp-k">Today’s practice</span><span class="mp-t">' + esc(t.short || t.name) + '</span>') +
+    '<span class="mp-l">' + plural(n, 'question') + ', about ' + aboutMin(u, n) + ' min</span></span></div>' +
+    (t.mark && st.attempted ? passBar(u, t) : '') +
+    '<button class="btn btn-primary" data-act="start-smart" data-topic="' + t.id + '">' + (st.attempted ? 'Continue' : 'Start') + '</button></div>';
+}
+/* once today's set is finished: the lit flame is the reward; nothing to start by mistake, only a quiet link for more */
+function homeDone(u, st) {
+  return '<div class="hm-mid"><span class="hm-art">' + statIcon('flame', 120) + '</span><span class="hm-name">Today’s practice done</span>' +
+    '<span class="hm-s">' + (st > 0 ? 'Come back tomorrow for a ' + (st + 1) + '-day streak.' : 'Come back tomorrow.') + '</span></div>' +
+    '<div class="hm-more"><button class="link" data-act="start-smart">Practice more</button></div>';
 }
 /* today's goal as a ring: violet while on the way, green when done */
 function goalRing(n, goal) {
@@ -5288,21 +5297,16 @@ function goalRing(n, goal) {
     (f >= 1 ? '<path d="M15.5 22.5l4.5 4.5 8.5-9" class="ring-k"/>' : '') + '</svg>';
 }
 SCREENS.home = function () {
-  var u = user, tk = todayKey(), st = liveStreak(u), done = setsToday(u) > 0, html, t, week = weekTotals(u, 0, 6), wxp = 0, i;
+  var u = user, tk = todayKey(), st = liveStreak(u), done = setsToday(u) > 0, html, t, wxp = 0, i;
   for (i = 0; i < 7; i++) wxp += dayRec(u, dayKey(addDays(now(), -i))).xp;
-  html = '<div class="page bg-dash nav-pad home' + (done ? ' is-done' : '') + '"><div class="dash-hello"><div class="greeting-badge">' + greeting().t + '</div>' +
-    '<div class="greeting-name">Hi, ' + esc(firstName(u.name)) + '</div></div>';
+  html = '<div class="page bg-dash nav-pad home hm' + (done ? ' is-done' : '') + '">' + homeTop(u, st, wxp);
   if (!Store.persistent()) html += '<div class="alert warn">Storage is blocked in this browser, so your progress will be lost when the app closes.</div>';
   if (db.auth && !db.auth.verified) html += '<button class="nudge" data-act="go" data-to="verify">' + li('mail', 18) + '<span>Confirm your email to switch on cloud backup. Tap here.</span></button>';
   else if (u.guest && u.answered >= 20) html += '<button class="nudge" data-act="go" data-to="account">' + li('cloud', 18) + '<span>Your progress is only on this phone. Create a free account to back it up. Tap here.</span></button>';
   t = recommendTopic(u);
-  html += done ? doneCard(u, st) : t ? heroCard(u, t)
-    : '<div class="hero"><div class="hero-name">Choose a topic</div><button class="btn btn-primary btn-cta" data-act="tab" data-tab="topics">Open Topics</button></div>';
-  /* what the student has earned: quiet until today's set is done, then it is the reward */
-  html += '<div class="mini-row stats"><div class="mini streak-card">' + statIcon('flame', 40, u.lastDay === tk ? '' : 'off') + '<div class="mini-n num streak-count">' + st + '</div><div class="mini-l">day streak</div>' +
-    (u.notif.streak && st > 0 && u.lastDay !== tk ? '<div class="mini-s warn">Ends at midnight</div>' : '') + '</div>' +
-    '<div class="mini">' + statIcon('star', 40) + '<div class="mini-n num">' + wxp + '</div><div class="mini-l">XP this week</div>' +
-    (week.n ? '<div class="mini-s">' + plural(week.n, 'question') + '</div><div class="mini-s">' + pct(week.c, week.n) + '% right</div>' : '') + '</div></div>';
+  if (done) html += homeDone(u, st);
+  else if (t) html += homeToday(u, t, st > 0 && u.lastDay !== tk ? '<div class="hm-line">Practise today to keep your ' + st + '-day streak.</div>' : '');
+  else html += '<div class="hm-mid"><span class="hm-name">Choose a chapter</span></div><div class="hm-card"><button class="btn btn-primary" data-act="tab" data-tab="topics">Open Topics</button></div>';
   return html + '</div>';
 };
 
