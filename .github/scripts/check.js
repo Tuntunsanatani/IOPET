@@ -137,7 +137,7 @@ const server = http.createServer((req, res) => {
     if (sh && shown(sh)) { var n = sh.nextElementSibling; while (n && !shown(n)) n = n.nextElementSibling;
       if (n && !n.classList.contains('sub')) { var gap = Math.round(n.getBoundingClientRect().top - sh.getBoundingClientRect().bottom); if (gap !== 16) out.push('the header is ' + gap + ' px over the first block, not 16'); } }
     var chk = root.querySelector('.btn-check[disabled]');
-    if (chk && shown(chk)) { var t = document.createElement('i'); t.style.background = 'var(--surface-3)'; document.body.appendChild(t);
+    if (chk && shown(chk)) { var t = document.createElement('i'); t.style.background = 'var(--off)'; document.body.appendChild(t);
       var want = cs(t).backgroundColor; t.remove(); if (cs(chk).backgroundColor !== want) out.push('the not-ready Check is ' + cs(chk).backgroundColor + ', not the one not-ready grey ' + want); }
     Array.prototype.forEach.call(root.querySelectorAll('.q-dock .btn, .sm-dock .btn'), function (b) {
       if (!shown(b)) return; var off = Math.round(vh - b.getBoundingClientRect().bottom); if (off !== 16) out.push('docked button ' + name(b) + ' is ' + off + ' px over the bottom, not 16'); });
