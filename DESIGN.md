@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.32.0)
+# IOPET design rules (v3, 3.32.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -141,7 +141,10 @@ Every part that can be touched has these, in both looks, from tokens only:
   sink onto.)
 - Two things look alike only if they do alike. Sign in before its fields are right is an outline because a tap on it
   answers (it shows what is missing). Check before a choice cannot be pressed at all, so it lies flat and faint
-  (3.32.0, Brilliant's: `--off`, words `--ink-off`, no line, no edge; WCAG exempts inactive controls from contrast), and
+  (3.32.0, Brilliant's: `--off`, words `--ink-off`, no line, no edge; WCAG exempts inactive controls from contrast;
+  3.32.1, the owner: about 25 % fainter than Brilliant's, and on every button that cannot be pressed, of any kind:
+  light `#F5F5F5` / `#D2D2D2` (1.4 : 1), dark `#1A1A1A` / `#3C3C3C` (1.6 : 1); the block 23-25 % and the words 28-29 %
+  closer to the page in L*), and
   rises when there is a choice.
 
 ## 2. Colour roles (tokens in `index.html`, `:root` and `[data-theme="light"]`)
