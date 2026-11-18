@@ -1368,10 +1368,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-btn.wrong .opt-mk{background:var(--wrong);color:var(--on-wrong)}
 .qz .opt-btn.shake{animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0)}
 @keyframes q-shake{0%,100%{transform:none}15%{transform:translateX(-6px)}35%{transform:translateX(6px)}55%{transform:translateX(-4px)}75%{transform:translateX(3px)}}
-.qz .opt-btn.fade{animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0),q-fade var(--t-step) var(--ease-std) var(--q-out) forwards}   /* a first miss: it shakes, then steps back */
-@keyframes q-fade{to{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in)}}
-.qz .opt-btn.fade .opt-mk{animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards,q-mk-out var(--t-step) var(--ease-std) var(--q-out) forwards}
-@keyframes q-mk-out{to{background:var(--ink3);color:var(--bg)}}
+.qz .opt-btn.wrong.fade{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in);   /* a first miss: it shakes, then steps back. 3.33.2 where it ends is */
+  animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0),q-fade var(--t-step) var(--ease-std) var(--q-out) backwards}   /* the rule itself: the motion only leads there, so with no motion (Reduce animations, a phone set to less motion) no red is left (the owner's bug) */
+@keyframes q-fade{from{opacity:1;border-color:var(--wrong);box-shadow:inset 0 0 0 .34px var(--wrong)}}
+.qz .opt-btn.wrong.fade .opt-mk{background:var(--ink3);color:var(--bg);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards,q-mk-out var(--t-step) var(--ease-std) var(--q-out) backwards}
+@keyframes q-mk-out{from{background:var(--wrong);color:var(--on-wrong)}}
 .qz .opt-btn.out{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in)}   /* found wrong: out of the way, its cross grey */
 .qz .opt-btn.out .opt-mk{background:var(--ink3);color:var(--bg)}
 .qz .q-dock .q-skip{border:var(--bw-edge) solid var(--edge);color:var(--ink2);font-weight:var(--fw-btn);box-shadow:0 2px 0 var(--edge),var(--edge-in)}   /* Skip: a quiet panel with a lip; 3.33.1 its word in --ink2, a quarter fainter than Check's (the owner, §0) */
@@ -1399,8 +1400,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-dock .q-ghost .btn-check{flex:1;min-width:0;background:var(--off);color:var(--ink-off);box-shadow:none;animation:q-ghost var(--t-state) var(--ease-std) backwards}   /* Check, pressed, steps back as the sheet comes */
 @keyframes q-ghost{from{background:var(--neutral);color:var(--on-neutral)}}
 .calm .qz .opt-btn,.calm .qz .opt-mk,.calm .qz .q-result,.calm .qz .qr-go,.calm .qz .fb-xp,.calm .qz .btn-check{animation:none !important;transition:none !important}
-.calm .qz .opt-btn.fade{opacity:.4;border-color:var(--edge)}
-@media (prefers-reduced-motion:reduce){.qz .opt-btn,.qz .opt-mk,.qz .q-result,.qz .qr-go,.qz .fb-xp,.qz .btn-check{animation:none !important;transition:none !important}.qz .opt-btn.fade{opacity:.4;border-color:var(--edge)}}
+@media (prefers-reduced-motion:reduce){.qz .opt-btn,.qz .opt-mk,.qz .q-result,.qz .qr-go,.qz .fb-xp,.qz .btn-check{animation:none !important;transition:none !important}}
 /* 3.33.0 PRACTICE AS A GAME (DESIGN.md §12.16). The pieces are the quiz's own: a card is an option's panel, a tile and a key are
    Skip's panel with its lip (a thing to press), an empty place is a well in the not-ready grey, the student's own move is the
    flame, and after Check everything speaks as an option does (green, red with its cross and one shake, the answer shown).
@@ -2954,7 +2954,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.33.1',
+  VERSION: '3.33.2',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
