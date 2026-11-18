@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.33.4)
+# IOPET design rules (v3, 3.34.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -820,7 +820,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 
 | | Brilliant (measured) | IOPET 3.32.0 |
 |---|---|---|
-| Bar above the question | grey X, grey dots, no clock | a plain grey X (no ring), the line, a grey count; no clock, no chapter name |
+| Bar above the question | grey X, grey dots, no clock | a plain grey X (no ring), one dot a question (3.34.0, §12.17); no count, no clock, no chapter name |
 | Where the answers are | the lower third, ~89 px above the buttons | pushed down to the buttons, the free space above them |
 | An option at rest | 2 px `#E5E5E5`, regular weight, no letter | the panel's edge (`--edge`), regular, no A B C D |
 | The choice | blue border and tint, at once | the flame's border and tint, in one `--t-state` |
@@ -889,4 +889,27 @@ the student's own answer as they built it, even when it is none of the four opti
 
 **Not built yet**: match (pairs) and fix-the-mistake need questions written for them (the questions chat); a number
 line, a balance or a Venn to fill need drawings that take answers.
+
+### 12.17 The set's dots (3.34.0)
+
+The owner (18 Nov 2026), on Brilliant's lesson bar: the line and its count (10/12) give way to one dot a question, and the
+X steps back. The dots say what happened without a word.
+
+| Dot | Means | Look | Motion |
+|---|---|---|---|
+| Faint | not reached yet | `--fill` (#F3F3F3 light, #222 dark; Brilliant #F2F2F2) | none |
+| Ringed | the question now open | `--line-2` (#C7C7C7 / #3D3D3D; Brilliant #CCC) inside a 2 px ring of `--fill`, 3 px from it (a `--bg` gap) | the ring opens in one `--t-state` when the question opens |
+| Green | the first answer was right | `--win` | from the grey to green with a small lift (×1.3, the pop spring, `--t-lift`), at `--q-ans`, with the answer |
+| Dark grey | the first answer was wrong, or it was skipped | `--ink3` (#6A6A6A / #8F8F8F; Brilliant #666) | none: at once and still (the owner) |
+
+- **Only the first answer counts**, as everywhere (§12.15): a right second try leaves its dot dark grey.
+- **Size, measured on the owner's screenshot**: dots 3.5 % of the screen wide, with two thirds of a dot between them. In
+  IOPET: 12 px with 8 px gaps. A set of 12 on a 360 px phone makes them 10 px, and on 320 px 8 px. They shrink (gaps 4 px)
+  when a set is long. A set too long for 6 px dots (a pack's) gets one thin piece a question, filling the row.
+- **The row** sits centred on the screen, between the X and an empty place of the same width (a grid of 44 px | 1fr | 44 px).
+  `role="img"` reads "Question 4 of 12".
+- **The X** is `--ink-x` (#909090 light, #666666 dark): 3.2:1, findable without calling to the eye (it was `--ink3`, 5.4:1).
+  Its line is 1.75 px, Brilliant's weight (2 px before).
+- **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
+- A full paper keeps its own bar: 90 dots would not fit.
 

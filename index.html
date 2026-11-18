@@ -58,7 +58,7 @@
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
   --line:#2C2C2C;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);--ink-skip:rgba(242,242,242,.75);   /* 3.33.3 Skip's word: the ink at 75 % (§0) */
-  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#3C3C3C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
+  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#3C3C3C;--ink-x:#666666;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#FF9F0A;--primary-2:#FFB340;--primary-soft:#282828;--primary-ink:#FFB340;   /* 8.1:1; its text tone 9.4:1. A chosen thing: orange ring + ink on a neutral fill */
@@ -142,7 +142,7 @@
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
   --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--win-lip:#15A845;--win-soft:#EDFBF1;--win-sheet:#D3F5DD;--win-ink:#0E7C3A;--miss-sheet:#EBEBEB;--off:#F5F5F5;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
   --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
-  --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
+  --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#909090;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
@@ -1340,9 +1340,30 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    takes its colour at once (here one --t-state); Check rises 60 ms after the first choice; on Check the answer itself changes
    first (~140 ms: its colour, then its corner mark), the sheet comes up at ~220 ms over 280 ms, its button lights and the XP
    rises at ~400-500 ms; a first wrong option fades at ~550 ms over 250 ms. Practice only (.qz): a full paper keeps its look. */
-.qz .q-header .icon-btn{border:0;background:none;color:var(--ink3)}
+.qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x)}   /* 3.34.0 the X stays findable (3.2:1) without calling to the eye (the owner) */
+.qz .q-header .icon-btn .li{stroke-width:1.75}
 .qz .q-header .icon-btn:active{background:var(--fill)}
-.qz .q-counter{color:var(--ink3);font-weight:600}
+/* 3.34.0 THE SET'S DOTS (DESIGN.md §12.17), measured on the owner's Brilliant screenshot: dots 3.5 % of the screen wide with
+   two thirds of a dot between them; the open question's dot a light grey (#CCC there) inside a 2 px ring of the faintest grey
+   (#F2F2F2), 3 px from it; a right answer green, a wrong one or a skip dark grey (#666), the rest the faintest grey. */
+.qz .q-header{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;column-gap:8px;align-items:center}
+.q-dots{display:flex;align-items:center;justify-content:center;gap:var(--qg);height:44px;min-width:0}
+.q-dots .qd{flex:none;display:block;width:var(--qd);height:var(--qd);border-radius:50%;background:var(--fill)}
+.q-dots .qd.cur{background:var(--line-2)}
+.q-dots .qd.ok{background:var(--win)}
+.q-dots .qd.miss{background:var(--ink3)}   /* wrong or skipped: at once, with no motion (the owner) */
+.q-dots .qd.at{box-shadow:0 0 0 var(--qr) var(--bg),0 0 0 var(--qs) var(--fill)}
+.q-dots .qd.at-in{animation:qd-at var(--t-state) var(--ease-swift) backwards}
+@keyframes qd-at{from{background:var(--fill);box-shadow:0 0 0 0 var(--bg),0 0 0 0 var(--fill)}}
+.q-dots .qd.ok-in{animation:qd-ok var(--t-lift) var(--ease-pop) var(--q-ans) backwards}   /* right: from the grey to green with a small lift, with the answer */
+@keyframes qd-ok{0%{background:var(--line-2);transform:none}45%{transform:scale(1.3)}100%{transform:none}}
+.q-dots.seg{gap:2px}
+.q-dots.seg .qd{flex:1 1 0;width:auto;min-width:0;height:6px;border-radius:var(--r-pill)}
+.q-dots.seg .qd.at{box-shadow:none}
+.q-dots.seg .qd.ok-in{animation-name:qd-ok-seg}
+@keyframes qd-ok-seg{from{background:var(--line-2)}}
+.calm .q-dots .qd{animation:none !important}
+@media (prefers-reduced-motion:reduce){.q-dots .qd{animation:none !important}}
 .qz>.opts{margin-top:auto;padding-top:24px}   /* the answers by the thumb, just above the buttons */
 .qz>.q-dock{margin-top:0}   /* (the free space goes above the answers, not between them and the buttons) */
 .qz>.q-dock:not(.res){padding-top:76px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes */
@@ -2955,7 +2976,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.33.4',
+  VERSION: '3.34.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5921,8 +5942,7 @@ SCREENS.practice = function () {
   sel = ask && typeof it.sel === 'number' ? it.sel : -1;
   ready = it.g ? ask && gReady(it) : sel >= 0;
   html = '<div class="page bg-practice practice qz"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
-    '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + (pct(S.i, total) - 100) + '%;' : ' style="') + 'transform:translateX(' + (pct(S.i + (stage === 'done' ? 1 : 0), total) - 100) + '%)"></i></div>' +
-    '<div class="q-counter num">' + (S.i + 1) + '/' + total + '</div></div>' +
+    qDots(fresh) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +   /* 3.34.0 one dot a question (the owner, on Brilliant's) */
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>' + (it.g ? gameHtml(it, stage, fresh) : '<div class="opts">');   // 3.33.0 a game in place of the options
   if (!it.g) {
   if (q.o.every(function (o) { return /^\[\[[a-z0-9]+:[^\[\]]*\]\]$/.test(o); })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid">';   /* four drawings: a 2 x 2 grid */
@@ -5962,6 +5982,27 @@ SCREENS.practice = function () {
   }
   return html + '</div>';
 };
+/* 3.34.0 THE SET'S DOTS (the owner, on Brilliant's; DESIGN.md §12.17): one dot a question, in place of the bar and its count.
+   What a dot says is the first answer, the one that counts: right (green, which comes in with a small lift as the answer
+   is checked), wrong or skipped (dark grey, at once and still), not answered yet (faint), and the question now open (a
+   light grey dot inside a very faint ring, which comes in when the question opens). The dots fit the row: 12 px with 8 px
+   between them, smaller when a set is long or a screen narrow, so the row always stays centred between the X and an empty
+   place of the same width; a set too long for dots of 6 px (a pack's) gets one thin piece a question, the row full. */
+function qDots(fresh) {
+  var n = S.items.length, w = (elScreens && elScreens.clientWidth) || window.innerWidth || 360, room, d, g = 8, h = '', seg;
+  room = w - 2 * (w < 340 ? 16 : 24) - 2 * 44 - 2 * 8;           // the page's sides, the X and its twin place, the two gaps
+  d = Math.min(12, Math.floor((room - (n - 1) * g) / n));
+  if (d < 8) { g = 4; d = Math.min(12, Math.floor((room - (n - 1) * g) / n)); }
+  seg = d < 6;                                                     // a very long set (a pack): one thin piece a question, the row full
+  S.items.forEach(function (it, k) {
+    var c = it.pick === null ? (k === S.i ? 'cur' : '') : it.pick === it.q.a ? 'ok' : 'miss';
+    if (c === 'ok' && fresh && k === S.i) c += ' ok-in';
+    if (k === S.i) c += ' at' + (S.dotAt !== S.i ? ' at-in' : '');
+    h += '<i class="qd ' + c + '"></i>';
+  });
+  S.dotAt = S.i;
+  return '<div class="q-dots' + (seg ? ' seg' : '') + '" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + n + '" style="--qd:' + d + 'px;--qg:' + g + 'px;--qr:' + (g > 4 ? 3 : 1) + 'px;--qs:' + (g > 4 ? 5 : 2) + 'px">' + h + '</div>';
+}
 /* 3.32.0 where a question stands: 'ask' (no answer yet), 'miss' (a first wrong answer, one more try offered), 'ask2' (the second
    try), 'done' (right, skipped, or the second try given) */
 function qStage(it) {
