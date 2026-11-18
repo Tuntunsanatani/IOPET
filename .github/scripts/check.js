@@ -102,6 +102,35 @@ try {
         for (const r of rules) if (r.sel !== SEL && BTN.test(r.sel) && /-webkit-text-fill-color:/.test(r.body)) e.push(r.sel + ' sets -webkit-text-fill-color');
         return e;
       } }
+    ,{ what: 'the set\'s dots in practice: one dot a question (right green growing in, wrong or skipped dark grey at once, the open one ringed, the rest faint)', since: '3.34.0, 3.34.2', status: 'FINAL, the owner, 18 Nov 2026',
+      test: () => {
+        const e = [], has = (sel, decl) => { if (!rule(sel).includes(decl.replace(/\s+/g, ''))) e.push(sel + ' must hold ' + decl); };
+        has('.q-dots', 'display:flex;align-items:center;justify-content:center;gap:var(--qg);height:44px;min-width:0');
+        has('.q-dots .qd', 'position:relative;flex:none;display:block;width:var(--qd);height:var(--qd);border-radius:50%;background:var(--fill)');
+        has('.q-dots .qd.cur', 'background:var(--line-2)');
+        has('.q-dots .qd.ok', 'background:var(--win)');
+        has('.q-dots .qd.miss', 'background:var(--ink3)');
+        has('.q-dots .qd.at', 'box-shadow:0 0 0 var(--qr) var(--bg),0 0 0 var(--qs) var(--fill)');
+        has('.q-dots .qd.ok-in::after', 'animation:qd-fill var(--t-dot) var(--ease-dot) var(--q-ans) backwards,qd-show var(--t-dot-in) linear var(--q-ans) backwards');
+        has('.qz .q-header', 'display:grid;grid-template-columns:44px minmax(0,1fr) 44px;column-gap:8px;align-items:center');
+        if (!/(^|;)--t-dot:460ms(;|$)/.test(root) || !/(^|;)--t-dot-in:90ms(;|$)/.test(root) || !/(^|;)--ease-dot:cubic-bezier\(\.2,1\.55,\.36,1\)(;|$)/.test(root)) e.push(':root must hold --t-dot:460ms, --t-dot-in:90ms, --ease-dot:cubic-bezier(.2,1.55,.36,1)');
+        for (const r of rules) if (/\.qd\.miss|\.qd\.cur(?![\w-])/.test(r.sel) && /animation/.test(r.body)) e.push(r.sel + ' moves: a wrong, skipped or waiting dot must not');
+        const js = scripts.join('\n');
+        for (const line of ["qDots(fresh) + '<span class=\"q-hd-sp\" aria-hidden=\"true\"></span></div>'",
+                            "var c = it.pick === null ? (k === S.i ? 'cur' : '') : it.pick === it.q.a ? 'ok' : 'miss';",
+                            "d = Math.min(12, Math.floor((room - (n - 1) * g) / n));"])
+          if (!js.includes(line)) e.push('the app must keep: ' + line);
+        if (/class="q-counter/.test(js.slice(js.indexOf('SCREENS.practice = function'), js.indexOf('function qStage(')))) e.push('the practice bar must not show a count again');
+        return e;
+      } },
+    { what: 'the practice X: 30 px, faint (--ink-x), 12 px higher and further left than the dots', since: '3.34.2', status: 'FINAL, the owner, 18 Nov 2026',
+      test: () => {
+        const e = [];
+        if (!rule('.qz .q-header .icon-btn').includes('border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px')) e.push('.qz .q-header .icon-btn must be color:var(--ink-x);position:relative;top:-12px;left:-12px');
+        if (!rule('.qz .q-header .icon-btn .li').includes('width:30px;height:30px;stroke-width:1.4')) e.push('.qz .q-header .icon-btn .li must be width:30px;height:30px;stroke-width:1.4');
+        if (!/(^|;)--ink-x:#5C5C5C(;|$)/.test(root) || !/(^|;)--ink-x:#A3A3A3(;|$)/.test(light)) e.push('--ink-x must be #5C5C5C (dark) and #A3A3A3 (light)');
+        return e;
+      } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
 })();

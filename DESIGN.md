@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.34.1)
+# IOPET design rules (v3, 3.34.2)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -29,6 +29,8 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 | 1 | The words on every action button (`.btn` and all that build on it: primary, neutral, Check, Continue, Start; the secondary line buttons; Skip; Sign in `.au-go`; Sign out): one weight lighter than they were and a little space between the letters, so a word on a button is read at a glance | `--fw-btn: 600` (they drew in the 800 face before), `--ls-btn: .03em`; no rule on a button sets another weight or spacing | 3.33.1 | **FINAL** (the owner, 18 Nov 2026) |
 | 2 | Skip never calls louder than Check: its word is the ink at 75 % | `--ink-skip`: `rgba(242,242,242,.75)` dark, `rgba(20,20,20,.75)` light, on `.q-skip` (9.5:1 and 8.2:1). It was `--ink2` in 3.33.1; the owner chose 75 % out of 60 / 75 / 80 / 85 % in 3.33.3 | 3.33.1, 75 % in 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
 | 3 | The words on every action button at 88 % of their colour (Skip apart, which has its own 75 %; a button that cannot be pressed keeps the not-ready look) | `--btn-ink: 88%`, one rule: `-webkit-text-fill-color: color-mix(in srgb, currentColor var(--btn-ink), transparent)` on `.btn:not([disabled]):not(.q-skip)`, `.au-go:not(.off)`, `.sign-out`; no other button rule sets a text fill. Sign in 7.3:1, Continue 7.1:1, Check 9.8:1 light / 11.0:1 dark. A browser without `color-mix` keeps the words whole. The owner chose 88 % in 3.33.3 | 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
+| 4 | The set's dots in practice (§12.17), in place of the bar and its count | One dot a question: the first answer right is `--win`. The green grows out of the dot (`::after` scale .15 → 1.08 → 1, `--t-dot` 460 ms, `--ease-dot` `cubic-bezier(.2,1.55,.36,1)`, from `--q-ans`; transform and opacity only). Wrong or skipped is `--ink3`, at once, no motion. The open question is `--line-2` in a ring of `--fill`, 3 px out, 2 px wide. Not reached is `--fill`. Dots are 12 px with 8 px gaps, smaller to fit; a too-long set gets thin pieces. The row is centred in a 44 px, 1fr, 44 px grid | 3.34.0, 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
+| 5 | The practice X | 30 px drawn (line 1.75 px), `--ink-x` #A3A3A3 light, #5C5C5C dark, 12 px higher and 12 px further left than the dots' line; the place to tap 44 px | 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
 
 ## 1. Principles
 
@@ -899,7 +901,7 @@ X steps back. The dots say what happened without a word.
 |---|---|---|---|
 | Faint | not reached yet | `--fill` (#F3F3F3 light, #222 dark; Brilliant #F2F2F2) | none |
 | Ringed | the question now open | `--line-2` (#C7C7C7 / #3D3D3D; Brilliant #CCC) inside a 2 px ring of `--fill`, 3 px from it (a `--bg` gap) | the ring opens in one `--t-state` when the question opens |
-| Green | the first answer was right | `--win` | from the grey to green with a small lift (×1.3, the pop spring, `--t-lift`), at `--q-ans`, with the answer |
+| Green | the first answer was right | `--win` | 3.34.2: the green grows out of the dot's middle (scale .15 → 1.08 → 1) over the grey, in `--t-dot` 460 ms on `--ease-dot` (an overshooting curve, smooth at any frame rate), from `--q-ans`; it is opaque within 90 ms. Transform and opacity only, so the graphics chip draws it at the screen's own rate (60 to 144 Hz), even while the page is busy (tested: it went on growing through a 650 ms block of the page) |
 | Dark grey | the first answer was wrong, or it was skipped | `--ink3` (#6A6A6A / #8F8F8F; Brilliant #666) | none: at once and still (the owner) |
 
 - **Only the first answer counts**, as everywhere (§12.15): a right second try leaves its dot dark grey.
@@ -908,7 +910,10 @@ X steps back. The dots say what happened without a word.
   when a set is long. A set too long for 6 px dots (a pack's) gets one thin piece a question, filling the row.
 - **The row** sits centred on the screen, between the X and an empty place of the same width (a grid of 44 px | 1fr | 44 px).
   `role="img"` reads "Question 4 of 12".
-- **The X** is `--ink-x` (#909090 light, #666666 dark): 3.2:1, findable without calling to the eye (it was `--ink3`, 5.4:1).
+- **The X** (3.34.2, the owner): 30 px, fainter, and set 12 px higher and 12 px further left than the dots' line, so the X and the
+  dots never read as one row. `--ink-x` is #A3A3A3 light (2.5:1) and #5C5C5C dark (2.75:1). This is below the 3:1 asked of
+  controls, the owner's choice: its larger size keeps it findable. The place to tap (44 px) moves with it. 3.34.0 had
+  #909090 / #666666 (3.2:1); before that it was `--ink3` (5.4:1).
   Its line is 1.75 (Brilliant's weight; 2 before). 3.34.1, the owner: the X is drawn at 20 px (it was 24); the place to tap stays
   44 px. The owner thought of taking the X away (Android's Back also quits). It stays: an installed app on an iPhone has no Back,
   and Back quits safely only where the browser lets the app catch it.

@@ -58,7 +58,7 @@
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
   --line:#2C2C2C;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);--ink-skip:rgba(242,242,242,.75);   /* 3.33.3 Skip's word: the ink at 75 % (§0) */
-  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#3C3C3C;--ink-x:#666666;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
+  --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#3C3C3C;--ink-x:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
   --primary:#FF9F0A;--primary-2:#FFB340;--primary-soft:#282828;--primary-ink:#FFB340;   /* 8.1:1; its text tone 9.4:1. A chosen thing: orange ring + ink on a neutral fill */
@@ -126,7 +126,7 @@
   --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-shake0:40ms;--q-ans:60ms;--q-dim:80ms;--q-mark:140ms;--q-sheet:220ms;--q-show:240ms;--q-go:460ms;--q-xp:500ms;--q-out:550ms;
-  --t-shake:360ms;--t-lift:320ms;--t-step:250ms;--t-xp:300ms;--q-step:40ms;--t-blink:1060ms;   /* 3.33.0 a game's places light one after another; the caret blinks */
+  --t-shake:360ms;--t-lift:320ms;--t-step:250ms;--t-xp:300ms;--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
   /* 3.17.0 page switches (the owner's timeline): the page leaves in 120 ms, then the next one comes in 150 ms. What comes in
      settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
      screen would stand empty for ~80 ms (five frames) before the next page — a blink. Evenly, the gap is one frame. */
@@ -142,7 +142,7 @@
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
   --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--win-lip:#15A845;--win-soft:#EDFBF1;--win-sheet:#D3F5DD;--win-ink:#0E7C3A;--miss-sheet:#EBEBEB;--off:#F5F5F5;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
   --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
-  --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#909090;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
+  --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#A3A3A3;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
@@ -1340,30 +1340,33 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    takes its colour at once (here one --t-state); Check rises 60 ms after the first choice; on Check the answer itself changes
    first (~140 ms: its colour, then its corner mark), the sheet comes up at ~220 ms over 280 ms, its button lights and the XP
    rises at ~400-500 ms; a first wrong option fades at ~550 ms over 250 ms. Practice only (.qz): a full paper keeps its look. */
-.qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x)}   /* 3.34.0 the X stays findable (3.2:1) without calling to the eye (the owner) */
-.qz .q-header .icon-btn .li{width:20px;height:20px;stroke-width:1.75}   /* 3.34.1 the owner: a smaller X (the place to tap stays 44 px) */
+.qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}   /* 3.34.0 the X stays findable without calling to the eye (the owner). 3.34.2 the owner: higher and further left than the dots' line, so the two never read as one row (12 px each way; the place to tap moves with it) */
+.qz .q-header .icon-btn .li{width:30px;height:30px;stroke-width:1.4}   /* 3.34.2 the owner: larger (30 px) and fainter; its line stays 1.75 px as drawn */
 .qz .q-header .icon-btn:active{background:var(--fill)}
 /* 3.34.0 THE SET'S DOTS (DESIGN.md §12.17), measured on the owner's Brilliant screenshot: dots 3.5 % of the screen wide with
    two thirds of a dot between them; the open question's dot a light grey (#CCC there) inside a 2 px ring of the faintest grey
    (#F2F2F2), 3 px from it; a right answer green, a wrong one or a skip dark grey (#666), the rest the faintest grey. */
 .qz .q-header{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;column-gap:8px;align-items:center}
 .q-dots{display:flex;align-items:center;justify-content:center;gap:var(--qg);height:44px;min-width:0}
-.q-dots .qd{flex:none;display:block;width:var(--qd);height:var(--qd);border-radius:50%;background:var(--fill)}
+.q-dots .qd{position:relative;flex:none;display:block;width:var(--qd);height:var(--qd);border-radius:50%;background:var(--fill)}
 .q-dots .qd.cur{background:var(--line-2)}
 .q-dots .qd.ok{background:var(--win)}
 .q-dots .qd.miss{background:var(--ink3)}   /* wrong or skipped: at once, with no motion (the owner) */
 .q-dots .qd.at{box-shadow:0 0 0 var(--qr) var(--bg),0 0 0 var(--qs) var(--fill)}
 .q-dots .qd.at-in{animation:qd-at var(--t-state) var(--ease-swift) backwards}
 @keyframes qd-at{from{background:var(--fill);box-shadow:0 0 0 0 var(--bg),0 0 0 0 var(--fill)}}
-.q-dots .qd.ok-in{animation:qd-ok var(--t-lift) var(--ease-pop) var(--q-ans) backwards}   /* right: from the grey to green with a small lift, with the answer */
-@keyframes qd-ok{0%{background:var(--line-2);transform:none}45%{transform:scale(1.3)}100%{transform:none}}
+.q-dots .qd.ok-in{background:var(--line-2)}   /* 3.34.2 right: the green grows out of the dot's middle, a little past its edge, and settles */
+.q-dots .qd.ok-in::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;background:var(--win);will-change:transform,opacity;
+  animation:qd-fill var(--t-dot) var(--ease-dot) var(--q-ans) backwards,qd-show var(--t-dot-in) linear var(--q-ans) backwards}   /* transform and opacity only: drawn by the graphics chip at the screen's own rate (60 to 144 Hz), whatever the page does meanwhile */
+@keyframes qd-fill{from{transform:scale(.15)}}
+@keyframes qd-show{from{opacity:0}}
 .q-dots.seg{gap:2px}
 .q-dots.seg .qd{flex:1 1 0;width:auto;min-width:0;height:6px;border-radius:var(--r-pill)}
 .q-dots.seg .qd.at{box-shadow:none}
-.q-dots.seg .qd.ok-in{animation-name:qd-ok-seg}
-@keyframes qd-ok-seg{from{background:var(--line-2)}}
-.calm .q-dots .qd{animation:none !important}
-@media (prefers-reduced-motion:reduce){.q-dots .qd{animation:none !important}}
+.q-dots.seg .qd.ok-in::after{transform-origin:0 50%;animation-name:qd-fill-seg,qd-show}
+@keyframes qd-fill-seg{from{transform:scaleX(0)}}
+.calm .q-dots .qd,.calm .q-dots .qd::after{animation:none !important}
+@media (prefers-reduced-motion:reduce){.q-dots .qd,.q-dots .qd::after{animation:none !important}}
 .qz>.opts{margin-top:auto;padding-top:24px}   /* the answers by the thumb, just above the buttons */
 .qz>.q-dock{margin-top:0}   /* (the free space goes above the answers, not between them and the buttons) */
 .qz>.q-dock:not(.res){padding-top:76px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes */
@@ -2976,7 +2979,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.34.1',
+  VERSION: '3.34.2',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
