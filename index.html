@@ -123,7 +123,7 @@
   --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-shake0:40ms;--q-ans:60ms;--q-dim:80ms;--q-mark:140ms;--q-sheet:220ms;--q-show:240ms;--q-go:460ms;--q-xp:500ms;--q-out:550ms;
-  --t-shake:360ms;--t-lift:320ms;--t-step:250ms;--t-xp:300ms;
+  --t-shake:360ms;--t-lift:320ms;--t-step:250ms;--t-xp:300ms;--q-step:40ms;--t-blink:1060ms;   /* 3.33.0 a game's places light one after another; the caret blinks */
   /* 3.17.0 page switches (the owner's timeline): the page leaves in 120 ms, then the next one comes in 150 ms. What comes in
      settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
      screen would stand empty for ~80 ms (five frames) before the next page — a blink. Evenly, the gap is one frame. */
@@ -1396,6 +1396,66 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .qz .opt-btn,.calm .qz .opt-mk,.calm .qz .q-result,.calm .qz .qr-go,.calm .qz .fb-xp,.calm .qz .btn-check{animation:none !important;transition:none !important}
 .calm .qz .opt-btn.fade{opacity:.4;border-color:var(--edge)}
 @media (prefers-reduced-motion:reduce){.qz .opt-btn,.qz .opt-mk,.qz .q-result,.qz .qr-go,.qz .fb-xp,.qz .btn-check{animation:none !important;transition:none !important}.qz .opt-btn.fade{opacity:.4;border-color:var(--edge)}}
+/* 3.33.0 PRACTICE AS A GAME (DESIGN.md §12.16). The pieces are the quiz's own: a card is an option's panel, a tile and a key are
+   Skip's panel with its lip (a thing to press), an empty place is a well in the not-ready grey, the student's own move is the
+   flame, and after Check everything speaks as an option does (green, red with its cross and one shake, the answer shown).
+   Moves glide (FLIP, transform only, on the pop spring); nothing on the page jumps. */
+.qz>.gm{margin-top:auto;padding-top:24px}
+.gm .num{font-variant-numeric:tabular-nums}
+.gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
+.gm .fly{z-index:3}
+/* order: the cards on a ladder; the place numbers stay, the cards move */
+.gm-row{display:flex;align-items:center}
+.gm-row+.gm-row{margin-top:8px}
+.gm-pos{flex:none;width:24px;margin-right:8px;text-align:center;font-size:var(--fs-sm);font-weight:700;color:var(--ink3)}
+.gm-card{position:relative;flex:1;min-width:0;display:flex;align-items:center;min-height:56px;padding:12px 12px 12px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);font-size:var(--fs-lg);line-height:1.4;text-align:left;color:var(--ink);touch-action:none;-webkit-user-select:none;user-select:none;
+  transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+.gm-card[disabled]{cursor:default}
+.gm-card .gm-txt{flex:1;min-width:0}
+.gm-grip{flex:none;margin-left:8px;color:var(--ink3);stroke-width:3.4}
+.gm-card.sel{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* picked up: the flame */
+.gm-card.sel-in{animation:q-sel var(--t-state) var(--ease-swift)}
+.gm-card.drag{z-index:4;border-color:var(--primary);background:var(--done-bg)}
+.gm-card.drop{border-color:var(--primary);background:var(--done-bg)}   /* the card it would swap with */
+/* spell: the places in a row, the letters in a tray below (a used letter leaves its well) */
+.gm-slots{display:grid;grid-template-columns:repeat(var(--n),minmax(0,48px));justify-content:center;gap:8px}
+.gm-slot{position:relative;height:56px;padding:0;border-radius:var(--r-sm);background:var(--fill-2)}
+.gm-slot.next{box-shadow:inset 0 -4px 0 var(--primary)}   /* the next place: a flame line under it */
+.gm-slot[disabled]{cursor:default}
+.gm-slot>.gm-tile{position:absolute;top:0;left:0;right:0;bottom:0;width:auto}
+.gm-bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
+.gm-tile{position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-sm);box-shadow:0 2px 0 var(--edge),var(--edge-in);
+  font-size:var(--fs-2xl);font-weight:700;color:var(--ink);touch-action:manipulation;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+.gm-tile:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
+.gm-tile.ghost{background:var(--fill-2);border-color:transparent;box-shadow:none}
+.gm-slot .gm-tile .opt-mk{top:-8px;right:-8px}
+/* num: the answer, and the app's own keys */
+.gm-field{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);
+  font-size:var(--fs-3xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+.gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* what the student typed: the flame */
+.gm-caret{display:block;width:2px;height:32px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
+@keyframes gm-blink{50%{opacity:0}}
+.gm-was{margin-right:12px;font-size:var(--fs-lg);font-weight:600;color:var(--ink3);text-decoration:line-through}   /* the number already found wrong */
+.gm-keys{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}
+.gm-key{display:flex;align-items:center;justify-content:center;height:48px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-md);box-shadow:0 2px 0 var(--edge),var(--edge-in);
+  font-size:var(--fs-2xl);font-weight:600;color:var(--ink);touch-action:manipulation}
+.gm-key:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
+.gm-key.nil{visibility:hidden}
+.gm-key .li{stroke-width:2.2}
+.gm.over .gm-key,.gm.over .gm-bank .gm-tile{opacity:.4;transition:opacity var(--t-fade) var(--ease-std)}   /* answered: the tools step back */
+.gm.over .gm-grip{display:none}
+@media (max-height:720px){.qz>.gm{padding-top:16px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
+/* checked: as an option speaks (§12.15) */
+.gm .ok{border-color:var(--win);background:var(--win-soft);box-shadow:inset 0 0 0 .34px var(--win)}
+.gm .bad{border-color:var(--wrong);background:var(--surface);box-shadow:inset 0 0 0 .34px var(--wrong)}
+.gm .ok-in{animation:gm-ok var(--t-lift) var(--ease-pop) calc(var(--q-ans) + var(--i,0) * var(--q-step)) backwards}   /* the student's own answer: right, place by place */
+@keyframes gm-ok{0%{border-color:var(--edge);background-color:var(--surface);transform:none}45%{transform:scale(1.03)}100%{transform:none}}
+.gm-field.ok-in{animation:q-ok var(--t-lift) var(--ease-pop) var(--q-ans) backwards}
+.gm .ok-show{animation:q-show var(--t-state) var(--ease-std) var(--q-show) backwards}   /* the answer, shown after a miss */
+.gm .shake{animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0)}
+.calm .gm *,.calm .gm{animation:none !important;transition:none !important}
+.calm .gm-caret{opacity:1}
+@media (prefers-reduced-motion:reduce){.gm *,.gm{animation:none !important;transition:none !important}}
 /* small examples side by side in an explanation (counting: one coloured example of each kind) */
 .rv-x .fig-fig svg{width:auto;max-width:92px;max-height:82px}
 .rv-x .figs .fig-fig{margin:4px}
@@ -1610,6 +1670,11 @@ a.link{text-decoration:none}
    Simple HTML is allowed in q / o / x (<sub>2</sub>, <sup>2</sup>).
    Write &lt; for a "less than" sign. Never write "option A/B" in an
    explanation — options are shuffled.
+   3.33.0 IN PRACTICE A QUESTION CAN BE A GAME by itself (see "PRACTICE AS A GAME"): "arrange (1) … (2) …" with orders as
+   options becomes cards to put in order; a code or a word made of capital letters becomes letter tiles; a worked-out
+   number becomes typing on the app's keys (only in chapters where the working gives one number). So write the list of
+   an order question as <b>(1) … (2) … (3) …</b> and its options as "2, 5, 4, 1, 3". Optional: g = 'mcq' keeps a question
+   a choice; g = 'game' lets it be a game in any chapter. A full paper is always the four options.
 
    To add a topic: add an entry to TOPICS and a matching array in BANK.
    courses = who the topic is for (see COURSES below); a topic can serve several courses.
@@ -2884,7 +2949,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.32.1',
+  VERSION: '3.33.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5471,6 +5536,8 @@ var LI_PATHS = {
   chev: '<path d="M9.5 6l6 6-6 6"/>',
   back: '<path d="M14.5 6l-6 6 6 6"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  del: '<path d="M9.5 5.5H20v13H9.5L3.5 12z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>',   /* 3.33.0 delete a digit (the number game) */
+  grip: '<path d="M9 6.5v.01M15 6.5v.01M9 12v.01M15 12v.01M9 17.5v.01M15 17.5v.01"/>',   /* 3.33.0 a card that can be moved */
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
   unlock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 6.8-1.2"/>',
@@ -5841,14 +5908,16 @@ SCREENS.practice = function () {
      shake and a cross), then the sheet comes up, then its button and the XP. A first wrong answer gets one more try: the wrong
      option fades and stays out; only the first answer counts (XP, mastery, the pass). */
   var it = S.items[S.i], q = it.q, total = S.items.length, stage = qStage(it);
-  var ask = stage === 'ask' || stage === 'ask2', last = S.i === total - 1, fresh = !!S.fresh, html, ok, latest, sel;
+  var ask = stage === 'ask' || stage === 'ask2', last = S.i === total - 1, fresh = !!S.fresh, html, ok, latest, sel, ready;
   S.fresh = false;
   latest = it.retry ? it.pick2 : it.pick;            // the answer shown now (the second try, once there is one)
   sel = ask && typeof it.sel === 'number' ? it.sel : -1;
+  ready = it.g ? ask && gReady(it) : sel >= 0;
   html = '<div class="page bg-practice practice qz"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     '<div class="q-progress" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + total + '"><i' + (fresh ? ' class="grow" style="--from:' + (pct(S.i, total) - 100) + '%;' : ' style="') + 'transform:translateX(' + (pct(S.i + (stage === 'done' ? 1 : 0), total) - 100) + '%)"></i></div>' +
     '<div class="q-counter num">' + (S.i + 1) + '/' + total + '</div></div>' +
-    '<div class="q-body"><div class="q-text">' + figHtml(q.q) + '</div></div><div class="opts">';
+    '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>' + (it.g ? gameHtml(it, stage, fresh) : '<div class="opts">');   // 3.33.0 a game in place of the options
+  if (!it.g) {
   if (q.o.every(function (o) { return /^\[\[[a-z0-9]+:[^\[\]]*\]\]$/.test(o); })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid">';   /* four drawings: a 2 x 2 grid */
   else if (q.o.length === 4 && q.o.every(function (o) { return o.indexOf('[[') < 0 && o.indexOf('<') < 0 && o.length <= 8; })) html = html.slice(0, -'<div class="opts">'.length) + '<div class="opts grid short">';   /* 3.9.0 four short answers: a 2 x 2 grid */
   it.order.forEach(function (orig, pos) {
@@ -5867,9 +5936,10 @@ SCREENS.practice = function () {
       '<span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
   });
   html += '</div>';
+  }
   if (ask) {                                          /* choose first, then check: a slip of the finger is not an answer yet */
     html += '<div class="q-dock"><button type="button" class="btn q-skip" data-act="skip">Skip</button>' +
-      '<button type="button" class="btn btn-primary btn-check' + (S.ckRise && sel >= 0 ? ' rise' : '') + '" data-act="check"' + (sel < 0 ? ' disabled' : '') + '>Check</button></div>';
+      '<button type="button" class="btn btn-primary btn-check' + (S.ckRise && ready ? ' rise' : '') + '" data-act="check"' + (ready ? '' : ' disabled') + '>Check</button></div>';
   } else {
     ok = latest === q.a;
     /* the result sheet (3.12.0; 3.32.0 one height in every state, so nothing on the page moves when it comes; the way to the
@@ -5892,7 +5962,355 @@ function qStage(it) {
   if (it.retry) return it.pick2 === undefined ? 'ask2' : 'done';
   return it.pick === -1 || it.pick === it.q.a ? 'done' : 'miss';
 }
-AFTER.practice = function () { startTimer(); if (!actx) setTimeout(warmAudio, 80); };
+/* ════════════════════════════════════════════════════════════════════
+   3.33.0 PRACTICE AS A GAME (DESIGN.md §12.16). The owner: practice should be a game in which the student arranges, builds or
+   works the answer out; only then is it a real test of knowing. Three games, each made from a question as it is written
+   (nothing new to write, nothing in the bank changed):
+     order  "arrange (1) … (2) … (3) …": the words are cards on a ladder; a tap picks one up, a tap on another swaps them
+            (or a card is dragged onto another). The options say which order is right.
+     spell  a code or a word is built from letter tiles: its own letters and a few from the wrong options (the traps), or
+            exactly the letters the question gives ("arrange UNPKIPM").
+     num    a worked-out number is typed on the app's own keys. Only in chapters where the working gives one answer: a
+            pattern puzzle (series, analogy, "if 64 × 52 = 17 …") keeps its options, which say which pattern is meant.
+   A question that points at its options ("which of these …") stays a choice. A question can also say g:'mcq' (stay a
+   choice) or g:'game' (be made a game in any chapter; it is still checked). A full paper stays as the exam is.
+   Everything after the answer is the quiz's own (§12.15): one more try after a first miss (the places found right stay,
+   locked), only the first answer counts, and a missed answer settles into place before the student's eyes.
+   ════════════════════════════════════════════════════════════════════ */
+var GAME_NUM_CH = { ab: 1, rk: 1, mo: 1, ar: 1, cf: 1, vn: 1, di: 1, br: 1, ca: 1 };   // the working gives one number
+var GAME_SPELL_CH = { ab: 1, cd: 1, wf: 1 };                                            // a code, a word made of letters
+var GAME_OPTS_RE = /इनमें|इनमे |इन में|विकल्प|निम्न|following|of these|which one/i;      // the question points at its options
+var GAME_PATTERN_RE = /=\s*\?|:\s*\?|::/;                                               // a pattern to be guessed from examples
+var GAME_FIX_MS = 700;            // a second miss is seen (its shake, the sheet), then the answer settles into place
+function gPlain(s) { return String(s).replace(/\[\[[^\]]*\]\]/g, ' ').replace(/<[^>]*>/g, ' ').replace(/&[a-zA-Z#0-9]+;/g, ' '); }
+function gSeed(s) { var h = 7, i; for (i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 2147483647; return h || 1; }
+/* 0 … n-1 in an order of its own for each question (the same at every drawing); never the order `avoid` */
+function gShuffle(n, seed, avoid) {
+  var a = [], i, j, t, r = seed % 2147483647 || 1;
+  for (i = 0; i < n; i++) a.push(i);
+  for (i = n - 1; i > 0; i--) { r = (r * 48271) % 2147483647; j = r % (i + 1); t = a[i]; a[i] = a[j]; a[j] = t; }
+  if (avoid && n > 1 && a.every(function (x, k) { return x === avoid[k]; })) a.push(a.shift());
+  return a;
+}
+function gPerm(o, n) {                                // "2, 5, 4, 1, 3" → [2, 5, 4, 1, 3] if it is an order of 1 … n
+  var p = String(o).split(/\s*,\s*/), seen = {}, out = [], i, x;
+  if (p.length !== n) return null;
+  for (i = 0; i < n; i++) { x = /^\d$/.test(p[i].trim()) ? +p[i].trim() : 0; if (x < 1 || x > n || seen[x]) return null; seen[x] = 1; out.push(x); }
+  return out;
+}
+function gSorted(w) { return w.split('').sort().join(''); }
+function gameOf(q, t) {
+  if (!q || q.g === 'mcq' || !Array.isArray(q.o) || q.o.length !== 4 || [0, 1, 2, 3].indexOf(q.a) < 0) return null;
+  return gOrder(q) || gSpell(q, t) || gNum(q, t);
+}
+function gUnique(list) { var seen = {}; return list.every(function (x) { x = String(x); if (has(seen, x)) return false; seen[x] = 1; return true; }); }   // two options the same: it stays a choice
+function gOrder(q) {
+  var m = /<b>\s*(\(1\)[\s\S]*?)<\/b>/.exec(q.q), re = /\((\d)\)\s*([\s\S]*?)\s*(?=\(\d\)|$)/g, items = [], seen = {}, x, opts, stem;
+  if (!m) return null;
+  while ((x = re.exec(m[1]))) {
+    if (+x[1] !== items.length + 1) return null;
+    items.push(x[2].replace(/[,;]\s*$/, '').trim());
+  }
+  if (items.length < 3 || items.length > 6) return null;
+  if (items.some(function (s) { var k = gPlain(s).trim(); if (!k || k.length > 32 || /[<>\[\]]/.test(s) || has(seen, k)) return true; seen[k] = 1; return false; })) return null;
+  opts = q.o.map(function (o) { return gPerm(o, items.length); });
+  if (opts.some(function (p) { return !p; }) || !gUnique(opts.map(function (p) { return p.join(','); }))) return null;
+  stem = (q.q.slice(0, m.index) + q.q.slice(m.index + m[0].length)).replace(/[\s:]+$/, '').trim();   // the list itself is the cards
+  if (!gPlain(stem).trim()) return null;
+  return { t: 'order', tiles: items, n: items.length, opts: opts, ans: opts[q.a].map(function (k) { return k - 1; }), stem: stem };
+}
+function gSpell(q, t) {
+  var ans = String(q.o[q.a]), s = gPlain(q.q), len = ans.length, need = {}, extra = {}, add = [], src, i, c;
+  if (!/^[A-Z]{2,7}$/.test(ans) || !q.o.every(function (o) { return /^[A-Z]{1,9}$/.test(o); }) || !gUnique(q.o)) return null;
+  if (q.g !== 'game' && !(t && has(GAME_SPELL_CH, t.ch))) return null;
+  if (GAME_OPTS_RE.test(s)) return null;
+  src = s.split(/[^A-Za-z]+/).filter(function (w) { return /^[A-Z]{3,9}$/.test(w) && w !== ans && gSorted(w) === gSorted(ans); })[0];
+  if (src) return { t: 'spell', tiles: src.split(''), n: len, ans: ans, keep: true };   // "arrange UNPKIPM": its letters, as given
+  if (!q.o.every(function (o) { return o.length === len; })) return null;
+  for (i = 0; i < len; i++) { c = ans.charAt(i); need[c] = (need[c] || 0) + 1; }
+  q.o.forEach(function (o, j) {                       // the traps: what a wrong option has beyond the answer's own letters
+    var left = {}, more = {}, k, ch;
+    if (j === q.a) return;
+    for (ch in need) if (has(need, ch)) left[ch] = need[ch];
+    for (k = 0; k < o.length; k++) { ch = o.charAt(k); if (left[ch]) left[ch]--; else more[ch] = (more[ch] || 0) + 1; }
+    for (ch in more) if (has(more, ch) && (extra[ch] || 0) < more[ch]) extra[ch] = more[ch];
+  });
+  for (c in extra) if (has(extra, c)) for (i = 0; i < extra[c]; i++) add.push(c);
+  add.sort();
+  for (i = 0; add.length < 3 && i < len; i++) {        // too few traps: the letter after one of the answer's
+    c = String.fromCharCode((ans.charCodeAt(i) - 64) % 26 + 65);
+    if (!has(need, c) && add.indexOf(c) < 0) add.push(c);
+  }
+  return { t: 'spell', tiles: ans.split('').concat(add.slice(0, 10 - len)), n: len, ans: ans };
+}
+function gNum(q, t) {
+  var s = gPlain(q.q), dot, neg;
+  if (!q.o.every(function (o) { return /^-?\d{1,8}(\.\d{1,3})?$/.test(String(o).trim()); }) || !gUnique(q.o.map(Number))) return null;
+  if (q.g !== 'game' && !(t && has(GAME_NUM_CH, t.ch))) return null;
+  if (GAME_OPTS_RE.test(s) || GAME_PATTERN_RE.test(s)) return null;
+  dot = q.o.some(function (o) { return String(o).indexOf('.') >= 0; });
+  neg = q.o.some(function (o) { return /^\s*-/.test(o); });
+  if (dot && neg) return null;                        // one free key only: such a question stays a choice
+  return { t: 'num', ans: String(q.o[q.a]).trim(), key: dot ? '.' : neg ? '-' : '' };
+}
+/* a practice question's game, laid out for its first drawing */
+function gStart(it, t) {
+  var g = gameOf(it.q, t), n, i, id = [];
+  it.g = g;
+  if (!g) return;
+  it.lock = [];
+  if (g.t === 'num') { it.typed = ''; return; }
+  n = g.tiles.length;
+  for (i = 0; i < n; i++) id.push(i);
+  if (g.t === 'order') { it.at = gShuffle(n, gSeed(it.q.id), g.ans); it.moved = false; it.lift = -1; return; }   // it.at[k]: the card at place k
+  it.bank = g.keep ? id : gShuffle(n, gSeed(it.q.id), id);    // the letters in the tray, in their places (a used one leaves its well)
+  it.slots = [];
+  for (i = 0; i < g.n; i++) it.slots.push(-1);
+}
+function gReady(it) {                                 // Check can be pressed
+  var g = it.g;
+  if (g.t === 'num') return /\d/.test(it.typed);
+  if (g.t === 'order') return !!it.moved;             // (the first order is never the right one: one move at least)
+  return it.slots.every(function (x) { return x >= 0; });
+}
+function gAnswer(it) {                                // → [the option it is (-2: none of them), the answer as text]
+  var g = it.g, q = it.q, txt, k;
+  if (g.t === 'num') { txt = it.typed.replace(/\.$/, ''); for (k = 0; k < 4; k++) if (Number(q.o[k]) === Number(txt)) return [k, txt]; return [-2, txt]; }
+  if (g.t === 'order') { txt = it.at.map(function (x) { return x + 1; }).join(', '); for (k = 0; k < 4; k++) if (g.opts[k].join(', ') === txt) return [k, txt]; return [-2, txt]; }
+  txt = it.slots.map(function (x) { return g.tiles[x]; }).join('');
+  for (k = 0; k < 4; k++) if (q.o[k] === txt) return [k, txt];
+  return [-2, txt];
+}
+function gRight(it, k) {                              // is place k right?
+  var g = it.g;
+  if (g.t === 'order') return it.at[k] === g.ans[k];
+  return it.slots[k] >= 0 && g.tiles[it.slots[k]] === g.ans.charAt(k);
+}
+function gNext(it) { for (var k = 0; k < it.slots.length; k++) if (it.slots[k] < 0 && !it.lock[k]) return k; return -1; }
+/* one more try: the places found right stay (locked, green); the wrong letters go back to the tray, the wrong cards stay to be swapped */
+function gRetry(it) {
+  var g = it.g, k;
+  if (g.t === 'num') { it.was = it.typed; it.typed = ''; return; }
+  for (k = 0; k < g.n; k++) { if (gRight(it, k)) it.lock[k] = true; else if (g.t === 'spell') it.slots[k] = -1; }
+  it.moved = false; it.lift = -1;
+}
+/* the answer, put in place (the tiles that were right do not move) */
+function gSolve(it) {
+  var g = it.g, used = {}, out = [], k, j;
+  it.fixed = true;
+  if (g.t === 'num') return;
+  if (g.t === 'order') { it.at = g.ans.slice(); it.lift = -1; return; }
+  for (k = 0; k < g.n; k++) { if (gRight(it, k)) { out[k] = it.slots[k]; used[it.slots[k]] = 1; } else out[k] = -1; }
+  for (k = 0; k < g.n; k++) if (out[k] < 0) for (j = 0; j < g.tiles.length; j++) if (!used[j] && g.tiles[j] === g.ans.charAt(k)) { out[k] = j; used[j] = 1; break; }
+  it.slots = out;
+}
+/* the tiles that changed place glide there from where they were (FLIP: measured before and after the drawing; transform only) */
+function gRects() {
+  var m = {};
+  [].forEach.call(elScreens.querySelectorAll('.gm [data-tk]'), function (el) { m[el.getAttribute('data-tk')] = el.getBoundingClientRect(); });
+  return m;
+}
+function gFly(before) {
+  if (!before || calmMotion()) return;
+  [].forEach.call(elScreens.querySelectorAll('.gm [data-tk]'), function (el) {
+    var a = before[el.getAttribute('data-tk')], b = el.getBoundingClientRect(), dx, dy, sx, sy, an;
+    if (!a || !el.animate || !b.width || !b.height) return;
+    dx = a.left - b.left; dy = a.top - b.top; sx = a.width / b.width; sy = a.height / b.height;
+    if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && Math.abs(sx - 1) < 0.02 && Math.abs(sy - 1) < 0.02) return;
+    el.classList.add('fly');
+    try {
+      an = el.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', transformOrigin: '0 0' }, { transform: 'none', transformOrigin: '0 0' }],
+        { duration: MOTION.pop.ms, easing: EASE.pop });
+      an.onfinish = an.oncancel = function () { el.classList.remove('fly'); };
+    } catch (e) { el.classList.remove('fly'); }
+  });
+}
+function gPaint(it, fn) { var before = gRects(), was = gReady(it); fn(); S.ckRise = !was && gReady(it); repaint(); S.ckRise = false; gFly(before); }
+/* the question now being answered, if it is a game still open to a move */
+function gIt() {
+  var it = S && !S.done && !S.exam ? S.items[S.i] : null, st;
+  if (!it || !it.g || !stack.length || top().s !== 'practice') return null;
+  st = qStage(it);
+  return st === 'ask' || st === 'ask2' ? it : null;
+}
+/* the second try missed: the miss is seen first, then the answer settles into place */
+function gFixSoon(it) {
+  if (calmMotion()) { gSolve(it); repaint(); return; }
+  setTimeout(function () {
+    if (!S || S.done || S.items[S.i] !== it || qStage(it) !== 'done' || it.fixed || top().s !== 'practice') return;
+    var before = gRects();
+    gSolve(it); S.fixIn = true; repaint(); S.fixIn = false; gFly(before);
+  }, GAME_FIX_MS);
+}
+/* the drawing: the game in place of the options */
+function gameHtml(it, stage, fresh) {
+  var g = it.g, ask = stage === 'ask' || stage === 'ask2', latest = it.retry ? it.pick2 : it.pick, ok = !ask && latest === it.q.a,
+    shown = !ask && !ok && it.fixed, glow = fresh || S.fixIn, h, k, x, cls, mk, nx, used = {}, lab;
+  /* how place k looks once checked: right (green), wrong (red, shaken once), or the answer shown */
+  function look(k) {
+    if (ask) return it.lock[k] ? ' ok lock' : '';
+    if (shown) return ' ok' + (glow ? ' ok-show' : '');
+    if (ok) return ' ok' + (fresh && !it.lock[k] ? ' ok-in' : '');
+    return gRight(it, k) ? ' ok' : ' bad' + (fresh ? ' shake' : '');
+  }
+  function mark(c) { return / bad/.test(c) ? '<span class="opt-mk" aria-hidden="true">' + li('close', 14) + '</span>' : ''; }
+  if (g.t === 'num') return gNumHtml(it, stage, fresh, ask, ok, shown, glow);
+  if (g.t === 'order') {
+    h = '<div class="gm gm-order' + (ask ? '' : ' over') + '">';
+    for (k = 0; k < g.n; k++) {
+      x = it.at[k]; cls = 'gm-card' + look(k);
+      if (ask && it.lift === k) cls += ' sel' + (S.liftIn === k ? ' sel-in' : '');
+      lab = (k + 1) + ': ' + gPlain(g.tiles[x]).trim() + (/ ok/.test(cls) && !ask ? ', right' : / bad/.test(cls) ? ', wrong' : it.lock[k] ? ', right' : it.lift === k ? ', picked up' : '');
+      h += '<div class="gm-row"><span class="gm-pos num" aria-hidden="true">' + (k + 1) + '</span><button type="button" class="' + cls + '" data-act="gc" data-i="' + k + '" data-tk="t' + x + '"' +
+        ' style="--i:' + k + '"' + (!ask || it.lock[k] ? ' disabled' : ' aria-pressed="' + (it.lift === k) + '"') + ' aria-label="' + esc(lab) + '">' + mark(cls) +
+        '<span class="gm-txt">' + g.tiles[x] + '</span>' + (ask && !it.lock[k] ? li('grip', 20, 'gm-grip') : '') + '</button></div>';
+    }
+    return h + '</div>';
+  }
+  nx = ask ? gNext(it) : -1;
+  h = '<div class="gm gm-spell' + (ask ? '' : ' over') + '"><div class="gm-slots" style="--n:' + g.n + '">';
+  for (k = 0; k < g.n; k++) {
+    x = it.slots[k];
+    if (x >= 0) used[x] = 1;
+    cls = look(k);
+    h += '<button type="button" class="gm-slot' + (x < 0 ? (k === nx ? ' next' : '') : ' full') + '" data-act="gs" data-i="' + k + '"' + (!ask || x < 0 || it.lock[k] ? ' disabled' : '') +
+      ' aria-label="Letter ' + (k + 1) + (x < 0 ? ', empty' : ': ' + g.tiles[x] + (/ bad/.test(cls) ? ', wrong' : / ok/.test(cls) ? ', right' : '')) + '">' +
+      (x >= 0 ? '<span class="gm-tile' + cls + '" data-tk="t' + x + '" style="--i:' + k + '">' + mark(cls) + g.tiles[x] + '</span>' : '') + '</button>';
+  }
+  h += '</div><div class="gm-bank">';
+  it.bank.forEach(function (x) {
+    h += used[x] ? '<span class="gm-tile ghost" aria-hidden="true"></span>'
+      : '<button type="button" class="gm-tile" data-act="gt" data-i="' + x + '" data-tk="t' + x + '"' + (ask ? '' : ' disabled') + '>' + g.tiles[x] + '</button>';
+  });
+  return h + '</div></div>';
+}
+function gNumHtml(it, stage, fresh, ask, ok, shown, glow) {
+  var g = it.g, val, was = '', cls = 'gm-field', keys = '', bad;
+  if (ask) { val = it.typed; cls += val ? ' has' : ''; if (it.was) was = it.was; }
+  else if (shown) { val = g.ans; cls += ' ok' + (glow ? ' ok-show' : ''); was = it.retry && it.pick2 !== -1 ? it.given2 : it.pick !== -1 ? it.given : ''; }
+  else if (ok) { val = it.retry ? it.given2 : it.given; cls += ' ok' + (fresh ? ' ok-in' : ''); }
+  else { val = stage === 'miss' ? it.given : it.given2; cls += ' bad' + (fresh ? ' shake' : ''); }
+  bad = / bad/.test(cls);
+  ['1', '2', '3', '4', '5', 'del', '6', '7', '8', '9', '0', g.key].forEach(function (c) {   // two rows by the thumb: the page keeps the question in sight
+    if (!c) { keys += '<span class="gm-key nil" aria-hidden="true"></span>'; return; }
+    keys += '<button type="button" class="gm-key' + (c === 'del' ? ' del' : '') + '" data-act="gk" data-k="' + c + '"' + (ask ? '' : ' disabled') +
+      (c === 'del' ? ' aria-label="Delete"' : c === '-' ? ' aria-label="Minus"' : '') + '>' + (c === 'del' ? li('del', 26) : c === '-' ? '−' : c) + '</button>';
+  });
+  return '<div class="gm gm-num' + (ask ? '' : ' over') + '"><div class="' + cls + '" role="status" aria-label="' + (val ? 'Your answer: ' + esc(val) : 'Type the answer') +
+    (bad ? ', wrong' : / ok/.test(cls) ? ', right' : '') + '">' + (bad ? '<span class="opt-mk" aria-hidden="true">' + li('close', 14) + '</span>' : '') +
+    (was ? '<s class="gm-was num">' + esc(was) + '</s>' : '') + '<span class="gm-val num">' + esc(String(val || '').replace('-', '−')) + '</span>' +
+    (ask ? '<i class="gm-caret" aria-hidden="true"></i>' : '') + '</div><div class="gm-keys">' + keys + '</div></div>';
+}
+/* order: a tap picks a card up; a tap on another swaps the two; a tap on the same one puts it down */
+ACTIONS.gc = function (el) {
+  var it = gIt(), k = parseInt(el.getAttribute('data-i'), 10), a;
+  if (!it || it.g.t !== 'order' || !(k >= 0 && k < it.g.n) || it.lock[k] || Date.now() - gDragEnd < 400) return;
+  if (it.lift < 0 || it.lift === k) { it.lift = it.lift === k ? -1 : k; S.liftIn = it.lift; repaint(); S.liftIn = -1; return; }
+  a = it.lift;
+  gSwap(it, a, k);
+};
+function gSwap(it, a, b) {
+  gPaint(it, function () { var t = it.at[a]; it.at[a] = it.at[b]; it.at[b] = t; it.lift = -1; it.moved = true; });
+}
+/* spell: a letter from the tray goes to the first free place; a letter in its place goes back to the tray */
+ACTIONS.gt = function (el) {
+  var it = gIt(), x = parseInt(el.getAttribute('data-i'), 10), k;
+  if (!it || it.g.t !== 'spell' || !(x >= 0 && x < it.g.tiles.length) || it.slots.indexOf(x) >= 0) return;
+  k = gNext(it);
+  if (k < 0) { sense('refuse'); return; }
+  gPaint(it, function () { it.slots[k] = x; });
+};
+ACTIONS.gs = function (el) {
+  var it = gIt(), k = parseInt(el.getAttribute('data-i'), 10);
+  if (!it || it.g.t !== 'spell' || !(k >= 0 && k < it.g.n) || it.lock[k] || it.slots[k] < 0) return;
+  gPaint(it, function () { it.slots[k] = -1; });
+};
+/* num: the app's own keys (a phone's keyboard would cover half the question and move the page) */
+ACTIONS.gk = function (el) { gKey(el.getAttribute('data-k')); };
+function gKey(c) {
+  var it = gIt(), v;
+  if (!it || it.g.t !== 'num') return;
+  v = it.typed;
+  if (c === 'del') v = v.slice(0, -1);
+  else if (c === '-' && it.g.key === '-') v = v.charAt(0) === '-' ? v.slice(1) : '-' + v;
+  else if (c === '.' && it.g.key === '.') { if (v.indexOf('.') < 0) v = (v === '' || v === '-' ? v + '0' : v) + '.'; }
+  else if (/^\d$/.test(c) && v.replace(/[^0-9]/g, '').length < 9) v = v.replace(/^(-?)0$/, '$1') + c;
+  if (v === it.typed) return;
+  gPaint(it, function () { it.typed = v; });
+}
+/* the keys of a computer type the number too (Enter checks it) */
+function gKeyEv(ev) {
+  var it = gIt(), k = ev.key;
+  if (!it || it.g.t !== 'num' || modalOpen || locked() || busyOn || ev.ctrlKey || ev.metaKey || ev.altKey) return false;
+  if (/^\d$/.test(k)) gKey(k);
+  else if (k === 'Backspace') gKey('del');
+  else if (k === '.' || k === ',') gKey('.');
+  else if (k === '-') gKey('-');
+  else if (k === 'Enter') { if (!gReady(it)) return false; ACTIONS.check(); }
+  else return false;
+  ev.preventDefault();
+  return true;
+}
+/* order: a card can also be dragged onto another (they swap). It follows the finger; the card under it is lit. */
+var gDrag = null, gDragEnd = 0;
+function gDown(ev) {
+  var el = ev.target && ev.target.closest ? ev.target.closest('.gm-card') : null, it;
+  if (!el || el.disabled || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
+  it = gIt();
+  if (!it || it.g.t !== 'order') return;
+  gDrag = { el: el, k: parseInt(el.getAttribute('data-i'), 10), x: ev.clientX, y: ev.clientY, id: ev.pointerId, on: false, over: -1 };
+}
+function gMove(ev) {
+  var d = gDrag, dy, over = -1, cards, i, r, it;
+  if (!d || ev.pointerId !== d.id) return;
+  dy = ev.clientY - d.y;
+  if (!d.on) {
+    if (Math.abs(dy) < 8 && Math.abs(ev.clientX - d.x) < 8) return;
+    it = gIt();
+    if (!it || !d.el.isConnected) { gDrag = null; return; }
+    d.on = true; d.el.classList.add('drag');
+    try { d.el.setPointerCapture(d.id); } catch (e) { /* */ }
+  }
+  if (ev.cancelable) ev.preventDefault();
+  d.el.style.transform = 'translateY(' + dy + 'px) scale(1.02)';
+  cards = elScreens.querySelectorAll('.gm-card');
+  for (i = 0; i < cards.length; i++) {
+    if (cards[i] === d.el || cards[i].disabled) continue;
+    r = cards[i].getBoundingClientRect();
+    if (ev.clientY >= r.top && ev.clientY <= r.bottom) over = i;
+  }
+  if (over !== d.over) {
+    if (d.over >= 0 && cards[d.over]) cards[d.over].classList.remove('drop');
+    if (over >= 0) { cards[over].classList.add('drop'); sense('select'); }
+    d.over = over;
+  }
+}
+function gUp(ev) {
+  var d = gDrag, it, an;
+  if (!d || ev.pointerId !== d.id) return;
+  gDrag = null;
+  if (!d.on) return;                                  // a tap: the click does the rest
+  gDragEnd = Date.now();
+  it = gIt();
+  if (it && ev.type !== 'pointercancel' && d.over >= 0 && d.over !== d.k && !it.lock[d.over]) { gSwap(it, d.k, d.over); return; }
+  d.el.classList.remove('drag');                      // dropped on no card: it glides back
+  an = d.el.style.transform; d.el.style.transform = '';
+  if (d.el.animate && !calmMotion()) try { d.el.animate([{ transform: an }, { transform: 'none' }], { duration: MOTION.pop.ms, easing: EASE.pop }); } catch (e) { /* */ }
+  [].forEach.call(elScreens.querySelectorAll('.gm-card.drop'), function (c) { c.classList.remove('drop'); });
+}
+/* a game that does not fit a short screen starts scrolled, by no more than the bar above the question takes: the question stays
+   in sight and every card or key is above the buttons (once per question; the student's own scrolling is left alone) */
+function gFit(sc) {
+  var it = S && !S.exam && !S.done ? S.items[S.i] : null, body, dock, all, over, room;
+  if (!it || !it.g || S.gFit === S.i || !sc) return;
+  S.gFit = S.i;
+  body = sc.querySelector('.q-body'); dock = sc.querySelector('.q-dock'); all = sc.querySelectorAll('.gm-card,.gm-key,.gm-slot,.gm-bank .gm-tile');
+  if (!body || !dock || !all.length) return;
+  over = all[all.length - 1].getBoundingClientRect().bottom - dock.getBoundingClientRect().top;
+  room = body.getBoundingClientRect().top - sc.getBoundingClientRect().top - 8;
+  if (over > 0 && room > 0) sc.scrollTop = Math.ceil(Math.min(over, room));
+}
+AFTER.practice = function (sc) { startTimer(); gFit(sc); if (!actx) setTimeout(warmAudio, 80); };
 
 /* 3.16.0 a new phone, just signed in, fetching its backup: Home's shape in skeletons (no numbers until they are real) */
 SCREENS.restoring = function () {
@@ -6019,7 +6437,7 @@ function rvSheet(i) {
   return '<div class="rv-sh-top"><span class="rv-n">QUESTION ' + (i + 1) + ' OF ' + n + '</span><span class="rv-chip ' + st + '">' + rvIcon(st, 14) +
       (st === 'ok' ? 'Right' : st === 'bad' ? 'Wrong' : 'Skipped') + '</span></div>' +
     '<div class="rv-q">' + figHtml(q.q) + '</div>' +
-    (st === 'skip' ? '' : '<div class="rv-line ' + st + '">' + rvIcon(st, 16) + ' Your answer: ' + figHtml(q.o[it.pick]) + '</div>') +
+    (st === 'skip' ? '' : '<div class="rv-line ' + st + '">' + rvIcon(st, 16) + ' Your answer: ' + (it.pick >= 0 ? figHtml(q.o[it.pick]) : esc(it.given || '')) + '</div>') +   /* 3.33.0 a game's answer may be none of the options */
     (st === 'ok' ? '' : '<div class="rv-line ok">' + rvIcon('ok', 16) + ' Correct answer: ' + figHtml(q.o[q.a]) + '</div>') +
     '<div class="rv-x">' + figHtml(explainOf(q)) + '</div>' +
     '<div class="rv-nav"><button type="button" class="icon-btn" data-act="rv-nav" data-d="-1" aria-label="Previous question"' + (i > 0 ? '' : ' disabled') + '>' + li('back') + '</button>' +
@@ -6567,8 +6985,9 @@ function startSession(topicId) {
     elapsed: 0, tick0: Date.now(), done: false, newAch: [], unlocked: [],
     lockedBefore: lockedBefore, streak0: liveStreak(u), passed0: t.mark ? markPassed(u, t) : false,
     items: qs.map(function (q) {
-      var order = q.o.map(function (_, i) { return i; });
-      return { q: q, order: u.settings.shuffle ? shuffled(order) : order, pick: null, sel: null, xp: 0 };
+      var order = q.o.map(function (_, i) { return i; }), it = { q: q, order: u.settings.shuffle ? shuffled(order) : order, pick: null, sel: null, xp: 0 };
+      gStart(it, t);                                  // 3.33.0 a question that can be a game is one (DESIGN.md §12.16)
+      return it;
     })
   };
   u.lastTopic = t.id; u.at = Date.now(); save();
@@ -7110,18 +7529,25 @@ function showCheck() {
   try { b.scrollIntoView({ block: 'nearest', behavior: calmMotion() ? 'auto' : 'smooth' }); } catch (e) { b.scrollIntoView(false); }
 }
 ACTIONS.check = function () {
-  var it, orig, ok, stage;
+  var it, orig, ok, stage, r;
   if (!S || S.done) return;
   it = S.items[S.i];
   if (!it) return;
   stage = qStage(it);
-  if ((stage !== 'ask' && stage !== 'ask2') || typeof it.sel !== 'number') return;
-  orig = it.order[it.sel];
-  if (typeof orig !== 'number') return;
+  if (stage !== 'ask' && stage !== 'ask2') return;
+  if (it.g) {                                    // 3.33.0 a game: what was built is compared with the options
+    if (!gReady(it)) return;
+    r = gAnswer(it); orig = r[0]; it.lift = -1;
+  } else {
+    if (typeof it.sel !== 'number') return;
+    orig = it.order[it.sel];
+    if (typeof orig !== 'number') return;
+  }
   ok = orig === it.q.a;
-  if (stage === 'ask2') it.pick2 = orig;              // 3.32.0 the second try is for learning: nothing is counted again
+  if (stage === 'ask2') { it.pick2 = orig; if (r) it.given2 = r[1]; }   // 3.32.0 the second try is for learning: nothing is counted again
   else {
     it.pick = orig;
+    if (r) it.given = r[1];
     it.xp = recordAnswer(user, it.q, ok);
     if (topicById(S.topic).mark && markReached(user, topicById(S.topic))) user.flags[markKey(topicById(S.topic))] = 1;   // a pass is kept the moment it is reached
     if (ok) { S.correct++; S.xp += it.xp; } else { S.wrong++; }
@@ -7131,9 +7557,10 @@ ACTIONS.check = function () {
   S.fresh = true;                                // the next drawing shows the answer arriving (once, not on later redraws)
   repaint(); revealEnd();                        // show the result first, then sound and vibration
   sense(ok ? 'correct' : 'wrong');
+  if (it.g && !ok && stage === 'ask2') gFixSoon(it);   // 3.33.0 a second miss: then the answer settles into place
 };
 ACTIONS.skip = function () {
-  var it, stage;
+  var it, stage, before;
   if (!S || S.done) return;
   it = S.items[S.i];
   if (!it) return;
@@ -7142,7 +7569,8 @@ ACTIONS.skip = function () {
   else if (stage === 'ask2') it.pick2 = -1;           // 3.32.0 the second try given up: the answer is shown
   else return;
   S.fresh = true;
-  repaint(); revealEnd();
+  if (it.g) { before = gRects(); gSolve(it); }        // 3.33.0 a game skipped: its answer glides into place
+  repaint(); revealEnd(); gFly(before);
 };
 /* 3.32.0 one more try after a first wrong answer: the sheet goes down, the wrong option stays out (faded, with its cross) */
 ACTIONS.retry = function () {
@@ -7150,7 +7578,12 @@ ACTIONS.retry = function () {
   if (!S || S.done || S.leaving) return;
   it = S.items[S.i];
   if (!it || qStage(it) !== 'miss') return;
-  on = function () { S.leaving = false; it.retry = true; it.sel = undefined; it.why = false; repaint(); };
+  on = function () {
+    var before = it.g ? gRects() : null;
+    S.leaving = false; it.retry = true; it.sel = undefined; it.why = false;
+    if (it.g) gRetry(it);                             // 3.33.0 the right places stay, locked; the wrong letters go back to the tray
+    repaint(); gFly(before);
+  };
   sh = $('fb');
   if (sh && !calmMotion()) { S.leaving = true; sh.classList.add('leave'); setTimeout(on, 200); } else on();
 };
@@ -7512,7 +7945,7 @@ function onClick(ev) {
   if (!el || el.disabled) return;
   if (el.classList && el.classList.contains('nav-item')) { splash(el, ev); flashNav(el); sense('select'); }   // 3.16.0 a tab: felt, never heard
   if (locked() || busyOn) return;                                   // CHANGE #5: navigation lock; nothing is tappable during a network step
-  if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) sense('select');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
+  if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn|gm-card|gm-tile|gm-slot|gm-key)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) sense('select');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
   if (el.classList && el.classList.contains('ch-panel') && !/(^| )k-(locked|soon)( |$)/.test(el.className) && !calmMotion()) {
     el.classList.add('press'); splash(el, ev, 'go'); lock(260);
     setTimeout(function () { run(el.getAttribute('data-act'), el, ev); }, 170);     // the press is seen first (a sixth of a second)
@@ -7717,6 +8150,7 @@ function readPack(id, text) {
       seen[q.id] = 1;
       out.push({ id: q.id, d: has(DIFF_RANK, q.d) ? q.d : 'medium', q: cleanHtml(q.q, 3000), o: q.o.map(function (o) { return cleanHtml(o, 400); }), a: q.a, x: cleanHtml(q.x, 4000) });
       if (typeof q.s === 'string' && q.s.trim()) out[out.length - 1].s = cleanHtml(q.s.trim(), 30);     // 3.9.6 the part of the paper (भौतिकी, इतिहास …)
+      if (q.g === 'mcq' || q.g === 'game') out[out.length - 1].g = q.g;                                // 3.33.0 a choice, or a game (§12.16)
     });
     if (err) return;
     if (!Array.isArray(t.courses) || !t.courses.some(function (c) { return typeof c === 'string' && !!courseInfo(c); })) { err = 'Topic ' + t.id + ': it names no course of this app.'; return; }
@@ -8397,7 +8831,12 @@ function boot() {
   document.addEventListener('pointercancel', onAuUp);
   document.addEventListener('keydown', function (ev) {
     if (ev.key === 'Escape' || ev.key === 'Esc' || ev.keyCode === 27) { if (appBack()) ev.preventDefault(); }
+    else gKeyEv(ev);                                                 // 3.33.0 a number game: the computer's keys type too
   });
+  elPhone.addEventListener('pointerdown', gDown);                    // 3.33.0 a card of an order game can be dragged
+  document.addEventListener('pointermove', gMove, { passive: false });
+  document.addEventListener('pointerup', gUp);
+  document.addEventListener('pointercancel', gUp);
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
       if (S && !S.done && S.tick0) { S.elapsed += Date.now() - S.tick0; S.tick0 = 0; }

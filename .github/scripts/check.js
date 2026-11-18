@@ -4,7 +4,8 @@
    service worker caches is in the repo;  3. the app opens and works in a real browser, dark and light: splash (with the name),
    the terms box (it holds the ways in until ticked), guest sign-in, course choice, the four tabs, Home's button on two phones, a chapter, one question
    checked — with no script error on the way;
-   2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token. */
+   2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token;
+   2c. every question that becomes a game (3.33.0) gives, played right, its own right option. */
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http');
 const ROOT = path.resolve(__dirname, '..', '..'), SHOTS = path.join(ROOT, 'ci-shots');
@@ -30,6 +31,29 @@ try {
   const gone = (mf.icons || []).map(i => i.src).filter(s => !fs.existsSync(path.join(ROOT, s)));
   if (gone.length) bad('manifest icons missing: ' + gone.join(', ')); else ok('manifest.webmanifest is valid JSON, its icons exist');
 } catch (e) { bad('manifest.webmanifest: ' + e.message); }
+
+// 2c. PRACTICE AS A GAME (3.33.0, DESIGN.md §12.16): a question becomes a game by itself, so every one of them is played here once,
+//   right: the order the cards end in, the word the letters make, the number typed must each BE the question's right option
+//   (and no first order may be the answer already). A question written later that would make a wrong game fails here.
+(function games() {
+  const vm = require('vm'), a = html.indexOf('var TOPICS = ['), b = html.indexOf('var BANK = {'), c = html.indexOf('\n};', b),
+    g0 = html.indexOf('var GAME_NUM_CH'), g1 = html.indexOf('/* the tiles that changed place glide');
+  if (a < 0 || b < 0 || c < 0 || g0 < 0 || g1 < 0) { bad('games: the bank or the game code was not found'); return; }
+  const box = { has: (o, k) => Object.prototype.hasOwnProperty.call(o, k) };
+  try { vm.runInNewContext(html.slice(a, c + 3) + '\n' + html.slice(g0, g1) + '\nthis.TOPICS = TOPICS; this.BANK = BANK;', box); }
+  catch (e) { bad('games: the bank or the game code does not run: ' + e.message); return; }
+  const n = { order: 0, spell: 0, num: 0 }, wrong = [];
+  box.TOPICS.forEach(t => (box.BANK[t.id] || []).forEach(q => {
+    const g = box.gameOf(q, t), it = { q: q };
+    if (!g) return;
+    n[g.t]++; box.gStart(it, t);
+    if (g.t === 'order' && it.at.join() === g.ans.join()) wrong.push(q.id + ' starts in its right order');
+    if (g.t === 'num') it.typed = g.ans; else if (g.t === 'order') { it.at = g.ans.slice(); it.moved = true; } else box.gSolve(it);
+    const r = box.gAnswer(it);
+    if (r[0] !== q.a) wrong.push(q.id + ': played right, it gives option ' + r[0] + ' (' + r[1] + '), not ' + q.a);
+  }));
+  if (wrong.length) bad('games: ' + wrong.join('; ')); else ok('games: ' + n.order + ' order, ' + n.spell + ' spell, ' + n.num + ' number; each, played right, gives its right option');
+})();
 
 // 2b. THE DESIGN SYSTEM KEEPS ITSELF (3.21.0, DESIGN.md §10). The style sheet is read rule by rule:
 //   - a token that is used must exist (a mistyped var(--name) draws nothing and says nothing), and a token of the light
