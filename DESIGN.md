@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.32.1)
+# IOPET design rules (v3, 3.33.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -826,7 +826,45 @@ student's own tap.
 **Not taken**: Brilliant's mascot and its help chat; the progress dots (a set of 12 keeps its line); amber for a miss
 (too close to the flame, which is now the choice).
 
-**Next (the owner's idea, not built)**: practice as a game, where the student arranges, matches, fixes or builds the
-answer (Brilliant's scales, number lines, letter tiles), not only picks one of four. That needs new question kinds in the
-engine (this chat) and questions written for them (the questions chat).
+**Next**: practice as a game, built in 3.33.0 (§12.16).
+
+### 12.16 Practice as a game (3.33.0)
+
+The owner (18 Nov 2026): practice should be a game in which the student arranges, settles, matches or fixes the answer;
+only then is it a real test of knowing. Picking one of four lets a student eliminate and guess; building the answer does
+not.
+
+**Made from the questions as they are.** Nothing new is written and nothing in the bank changes: `gameOf()` reads a
+question and makes it a game when it safely can, else it stays a choice. 140 of the 477 NMMS Hindi questions (29 %):
+
+| Game | Made from | The student | Count |
+|---|---|---|---|
+| Order | "arrange <b>(1) … (2) …</b>" with orders as options (`2, 5, 4, 1, 3`) | puts cards on a ladder in order: a tap picks a card up (the flame), a tap on another swaps them; or drags it onto another | 26 (word sequence, dictionary order) |
+| Spell | a code or word of capital letters (coding-decoding, alphabet, word making) | builds it from letter tiles: its letters and 3-4 traps from the wrong options; or exactly the letters the question gives ("arrange UNPKIPM") | 19 |
+| Number | a worked-out number (ranking, arithmetic, counting figures, maths operations, alphabet, Venn, directions, calendar, blood relations) | types it on the app's own keys (a phone keyboard would cover the question and move the page) | 95 |
+
+**When a question stays a choice**: it points at its options ("इनमें से", "विकल्प", "which of these"); it is a pattern
+to be guessed from examples (series, analogy, missing number, "if 64 × 52 = 17 … then 84 × 37 = ?"), where the options
+tell which pattern is meant and a typed answer could be right by another pattern; two options are the same; it is in a
+full paper (the real test is four options). A question may say `g:'mcq'` (stay a choice) or `g:'game'` (be a game in any
+chapter). CI (`check.js`, 2c) plays every game once, right, and fails if it does not give the question's right option.
+
+**The pieces are the quiz's own**: a card is an option's panel; a tile and a key are Skip's panel with its 2 px lip (a
+thing to press); an empty place is a well (`--fill-2`), the next one marked by a flame line under it; the student's own
+move is the flame; a grip (six dots) says a card can move, the caret says "type": no line of instructions. Check
+rises once the game is complete (a first move for an order; every place filled; a digit typed).
+
+**Motion**: a tile or card glides to its new place (FLIP: measured before and after, transform only, the pop spring,
+250 ms); after Check the places light one after another (`--q-step` 40 ms), a wrong one shakes with its ✕, as an
+option does (§12.15 timeline). Nothing on the page moves when the sheet comes or on Try again (measured at 320, 360 ×
+640, 360 × 790, 412: 0 px). A game that does not fit a short screen starts scrolled by no more than the bar above it,
+so the question stays in sight and every key is above the buttons; below 720 px tall the game sits a little closer.
+
+**One more try** (as §12.15): the places found right stay, green and locked; wrong letters go back to the tray, wrong
+cards stay to be swapped, a wrong number is shown struck through. A second miss is seen (700 ms), then the answer
+settles into place before the student's eyes; Skip shows it the same way. Only the first answer counts. The review shows
+the student's own answer as they built it, even when it is none of the four options.
+
+**Not built yet**: match (pairs) and fix-the-mistake need questions written for them (the questions chat); a number
+line, a balance or a Venn to fill need drawings that take answers.
 
