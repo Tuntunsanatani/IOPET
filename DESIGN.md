@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.34.0)
+# IOPET design rules (v3, 3.34.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -909,7 +909,9 @@ X steps back. The dots say what happened without a word.
 - **The row** sits centred on the screen, between the X and an empty place of the same width (a grid of 44 px | 1fr | 44 px).
   `role="img"` reads "Question 4 of 12".
 - **The X** is `--ink-x` (#909090 light, #666666 dark): 3.2:1, findable without calling to the eye (it was `--ink3`, 5.4:1).
-  Its line is 1.75 px, Brilliant's weight (2 px before).
+  Its line is 1.75 (Brilliant's weight; 2 before). 3.34.1, the owner: the X is drawn at 20 px (it was 24); the place to tap stays
+  44 px. The owner thought of taking the X away (Android's Back also quits). It stays: an installed app on an iPhone has no Back,
+  and Back quits safely only where the browser lets the app catch it.
 - **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
 - A full paper keeps its own bar: 90 dots would not fit.
 
