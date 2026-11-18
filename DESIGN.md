@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.33.3)
+# IOPET design rules (v3, 3.33.4)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule

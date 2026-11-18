@@ -2955,7 +2955,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.33.3',
+  VERSION: '3.33.4',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4575,6 +4575,7 @@ function paint(quiet) {
   paintNav(e.s);
   if (!quiet) lock(Math.max(CONFIG.NAV_LOCK_MS, offMs));   // (3.9.5 after the splash: until its light has opened onto the screen)
   if (AFTER[e.s]) { try { AFTER[e.s](sc); } catch (err2) { if (window.console) console.error(err2); } }
+  if (upd && upd.ready && TABS[e.s]) setTimeout(function () { updSoon(true); }, 0);   // 3.33.4 a new version waiting: opening a tab is a quiet moment
 }
 function repaint() { paint(true); }
 /* The splash leaves (3.9.2): it is lifted out of the screens — moving it replays nothing: what has caught stays lit — and laid over
@@ -8052,13 +8053,60 @@ function registerHelper() {
   if (!ok) return;
   try {
     if (!('serviceWorker' in navigator) || !navigator.serviceWorker) return;
-    navigator.serviceWorker.register('sw.js').then(null, function () { /* not this time: the app still works as a page */ });
+    upd.had = !!navigator.serviceWorker.controller;               // (a first install taking over is not a new version)
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!upd.had) { upd.had = true; return; }
+      updVersion(function (v) { if (v && v === CONFIG.VERSION) return; upd.ready = true; updSoon(false); });   // (this page may already be that version)
+    });
+    navigator.serviceWorker.register('sw.js').then(function (reg) { upd.reg = reg; upd.last = Date.now(); }, function () { /* not this time: the app still works as a page */ });
+    setInterval(function () { if (!document.hidden) updCheck(); }, UPD_EVERY_MS);
   } catch (e) { /* a frame that may not have one */ }
+}
+/* 3.33.4 A NEW VERSION REACHES THE PHONE (the owner's bug: a fix was live, but the phone still drew the old app). A phone keeps
+   an installed app alive in the background, so it is not opened again and keeps running the old code for days. Now, when the
+   app comes back to the screen (and every 10 minutes while it is open), the helper is asked to look for a newer sw.js. Once a
+   new version has taken over, the app reloads itself at the first quiet moment, so the student never loses anything: on a tab
+   (Home, Topics, Progress, You) with no set or paper going, no dialog, no network step and no backup running, and then only
+   while the app is hidden or the moment a tab is opened (never under a reading eye). It opens again on the same tab.
+   Nothing is said: the next look is simply the new one. */
+var UPD_EVERY_MS = 600000;
+var upd = { had: false, ready: false, reg: null, last: 0 };
+function updCheck() {
+  var p, t = Date.now();
+  if (!upd || !upd.reg || t - upd.last < 60000) return;                  // at most once a minute
+  upd.last = t;
+  try { p = upd.reg.update(); if (p && p.then) p.then(null, function () { /* no internet: next time */ }); } catch (e) { /* */ }
+}
+function updVersion(cb) {                                          // the version of the helper now in charge: its sw.js says it ('' if unknown)
+  var x;
+  try {
+    x = new XMLHttpRequest();
+    x.open('GET', 'sw.js?t=' + Date.now(), true);
+    x.onload = function () { var m = /var VERSION = '([^']+)'/.exec(x.responseText || ''); cb(m ? m[1] : ''); };
+    x.onerror = function () { cb(''); };
+    x.send();
+  } catch (e) { cb(''); }
+}
+function updBusy() { return !!(S && !S.done) || modalOpen || busyOn || !!celeEl || sync.busy; }
+function updSoon(onTab) {
+  if (!upd || !upd.ready || updBusy() || !stack.length || !TABS[top().s]) return;
+  if (document.hidden || onTab) updGo();
+}
+function updGo() {
+  upd.ready = false;
+  try { if (stack.length && TABS[top().s]) window.sessionStorage.setItem(UPD_TAB_KEY, top().s); } catch (e) { /* no storage: it opens on Home */ }
+  location.reload();
+}
+var UPD_TAB_KEY = 'iopet.tab';
+function updTab() {                                                // the tab to open on after such a reload (once)
+  var t = null;
+  try { t = window.sessionStorage.getItem(UPD_TAB_KEY); window.sessionStorage.removeItem(UPD_TAB_KEY); } catch (e) { t = null; }
+  return t && has(TABS, t) ? t : 'home';
 }
 function enterApp() {
   var note = db.note;
   if (db.session && has(db.users, db.session)) {
-    user = db.users[db.session]; applyPrefs(); reset('home');
+    user = db.users[db.session]; applyPrefs(); reset(updTab());   // (3.33.4 after an update's reload: the same tab)
     if (db.auth) { if (db.auth.verified) syncRun(true); else autoVerify(); }
   } else reset('login');
   if (user && user.settings.calm && !user.flags.calmnote && !note) {      // told once: the opening logo now plays even with "Reduce animations" on
@@ -8844,6 +8892,7 @@ function boot() {
   document.addEventListener('pointerup', gUp);
   document.addEventListener('pointercancel', gUp);
   document.addEventListener('visibilitychange', function () {
+    if (document.hidden) updSoon(false); else updCheck();          // 3.33.4 a new version: looked for on coming back, taken in while away
     if (document.hidden) {
       if (S && !S.done && S.tick0) { S.elapsed += Date.now() - S.tick0; S.tick0 = 0; }
       if (S && S.exam && !S.done) savePaper();                     // (a phone may close the app while it is away)
