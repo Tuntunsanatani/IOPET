@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.33.1)
+# IOPET design rules (v3, 3.33.2)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -830,6 +830,10 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | `--win-sheet`, `--win` with `--win-lip`, the XP as words (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
 | The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:76px`); the sheet slides up inside it over the buttons it replaces |
+
+**Where a motion ends is the rule itself** (3.33.2, the owner's bug): the faded wrong option's grey line and grey ✕ are
+written in its rule; the motion only leads there from the red. A look held by an animation (`forwards`) is lost when
+motion is off (Reduce animations, a phone set to less motion): a thin red line and a red ✕ stayed.
 
 **One more try**: a first wrong answer gets "Not quite" and Try again (no "Why?": it would give the answer away). The
 wrong option stays out (faded, a grey ✕, not tappable); a second Check shows the result and the right answer; Skip on the
