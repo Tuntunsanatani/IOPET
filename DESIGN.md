@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.33.2)
+# IOPET design rules (v3, 3.33.3)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -27,7 +27,8 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 | # | What is locked | The values | Since | Status |
 |---|---|---|---|---|
 | 1 | The words on every action button (`.btn` and all that build on it: primary, neutral, Check, Continue, Start; the secondary line buttons; Skip; Sign in `.au-go`; Sign out): one weight lighter than they were and a little space between the letters, so a word on a button is read at a glance | `--fw-btn: 600` (they drew in the 800 face before), `--ls-btn: .03em`; no rule on a button sets another weight or spacing | 3.33.1 | **FINAL** (the owner, 18 Nov 2026) |
-| 2 | Skip never calls louder than Check: its word is a quarter fainter | `--ink2` on `.q-skip` (L* gap to the page 25 % smaller in dark, 28 % in light; 8.9:1 and 8.5:1, still well readable) | 3.33.1 | **FINAL** (the owner, 18 Nov 2026) |
+| 2 | Skip never calls louder than Check: its word is the ink at 75 % | `--ink-skip`: `rgba(242,242,242,.75)` dark, `rgba(20,20,20,.75)` light, on `.q-skip` (9.5:1 and 8.2:1). It was `--ink2` in 3.33.1; the owner chose 75 % out of 60 / 75 / 80 / 85 % in 3.33.3 | 3.33.1, 75 % in 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
+| 3 | The words on every action button at 88 % of their colour (Skip apart, which has its own 75 %; a button that cannot be pressed keeps the not-ready look) | `--btn-ink: 88%`, one rule: `-webkit-text-fill-color: color-mix(in srgb, currentColor var(--btn-ink), transparent)` on `.btn:not([disabled]):not(.q-skip)`, `.au-go:not(.off)`, `.sign-out`; no other button rule sets a text fill. Sign in 7.3:1, Continue 7.1:1, Check 9.8:1 light / 11.0:1 dark. A browser without `color-mix` keeps the words whole. The owner chose 88 % in 3.33.3 | 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
 
 ## 1. Principles
 
@@ -265,7 +266,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 |---|---|---|
 | Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Next set, Create account (3.32.0: Check is the neutral ink, §12.15) |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
-| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words (Skip: `--ink2`, §0), semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
+| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words (Skip: `--ink-skip`, the ink at 75 %, §0), semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
 | Not ready (§1c, §12.7) | one look for every primary button that cannot go on yet (3.24.0): a flat grey block (`--surface-3`), a faint `--line-2` line, `--ink-off` words, no edge. A sign-in button in that state still answers a tap (it says what is missing). A second button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
 | Text link (§12.6) | `--ink2`, 15 px, semibold, 44 px to touch, no underline; inside a sentence it takes the sentence's size, bold. Orange (`--primary-ink`, `.link.acc`) only where it moves you between accounts (3.24.0: it was on Cancel, Close and Copy too) | Forgot password?, Continue as guest, Review answers; orange: Create account, Sign in, I already have an account |
 | Icon button | 44 px circle, `--line-2`, no shadow | ✕ close, ‹ back, flag (report), − + |

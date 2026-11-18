@@ -80,12 +80,26 @@ try {
         }
         return e;
       } },
-    { what: 'Skip: its word a quarter fainter than Check\'s (--ink2), so it never calls louder than Check', since: '3.33.1', status: 'FINAL, the owner, 18 Nov 2026',
+    { what: 'Skip: its word the ink at 75 % (--ink-skip), so it never calls louder than Check', since: '3.33.1, 75 % in 3.33.3', status: 'FINAL, the owner, 18 Nov 2026',
       test: () => {
         const e = [];
-        if (!/(^|;)color:var\(--ink2\)(;|$)/.test(rule('.q-skip'))) e.push('.q-skip must be color:var(--ink2)');
-        if (!/(^|;)color:var\(--ink2\)(;|$)/.test(rule('.qz .q-dock .q-skip'))) e.push('.qz .q-dock .q-skip must be color:var(--ink2)');
-        for (const r of rules) if (/\.q-skip(?![\w-])/.test(r.sel)) for (const m of r.body.matchAll(/(?:^|;)color:([^;]+)/g)) if (m[1] !== 'var(--ink2)') e.push(r.sel + ' sets color:' + m[1]);
+        if (!/(^|;)--ink-skip:rgba\(242,242,242,\.75\)(;|$)/.test(root)) e.push(':root must hold --ink-skip:rgba(242,242,242,.75)');
+        if (!/(^|;)--ink-skip:rgba\(20,20,20,\.75\)(;|$)/.test(light)) e.push('the light look must hold --ink-skip:rgba(20,20,20,.75)');
+        if (!/(^|;)color:var\(--ink-skip\)(;|$)/.test(rule('.q-skip'))) e.push('.q-skip must be color:var(--ink-skip)');
+        if (!/(^|;)color:var\(--ink-skip\)(;|$)/.test(rule('.qz .q-dock .q-skip'))) e.push('.qz .q-dock .q-skip must be color:var(--ink-skip)');
+        for (const r of rules) if (/\.q-skip(?![\w-])/.test(r.sel) && !/:not\(\.q-skip\)/.test(r.sel)) {
+          for (const m of r.body.matchAll(/(?:^|;)color:([^;]+)/g)) if (m[1] !== 'var(--ink-skip)') e.push(r.sel + ' sets color:' + m[1]);
+          if (/-webkit-text-fill-color:/.test(r.body)) e.push(r.sel + ' sets -webkit-text-fill-color');
+        }
+        return e;
+      } },
+    { what: 'action buttons: their words at 88 % of their colour (--btn-ink), Skip apart', since: '3.33.3', status: 'FINAL, the owner, 18 Nov 2026',
+      test: () => {
+        const e = [], SEL = '.btn:not([disabled]):not(.q-skip),.au-go:not(.off),.sign-out';
+        if (!/(^|;)--btn-ink:88%(;|$)/.test(root)) e.push(':root must hold --btn-ink:88%');
+        if (/--btn-ink/.test(light)) e.push('the light look must not redefine --btn-ink');
+        if (!rule(SEL).includes('-webkit-text-fill-color:color-mix(insrgb,currentColorvar(--btn-ink),transparent)')) e.push(SEL + ' must set -webkit-text-fill-color:color-mix(in srgb,currentColor var(--btn-ink),transparent)');
+        for (const r of rules) if (r.sel !== SEL && BTN.test(r.sel) && /-webkit-text-fill-color:/.test(r.body)) e.push(r.sel + ' sets -webkit-text-fill-color');
         return e;
       } }
   ];
