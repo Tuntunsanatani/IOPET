@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.33.0)
+# IOPET design rules (v3, 3.33.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -11,6 +11,23 @@ v3 (3.21.0, the owner's master directive) adds the rulebook in numbers (§1b), t
 has (§1c), and the check that keeps the app on the system (§10). 3.22.0 puts the shared parts of every
 page on it: buttons, fields, lines, the press, touch areas, times and curves. 3.23.0 puts every space
 on the grid. §11 says what is next.
+
+## 0. FINAL: what the owner has locked (read this first)
+
+The owner (18 Nov 2026): a change the owner has tested and marked **FINAL** is part of IOPET's identity for life.
+It is never changed again: not by any chat, not by any person, not as a side effect of another change, unless the
+owner asks for exactly that change. If it changes by mistake, it is put back as it was locked. More broadly, the
+identity written in this file is followed strictly in every update, and nothing new is added to the look on one's
+own initiative: an update does what was asked and nothing more.
+
+Each entry below is checked on every pull request by `.github/scripts/check.js` (step 2d, "FINAL holds"). To change
+one (only when the owner asks for it), change the app, this table and the FINAL list in `check.js` together, and say so
+in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points here.
+
+| # | What is locked | The values | Since | Status |
+|---|---|---|---|---|
+| 1 | The words on every action button (`.btn` and all that build on it: primary, neutral, Check, Continue, Start; the secondary line buttons; Skip; Sign in `.au-go`; Sign out): one weight lighter than they were and a little space between the letters, so a word on a button is read at a glance | `--fw-btn: 600` (they drew in the 800 face before), `--ls-btn: .03em`; no rule on a button sets another weight or spacing | 3.33.1 | waiting for the owner's FINAL |
+| 2 | Skip never calls louder than Check: its word is a quarter fainter | `--ink2` on `.q-skip` (L* gap to the page 25 % smaller in dark, 28 % in light; 8.9:1 and 8.5:1, still well readable) | 3.33.1 | waiting for the owner's FINAL |
 
 ## 1. Principles
 
@@ -219,7 +236,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 | `--fs-3xl` | 28 | hero titles (summary, chapter) |
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
-- Weights: 700 for titles, values and buttons; 600 for labels and options; 400 for body.
+- Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
 - Case: buttons and titles in sentence case ("Continue with Google"); small labels in CAPS.
 - Hindi lines get line-height ≥ 1.5.
 
@@ -248,7 +265,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 |---|---|---|
 | Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Next set, Create account (3.32.0: Check is the neutral ink, §12.15) |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
-| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words, semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
+| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words (Skip: `--ink2`, §0), semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
 | Not ready (§1c, §12.7) | one look for every primary button that cannot go on yet (3.24.0): a flat grey block (`--surface-3`), a faint `--line-2` line, `--ink-off` words, no edge. A sign-in button in that state still answers a tap (it says what is missing). A second button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
 | Text link (§12.6) | `--ink2`, 15 px, semibold, 44 px to touch, no underline; inside a sentence it takes the sentence's size, bold. Orange (`--primary-ink`, `.link.acc`) only where it moves you between accounts (3.24.0: it was on Cancel, Close and Copy too) | Forgot password?, Continue as guest, Review answers; orange: Create account, Sign in, I already have an account |
 | Icon button | 44 px circle, `--line-2`, no shadow | ✕ close, ‹ back, flag (report), − + |

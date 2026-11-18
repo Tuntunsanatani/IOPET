@@ -5,7 +5,8 @@
    the terms box (it holds the ways in until ticked), guest sign-in, course choice, the four tabs, Home's button on two phones, a chapter, one question
    checked — with no script error on the way;
    2b. the design system keeps itself: tokens exist, and nothing new is written into a rule that should come from a token;
-   2c. every question that becomes a game (3.33.0) gives, played right, its own right option. */
+   2c. every question that becomes a game (3.33.0) gives, played right, its own right option;
+   2d. what the owner has locked as FINAL (DESIGN.md §0) is still exactly as locked. */
 'use strict';
 const fs = require('fs'), path = require('path'), http = require('http');
 const ROOT = path.resolve(__dirname, '..', '..'), SHOTS = path.join(ROOT, 'ci-shots');
@@ -53,6 +54,42 @@ try {
     if (r[0] !== q.a) wrong.push(q.id + ': played right, it gives option ' + r[0] + ' (' + r[1] + '), not ' + q.a);
   }));
   if (wrong.length) bad('games: ' + wrong.join('; ')); else ok('games: ' + n.order + ' order, ' + n.spell + ' spell, ' + n.num + ' number; each, played right, gives its right option');
+})();
+
+// 2d. FINAL — WHAT THE OWNER HAS LOCKED (DESIGN.md §0, CLAUDE.md). The owner tests a change and writes FINAL: from then on it is
+//   never changed again, by any chat or person, unless the owner asks for exactly that change. Each entry below is checked on
+//   every pull request; a rule written later that undoes it (even by accident) fails here. To change a FINAL thing, the owner
+//   must ask for it: then change the app, this list and DESIGN.md §0 together, and say so in the pull request.
+(function finals() {
+  const css = ((html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '').replace(/\/\*[\s\S]*?\*\//g, '');
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(m => ({ sel: m[1].trim().replace(/^@[^{]*\{\s*/, ''), body: m[2].replace(/\s+/g, '') }));
+  const rule = sel => rules.filter(r => r.sel === sel).map(r => r.body).join(';');
+  const root = rule(':root'), light = rule('[data-theme="light"]');
+  const BTN = /(^|[\s,>+~])[^,]*(\.btn|\.q-skip|\.au-go|\.sign-out|\.qr-go)(?![\w-])/;
+  const FINAL = [
+    { what: 'action buttons: the words one weight lighter (600) with a little space between the letters (.03em)', since: '3.33.1', status: 'awaiting the owner\'s FINAL',
+      test: () => {
+        const e = [];
+        if (!/(^|;)--fw-btn:600(;|$)/.test(root) || !/(^|;)--ls-btn:\.03em(;|$)/.test(root)) e.push(':root must hold --fw-btn:600 and --ls-btn:.03em');
+        if (/--fw-btn|--ls-btn/.test(light)) e.push('the light look must not redefine --fw-btn / --ls-btn');
+        for (const sel of ['.btn', '.btn-sec,.btn-line,.q-skip', '.au-go', '.sign-out'])
+          if (!rule(sel).includes('font-weight:var(--fw-btn);letter-spacing:var(--ls-btn)')) e.push(sel + ' must use font-weight:var(--fw-btn);letter-spacing:var(--ls-btn)');
+        for (const r of rules) if (BTN.test(r.sel)) {
+          for (const m of r.body.matchAll(/(?:^|;)font-weight:([^;]+)/g)) if (m[1] !== 'var(--fw-btn)') e.push(r.sel + ' sets font-weight:' + m[1]);
+          for (const m of r.body.matchAll(/(?:^|;)letter-spacing:([^;]+)/g)) if (m[1] !== 'var(--ls-btn)') e.push(r.sel + ' sets letter-spacing:' + m[1]);
+        }
+        return e;
+      } },
+    { what: 'Skip: its word a quarter fainter than Check\'s (--ink2), so it never calls louder than Check', since: '3.33.1', status: 'awaiting the owner\'s FINAL',
+      test: () => {
+        const e = [];
+        if (!/(^|;)color:var\(--ink2\)(;|$)/.test(rule('.q-skip'))) e.push('.q-skip must be color:var(--ink2)');
+        if (!/(^|;)color:var\(--ink2\)(;|$)/.test(rule('.qz .q-dock .q-skip'))) e.push('.qz .q-dock .q-skip must be color:var(--ink2)');
+        for (const r of rules) if (/\.q-skip(?![\w-])/.test(r.sel)) for (const m of r.body.matchAll(/(?:^|;)color:([^;]+)/g)) if (m[1] !== 'var(--ink2)') e.push(r.sel + ' sets color:' + m[1]);
+        return e;
+      } }
+  ];
+  for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
 })();
 
 // 2b. THE DESIGN SYSTEM KEEPS ITSELF (3.21.0, DESIGN.md §10). The style sheet is read rule by rule:
