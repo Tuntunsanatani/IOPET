@@ -32,6 +32,9 @@
      small CAPS labels (letter-spaced; 12 px since 3.14.0, 11 was too small on cheap screens); 16 px stays on text inputs
      (smaller makes iPhones zoom in). Icons keep their own sizes. */
   --fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;--fs-in:16px;   /* --fs-in: what is typed */
+  /* 3.33.1 THE WORDS ON AN ACTION BUTTON (the owner; DESIGN.md §0, FINAL register): one weight lighter than they were (they drew
+     in the 800 face) and a little space between the letters, so a word on a button is read at a glance. Every action button. */
+  --fw-btn:600;--ls-btn:.03em;
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.10.0 the brand: matte charcoal and the diya's flame. The chrome is plain grey (no tint, no haze, no gloss); a hue appears
      only where it means something, and each hue means one thing in both looks:
@@ -257,11 +260,13 @@ sub,sup{font-size:.72em;line-height:0}
    53.5, 56 and 58 px. The one to press is orange on its 4 px edge and sinks onto it. The second button of a page is a
    line on what it stands on (.btn-sec, .btn-line: --outline; it was a filled white button with a shadow in some places
    and a fainter line in others) and gets 2 % smaller under the finger, like every flat control. */
-.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 24px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:700;line-height:1.3;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:4px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 24px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);line-height:1.3;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:4px}
 .btn:active{transform:scale(.98)}
 .btn-primary{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
 .btn-primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}   /* 3.10.0 pressed: it sits down on its edge */
-.btn-sec,.btn-line,.q-skip{background:transparent;border:var(--bw-ctl) solid var(--outline);color:var(--ink);font-weight:600;box-shadow:none}
+.btn-sec,.btn-line,.q-skip{background:transparent;border:var(--bw-ctl) solid var(--outline);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);box-shadow:none}
+.btn-sec,.btn-line{color:var(--ink)}
+.q-skip{color:var(--ink2)}   /* 3.33.1 Skip: its word a quarter fainter (the owner, §0): it must never call louder than Check */
 .btn-danger{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad-ink)}
 .link{display:inline-block;color:var(--ink2);font-size:var(--fs-md);font-weight:600;padding:12px 8px}   /* 3.24.0 one text action: grey, 15 px (orange was on Cancel, Close and Copy too); orange only where it moves you between accounts (.acc, the owner's "Create account") */
 .link.acc{color:var(--primary-ink)}
@@ -521,7 +526,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fgt{display:flex;justify-content:flex-end}
 .au-fgt button{position:relative;font-size:var(--fs-md);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
-.au-go{margin-top:var(--sp-rel);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:700;border-radius:var(--r-btn);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
+.au-go{margin-top:var(--sp-rel);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);border-radius:var(--r-btn);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
 .au-go.off{background:var(--off);color:var(--ink-off);box-shadow:none}   /* 3.24.0 not ready: the one not-ready look (see .btn-primary[disabled]); the outline it wore (3.19.0) was the second button's look */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready var(--t-pop) var(--ease-swift)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
@@ -929,7 +934,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
 .menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
-.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 16px;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:600;color:var(--ink2);margin-top:24px !important;transition:transform var(--t-press) var(--ease-swift)}
+.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 16px;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);color:var(--ink2);margin-top:24px !important;transition:transform var(--t-press) var(--ease-swift)}
 .sign-out .li{margin-right:8px}
 .sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
@@ -1369,7 +1374,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes q-mk-out{to{background:var(--ink3);color:var(--bg)}}
 .qz .opt-btn.out{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in)}   /* found wrong: out of the way, its cross grey */
 .qz .opt-btn.out .opt-mk{background:var(--ink3);color:var(--bg)}
-.qz .q-dock .q-skip{border:var(--bw-edge) solid var(--edge);color:var(--ink);font-weight:700;box-shadow:0 2px 0 var(--edge),var(--edge-in)}   /* Skip: a quiet panel with a lip */
+.qz .q-dock .q-skip{border:var(--bw-edge) solid var(--edge);color:var(--ink2);font-weight:var(--fw-btn);box-shadow:0 2px 0 var(--edge),var(--edge-in)}   /* Skip: a quiet panel with a lip; 3.33.1 its word in --ink2, a quarter fainter than Check's (the owner, §0) */
 .qz .q-dock .q-skip:active{transform:translateY(2px);box-shadow:var(--edge-in)}
 .qz .q-dock .btn-check:not([disabled]){background:var(--neutral);color:var(--on-neutral);box-shadow:0 4px 0 var(--neutral-lip)}   /* Check: neutral ink, not the flame */
 .qz .q-dock .btn-check:not([disabled]):active{transform:translateY(3px);box-shadow:0 1px 0 var(--neutral-lip)}
@@ -2949,7 +2954,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.33.0',
+  VERSION: '3.33.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
