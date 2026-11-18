@@ -1341,7 +1341,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    first (~140 ms: its colour, then its corner mark), the sheet comes up at ~220 ms over 280 ms, its button lights and the XP
    rises at ~400-500 ms; a first wrong option fades at ~550 ms over 250 ms. Practice only (.qz): a full paper keeps its look. */
 .qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x)}   /* 3.34.0 the X stays findable (3.2:1) without calling to the eye (the owner) */
-.qz .q-header .icon-btn .li{stroke-width:1.75}
+.qz .q-header .icon-btn .li{width:20px;height:20px;stroke-width:1.75}   /* 3.34.1 the owner: a smaller X (the place to tap stays 44 px) */
 .qz .q-header .icon-btn:active{background:var(--fill)}
 /* 3.34.0 THE SET'S DOTS (DESIGN.md §12.17), measured on the owner's Brilliant screenshot: dots 3.5 % of the screen wide with
    two thirds of a dot between them; the open question's dot a light grey (#CCC there) inside a 2 px ring of the faintest grey
@@ -2976,7 +2976,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.34.0',
+  VERSION: '3.34.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
