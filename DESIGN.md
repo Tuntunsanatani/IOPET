@@ -26,8 +26,8 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 
 | # | What is locked | The values | Since | Status |
 |---|---|---|---|---|
-| 1 | The words on every action button (`.btn` and all that build on it: primary, neutral, Check, Continue, Start; the secondary line buttons; Skip; Sign in `.au-go`; Sign out): one weight lighter than they were and a little space between the letters, so a word on a button is read at a glance | `--fw-btn: 600` (they drew in the 800 face before), `--ls-btn: .03em`; no rule on a button sets another weight or spacing | 3.33.1 | waiting for the owner's FINAL |
-| 2 | Skip never calls louder than Check: its word is a quarter fainter | `--ink2` on `.q-skip` (L* gap to the page 25 % smaller in dark, 28 % in light; 8.9:1 and 8.5:1, still well readable) | 3.33.1 | waiting for the owner's FINAL |
+| 1 | The words on every action button (`.btn` and all that build on it: primary, neutral, Check, Continue, Start; the secondary line buttons; Skip; Sign in `.au-go`; Sign out): one weight lighter than they were and a little space between the letters, so a word on a button is read at a glance | `--fw-btn: 600` (they drew in the 800 face before), `--ls-btn: .03em`; no rule on a button sets another weight or spacing | 3.33.1 | **FINAL** (the owner, 18 Nov 2026) |
+| 2 | Skip never calls louder than Check: its word is a quarter fainter | `--ink2` on `.q-skip` (L* gap to the page 25 % smaller in dark, 28 % in light; 8.9:1 and 8.5:1, still well readable) | 3.33.1 | **FINAL** (the owner, 18 Nov 2026) |
 
 ## 1. Principles
 

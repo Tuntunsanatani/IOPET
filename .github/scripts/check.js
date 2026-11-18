@@ -67,7 +67,7 @@ try {
   const root = rule(':root'), light = rule('[data-theme="light"]');
   const BTN = /(^|[\s,>+~])[^,]*(\.btn|\.q-skip|\.au-go|\.sign-out|\.qr-go)(?![\w-])/;
   const FINAL = [
-    { what: 'action buttons: the words one weight lighter (600) with a little space between the letters (.03em)', since: '3.33.1', status: 'awaiting the owner\'s FINAL',
+    { what: 'action buttons: the words one weight lighter (600) with a little space between the letters (.03em)', since: '3.33.1', status: 'FINAL, the owner, 18 Nov 2026',
       test: () => {
         const e = [];
         if (!/(^|;)--fw-btn:600(;|$)/.test(root) || !/(^|;)--ls-btn:\.03em(;|$)/.test(root)) e.push(':root must hold --fw-btn:600 and --ls-btn:.03em');
@@ -80,7 +80,7 @@ try {
         }
         return e;
       } },
-    { what: 'Skip: its word a quarter fainter than Check\'s (--ink2), so it never calls louder than Check', since: '3.33.1', status: 'awaiting the owner\'s FINAL',
+    { what: 'Skip: its word a quarter fainter than Check\'s (--ink2), so it never calls louder than Check', since: '3.33.1', status: 'FINAL, the owner, 18 Nov 2026',
       test: () => {
         const e = [];
         if (!/(^|;)color:var\(--ink2\)(;|$)/.test(rule('.q-skip'))) e.push('.q-skip must be color:var(--ink2)');
