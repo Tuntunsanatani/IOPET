@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.38.2)
+# IOPET design rules (v3, 3.38.3)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -225,7 +225,12 @@ Dark and light are the same design. Neither is made from the other by turning co
   uses, so buttons read as "default". Plus Jakarta Sans is geometric, has a tall x-height and tabular figures. Its English
   is drawn one step heavier than the CSS weight asks (400 → its 500, 600 → 600, 700 → its 800): its own 400 is thin on a
   cheap screen in the sun, and its 700 looked light beside the Hindi. The Hindi stays Noto Sans Devanagari 400/600/700.
-- All six files: 166 KB, OFL (see `OFL.txt`).
+- 3.38.3: one more Hindi file, `noto-hi-450.woff2`, for the question's words (`--fw-q`). It is the 450 instance of the
+  very font the other three come from (Google's Noto Sans 2.015, its Devanagari part): drawn at 400 and 600 from that same
+  source, it matches IOPET's own two files pixel for pixel, so the 450 is the same design, one quarter of the way to 600.
+  A 450 asked of the old three would have drawn 400. The splash waits for it with the others, so a question never shows
+  in a stand-in font.
+- All seven files: 211 KB, OFL (see `OFL.txt`).
 
 | Token | Size | Use |
 |---|---|---|
@@ -240,8 +245,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
 - Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
-- **A question is read, not glanced at (3.38.0; 400 in 3.38.2, the owner's pick, to be tested).** Its words (`.q-text`
-  in a set and a paper, `.rv-q` in Review) are `--fw-q` 400, the regular weight; they were 700.
+- **A question is read, not glanced at (3.38.0; 400 in 3.38.2; 450 in 3.38.3, the owner's try, to be tested).** Its
+  words (`.q-text` in a set and a paper, `.rv-q` in Review) are `--fw-q` 450: a little fuller than the regular 400, far
+  lighter than 600; they were 700. The English and the numbers in it stay on the 400 face (Plus Jakarta Sans 500).
   - **Why:** Hindi joins letters (क्ष, ष्क, द्या, ह्न) and hangs marks above and below the line. At 700 their small
     openings fill in and the letters run together. At 400 every opening stays clear, and the question's own bold words
     (कथन:, निष्कर्ष:) stand out at 700.
