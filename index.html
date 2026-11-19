@@ -279,6 +279,10 @@ sub,sup{font-size:.72em;line-height:0}
 .pbar.thin{height:6px;margin-top:8px}
 .icon-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .icon-btn svg{width:22px;height:22px}
+.icon-btn[data-act=back] .li{width:30px;height:30px;stroke-width:1.4}   /* 3.35.0 every Back is drawn as the practice X: 30 px, the same 1.75 px line (§12.18); its circle stays */
+.nav-morph{position:fixed;z-index:80;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}   /* 3.35.0 the X ↔ Back morph (§12.18) */
+.nav-morph>i{position:absolute;top:0;left:0;right:0;bottom:0;will-change:opacity}
+.nav-morph .nm-s{position:absolute;top:0;left:0;display:block;overflow:visible;will-change:transform}
 .icon-btn:active{background:var(--surface-2)}
 .alert{background:var(--warn-bg);border:var(--bw-edge) solid var(--warn-line);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-xs);font-weight:600;color:var(--warn-ink);line-height:1.5;box-shadow:var(--edge-in)}
 .alert.warn{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad-ink)}
@@ -2979,7 +2983,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.34.2',
+  VERSION: '3.35.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4575,6 +4579,7 @@ function guard() {
 /* CHANGE #5: one screen in the DOM at a time. The old screen is replaced in the same
    tick, so screens can never stack up, however fast the user taps. */
 function paint(quiet) {
+  navStop();                                        // 3.35.0 (a morph still going ends with any new drawing)
   var keep = quiet ? curScroll() : 0, was = stack.length ? top() : null, e, html, sc, old = elScreens.firstChild, off, offMs = 0;
   refreshDue = false;                               // this paint shows everything as it is now
   stopTimer();
@@ -7021,7 +7026,7 @@ function showLocked(t) {
     '<button class="btn btn-primary" data-act="start" data-topic="' + rt.id + '">Practice it</button></div>');
 }
 function startSession(topicId) {
-  var u = user, t = topicById(topicId), lockedBefore = {}, qs;
+  var u = user, t = topicById(topicId), lockedBefore = {}, qs, from;
   if (!u || !t || !BANK[t.id] || !BANK[t.id].length) { toast('This topic has no questions yet.'); return; }
   if (t.mock) { if (topicsOf(u).indexOf(t) >= 0) { hideModal(); go('paper', { topic: t.id }); } else toast('That paper is not part of your course.'); return; }   // 3.9.6 a full paper: its page first
   if (!courseOf(u)) { reset('home'); return; }                 // no course (any more): the question comes first
@@ -7042,10 +7047,12 @@ function startSession(topicId) {
     })
   };
   u.lastTopic = t.id; u.at = Date.now(); save();
+  from = navMark('.icon-btn[data-act=back] .li');                    // 3.35.0 the Back, to open into the X
   while (stack.length && SESSION_SCREENS[top().s]) stack.pop();      // "practice again" replaces the old summary
   if (!stack.length) stack = [{ s: 'home' }];
   stack.push({ s: 'practice' });
   paint();
+  navMorph(from, '.qz .q-header .icon-btn .li', false);
 }
 function noteAch(silent) {
   var fresh = checkAch(user);
@@ -7140,13 +7147,87 @@ function confetti(cv, hue) {
   confettiRaf = window.requestAnimationFrame(step);
 }
 /* (3.13.0 the count-up is sumCount(): the XP, once, after any celebration over the summary) */
+/* 3.35.0 ONE NAVIGATION MARK, TWO STATES (the owner; DESIGN.md §12.18). The practice X and the Back of the page under it are
+   one mark: the same 30 px drawing with the same 1.75 px line, the X's four half-strokes as long as the arrow's two arms and
+   at the same 45°. Leaving a set, the X becomes the Back: each of its two strokes keeps its slant and draws in its left
+   end while its right end steps left, so the crossing slides left until the two strokes meet only at their ends, the
+   arrow's point (× narrows into ‹), while the mark glides from the X's place to the Back's and takes the Back's colour.
+   Starting a set from that page, the Back opens into the X the same way. Nothing turns and nothing fades from one icon to
+   the other: the strokes themselves move (each stroke is two half-strokes that slide over each other: round ends stay round).
+   How it is drawn: the eight half-strokes (four in the colour it leaves, four in the colour it reaches) are each drawn once,
+   as the icon draws them (an SVG line, slanted, round ends), and are then only slid, by transform and opacity (Web
+   Animations): nothing is turned or scaled, so the graphics chip draws every frame at the screen's own rate
+   (60 to 200 Hz) with nothing else asked of the page; no frame loop, nothing drawn when nothing moves. In its last 15 % the
+   real icon (the same geometry) comes in under it, so the hand-over cannot be seen. With Reduce animations: none. */
+var NAV_MS = 380, NAV_EASE = 'cubic-bezier(.2,0,0,1)', NAV_LINE = 1.4;
+var NAV_HALF = [[18, 6, -3.5, 0], [18, 18, -3.5, 0], [6, 6, 2.5, 6], [6, 18, 2.5, -6]];   // the X's half-strokes from its crossing (12,12) to a corner, and how far each slides in the arrow (24-unit drawing)
+var navEl = null;
+function navMark(sel) {                                            // the X or the Back now on the screen: where it is, its colour
+  var el = elScreens.querySelector(sel), r;
+  if (!el || !el.getBoundingClientRect) return null;
+  r = el.getBoundingClientRect();
+  if (!r.width || r.bottom < 0 || r.top > (window.innerHeight || 0)) return null;
+  return { r: r, c: window.getComputedStyle(el).color };
+}
+function navSettled(el) {                                          // where the new screen's mark will rest once the screen has come in
+  var sc = elScreens.firstChild, an = sc && sc.getAnimations ? sc.getAnimations() : [], was = [], r;
+  an.forEach(function (a) { was.push(a.currentTime); try { a.currentTime = a.effect.getComputedTiming().endTime; } catch (e) { /* */ } });
+  r = el.getBoundingClientRect();
+  an.forEach(function (a, i) { try { a.currentTime = was[i]; } catch (e) { /* */ } });
+  return r;
+}
+function navStop() { if (navEl && navEl.parentNode) navEl.parentNode.removeChild(navEl); navEl = null; }
+function navMorph(from, sel, toArrow) {
+  var el, r, k, box, tf, cols, end;
+  navStop();
+  if (!from || calmMotion() || !document.body || !document.body.animate) return;
+  el = elScreens.querySelector(sel);
+  if (!el) return;
+  r = navSettled(el);
+  if (!r.width || r.bottom < 0 || r.top > (window.innerHeight || 0)) return;
+  k = r.width / 24;
+  tf = function (i, arrow) { var m = NAV_HALF[i]; return 'translate(' + (arrow ? m[2] * k : 0) + 'px,' + (arrow ? m[3] * k : 0) + 'px)'; };
+  cols = [from.c, window.getComputedStyle(el).color];
+  if (cols[0] === cols[1]) cols.pop();
+  box = document.createElement('div');
+  box.className = 'nav-morph'; box.setAttribute('aria-hidden', 'true');
+  box.style.left = r.left + 'px'; box.style.top = r.top + 'px'; box.style.width = r.width + 'px'; box.style.height = r.height + 'px';
+  try {
+    cols.forEach(function (col, n) {
+      var layer = document.createElement('i'), i, bar, ln, NS = 'http://www.w3.org/2000/svg';
+      for (i = 0; i < 4; i++) {
+        bar = document.createElementNS(NS, 'svg'); ln = document.createElementNS(NS, 'line');
+        bar.setAttribute('viewBox', '0 0 24 24'); bar.setAttribute('class', 'nm-s');
+        ln.setAttribute('x1', '12'); ln.setAttribute('y1', '12'); ln.setAttribute('x2', String(NAV_HALF[i][0])); ln.setAttribute('y2', String(NAV_HALF[i][1]));
+        ln.setAttribute('stroke', col); ln.setAttribute('stroke-width', String(NAV_LINE)); ln.setAttribute('stroke-linecap', 'round');
+        bar.appendChild(ln);
+        bar.style.width = r.width + 'px'; bar.style.height = r.height + 'px'; bar.style.transform = tf(i, toArrow);
+        layer.appendChild(bar);
+        bar.animate([{ transform: tf(i, !toArrow) }, { transform: tf(i, toArrow) }], { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
+        /* the two half-strokes that slide over the others: in the arrow they lie on them, and a stroke drawn twice looks heavier,
+           so they are let go while they settle there (and taken up as they leave, the other way) */
+        if (i > 1) bar.animate(toArrow ? [{ opacity: 1 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }]
+                                       : [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1 }], { duration: NAV_MS, fill: 'both' });
+      }
+      if (n === 1) layer.animate([{ opacity: 0 }, { opacity: 1, offset: 0.6 }, { opacity: 1 }], { duration: NAV_MS, fill: 'backwards' });   // the colour it reaches
+      box.appendChild(layer);
+    });
+    document.body.appendChild(box); navEl = box;
+    box.animate([{ transform: 'translate(' + (from.r.left - r.left) + 'px,' + (from.r.top - r.top) + 'px) scale(' + from.r.width / r.width + ')' }, { transform: 'none' }],
+      { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
+    end = box.animate([{ opacity: 1 }, { opacity: 1, offset: 0.85 }, { opacity: 0 }], { duration: NAV_MS, fill: 'forwards' });
+    el.animate([{ opacity: 0 }, { opacity: 0, offset: 0.85 }, { opacity: 1 }], { duration: NAV_MS });   // the real mark, under it, in its last moment
+    end.onfinish = function () { if (navEl === box) navStop(); };
+  } catch (e) { navStop(); }
+}
 function quitNow() {
-  var live = S && !S.done;
+  var live = S && !S.done, from = !(S && S.exam) ? navMark('.qz .q-header .icon-btn .li') : null;   // 3.35.0 the X, to become the Back
   if (live && S.exam) { savePaper(); stopTimer(); }  // 3.9.6 a paper left half-way: kept, to go on with later
   S = null;
   hideModal();
   if (stack.length > 1) stack.pop(); else stack = [{ s: 'home' }];
   paint();
+  navMorph(from, '.icon-btn[data-act=back] .li', true);
   if (live && user && !user.guest) syncSoon(800);
 }
 function askQuit() {
