@@ -116,7 +116,7 @@
                  C in use (focus)              --outline-on, plus a 1 px ring (--ring): 6.4 : 1, ~65 %, never white
                  a chosen answer keeps ink (§2): it is what the student said, the main thing on that screen
        --ctl-on  the inside of a control in use: one step lighter than what it stands on (white on a light page)
-       sizes     --h-ctl a button or a field · --h-row a line to tap (words only) · --tap the least a finger needs
+       sizes     --h-ctl a field · --h-btn a button (3.40.1, Brilliant's 48) · --h-row a line to tap (words only) · --tap the least a finger needs
                  --ic an icon · --ic-sm an icon inside a control · --ic-xs inside a chip
        space     by what it separates (all on the 4 pt grid): --sp-icon a mark and its words · --sp-rel things of one group
                  (field and field, button and button) · --sp-in words and the edge of their control · --sp-grp one group
@@ -125,7 +125,7 @@
                  thing appears or goes in place; --ease-swift what answers a touch, --ease-std a fade or a two-way move */
   --outline-on:#A0A0A0;--ctl-on:#282828;
   --bw:1px;--bw-ctl:1.5px;--ring:1px;
-  --h-ctl:56px;--h-row:48px;--tap:44px;--ic:24px;--ic-sm:20px;--ic-xs:16px;
+  --h-ctl:56px;--h-btn:48px;--h-row:48px;--tap:44px;--ic:24px;--ic-sm:20px;--ic-xs:16px;
   --sp-icon:8px;--sp-rel:8px;--sp-in:16px;--sp-grp:16px;--sp-sec:24px;
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
@@ -267,7 +267,7 @@ sub,sup{font-size:.72em;line-height:0}
    53.5, 56 and 58 px. The one to press is orange on its 4 px edge and sinks onto it. The second button of a page is a
    line on what it stands on (.btn-sec, .btn-line: --outline; it was a filled white button with a shadow in some places
    and a fainter line in others) and gets 2 % smaller under the finger, like every flat control. */
-.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 24px;border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);line-height:1.3;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:4px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-btn);padding:8px 24px;border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);line-height:1.3;text-align:center;transition:transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift);margin-bottom:4px}
 .btn:not([disabled]):not(.q-skip),.au-go:not(.off),.sign-out{-webkit-text-fill-color:color-mix(in srgb,currentColor var(--btn-ink),transparent)}   /* 3.33.3 the words of every action button at 88 % of their colour (the owner's pick, §0); a browser without color-mix keeps them whole. Skip has its own 75 %; a button that cannot be pressed keeps the not-ready look */
 .btn:active{transform:scale(.98)}
 .btn-primary{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta)}
@@ -544,7 +544,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .au-fgt{display:flex;justify-content:flex-end}
 .au-fgt button{position:relative;font-size:var(--fs-md);font-weight:600;color:var(--ink2);min-height:40px;padding:0 4px}
 .au-fgt button:after,.au-alt button:after{content:'';position:absolute;top:-4px;right:0;bottom:-4px;left:0}   /* 40 px drawn, 48 px to touch */
-.au-go{margin-top:var(--sp-rel);min-height:var(--h-ctl);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);border-radius:var(--r-btn);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
+.au-go{margin-top:var(--sp-rel);min-height:var(--h-btn);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);border-radius:var(--r-pill);transition:background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),box-shadow var(--t-state) var(--ease-swift),transform var(--t-press) var(--ease-swift)}
 .au-go.off{background:var(--off);color:var(--ink-off);box-shadow:none}   /* 3.24.0 not ready: the one not-ready look (see .btn-primary[disabled]); the outline it wore (3.19.0) was the second button's look */
 .au-go.on{background:var(--cta);color:var(--on-cta);box-shadow:var(--shadow-cta);animation:au-ready var(--t-pop) var(--ease-swift)}
 .au-go.on:active{transform:translateY(3px);box-shadow:0 1px 0 var(--purple-dark)}
@@ -669,7 +669,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz>.q-body{margin-top:40px}   /* 3.38.0 the owner: room between the set's dots and the question, so the two never read as one block (the question 4 times further from the dots than from its own figure) */
 .qz .q-level{margin-bottom:8px}
 .qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));background:var(--bg)}   /* 3.40.0 Brilliant 1:1 (DESIGN.md §5b): 20 px from the sides, the buttons 20 px over the bottom (their lip 16) */
-.qz .q-dock .btn{margin:0 !important;min-height:48px;border-radius:var(--r-pill)}   /* 3.40.0 the owner, Brilliant 1:1: 48 px and round ends, as big as a finger needs and no bigger (the words are short) */
+.qz .q-dock .btn{margin:0 !important}   /* 3.40.0 the owner, Brilliant 1:1: 48 px and round ends (3.40.1: every button, .btn) */
 .qz .q-dock .q-skip{flex:0 0 86px;padding-left:12px;padding-right:12px;margin-right:12px !important}   /* a second button (its look: .btn-line). 3.22.0 the 12 px between Skip and Check are there now: ".qz .q-dock .btn" was stronger and set them to 0, so the two buttons touched */
 .qz .q-dock .btn-check{flex:1;min-width:0}
 .qz>.q-dock.res{display:block;padding:0;background:transparent}
@@ -805,7 +805,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sm-chip.y .li{color:var(--gold)}
 .sm2 .next-card{margin-top:8px !important}
 /* the dock: the next set alone at full width (the one big target); Review and Again as quiet links under it */
-.sm-dock{position:sticky;bottom:0;z-index:5;margin:auto -24px -32px !important;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
+.sm-dock{position:sticky;bottom:0;z-index:5;margin:auto -24px -32px !important;padding:16px 16px;padding-bottom:calc(20px + env(safe-area-inset-bottom));background:var(--bg)}   /* 3.40.1 the owner: as the question's dock (§5b): one full-width button 16 px from the sides (round ends look inset), 20 px over the bottom */
 .sm-dock .btn{margin:0 !important}
 .sm-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px}
 .sm-links .link{min-height:44px;padding:12px}
@@ -952,7 +952,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .menu-arrow{flex:none;display:flex;color:var(--ink3)}
 .menu-item.wrap .menu-meta{white-space:normal;text-align:right;line-height:1.35}
 .menu-item.danger .menu-lbl,.menu-item.danger .menu-ico{color:var(--wrong-ink)}
-.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-ctl);padding:8px 16px;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-btn);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);color:var(--ink2);margin-top:24px !important;transition:transform var(--t-press) var(--ease-swift)}
+.sign-out{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--h-btn);padding:8px 16px;background:transparent;border:var(--bw-ctl) solid var(--outline);border-radius:var(--r-pill);font-size:var(--fs-lg);font-weight:var(--fw-btn);letter-spacing:var(--ls-btn);color:var(--ink2);margin-top:24px !important;transition:transform var(--t-press) var(--ease-swift)}
 .sign-out .li{margin-right:8px}
 .sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
@@ -1316,7 +1316,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .cele-t{font-size:var(--fs-3xl);font-weight:900;line-height:1.2;margin-top:24px;animation:rise .45s ease-out .55s both}
 .cele-s{font-size:var(--fs-md);font-weight:700;color:var(--ink2);margin-top:8px;line-height:1.5;max-width:300px;animation:rise .45s ease-out .7s both}
 .cele-s b{color:var(--ink)}
-.cele .btn{position:absolute;left:24px;right:24px;bottom:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:auto;margin:0;animation:rise .45s ease-out .9s both}   /* 3.24.0 pinned where every docked button is (16 px over the bottom edge), as on the welcome page */
+.cele .btn{position:absolute;left:16px;right:16px;bottom:20px;bottom:calc(20px + env(safe-area-inset-bottom));width:auto;margin:0;animation:rise .45s ease-out .9s both}   /* 3.24.0 pinned where every docked button is (16 px over the bottom edge), as on the welcome page */
 @keyframes cele-in{from{opacity:0}to{opacity:1}}
 @keyframes rays{from{transform:rotate(-60deg)}to{transform:none}}
 @keyframes flip3d{0%{opacity:0;transform:translateY(60px) scale(.3) rotateY(-540deg) rotateX(25deg)}60%{opacity:1;transform:translateY(-14px) scale(1.12) rotateY(-30deg) rotateX(0)}
@@ -3016,7 +3016,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.40.0',
+  VERSION: '3.40.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)

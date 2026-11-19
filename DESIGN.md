@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.40.0)
+# IOPET design rules (v3, 3.40.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -99,7 +99,8 @@ ground on the way to full ink (in L*, the eye's scale): 0 % is the ground, 100 %
 
 | Token | Value | For |
 |---|---|---|
-| `--h-ctl` | 56 px | a button or a field |
+| `--h-ctl` | 56 px | a field |
+| `--h-btn` | 48 px | a button, every kind (3.40.1, Brilliant's; §5b) |
 | `--h-row` | 48 px | a line of words to tap (guest, "Skip for now") |
 | `--tap` | 44 px | the least a finger needs; a smaller drawing gets an unseen area up to it |
 | `--ic` / `--ic-sm` / `--ic-xs` | 24 / 20 / 16 px | an icon; inside a control; inside a chip |
@@ -289,9 +290,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 | Kind | Look | Examples |
 |---|---|---|
-| Primary | orange, 56 px, 16 px corners, dark text, a 4 px edge, full width where it is the screen's one action | Start, Next set, Create account (3.32.0: Check is the neutral ink, §12.15) |
+| Primary | orange, 48 px, round ends (3.40.1), dark text, a 4 px edge, full width where it is the screen's one action | Start, Next set, Create account (3.32.0: Check is the neutral ink, §12.15) |
 | Result / acknowledge | green button after right; neutral button (light grey in dark, near-black in light) after wrong and on reward moments | Continue, See results |
-| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 56 px, ink words (Skip: `--ink-skip`, the ink at 75 %, §0), semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
+| Secondary | a line on what it stands on (`.btn-sec`, `.btn-line`: `--outline`, 48 px (3.40.1), ink words (Skip: `--ink-skip`, the ink at 75 %, §0), semibold; 3.22.0: on every page, it was a filled white button with a shadow in some places), or a quiet text link under the primary | Continue with email, Skip, Cancel, Quit, Change exam and date, Sign out |
 | Not ready (§1c, §12.7) | one look for every primary button that cannot go on yet (3.24.0): a flat grey block (`--surface-3`), a faint `--line-2` line, `--ink-off` words, no edge. A sign-in button in that state still answers a tap (it says what is missing). A second button that cannot be pressed: dimmed to 50 % | Sign in before valid input; Check before a choice; Back up now while it runs |
 | Text link (§12.6) | `--ink2`, 15 px, semibold, 44 px to touch, no underline; inside a sentence it takes the sentence's size, bold. Orange (`--primary-ink`, `.link.acc`) only where it moves you between accounts (3.24.0: it was on Cancel, Close and Copy too) | Forgot password?, Continue as guest, Review answers; orange: Create account, Sign in, I already have an account |
 | Icon button | 44 px circle, `--line-2`, no shadow | ✕ close, ‹ back, flag (report), − + |
@@ -300,8 +301,11 @@ Dark and light are the same design. Neither is made from the other by turning co
   Keep going | Quit, Cancel | Delete); the orange goes to the one the app recommends. In a dock the minor one takes about 1/3;
   in a dialog both halves are equal. Stacked: the primary on top, the second under it, text actions last, 12 px from it
   (3.22.0: Skip and Check touched; a stronger rule had set the gap to 0 since 3.12.0).
-- Every button is 56 px with its words in its middle (3.22.0: they were 53.5, 56 and 58). Small buttons inside a card
-  (Share, the pay buttons) are 44. A question's own buttons are the exception below (§5b).
+- Every button is 48 px (`--h-btn`) with round ends and its words in its middle: 3.40.1, the owner, so that every
+  button of the app is the question's (§5b), one family (3.22.0: 56 px with 16 px corners; before that 53.5, 56 and 58).
+  Small buttons inside a card (Share, the pay buttons) are 44, round too. Fields stay 56 px with 16 px corners.
+- A page's one docked button (`.sm-dock`: a chapter's Practice, a summary's Next set, Review's Done; a celebration's
+  Continue) stands as Brilliant's does: 16 px from the sides, 20 px over the bottom.
 
 ## 5b. A question's bottom buttons: Brilliant 1:1 (3.40.0, the owner)
 
@@ -341,6 +345,9 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
   (IOPET 280); Continue or Try again stands exactly where Check stood. The ghost Skip / Check the sheet slides over now
   stands exactly on the real ones at every width (on a 320 px phone it stood 8 px off since 3.32).
 - **Contrast, the owner's choice**: white on the green is 2.1:1 (Brilliant's too), under the 3:1 asked of large words.
+- **3.40.1, the owner: every button of the app** in this family (the sign-in buttons, a chapter's Practice, the paper's
+  Start, the sheets' pairs such as Keep going / Quit, Sign out): 48 px, round ends (§5). Brilliant does the same
+  everywhere (measured: the lesson's last Continue 48 px, 16 px sides; Review with Koji / Skip review 48 px, 20 px sides).
 
 ## 6. Components
 
@@ -532,9 +539,10 @@ file (`.github/scripts/check.js`, part 2b):
   the sizes of pictures and big numbers, a chart bar's shape, and the eight spaces of §4.
 - A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
 - 3.24.0: CI also measures the geometry of the pages it opens, in both looks (the sign-in page, the four tabs, Account,
-  Privacy, Terms, Notifications, Settings, Help, a chapter, a question before a choice): every button 56 px with 16 px
-  corners (44 for the small one in a card), every block 24 px from both sides, the top-left mark at 12,12 (3.37.0), a header
-  16 px over its first block, the one not-ready look, docked buttons 16 px over the bottom (§12). It was proved to
+  Privacy, Terms, Notifications, Settings, Help, a chapter, a question before a choice): every button 48 px with round ends (3.40.1; it was
+  56 px with 16 px corners; 44 for the small one in a card), every block 24 px from both sides, the top-left mark at 12,12
+  (3.37.0), a header 16 px over its first block, the one not-ready look, docked buttons 20 px over the bottom (3.40.1; it was
+  16) (§12). It was proved to
   fail: with the sign-in pages put back on 16 px sides, it stopped the build on both looks.
 - The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
   and curves are their own.
@@ -638,7 +646,7 @@ never covers it.
 
 | Component | Height | Corners | Line | Inside | Note |
 |---|---|---|---|---|---|
-| Button, every kind | 56 | 16 | none, or 1.5 px `--outline` for a second button | 8 24 | the small button inside a card: 44 |
+| Button, every kind | 48 (3.40.1) | round ends | none, or 1.5 px `--outline` for a second button | 8 24 | the small button inside a card: 44 |
 | Field | 56 | 16 | 1.5 px `--outline` | 0 16 | |
 | Option of a question | 72 and up | 18 | 1.5 px `--line-2` | 12 8 (grid) / 12 16 | |
 | Row (menu, switch, FAQ) | 64 (FAQ 48 and up) | the group's 24 | a hairline between rows | 12 16 | the rows of a section sit in ONE box (3.24.0) |
