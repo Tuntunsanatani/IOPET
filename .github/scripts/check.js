@@ -130,6 +130,21 @@ try {
         if (!rule('.qz .q-header .icon-btn .li').includes('width:30px;height:30px;stroke-width:1.4')) e.push('.qz .q-header .icon-btn .li must be width:30px;height:30px;stroke-width:1.4');
         if (!/(^|;)--ink-x:#5C5C5C(;|$)/.test(root) || !/(^|;)--ink-x:#A3A3A3(;|$)/.test(light)) e.push('--ink-x must be #5C5C5C (dark) and #A3A3A3 (light)');
         return e;
+      } },
+    { what: 'the question\'s words at 450 (--fw-q), its own Hindi file (noto-hi-450, Noto Sans 2.015)', since: '3.38.3', status: 'FINAL, the owner, 19 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+        if (!/(^|;)--fw-q:450(;|$)/.test(root)) e.push(':root must hold --fw-q:450');
+        if (/--fw-q/.test(light)) e.push('the light look must not redefine --fw-q');
+        if (!rule('.q-text').includes('font-size:var(--fs-xl);font-weight:var(--fw-q);line-height:1.6')) e.push('.q-text must be font-size:var(--fs-xl);font-weight:var(--fw-q);line-height:1.6');
+        if (!rule('.rv-q').includes('font-weight:var(--fw-q)')) e.push('.rv-q must be font-weight:var(--fw-q)');
+        for (const r of rules) for (const part of r.sel.split(',')) if (/\.(q-text|rv-q)$/.test(part.trim()))
+          for (const m of r.body.matchAll(/(?:^|;)font-weight:([^;]+)/g)) if (m[1] !== 'var(--fw-q)') e.push(r.sel + ' sets font-weight:' + m[1]);
+        if (!/@font-face\{font-family:'IOPET Sans';font-style:normal;font-weight:450;font-display:swap;src:url\(noto-hi-450\.woff2\) format\('woff2'\);unicode-range:U\+0900-097F/.test(html)) e.push('the @font-face for weight 450 (noto-hi-450.woff2, the Devanagari range) must stay');
+        if (!fs.existsSync(path.join(ROOT, 'noto-hi-450.woff2'))) e.push('noto-hi-450.woff2 must be in the repo');
+        if (!sw.includes("'noto-hi-450.woff2'")) e.push('sw.js must cache noto-hi-450.woff2');
+        if (!js.includes("['400', '450', '600', '700'].forEach(function (w) { document.fonts.load(")) e.push('the splash must wait for the 450 face with the others');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
