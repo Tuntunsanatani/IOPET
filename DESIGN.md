@@ -31,6 +31,7 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 | 3 | The words on every action button at 88 % of their colour (Skip apart, which has its own 75 %; a button that cannot be pressed keeps the not-ready look) | `--btn-ink: 88%`, one rule: `-webkit-text-fill-color: color-mix(in srgb, currentColor var(--btn-ink), transparent)` on `.btn:not([disabled]):not(.q-skip)`, `.au-go:not(.off)`, `.sign-out`; no other button rule sets a text fill. Sign in 7.3:1, Continue 7.1:1, Check 9.8:1 light / 11.0:1 dark. A browser without `color-mix` keeps the words whole. The owner chose 88 % in 3.33.3 | 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
 | 4 | The set's dots in practice (§12.17), in place of the bar and its count | One dot a question: the first answer right is `--win`. The green grows out of the dot (`::after` scale .15 → 1.08 → 1, `--t-dot` 460 ms, `--ease-dot` `cubic-bezier(.2,1.55,.36,1)`, from `--q-ans`; transform and opacity only). Wrong or skipped is `--ink3`, at once, no motion. The open question is `--line-2` in a ring of `--fill`, 3 px out, 2 px wide. Not reached is `--fill`. Dots are 12 px with 8 px gaps, smaller to fit; a too-long set gets thin pieces. The row is centred in a 44 px, 1fr, 44 px grid | 3.34.0, 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
 | 5 | The practice X | 30 px drawn (line 1.75 px), `--ink-x` #A3A3A3 light, #5C5C5C dark, 12 px higher and 12 px further left than the dots' line; the place to tap 44 px | 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
+| 6 | The question's words, in a set, a game, a paper and Review (`.q-text`, `.rv-q`): not bold, so Hindi's joined letters stay open and the question's own bold words stand out (§3) | `--fw-q: 450` (it was 700; 600 in 3.38.0, 400 in 3.38.2; the owner chose 450). Its Hindi is its own file, `noto-hi-450.woff2`: the 450 of the same Noto Sans 2.015 the other Hindi files are cut from, in its `@font-face` (the Devanagari range), cached by `sw.js`, waited for by the splash. The English and numbers in it use the 400 face; its bold words 700. No rule on `.q-text` / `.rv-q` sets another weight | 3.38.3 | **FINAL** (the owner, 19 Nov 2026) |
 
 ## 1. Principles
 
@@ -245,7 +246,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
 - Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
-- **A question is read, not glanced at (3.38.0; 400 in 3.38.2; 450 in 3.38.3, the owner's try, to be tested).** Its
+- **A question is read, not glanced at (3.38.0; 400 in 3.38.2; 450 in 3.38.3, FINAL, the owner, 19 Nov 2026: §0 6).** Its
   words (`.q-text` in a set and a paper, `.rv-q` in Review) are `--fw-q` 450: a little fuller than the regular 400, far
   lighter than 600; they were 700. The English and the numbers in it stay on the 400 face (Plus Jakarta Sans 500).
   - **Why:** Hindi joins letters (क्ष, ष्क, द्या, ह्न) and hangs marks above and below the line. At 700 their small
