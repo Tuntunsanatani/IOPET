@@ -33,7 +33,6 @@ rawSize   .hero-emoji { font-size:56px }
 rawSize   .icon-btn { font-size:17px }
 rawSize   .m-emoji { font-size:40px }
 rawSize   .menu-ico { font-size:18px }
-rawSize   .pack-hero-ico { font-size:40px }
 rawSize   .pack-ico { font-size:21px }
 rawSize   .pr-big { font-size:64px }
 rawSize   .prof-avatar { font-size:36px }

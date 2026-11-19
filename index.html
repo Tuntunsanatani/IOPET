@@ -279,13 +279,13 @@ sub,sup{font-size:.72em;line-height:0}
 .pbar.thin{height:6px;margin-top:8px}
 .icon-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .icon-btn svg{width:22px;height:22px}
-.icon-btn[data-act=back] .li{width:30px;height:30px;stroke-width:1.4}   /* 3.35.0 every Back is drawn as the practice X: 30 px, the same 1.75 px line (§12.18); its circle stays */
-.nav-morph{position:fixed;z-index:80;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}   /* 3.35.0 the X ↔ Back morph (§12.18) */
-.nav-morph>i{position:absolute;top:0;left:0;right:0;bottom:0;will-change:opacity}
+.icon-btn[data-act=back]{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}   /* 3.37.0 the owner: every Back is the X's twin, an arrow (←) of the same size in the same place (§12.18): no circle, its grey, 12 px up and left */
+.icon-btn[data-act=back]:active{background:var(--fill)}
+.icon-btn[data-act=back] .li{width:30px;height:30px;stroke-width:1.4}
+.nav-morph{position:fixed;z-index:80;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}   /* 3.35.0 the X ↔ ← morph (§12.18) */
 .nav-morph .nm-s{position:absolute;top:0;left:0;display:block;overflow:visible;will-change:transform}
-.nav-morph .nm-ring{position:absolute;display:block;box-sizing:border-box;border-radius:50%;will-change:opacity}
 /* 3.36.0 one mark everywhere (§12.18): every X is the practice X (no circle, --ink-x, 30 px, 12 px up and left of its place);
-   the review's ‹ › are drawn as the Back */
+   3.37.0 every Back is its twin (above). The review's ‹ › (a pair that steps through questions) are drawn at the mark's size */
 .paper .q-header .icon-btn[data-act=quit],.sm-top .icon-btn[data-act=home]{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}
 .paper .q-header .icon-btn[data-act=quit]:active,.sm-top .icon-btn[data-act=home]:active{background:var(--fill)}
 .paper .q-header .icon-btn[data-act=quit] .li,.sm-top .icon-btn[data-act=home] .li,.rv-nav .icon-btn .li{width:30px;height:30px;stroke-width:1.4}
@@ -950,6 +950,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
 .sub-title{font-size:var(--fs-2xl);font-weight:700;margin-left:12px}
+.sub-header.titled{margin-top:-12px}   /* 3.37.0 the Back stands in the X's place, 12 px up and left; a title stays on its line, beside it, and the page under it keeps its 16 */
+.sub-header.titled .icon-btn[data-act=back]{top:0}
+.sub-header.titled .sub-title{margin-left:0}
 .toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important}
 .toggle-info{flex:1;min-width:0;padding-right:12px}
 .toggle-label{font-size:var(--fs-md);font-weight:600}
@@ -2989,7 +2992,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.36.0',
+  VERSION: '3.37.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4874,7 +4877,7 @@ function authHead(title, sub) {
     '<div class="auth-title">' + title + '</div><div class="auth-sub">' + sub + '</div>';
 }
 function subHead(title) {
-  return '<div class="sub-header"><button class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button>' + (title ? '<div class="sub-title">' + title + '</div>' : '') + '</div>';
+  return '<div class="sub-header' + (title ? ' titled' : '') + '"><button class="icon-btn" data-act="back" aria-label="Back">' + li('arrow') + '</button>' + (title ? '<div class="sub-title">' + title + '</div>' : '') + '</div>';
 }
 function toggleRow(group, key, on, label, desc) {
   return '<div class="toggle-row"><div class="toggle-info"><div class="toggle-label">' + label + '</div>' + (desc ? '<div class="toggle-desc">' + desc + '</div>' : '') + '</div>' +
@@ -4988,7 +4991,7 @@ SCREENS.splash = function () {
   '</div>';
 };
 
-function backBtn() { return '<button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('back') + '</button>'; }   // 3.21.0 one back button on every page (the "← Back" words are gone)
+function backBtn() { return '<button type="button" class="icon-btn" data-act="back" aria-label="Back">' + li('arrow') + '</button>'; }   // 3.21.0 one back button on every page (the "← Back" words are gone)
 function moving(p) { return !!(p.adopt && user && user.guest); }       // a guest is creating / signing in to an account and takes the progress along
 /* "Use another email": still signed in to the unconfirmed sign-up, and creating the account that replaces it */
 function restarting(p) { return !!(p.restart && db.auth && !db.auth.verified && user && !user.guest && db.auth.uid === p.restart); }
@@ -5579,6 +5582,7 @@ var LI_PATHS = {
   play: '<path d="M8 5.5v13l10-6.5z" fill="currentColor"/>',
   chev: '<path d="M9.5 6l6 6-6 6"/>',
   back: '<path d="M14.5 6l-6 6 6 6"/>',
+  arrow: '<path d="M12 6l-6 6 6 6M6 12h12"/>',                          /* 3.37.0 Back (the owner): an arrow in the X's own 12 x 12 box, its arms the X's half-strokes */
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   del: '<path d="M9.5 5.5H20v13H9.5L3.5 12z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>',   /* 3.33.0 delete a digit (the number game) */
   grip: '<path d="M9 6.5v.01M15 6.5v.01M9 12v.01M15 12v.01M9 17.5v.01M15 17.5v.01"/>',   /* 3.33.0 a card that can be moved */
@@ -7153,23 +7157,22 @@ function confetti(cv, hue) {
   confettiRaf = window.requestAnimationFrame(step);
 }
 /* (3.13.0 the count-up is sumCount(): the XP, once, after any celebration over the summary) */
-/* 3.35.0 / 3.36.0 ONE NAVIGATION MARK, TWO STATES, EVERYWHERE (the owner; DESIGN.md §12.18). The mark at the top left of a
-   screen is one component in two states: the X (close: no circle, --ink-x, at the practice X's place) and the Back (‹: in
-   its circle, in the page's ink). Every one of them is the same drawing: 30 px, a 1.4-unit line (1.75 px), round ends; the
-   X's four half-strokes as long as the arrow's two arms, at the same 45°.
+/* 3.35.0 / 3.36.0 / 3.37.0 ONE NAVIGATION MARK, TWO STATES, EVERYWHERE (the owner; DESIGN.md §12.18). The mark at the top left
+   of a screen is one component in two states, the X (close) and the Back (←). 3.37.0 the owner: "simple": the two are twins,
+   the same size in the same place in the same grey (--ink-x; 30 px, a 1.4-unit line (1.75 px), round ends, 12 px up and left
+   of the page's corner, no circle), and the arrow sits in the X's own 12 x 12 box, its two arms as long as the X's half-strokes.
    Whenever the screen changes and both screens have the mark, it is not drawn again with the page: it carries over. Between
-   an X and a Back it morphs: each of the X's two strokes keeps its slant, draws in its left end and steps its right end
-   left, so the crossing slides into the arrow's point (× narrows into ‹), or the other way; its circle comes or goes, its
-   colour changes, and it glides from one place to the other. Between two of the same state it simply stays (or glides),
-   while the page comes in under it: the next question's X, the summary's X, the next page's Back never flicker.
-   How it is drawn: the eight half-strokes (four in the colour it leaves, four in the colour it reaches) are each drawn once,
-   as the icon draws them (an SVG line, slanted, round ends), and are then only slid, by transform and opacity (Web
-   Animations): nothing is turned or scaled, so the graphics chip draws every frame at the screen's own rate (60 to 200 Hz)
-   with nothing else asked of the page; no frame loop, nothing drawn when nothing moves. In its last 15 % the real mark
-   (the same geometry) comes in under it, so the hand-over cannot be seen. With Reduce animations: none. */
+   an X and a ← it morphs where it stands: the X's two right half-strokes slide left and become the arrow's head, its two
+   left half-strokes slide onto them (and are let go there), and the shaft draws out of the point as the point moves; the
+   other way, the same backwards. Nothing else moves: no circle, no glide, no colour. Between two of the same state it simply
+   stays while the page comes in under it: the next question's X, the summary's X, the next page's ← never flicker.
+   How it is drawn: the five strokes are each drawn once, as the icon draws them (an SVG line, round ends), and are then only
+   moved by transform and opacity (Web Animations): nothing is drawn again while it moves, so the graphics chip draws every
+   frame at the screen's own rate (60 to 200 Hz) with nothing else asked of the page. At its end the real mark (the same
+   geometry) takes its place in the same frame, so the hand-over cannot be seen. With Reduce animations: none. */
 var NAV_MS = 380, NAV_EASE = 'cubic-bezier(.2,0,0,1)', NAV_LINE = 1.4;
 var NAV_SEL = '.icon-btn[data-act=back], .icon-btn[data-act=quit], .sm-top .icon-btn[data-act=home]';
-var NAV_HALF = [[18, 6, -3.5, 0], [18, 18, -3.5, 0], [6, 6, 2.5, 6], [6, 18, 2.5, -6]];   // the X's half-strokes from its crossing (12,12) to a corner, and how far each slides in the arrow (24-unit drawing)
+var NAV_PART = [['M18 6L12 12 18 18', -6, 0], ['M12 12L6 6', 0, 6], ['M12 12L6 18', 0, -6]];   // the X as three strokes (its right half, a <, and its two left half-strokes) and how far each slides in the arrow (24-unit drawing)
 var navEl = null;
 function navFind() {                                               // the mark of the screen now drawn (the first in its top-left corner)
   var all = elScreens.querySelectorAll(NAV_SEL), i, r;
@@ -7179,12 +7182,10 @@ function navFind() {                                               // the mark o
   }
   return null;
 }
-function navState(btn, rect) {                                     // all that is needed to draw a mark: where, what, which colours, its circle
-  var svg = btn.querySelector('.li'), cs, bs, r = rect || (svg && svg.getBoundingClientRect()), b = btn.getBoundingClientRect(), bw;
+function navState(btn, rect) {                                     // all that is needed to draw a mark: where, which state, its colour
+  var svg = btn.querySelector('.li'), r = rect || (svg && svg.getBoundingClientRect());
   if (!svg || !r || !r.width) return null;
-  cs = window.getComputedStyle(svg); bs = window.getComputedStyle(btn); bw = parseFloat(bs.borderTopWidth) || 0;
-  return { r: r, arrow: btn.getAttribute('data-act') === 'back', c: cs.color,
-           ring: bw > 0 && bs.borderTopStyle !== 'none' ? { bw: bw, bc: bs.borderTopColor, bg: bs.backgroundColor, x: b.left - r.left, y: b.top - r.top, w: b.width, h: b.height } : null };
+  return { r: r, arrow: btn.getAttribute('data-act') === 'back', c: window.getComputedStyle(svg).color };
 }
 function navCapture() { var b = calmMotion() ? null : navFind(); return b ? navState(b) : null; }
 function navSettled(el) {                                          // where the new screen's mark will rest once the screen has come in
@@ -7196,7 +7197,7 @@ function navSettled(el) {                                          // where the 
 }
 function navStop() { if (navEl && navEl.parentNode) navEl.parentNode.removeChild(navEl); navEl = null; }
 function navMorph(from) {
-  var btn, svg, to, r, k, box, tf, cols, end, ring, morph, NS = 'http://www.w3.org/2000/svg';
+  var btn, svg, to, r, k, box, end, morph, dx, dy, off, sh, line, NS = 'http://www.w3.org/2000/svg';
   navStop();
   if (!from || calmMotion() || !document.body || !document.body.animate) return;
   btn = navFind(); svg = btn && btn.querySelector('.li');
@@ -7204,48 +7205,47 @@ function navMorph(from) {
   to = navState(btn, navSettled(svg));
   if (!to) return;
   r = to.r; k = r.width / 24; morph = from.arrow !== to.arrow;
-  tf = function (i, arrow) { var m = NAV_HALF[i]; return 'translate(' + (arrow ? m[2] * k : 0) + 'px,' + (arrow ? m[3] * k : 0) + 'px)'; };
-  cols = [from.c, to.c];
-  if (cols[0] === cols[1]) cols.pop();
+  /* every stroke is drawn where it ends (the state reached) and slides in from where it was, so its last frame is the real
+     mark's own drawing, untouched (a stroke left shifted by a part of a pixel is drawn softer) */
+  off = function (i, arrow) { var m = NAV_PART[i], d = (arrow ? 1 : 0) - (to.arrow ? 1 : 0); return 'translate(' + m[1] * k * d + 'px,' + m[2] * k * d + 'px)'; };
+  sh = function (arrow) { return 'translateX(' + (arrow ? 0 : 6 * k) + 'px) scaleX(' + (arrow ? 1 : 0) + ')'; };   // the shaft: out of the point, with it
+  line = function (d, x, y) {                                     // one stroke, drawn as the icon draws it, moved x, y units in the drawing
+    var el = document.createElementNS(NS, 'svg'), ln = document.createElementNS(NS, 'path');
+    el.setAttribute('viewBox', '0 0 24 24'); el.setAttribute('class', 'nm-s');
+    ln.setAttribute('d', d); ln.setAttribute('transform', 'translate(' + x + ' ' + y + ')');
+    ln.setAttribute('fill', 'none'); ln.setAttribute('stroke', to.c); ln.setAttribute('stroke-width', String(NAV_LINE)); ln.setAttribute('stroke-linecap', 'round'); ln.setAttribute('stroke-linejoin', 'round');
+    el.appendChild(ln); el.style.width = r.width + 'px'; el.style.height = r.height + 'px';
+    box.appendChild(el); return el;
+  };
   box = document.createElement('div');
   box.className = 'nav-morph'; box.setAttribute('aria-hidden', 'true');
   box.style.left = r.left + 'px'; box.style.top = r.top + 'px'; box.style.width = r.width + 'px'; box.style.height = r.height + 'px';
   try {
-    ring = to.ring || from.ring;                                   // the Back's circle: it stays, comes or goes with the state
-    if (ring) {
-      var rg = document.createElement('span'), off = to.ring || { x: from.ring.x, y: from.ring.y, w: from.ring.w, h: from.ring.h };
-      rg.className = 'nm-ring';
-      rg.style.cssText = 'left:' + off.x + 'px;top:' + off.y + 'px;width:' + off.w + 'px;height:' + off.h + 'px;border:' + ring.bw + 'px solid ' + ring.bc + ';background:' + ring.bg;
-      box.appendChild(rg);
-      if (!from.ring !== !to.ring) rg.animate([{ opacity: from.ring ? 1 : 0 }, { opacity: to.ring ? 1 : 0 }], { duration: NAV_MS, easing: NAV_EASE, fill: 'both' });
-    }
-    cols.forEach(function (col, n) {
-      var layer = document.createElement('i'), i, bar, ln;
-      for (i = 0; i < 4; i++) {
-        bar = document.createElementNS(NS, 'svg'); ln = document.createElementNS(NS, 'line');
-        bar.setAttribute('viewBox', '0 0 24 24'); bar.setAttribute('class', 'nm-s');
-        ln.setAttribute('x1', '12'); ln.setAttribute('y1', '12'); ln.setAttribute('x2', String(NAV_HALF[i][0])); ln.setAttribute('y2', String(NAV_HALF[i][1]));
-        ln.setAttribute('stroke', col); ln.setAttribute('stroke-width', String(NAV_LINE)); ln.setAttribute('stroke-linecap', 'round');
-        bar.appendChild(ln);
-        bar.style.width = r.width + 'px'; bar.style.height = r.height + 'px'; bar.style.transform = tf(i, to.arrow);
-        if (to.arrow && i > 1 && !morph) bar.style.opacity = '0';   // an arrow staying an arrow: its two strokes, once
-        layer.appendChild(bar);
-        if (morph) {
-          bar.animate([{ transform: tf(i, from.arrow) }, { transform: tf(i, to.arrow) }], { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
-          /* the two half-strokes that slide over the others: in the arrow they lie on them, and a stroke drawn twice looks heavier,
-             so they are let go while they settle there (and taken up as they leave, the other way) */
-          if (i > 1) bar.animate(to.arrow ? [{ opacity: 1 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }]
-                                          : [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1 }], { duration: NAV_MS, fill: 'both' });
-        }
-      }
-      if (n === 1) layer.animate([{ opacity: 0 }, { opacity: 1, offset: 0.6 }, { opacity: 1 }], { duration: NAV_MS, fill: 'backwards' });   // the colour it reaches
-      box.appendChild(layer);
+    if (!morph) {                                                  // the same state: the mark itself, as it is drawn, held still
+      var el = svg.cloneNode(true);
+      el.setAttribute('class', 'li nm-s'); el.style.width = r.width + 'px'; el.style.height = r.height + 'px'; el.style.color = to.c; el.style.strokeWidth = String(NAV_LINE);
+      box.appendChild(el);
+    } else NAV_PART.forEach(function (m, i) {
+      var a = to.arrow ? 1 : 0, el = line(m[0], m[1] * a, m[2] * a);
+      el.animate([{ transform: off(i, from.arrow) }, { transform: off(i, to.arrow) }], { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
+      /* the two left half-strokes slide onto the head: in the arrow they lie on them, and a stroke drawn twice looks heavier,
+         so they are let go as they settle there (and taken up as they leave, the other way) */
+      if (i) el.animate(to.arrow ? [{ opacity: 1 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }]
+                                     : [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1 }], { duration: NAV_MS, fill: 'both' });
     });
+    if (morph) {
+      var shaft = line('M6 12h12', 0, 0);
+      shaft.style.transformOrigin = 6 * k + 'px ' + 12 * k + 'px'; shaft.style.transform = sh(to.arrow);
+      shaft.animate([{ transform: sh(from.arrow) }, { transform: sh(to.arrow) }], { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
+    }
     document.body.appendChild(box); navEl = box;
-    box.animate([{ transform: 'translate(' + (from.r.left - r.left) + 'px,' + (from.r.top - r.top) + 'px) scale(' + from.r.width / r.width + ')' }, { transform: 'none' }],
-      { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
-    end = box.animate([{ opacity: 1 }, { opacity: 1, offset: 0.85 }, { opacity: 0 }], { duration: NAV_MS, fill: 'forwards' });
-    btn.animate([{ opacity: 0 }, { opacity: 0, offset: 0.85 }, { opacity: 1 }], { duration: NAV_MS });   // the real mark (and its circle), under it, in its last moment
+    dx = from.r.left - r.left; dy = from.r.top - r.top;            // the same place, unless the page it leaves was scrolled
+    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) box.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { duration: NAV_MS, easing: NAV_EASE, fill: 'backwards' });
+    /* the hand-over: the drawing and the real mark are the same geometry, so they change places in one frame (two animations
+       started together end together). A crossfade of two copies would lighten the mark while both are half there. */
+    box.style.opacity = '0';
+    end = box.animate([{ opacity: 1 }, { opacity: 1 }], { duration: NAV_MS });
+    btn.animate([{ opacity: 0 }, { opacity: 0 }], { duration: NAV_MS });
     end.onfinish = function () { if (navEl === box) navStop(); };
   } catch (e) { navStop(); }
 }

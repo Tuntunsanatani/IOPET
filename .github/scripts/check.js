@@ -214,7 +214,7 @@ const server = http.createServer((req, res) => {
   const base = 'http://127.0.0.1:' + server.address().port + '/', browser = await chromium.launch();
   /* 3.24.0 Phase 15: the geometry of the system, measured on every page the walk below opens (DESIGN.md §12). A page breaks it
      when a button is not 56 px high with 16 px corners (44 for the small button inside a card), a block of the page does
-     not stand 24 px from both sides, the top-left button is not at 24,24, or a page's header is not 16 px over its first
+     not stand 24 px from both sides, the top-left mark is not at 12,12 (the X's place; 3.37.0), or a page's header is not 16 px over its first
      block. Each rule was measured on all 74 states of the app before it was written down. */
   const GEO = `(function () {
     var out = [], vw = innerWidth, vh = innerHeight, cs = function (e) { return getComputedStyle(e); };
@@ -236,7 +236,7 @@ const server = http.createServer((req, res) => {
       if (l !== 24 || g !== 24) out.push(String(e.className).split(' ')[0] + ' ' + name(e) + ' stands ' + l + ' / ' + g + ' px from the sides, not 24');
     });
     var back = root.querySelector('.sub-header [data-act=back], .au-top [data-act=back], .sm-top [data-act=home]');
-    if (back && shown(back)) { var br = back.getBoundingClientRect(); if (Math.round(br.left) !== 24 || Math.round(br.top) !== 24) out.push('the top-left button stands at ' + Math.round(br.left) + ',' + Math.round(br.top) + ', not 24,24'); }
+    if (back && shown(back)) { var br = back.getBoundingClientRect(); if (Math.round(br.left) !== 12 || Math.round(br.top) !== 12) out.push('the top-left mark stands at ' + Math.round(br.left) + ',' + Math.round(br.top) + ', not 12,12 (the place of the X, 3.37.0)'); }
     var sh = root.querySelector('.sub-header');
     if (sh && shown(sh)) { var n = sh.nextElementSibling; while (n && !shown(n)) n = n.nextElementSibling;
       if (n && !n.classList.contains('sub')) { var gap = Math.round(n.getBoundingClientRect().top - sh.getBoundingClientRect().bottom); if (gap !== 16) out.push('the header is ' + gap + ' px over the first block, not 16'); } }

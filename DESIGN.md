@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.36.0)
+# IOPET design rules (v3, 3.37.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -471,7 +471,7 @@ file (`.github/scripts/check.js`, part 2b):
 - A line that is not on the list fails the check. So the list can only get shorter, whoever changes the app.
 - 3.24.0: CI also measures the geometry of the pages it opens, in both looks (the sign-in page, the four tabs, Account,
   Privacy, Terms, Notifications, Settings, Help, a chapter, a question before a choice): every button 56 px with 16 px
-  corners (44 for the small one in a card), every block 24 px from both sides, the top-left button at 24,24, a header
+  corners (44 for the small one in a card), every block 24 px from both sides, the top-left mark at 12,12 (3.37.0), a header
   16 px over its first block, the one not-ready look, docked buttons 16 px over the bottom (§12). It was proved to
   fail: with the sign-in pages put back on 16 px sides, it stopped the build on both looks.
 - The splash, the celebrations, the sparks and the loading marks are moves made by hand (§7, "celebrate"): their times
@@ -543,7 +543,7 @@ on every push (`check.js`, "each in the system"), so a page cannot drift off the
 | Region | Rule |
 |---|---|
 | 1. The phone's own bar | the app's top 24 px fade out of the bar's colour (3.7.2) |
-| 2. Header | sub-page: the back button (44 px) at 24,24, the title (24 px bold) beside it at x = 80. Tab: its title block at 24 (still uneven, §12.9 L2). A moment or the summary: the close button at 24,24 |
+| 2. Header | sub-page: the Back (←, 44 px) at 12,12, the X's place (3.37.0, §12.18), the title (24 px bold) on its line beside it at x = 68. Tab: its title block at 24 (still uneven, §12.9 L2). A set, a paper or the summary: the X at 12,12 |
 | 3. Content | every block 24 px from both sides, on every page, the sign-in sheet included |
 | 4. The action | where its kind says (§12.2) |
 | 5. Bottom bar or dock | the tab bar on the four tabs; a dock where the page's action is docked |
@@ -582,7 +582,7 @@ never covers it.
 | Row (menu, switch, FAQ) | 64 (FAQ 48 and up) | the group's 24 | a hairline between rows | 12 16 | the rows of a section sit in ONE box (3.24.0) |
 | Card | its content | 24 | 2.33 px `--edge` | 20 | |
 | Topic row | 136 | 24 | 1 px, a 2 px foot | 24 | |
-| Page header | 44 | | | | back button at 24,24 |
+| Page header | 44 | | | | the Back (←) at 12,12, the X's place (3.37.0) |
 
 Corners grow with the box: 16 for what you press, 18 for options and alerts, 24 for cards and groups.
 
@@ -920,63 +920,65 @@ X steps back. The dots say what happened without a word.
 - **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
 - A full paper keeps its own bar: 90 dots would not fit.
 
-### 12.18 One navigation mark, two states: the X and the Back (3.35.0)
+### 12.18 One navigation mark, two states: the X and the Back (3.35.0, simplified in 3.37.0)
 
-The owner (19 Nov 2026): the practice X and the Back of the page under it (the chapter's Learn / Revise / Master) are to be
-one component in two states, joined by a real morph.
+The owner (19 Nov 2026): the practice X and the Back of the page under it are one component in two states, joined by a
+morph. 3.37.0 the owner, after a recording of 3.36.0 (its circle came and went, the mark glided, its colour changed): "keep
+it simple": the left chevron becomes an arrow (←), the same size, in the same place, everywhere, and the transition between
+X and ← is smooth.
 
-**One drawing.** Every Back (`.icon-btn[data-act=back]`, on every page, as it is one component) is drawn as the practice X:
-30 px, a 1.4-unit line (1.75 px), round ends. The X's four half-strokes (from its crossing to a corner) are 6√2 units long at
-45°, and so are the arrow's two arms, so the two share their proportions exactly. The Back keeps its circle and its colour.
-The X keeps its place, size and colour (FINAL, §0 5).
+**One drawing, twins.**
+- **The X** (`close`): FINAL (§0 5). 30 px, a 1.4-unit line (1.75 px), round ends, `--ink-x`, no circle, 12 px higher and
+  further left than its place (the button at 12,12 on a page with 24 px sides; its drawing at 19,19).
+- **The Back** (`arrow`, ←): the X's twin. The same 30 px, the same line, the same `--ink-x`, no circle, the same place.
+  The arrow sits in the X's own 12 x 12 box (`M12 6l-6 6 6 6M6 12h12`): its point at the box's left edge, its shaft the
+  box's width, its two arms exactly the X's two right half-strokes (6√2 units, 45°).
+- **Every Back** is this one: the 19 page headers (`subHead`), the sign-in pages (`backBtn`), the chapter page, Review.
+- **A page header with a title** (Settings, Account, Review answers and the rest): the title stays on the arrow's line,
+  beside it (the header 12 px higher, the title 12 px from the button), and the page under it keeps its 16 px (§12.5).
+- **Not the Back** (left as they are): the review pager's ‹ › and the paper's "‹ Previous / Next ›" are a pair that step
+  through questions; they stay chevrons, at the mark's size and line.
 
-**The morph.**
-- **Leaving a set** (X, Quit, or the phone's Back): each of the X's two strokes keeps its slant. Its left end draws in and
-  its right end steps left (3.5 units), so the crossing slides left until the strokes meet only at their ends: × narrows into ‹.
-- **The mark moves with it**: it glides from the X's place to the Back's (the Back's place is read as the page will rest),
-  and its colour goes from `--ink-x` to the Back's in the first 60 %.
-- **Starting a set from the chapter page**: the Back opens into the X the same way, in reverse.
-- **Not used**: a turn of the whole, a fade from one icon to the other, a swap.
+**The morph (in place).**
+- **X → ←** (starting from the chapter page, Review, the paper page; or the other way): the X is three strokes: its right
+  half (a <) and its two left half-strokes.
+  - The < slides left 6 units and is the arrow's head.
+  - The two left half-strokes slide 6 units down and up onto the head's two arms, and are let go there (0.5 → 0.75 of
+    the time), so no line is drawn twice.
+  - The shaft draws out of the point as the point moves (scaleX 0 → 1 from the point).
+  - ← → X is the same, backwards.
+- **Nothing else moves**: no circle, no glide, no colour change (the two states share size, place and colour). If the
+  page left was scrolled so the mark was not in its place, the mark slides back to it (the only case).
+- **Not used**: a turn of the whole, a crossfade from one icon to the other, a swap.
 
 **How it is drawn (smoothness).**
-- **Strokes**: each half-stroke is one small SVG line, drawn once as the icon draws it, then only slid (`translate`).
-  The overlay moves by translate and fades by opacity (Web Animations). Nothing is scaled or turned, so nothing blurs and
-  the round ends stay round.
-- **Frame rate**: these are the properties the graphics chip animates by itself, at the screen's own refresh rate
-  (60, 90, 120, 144 or 200 Hz). No frame loop runs, and nothing is drawn when nothing moves. Tested: it kept moving while
-  the page's main thread was held for 400 ms.
-- **Overlapping halves**: the two half-strokes that slide over the others are let go (0.5 → 0.75 of the time) once they
-  lie on them, so no line is drawn twice.
-- **The hand-over**: in the last 15 % the real icon comes in under the morph. Measured on the last whole frame, the two
-  differ by under one device pixel, so the hand-over cannot be seen.
-- **Timing**: 380 ms, `cubic-bezier(.2,0,0,1)` (a gentle start, then it settles). By about 75 ms the X has visibly begun
-  to change, and by 250 ms it has all but landed. The page itself comes in during the first 200 ms.
+- **Strokes**: each stroke is one small SVG drawing, drawn once where it will end, and then only slid (`translate`) or, the
+  shaft, stretched (`scaleX`) from where it was (Web Animations). Its last frame is the real icon's own drawing, untouched.
+- **Frame rate**: transform and opacity are the properties the graphics chip animates by itself, at the screen's own
+  refresh rate (60, 90, 120, 144 or 200 Hz). No frame loop runs, and nothing is drawn when nothing moves.
+- **The hand-over**: the overlay and the real mark change places in one frame (two animations started together end
+  together). A crossfade of two copies was measured to lighten the mark for about 60 ms, so it is not used. Measured on the
+  last frame: the carry-overs differ from the real mark by 1/255, the morph into the X by 7/255, the morph into ← by under
+  25/255 on 3 to 5 device pixels at its point. None of it can be seen.
+- **Timing**: 380 ms, `cubic-bezier(.2,0,0,1)`: most of the change in the first 150 ms, then it settles.
 - **When there is none**: with Reduce animations or the phone's reduce-motion, there is no morph. There is none either
-  where the other screen has no Back (a set started from Home). A morph still running ends with any new drawing.
+  where the other screen has no mark (Home, a tab). A morph still running ends with any new drawing.
 
-**Everywhere (3.36.0, the owner: "one global navigation language").**
-- **The X state:** every close mark is the practice X: no circle, `--ink-x`, 30 px, 12 px higher and further left than its
-  place. That covers the set's X (FINAL), the full paper's X and the summary's X.
-- **The Back state:** every Back is the same drawing in its circle, in the page's ink.
-- **The review pager:** its ‹ › are drawn as the Back.
-- **Carry-over:** whenever the screen changes (`paint`) and both screens have the mark in their top-left corner, the mark
-  carries over; it is never drawn again with the page.
-  - Between X and Back it morphs as above; its circle comes or goes with the state, its colour changes, and it glides.
-  - Between two of the same state it stays (or glides) while the page comes in under it. The next question's X, the
-    summary's X after the last question, and the next page's Back never flicker.
-- **One carry-over (no morph) when** a tab is opened, when a page without the mark is left or reached (Home), with Reduce
-  animations, and on a quiet redraw of the same page.
+**Carry-over:** whenever the screen changes (`paint`) and both screens have the mark in their top-left corner, the mark
+carries over; it is never drawn again with the page. Between two of the same state it stays, held as its own drawing,
+while the page comes in under it: the next question's X, the summary's X after the last question, and the next page's ←
+never flicker.
 
 | From | To | The mark |
 |---|---|---|
-| chapter page ‹ | the set | morphs into the X |
-| the set's X (X, Quit, the phone's Back) | chapter page | morphs into ‹ |
+| chapter page ← | the set | morphs into the X, in place |
+| the set's X (X, Quit, the phone's Back) | chapter page | morphs into ←, in place |
 | a question's X | the next question's X | stays |
 | the last question's X | the summary's X | stays (they share the place) |
-| summary X | Review answers ‹ | morphs, gains its circle |
-| Review ‹ | summary | morphs into the X |
-| paper page ‹ | the paper's X | morphs |
-| a page's ‹ | the next page's ‹ (Settings → Account) | stays |
-| a tab | a page with ‹ | none: ‹ comes with the page |
+| summary X | Review answers ← | morphs, in place |
+| Review ← | summary | morphs into the X |
+| paper page ← | the paper's X | morphs, in place |
+| a page's ← | the next page's ← (Settings → Account) | stays |
+| a tab | a page with ← | none: ← comes with the page |
 | summary X | Home | none |
 
