@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.40.1)
+# IOPET design rules (v3, 3.40.2)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -1106,6 +1106,27 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
   When Why? makes the result sheet longer, the room above the block is held (`.held`, `--q-held`), so the longer sheet
   takes the room below it. Only if the sheet would cover the answers is the block lifted, just far enough to stay 16 px
   clear, in the same frame. Before 3.39.0 the options jumped 63 px at Why?; now 0 to 29 px, and only when they must.
+  3.40.2 (the owner's bug, a video): Why? pressed again and again lifted a number or spelling game 16 px each time, and
+  the dock floated up off the bottom (191 px after 10 presses). Held, the room under the block gives and takes
+  (`.held::after{flex:1 1 0}`), so the dock stays on the bottom. Folding the reason puts everything back where it was
+  before Why? (the keys back by the thumb, §12.19 above); open again, the same one place. Two states, never a climb. The
+  held room is kept with the question, so a redraw (a game's answer settling 700 ms after a second miss) does not move
+  it either. Measured: 8 presses, the options and every game, 320 x 640, 360 x 791, 412 x 915: folded = where it was,
+  open = one place, the dock 0 px off the bottom every time.
+- **A tap on the page puts the sheet away** (3.40.2, the owner: a student tapped near the options after a wrong answer,
+  expecting the sheet to go down). The tap does what the sheet's own button would, and nothing else:
+  - "Not quite": a tap anywhere on the page outside the sheet is Try again. A tap on another option is Try again and
+    that option chosen (Check is ready); a tap on the option found wrong is Try again only.
+  - Why? open: a tap outside the sheet folds the reason away; the sheet stays. With the reason folded, a tap on the page
+    does nothing (Continue is the way on, as before).
+  - The X at the top keeps its own tap (it asks to quit). A paper has no sheet, so nothing changes there.
+  - An option that cannot be chosen is `aria-disabled`, not `disabled` (a disabled button gets no tap at all, so the
+    page could not hear it). It looks and reads the same (checked pixel by pixel, light and dark).
+- **A double tap presses one button** (3.40.2). When the dock changes under the finger (Check → Continue, Skip →
+  Continue, Try again → Skip | Check), its buttons wait 300 ms (the same wait as after a new screen), so the second tap of
+  a quick double tap cannot press the button that has just come into the same place. Before, with motion off, Check
+  tapped twice went on to the next question unseen, Skip twice did the same, and Try again twice gave up the second try.
+  The options and the page answer at once; a tap after the wait is taken.
 - **Measured on IOPET's questions** (light and dark, 320 x 568 to 412 x 915):
 
 | Question | Size | Question to options before | Now |
