@@ -35,6 +35,7 @@
   /* 3.33.1 THE WORDS ON AN ACTION BUTTON (the owner; DESIGN.md §0, FINAL register): one weight lighter than they were (they drew
      in the 800 face) and a little space between the letters, so a word on a button is read at a glance. Every action button. */
   --fw-btn:600;--ls-btn:.03em;--btn-ink:88%;   /* 3.33.3 the owner's pick: a button's words at 88 % of their colour (§0) */
+  --fw-q:600;   /* 3.38.0 the owner: a question is read, letter by letter, in Hindi: one weight under bold, so the joined letters (क्ष, ष्क, द्या) keep their openings and the question's own bold words stand out again (§3) */
   /* DARK (default) — every colour of the app is one of these; [data-theme="light"] below redefines them.
      3.10.0 the brand: matte charcoal and the diya's flame. The chrome is plain grey (no tint, no haze, no gloss); a hue appears
      only where it means something, and each hue means one thing in both looks:
@@ -632,7 +633,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .practice .q-card{margin-top:20px}
 .q-level{display:flex;align-items:center;font-size:var(--fs-xs);font-weight:600;color:var(--ink2);margin-bottom:8px}
 .q-level .chi{margin-right:8px}
-.q-text{font-size:var(--fs-xl);font-weight:700;line-height:1.6}
+.q-text{font-size:var(--fs-xl);font-weight:var(--fw-q);line-height:1.6}
 .opts>.opt-btn+.opt-btn{margin-top:8px}
 .opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
 .opt-btn:active{transform:scale(.98)}
@@ -659,7 +660,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    skipped: shown at once), a flag to report the question, and one button: green Continue after a right answer, a plain
    one after a wrong answer (a red button would read as "delete"). */
 .page.practice.qz{display:flex;flex-direction:column}
-.qz>.q-body{margin-top:24px}
+.qz>.q-body{margin-top:40px}   /* 3.38.0 the owner: room between the set's dots and the question, so the two never read as one block (the question 4 times further from the dots than from its own figure) */
 .qz .q-level{margin-bottom:8px}
 .qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
 .qz .q-dock .btn{margin:0 !important}
@@ -834,7 +835,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes sk-light{from{transform:scale(.4)}to{transform:none}}
 .calm .sk-art,.calm .sk-n,.calm .sk-t,.calm .sk-d,.calm .sk-d.now.on i,.calm .sk-s{animation:none}
 @media (prefers-reduced-motion:reduce){.sk-art,.sk-n,.sk-t,.sk-d,.sk-d.now.on i,.sk-s{animation:none}}
-.rv-q{font-size:var(--fs-lg);font-weight:700;line-height:1.55;margin-top:8px}
+.rv-q{font-size:var(--fs-lg);font-weight:var(--fw-q);line-height:1.55;margin-top:8px}
 .rv-line{display:flex;align-items:flex-start;font-size:var(--fs-sm);line-height:1.5;margin-top:8px}
 .rv-line .li{margin:2px 8px 0 0;stroke-width:3}
 .rv-line.ok,.rv-line.bad{color:var(--ink)}   /* 3.13.0 the words in ink; the meaning is on the mark */
@@ -2992,7 +2993,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.37.0',
+  VERSION: '3.38.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
