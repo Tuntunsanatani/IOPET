@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.39.1)
+# IOPET design rules (v3, 3.40.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -301,7 +301,46 @@ Dark and light are the same design. Neither is made from the other by turning co
   in a dialog both halves are equal. Stacked: the primary on top, the second under it, text actions last, 12 px from it
   (3.22.0: Skip and Check touched; a stronger rule had set the gap to 0 since 3.12.0).
 - Every button is 56 px with its words in its middle (3.22.0: they were 53.5, 56 and 58). Small buttons inside a card
-  (Share, the pay buttons) are 44.
+  (Share, the pay buttons) are 44. A question's own buttons are the exception below (§5b).
+
+## 5b. A question's bottom buttons: Brilliant 1:1 (3.40.0, the owner)
+
+The owner (19 Nov 2026): the words on Skip, Check, Continue and Try again are short; a 56 px button for them is more than
+a premium screen needs. Copy Brilliant, learn why, then make it our own.
+
+**Brilliant, measured** on the owner's phone (360 x 790 css, 3x; the owner's screenshots and two screen recordings):
+
+| | Brilliant | IOPET before | IOPET now |
+|---|---|---|---|
+| Height (the lip apart) | 48, a 4 px lip | 56 | **48** |
+| Shape | round ends | 16 px corners | **round ends** (`--r-pill`) |
+| Skip | 86 wide | 32 % (100) | **86** (12 px sides inside) |
+| Skip to Check | 12 | 12 | 12 |
+| Sides: Skip and Check | 20 | 24 | **20** |
+| Sides: the sheet's Continue / Try again | 16 | 24 | **16** |
+| The lip's foot over the bottom of the screen | 16 | 12 | **16** (the button 20) |
+| Continue's words on the green | white | dark | **white** (`--on-win`) |
+
+**Why Brilliant does it:**
+- 48 is the comfortable touch target (Google's Material guidance 48 dp; Apple's 44 pt). A button no bigger than a finger
+  needs keeps the eye on the question.
+- Lifted 16 px off the bottom edge: the edge is the phone's own gesture zone (swipe up for Home), and taps there are the
+  least sure (Hoober).
+- Skip is small and Check takes the rest: the main action gets the room.
+- Round ends make a button's edge look inset, so a 16 px Continue lines up with the 20 to 24 px of what is around it.
+
+**What IOPET keeps of its own:**
+- The words on the buttons stay as locked (§0 1 to 3: 600, .03em, 88 %). Brilliant's are a little smaller (about 15
+  px); IOPET's stay 17.
+- **The sheet** has a little more room than Brilliant's, because it holds more (the title, the XP, Why?, the flag, the
+  button): 24 px above the title, 20 px between it and the button (Brilliant 16 / 16). The sheet is 156 px; the dock
+  keeps 88 px above Skip / Check so the page does not move when it comes. On a phone 720 px tall or less, the 3.39 room
+  (16 / 16, the dock 76) is kept, so a question with a figure still fits.
+- **The flag** is not a first action: it is drawn in the X's quiet grey (`--ink-x`; Brilliant's is #9F9F9F).
+- **The animation** was already Brilliant's: Check greys at once; about 120 ms later the sheet rises in about 250 ms
+  (IOPET 280); Continue or Try again stands exactly where Check stood. The ghost Skip / Check the sheet slides over now
+  stands exactly on the real ones at every width (on a 320 px phone it stood 8 px off since 3.32).
+- **Contrast, the owner's choice**: white on the green is 2.1:1 (Brilliant's too), under the 3:1 asked of large words.
 
 ## 6. Components
 
@@ -855,7 +894,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
 | Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | `--win-sheet`, `--win` with `--win-lip`, the XP as words (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
-| The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:76px`); the sheet slides up inside it over the buttons it replaces |
+| The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:88px`, 76 on a short phone, §5b); the sheet slides up inside it over the buttons it replaces |
 
 **Where a motion ends is the rule itself** (3.33.2, the owner's bug): the faded wrong option's grey line and grey ✕ are
 written in its rule; the motion only leads there from the red. A look held by an animation (`forwards`) is lost when
@@ -1047,10 +1086,10 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
   3.39.0 had 10 / 32: it read as one big block. Brilliant's 48 / 24 was not taken: there a figure is often part of the
   answer (a scale, an equation); in IOPET's questions the figure belongs to the question.
 - The block stands in the room between the header and the dock. The room left is shared two parts above, one part below
-  (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 76 px for the result sheet below
+  (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 88 px for the result sheet below
   that, so the block sits a little above the middle, as Brilliant's does.
 - **What is typed key by key waits by the thumb (3.39.1, the owner).** The number pad and the letter tiles are tapped
-  again and again, so their block stands at the bottom of the room (`.q-thumb`: all the room above it): the keys end 76 px
+  again and again, so their block stands at the bottom of the room (`.q-thumb`: all the room above it): the keys end 88 px
   over Skip / Check (the room the result sheet needs), in the lower third of the phone. The question stays 48 px over its
   answer box. A one-tap answer (the options) and the cards of an order game stay in the middle (§ above).
 - The question is never closer than 40 px to the dots (§12.17).

@@ -60,7 +60,7 @@
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
   --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;
-  --win:#2DCC5A;--win-lip:#1B8E3C;--win-soft:#0E2A16;--win-sheet:#0D3A1B;--win-ink:#5BE584;--miss-sheet:#262626;--off:#1A1A1A;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */   /* 3.31.0 a finished chapter: the flame's tint, its border and lip in the flame (Brilliant's finished course card) */
+  --win:#2DCC5A;--win-lip:#1B8E3C;--win-soft:#0E2A16;--win-sheet:#0D3A1B;--win-ink:#5BE584;--miss-sheet:#262626;--off:#1A1A1A;--on-win:#FFFFFF;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */   /* 3.31.0 a finished chapter: the flame's tint, its border and lip in the flame (Brilliant's finished course card) */
   --edge:#2C2C2C;--bw-edge:2px;--edge-in:inset 0 0 0 .34px var(--edge);   /* 3.30.0 Brilliant's rule, measured on the owner's phone: the panel IS the ground and its border
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
@@ -668,9 +668,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .page.practice.qz{display:flex;flex-direction:column}
 .qz>.q-body{margin-top:40px}   /* 3.38.0 the owner: room between the set's dots and the question, so the two never read as one block (the question 4 times further from the dots than from its own figure) */
 .qz .q-level{margin-bottom:8px}
-.qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--bg)}
-.qz .q-dock .btn{margin:0 !important}
-.qz .q-dock .q-skip{flex:0 0 32%;margin-right:12px !important}   /* a second button (its look: .btn-line). 3.22.0 the 12 px between Skip and Check are there now: ".qz .q-dock .btn" was stronger and set them to 0, so the two buttons touched */
+.qz>.q-dock{position:sticky;bottom:0;z-index:5;display:flex;margin:auto -24px -32px;padding:16px 20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));background:var(--bg)}   /* 3.40.0 Brilliant 1:1 (DESIGN.md §5b): 20 px from the sides, the buttons 20 px over the bottom (their lip 16) */
+.qz .q-dock .btn{margin:0 !important;min-height:48px;border-radius:var(--r-pill)}   /* 3.40.0 the owner, Brilliant 1:1: 48 px and round ends, as big as a finger needs and no bigger (the words are short) */
+.qz .q-dock .q-skip{flex:0 0 86px;padding-left:12px;padding-right:12px;margin-right:12px !important}   /* a second button (its look: .btn-line). 3.22.0 the 12 px between Skip and Check are there now: ".qz .q-dock .btn" was stronger and set them to 0, so the two buttons touched */
 .qz .q-dock .btn-check{flex:1;min-width:0}
 .qz>.q-dock.res{display:block;padding:0;background:transparent}
 .q-result{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:16px 24px;padding-bottom:calc(16px + env(safe-area-inset-bottom));background:var(--surface-2)}
@@ -687,7 +687,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-sp{flex:1}
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
-.qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-x)}   /* 3.40.0 the owner: not a first action, so the X's quiet grey (Brilliant's flag is #9F9F9F) */
 .qr-flag .li{width:20px;height:20px}
 .qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
 .q-result.open .qr-text{display:block}
@@ -1394,7 +1394,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    bottom, a long way down: the eye had to travel to find them. Now the question (and its figure) and its answers (options,
    or a game) are one block, 32 px apart, and the block stands in the middle of the room between the dots and the buttons, as
    Brilliant does (measured on its lessons: the block's middle stays put whatever its height). The room left is shared, two
-   parts above and one below (the dock's 76 px kept for the result sheet sits below it too), so the block sits a little above
+   parts above and one below (the dock's 88 px kept for the result sheet sits below it too), so the block sits a little above
    the middle, never touches the dots (40 px at least) and lands where a thumb taps most surely. A question too long for the
    room starts 40 px under the dots and the page scrolls, as before. The two shares are the page's own ::before / ::after. */
 .qz>.q-header{order:-2}
@@ -1403,7 +1403,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz>.q-dock{order:2}
 .page.practice.qz.held::before{flex:0 0 var(--q-held)}
 .page.practice.qz.q-thumb::after{flex:0 0 0}   /* 3.39.1 the owner: what is typed key by key (the number pad, the letter tiles) waits by the thumb, the room all above the block */   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
-.qz>.q-dock:not(.res){padding-top:76px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes */
+.qz>.q-dock:not(.res){padding-top:88px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes (3.40.0: 88, the sheet 156 px) */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
   transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
 .qz .opts.grid.short .opt-btn{min-height:64px;font-weight:400}
@@ -1443,7 +1443,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-result.ok{background:var(--win-sheet)}
 .qz .q-result.bad{background:var(--miss-sheet)}
 .qz .fb-xp{margin-left:12px;font-size:var(--fs-lg);font-weight:700;color:var(--win-ink)}
-.qz .qr-go.ok{background:var(--win);color:var(--on-mark);box-shadow:0 4px 0 var(--win-lip)}
+.qz .qr-go.ok{background:var(--win);color:var(--on-win);box-shadow:0 4px 0 var(--win-lip)}   /* 3.40.0 the owner, as Brilliant: white words on the green */
 .qz .qr-go.ok:active{box-shadow:0 1px 0 var(--win-lip)}
 .qz .q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet) var(--q-sheet) backwards}
 .qz .q-result.fresh .qr-go{animation:q-go var(--t-state) var(--ease-std) var(--q-go) backwards}
@@ -1453,9 +1453,12 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-result.leave{transform:translateY(100%);transition:transform var(--t-fade) var(--ease-std)}
 .qz>.q-dock.res{overflow:hidden}   /* the sheet slides up inside the dock's own place: the page never grows or scrolls under it */
 .qz .q-result{position:relative;z-index:1}
-.qz .q-dock .q-result .qr-go{margin-top:16px !important}
-.qz .q-ghost{position:absolute;left:24px;right:24px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;pointer-events:none}   /* the buttons the sheet slides over */
-.qz .q-ghost .q-skip{flex:0 0 32%;margin-right:12px}
+.qz .q-dock .q-result .qr-go{margin-top:20px !important}
+.qz .q-result{padding:24px 16px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}   /* 3.40.0 Brilliant's 16 px sides (round ends look inset); a little more room than Brilliant's sheet (the owner: ours holds Why?, the flag, the XP) */
+.qz .q-ghost{position:absolute;left:20px;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));display:flex;pointer-events:none}   /* the buttons the sheet slides over */
+.qz .q-ghost .q-skip{flex:0 0 86px;padding-left:12px;padding-right:12px;margin-right:12px}
+@media (max-width:340px){.qz .q-ghost{left:16px;right:16px}}
+@media (max-height:720px){.qz .q-result{padding-top:16px}.qz .q-dock .q-result .qr-go{margin-top:16px !important}.qz>.q-dock:not(.res){padding-top:76px}}   /* 3.40.0 a short phone keeps the sheet's 3.39 room (8 px less), so a question with a figure still fits without a scroll */   /* 3.40.0 on a small phone the dock has 16 px sides, and so must the ghost (it stood at 24, then 20, and the buttons seemed to step as the sheet came) */
 .qz .q-dock .q-ghost .btn-check{flex:1;min-width:0;background:var(--off);color:var(--ink-off);box-shadow:none;animation:q-ghost var(--t-state) var(--ease-std) backwards}   /* Check, pressed, steps back as the sheet comes */
 @keyframes q-ghost{from{background:var(--neutral);color:var(--on-neutral)}}
 .calm .qz .opt-btn,.calm .qz .opt-mk,.calm .qz .q-result,.calm .qz .qr-go,.calm .qz .fb-xp,.calm .qz .btn-check{animation:none !important;transition:none !important}
@@ -3013,7 +3016,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.39.1',
+  VERSION: '3.40.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
