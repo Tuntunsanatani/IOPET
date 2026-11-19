@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.38.1)
+# IOPET design rules (v3, 3.38.2)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -240,16 +240,21 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
 - Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
-- **A question is read, not glanced at (3.38.0, the owner).** Its words (`.q-text` in a set and a paper, `.rv-q` in
-  Review) are `--fw-q` 600, one step under bold, not 700.
+- **A question is read, not glanced at (3.38.0; 400 in 3.38.2, the owner's pick, to be tested).** Its words (`.q-text`
+  in a set and a paper, `.rv-q` in Review) are `--fw-q` 400, the regular weight; they were 700.
   - **Why:** Hindi joins letters (क्ष, ष्क, द्या, ह्न) and hangs marks above and below the line. At 700 their small
-    openings fill in and the letters run together; at 400 the question loses its place above the options.
-  - **Where 600 sits:** between those two. The question's own bold words (कथन:, निष्कर्ष:) stand out again, at 700.
-  - **Research:** type designers and India's UX4G guide keep bold for short headings and use regular/medium for text
-    that is read. The peer-reviewed evidence for Devanagari weight on screens is thin, so this is the practitioners'
-    rule, checked on IOPET's own questions at 400, 500, 550, 600 and 700 in both looks.
-  - **Why not 500:** it would need one more Hindi file, from a different version of Noto, set wider than the three the
-    app has. 600 is already in the app.
+    openings fill in and the letters run together. At 400 every opening stays clear, and the question's own bold words
+    (कथन:, निष्कर्ष:) stand out at 700.
+  - **Its place above the options** comes from where it sits, its size (20 px, the options 17 px) and the room around it
+    (§12.17), not from weight.
+  - **Why not 600 (3.38.0):** IOPET's Noto Sans Devanagari 600 file is drawn almost as heavy as its 700, so 3.38.0
+    changed almost nothing that could be seen. The comparison that chose it was wrong: its 600, 550 and 500 samples were
+    taken before those fonts had loaded, so they showed the phone's own fallback font. Checked again with each file
+    loaded on its own: 700 and 600 nearly the same, 400 clearly lighter.
+  - **The lesson:** before a picture of a new weight, wait for that face itself (`document.fonts.load('600 20px "IOPET
+    Sans"', 'क')`), not for `document.fonts.ready`, which was already settled.
+  - **Research:** type designers and India's UX4G guide keep bold for short headings and use regular or medium for text
+    that is read. The peer-reviewed evidence for Devanagari weight on screens is thin, so this is the practitioners' rule.
   - **Brilliant:** it sets short English prompts bold. Hindi is denser than English, so IOPET takes its own rule here.
 - Case: buttons and titles in sentence case ("Continue with Google"); small labels in CAPS.
 - Hindi lines get line-height ≥ 1.5.
