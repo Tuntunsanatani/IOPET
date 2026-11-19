@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.37.0)
+# IOPET design rules (v3, 3.38.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -240,6 +240,17 @@ Dark and light are the same design. Neither is made from the other by turning co
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
 - Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
+- **A question is read, not glanced at (3.38.0, the owner).** Its words (`.q-text` in a set and a paper, `.rv-q` in
+  Review) are `--fw-q` 600, one step under bold, not 700.
+  - **Why:** Hindi joins letters (क्ष, ष्क, द्या, ह्न) and hangs marks above and below the line. At 700 their small
+    openings fill in and the letters run together; at 400 the question loses its place above the options.
+  - **Where 600 sits:** between those two. The question's own bold words (कथन:, निष्कर्ष:) stand out again, at 700.
+  - **Research:** type designers and India's UX4G guide keep bold for short headings and use regular/medium for text
+    that is read. The peer-reviewed evidence for Devanagari weight on screens is thin, so this is the practitioners'
+    rule, checked on IOPET's own questions at 400, 500, 550, 600 and 700 in both looks.
+  - **Why not 500:** it would need one more Hindi file, from a different version of Noto, set wider than the three the
+    app has. 600 is already in the app.
+  - **Brilliant:** it sets short English prompts bold. Hindi is denser than English, so IOPET takes its own rule here.
 - Case: buttons and titles in sentence case ("Continue with Google"); small labels in CAPS.
 - Hindi lines get line-height ≥ 1.5.
 
@@ -919,6 +930,11 @@ X steps back. The dots say what happened without a word.
   and Back quits safely only where the browser lets the app catch it.
 - **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
 - A full paper keeps its own bar: 90 dots would not fit.
+- **The question under the dots (3.38.0, the owner):** 40 px under the header (`.qz>.q-body`; 24 before). It starts
+  56 px under the dots, 4 times as far as its own figure is from it (14 px). The dots are where you are; the question
+  is what you read. The options stay docked by the thumb, so the room comes out of the empty middle. A long question
+  scrolls 16 px sooner on a small phone. The number pad, the tiles and the cards of the games stay clear of the buttons
+  at 320 x 568 to 412 x 915.
 
 ### 12.18 One navigation mark, two states: the X and the Back (3.35.0, simplified in 3.37.0)
 
