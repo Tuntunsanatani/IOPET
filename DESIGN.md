@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.39.0)
+# IOPET design rules (v3, 3.39.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -1037,11 +1037,22 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
   there, 12 mm at the corners) and prefer it. Answers in the middle are easier to hit than answers by the bottom edge.
 
 **IOPET's rule:**
-- The question (`.q-body`, with its figure) and its answers (`.opts`, or a game `.gm`) are one block, the answers 32 px
-  under the question (24 px for a game on a short screen).
+- The question (`.q-body`, with its figure) and its answers (`.opts`, or a game `.gm`) are one block.
+- **Inside the block, space by kinship (3.39.1, the owner's pick out of four: 16/40, 24/48, 32/64, and Brilliant's 48/24).**
+  Each step out is about twice the one inside it, so the eye reads three parts, not one lump:
+  - the options among themselves: 8 px;
+  - the question to its figure: 24 px (with it, yet its own part);
+  - the question, or its figure, to the answers: 48 px (32 for a game on a short screen);
+  - the block to the dots and the buttons: what is left of the room, about 100 px and more.
+  3.39.0 had 10 / 32: it read as one big block. Brilliant's 48 / 24 was not taken: there a figure is often part of the
+  answer (a scale, an equation); in IOPET's questions the figure belongs to the question.
 - The block stands in the room between the header and the dock. The room left is shared two parts above, one part below
   (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 76 px for the result sheet below
   that, so the block sits a little above the middle, as Brilliant's does.
+- **What is typed key by key waits by the thumb (3.39.1, the owner).** The number pad and the letter tiles are tapped
+  again and again, so their block stands at the bottom of the room (`.q-thumb`: all the room above it): the keys end 76 px
+  over Skip / Check (the room the result sheet needs), in the lower third of the phone. The question stays 48 px over its
+  answer box. A one-tap answer (the options) and the cards of an order game stay in the middle (§ above).
 - The question is never closer than 40 px to the dots (§12.17).
 - A question too long for the room starts 40 px under the dots and the page scrolls, as before.
 - **Nothing moves after the question opens.** The block stays put when an option is picked, at Check, and at Try again.

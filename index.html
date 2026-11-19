@@ -1387,7 +1387,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes qd-fill-seg{from{transform:scaleX(0)}}
 .calm .q-dots .qd,.calm .q-dots .qd::after{animation:none !important}
 @media (prefers-reduced-motion:reduce){.q-dots .qd,.q-dots .qd::after{animation:none !important}}
-.qz>.opts{margin-top:32px}   /* 3.39.0 the answers right under their question (§12.19) */
+.qz>.opts{margin-top:48px}   /* 3.39.0 the answers right under their question (§12.19); 3.39.1 the owner's pick, 48 px */
+.qz .q-text .figs{margin-top:24px}   /* 3.39.1 a figure 24 px under its question: with it, yet its own part (§12.19) */
 .qz>.q-dock{margin-top:0}
 /* 3.39.0 THE QUESTION AND ITS ANSWERS ARE ONE GROUP (the owner; DESIGN.md §12.19). A short question left its options at the
    bottom, a long way down: the eye had to travel to find them. Now the question (and its figure) and its answers (options,
@@ -1400,7 +1401,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .page.practice.qz::before{content:'';order:-1;flex:2 1 0}
 .page.practice.qz::after{content:'';order:1;flex:1 1 0}
 .qz>.q-dock{order:2}
-.page.practice.qz.held::before{flex:0 0 var(--q-held)}   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
+.page.practice.qz.held::before{flex:0 0 var(--q-held)}
+.page.practice.qz.q-thumb::after{flex:0 0 0}   /* 3.39.1 the owner: what is typed key by key (the number pad, the letter tiles) waits by the thumb, the room all above the block */   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
 .qz>.q-dock:not(.res){padding-top:76px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
   transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
@@ -1462,7 +1464,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    Skip's panel with its lip (a thing to press), an empty place is a well in the not-ready grey, the student's own move is the
    flame, and after Check everything speaks as an option does (green, red with its cross and one shake, the answer shown).
    Moves glide (FLIP, transform only, on the pop spring); nothing on the page jumps. */
-.qz>.gm{margin-top:32px}   /* 3.39.0 the game right under its question, one block (§12.19) */
+.qz>.gm{margin-top:48px}   /* 3.39.0 the game right under its question, one block (§12.19); 3.39.1 48 px */
 .gm .num{font-variant-numeric:tabular-nums}
 .gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
 .gm .fly{z-index:3}
@@ -1506,7 +1508,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-key .li{stroke-width:2.2}
 .gm.over .gm-key,.gm.over .gm-bank .gm-tile{opacity:.4;transition:opacity var(--t-fade) var(--ease-std)}   /* answered: the tools step back */
 .gm.over .gm-grip{display:none}
-@media (max-height:720px){.qz>.gm{margin-top:24px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
+@media (max-height:720px){.qz>.gm{margin-top:32px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
 /* checked: as an option speaks (§12.15) */
 .gm .ok{border-color:var(--win);background:var(--win-soft);box-shadow:inset 0 0 0 .34px var(--win)}
 .gm .bad{border-color:var(--wrong);background:var(--surface);box-shadow:inset 0 0 0 .34px var(--wrong)}
@@ -3011,7 +3013,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.39.0',
+  VERSION: '3.39.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5980,7 +5982,7 @@ SCREENS.practice = function () {
   latest = it.retry ? it.pick2 : it.pick;            // the answer shown now (the second try, once there is one)
   sel = ask && typeof it.sel === 'number' ? it.sel : -1;
   ready = it.g ? ask && gReady(it) : sel >= 0;
-  html = '<div class="page bg-practice practice qz"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+  html = '<div class="page bg-practice practice qz' + (it.g && (it.g.t === 'num' || it.g.t === 'spell') ? ' q-thumb' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(fresh) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +   /* 3.34.0 one dot a question (the owner, on Brilliant's) */
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>' + (it.g ? gameHtml(it, stage, fresh) : '<div class="opts">');   // 3.33.0 a game in place of the options
   if (!it.g) {
