@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.38.3)
+# IOPET design rules (v3, 3.39.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -31,7 +31,7 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 | 3 | The words on every action button at 88 % of their colour (Skip apart, which has its own 75 %; a button that cannot be pressed keeps the not-ready look) | `--btn-ink: 88%`, one rule: `-webkit-text-fill-color: color-mix(in srgb, currentColor var(--btn-ink), transparent)` on `.btn:not([disabled]):not(.q-skip)`, `.au-go:not(.off)`, `.sign-out`; no other button rule sets a text fill. Sign in 7.3:1, Continue 7.1:1, Check 9.8:1 light / 11.0:1 dark. A browser without `color-mix` keeps the words whole. The owner chose 88 % in 3.33.3 | 3.33.3 | **FINAL** (the owner, 18 Nov 2026) |
 | 4 | The set's dots in practice (§12.17), in place of the bar and its count | One dot a question: the first answer right is `--win`. The green grows out of the dot (`::after` scale .15 → 1.08 → 1, `--t-dot` 460 ms, `--ease-dot` `cubic-bezier(.2,1.55,.36,1)`, from `--q-ans`; transform and opacity only). Wrong or skipped is `--ink3`, at once, no motion. The open question is `--line-2` in a ring of `--fill`, 3 px out, 2 px wide. Not reached is `--fill`. Dots are 12 px with 8 px gaps, smaller to fit; a too-long set gets thin pieces. The row is centred in a 44 px, 1fr, 44 px grid | 3.34.0, 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
 | 5 | The practice X | 30 px drawn (line 1.75 px), `--ink-x` #A3A3A3 light, #5C5C5C dark, 12 px higher and 12 px further left than the dots' line; the place to tap 44 px | 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
-| 6 | The question's words, in a set, a game, a paper and Review (`.q-text`, `.rv-q`): not bold, so Hindi's joined letters stay open and the question's own bold words stand out (§3) | `--fw-q: 450` (it was 700; 600 in 3.38.0, 400 in 3.38.2; the owner chose 450). Its Hindi is its own file, `noto-hi-450.woff2`: the 450 of the same Noto Sans 2.015 the other Hindi files are cut from, in its `@font-face` (the Devanagari range), cached by `sw.js`, waited for by the splash. The English and numbers in it use the 400 face; its bold words 700. No rule on `.q-text` / `.rv-q` sets another weight | 3.38.3 | **FINAL** (the owner, 19 Nov 2026) |
+| 6 | The question's words, in a set, a game, a paper and Review (`.q-text`, `.rv-q`): not bold, so Hindi's joined letters stay open and the question's own bold words stand out (§3) | `--fw-q: 450` (it was 700; 600 in 3.38.0, 400 in 3.38.2; the owner chose 450). Its Hindi is its own file, `noto-hi-450.woff2`: the 450 of the same Noto Sans 2.015 the other Hindi files are cut from, in its `@font-face` (the Devanagari range), cached by `sw.js`, waited for by the splash. The English, numbers and spaces in it use the 400 face's file (`pjs-500.woff2`), given again at 450 (3.39.0: until then they were drawn in the phone's own font, a bug); its bold words 700. No rule on `.q-text` / `.rv-q` sets another weight; every weight has both an English and a Hindi face | 3.38.3 | **FINAL** (the owner, 19 Nov 2026) |
 
 ## 1. Principles
 
@@ -944,7 +944,7 @@ X steps back. The dots say what happened without a word.
 - A full paper keeps its own bar: 90 dots would not fit.
 - **The question under the dots (3.38.0, the owner):** 40 px under the header (`.qz>.q-body`; 24 before). It starts
   56 px under the dots, 4 times as far as its own figure is from it (14 px). The dots are where you are; the question
-  is what you read. The options stay docked by the thumb, so the room comes out of the empty middle. A long question
+  is what you read. (3.39.0: the room above and below the question and its answers is shared, §12.19.) A long question
   scrolls 16 px sooner on a small phone. The number pad, the tiles and the cards of the games stay clear of the buttons
   at 320 x 568 to 412 x 915.
 
@@ -1017,3 +1017,47 @@ never flicker.
 | a tab | a page with ← | none: ← comes with the page |
 | summary X | Home | none |
 
+### 12.19 The question and its answers are one group (3.39.0)
+
+The owner (19 Nov 2026): a short question (one or two lines) left a big gap before its options, which sat at the bottom by
+the buttons, and the eye had to travel a long way down to find them. Tiring, and a flaw in the hierarchy.
+
+**Brilliant, measured** (the owner's 163 s screen recording, every quiz screen; 388 x 854 frames):
+- The question, its figure, the answer box and the keypad or the choices are one block. Inside it the gaps are small: about
+  60 px from the question to its figure, 14 to 27 px between the answer box and the keys or choices.
+- The block stands in the middle of the room between the progress bar and Skip / Submit. Its height went from 382 to 554
+  px, and its middle stayed at 448 to 453 px every time. The room left over is shared: 95 to 179 px above, 52 to 140 px
+  below (above : below about 1.3 to 1.6).
+- The answers never wait at the bottom; Skip and Submit do.
+
+**The research behind it:**
+- Proximity (Gestalt; Nielsen Norman Group): things that sit close are read as belonging together, and space separates
+  groups. A question and its answers belong together; the dots and the buttons are other groups.
+- Touch (Steven Hoober, from millions of measured touches): people tap the middle of the screen most surely (about 7 mm
+  there, 12 mm at the corners) and prefer it. Answers in the middle are easier to hit than answers by the bottom edge.
+
+**IOPET's rule:**
+- The question (`.q-body`, with its figure) and its answers (`.opts`, or a game `.gm`) are one block, the answers 32 px
+  under the question (24 px for a game on a short screen).
+- The block stands in the room between the header and the dock. The room left is shared two parts above, one part below
+  (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 76 px for the result sheet below
+  that, so the block sits a little above the middle, as Brilliant's does.
+- The question is never closer than 40 px to the dots (§12.17).
+- A question too long for the room starts 40 px under the dots and the page scrolls, as before.
+- **Nothing moves after the question opens.** The block stays put when an option is picked, at Check, and at Try again.
+  When Why? makes the result sheet longer, the room above the block is held (`.held`, `--q-held`), so the longer sheet
+  takes the room below it. Only if the sheet would cover the answers is the block lifted, just far enough to stay 16 px
+  clear, in the same frame. Before 3.39.0 the options jumped 63 px at Why?; now 0 to 29 px, and only when they must.
+- **Measured on IOPET's questions** (light and dark, 320 x 568 to 412 x 915):
+
+| Question | Size | Question to options before | Now |
+|---|---|---|---|
+| Two lines (relations) | 360 x 760 | 280 px | 32 px |
+| Two lines (relations) | 412 x 915 | 467 px | 32 px |
+| Three lines + number pad | 360 x 760 | 212 px | 32 px |
+| Two lines + figure | 360 x 760 | 161 px | 34 px |
+
+  The games' keys, tiles and cards stay clear of the buttons at every size.
+- **Not taken**: the options right under the question with all the room below them (the screen looks top-heavy, and on a
+  tall phone the answers end up far from the thumb); the question moved down to the options (the reading would start in
+  a different place on every question, low on the screen).

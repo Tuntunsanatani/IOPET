@@ -20,8 +20,12 @@
    is drawn one step heavier than asked (regular = its 500, bold = its 800): its own 400 is thin on a cheap screen in the
    sun, and its 700 looked light beside the Hindi. Two small files per weight (166 KB for all six); a phone downloads only
    the ones a page uses. Until they arrive the phone's own font shows (swap). 3.38.3: a seventh, the Hindi at 450, for the
-   question's words (--fw-q), cut from the same Noto Sans 2.015 as the others (211 KB for all seven). ── */
+   question's words (--fw-q), cut from the same Noto Sans 2.015 as the others (211 KB for all seven). 3.39.0: the English
+   face (pjs-500, the same file as 400's) is also given as 450, so the English, the numbers and the spaces of a question at
+   450 are drawn by it. A browser joins only the faces declared with the very same weight; with none for 450 it drew them
+   in the phone's own font (3.38.3). ── */
 @font-face{font-family:'IOPET Sans';font-style:normal;font-weight:400;font-display:swap;src:url(pjs-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IOPET Sans';font-style:normal;font-weight:450;font-display:swap;src:url(pjs-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'IOPET Sans';font-style:normal;font-weight:600;font-display:swap;src:url(pjs-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'IOPET Sans';font-style:normal;font-weight:700 900;font-display:swap;src:url(pjs-800.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'IOPET Sans';font-style:normal;font-weight:400;font-display:swap;src:url(noto-hi-400.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF}
@@ -1383,8 +1387,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes qd-fill-seg{from{transform:scaleX(0)}}
 .calm .q-dots .qd,.calm .q-dots .qd::after{animation:none !important}
 @media (prefers-reduced-motion:reduce){.q-dots .qd,.q-dots .qd::after{animation:none !important}}
-.qz>.opts{margin-top:auto;padding-top:24px}   /* the answers by the thumb, just above the buttons */
-.qz>.q-dock{margin-top:0}   /* (the free space goes above the answers, not between them and the buttons) */
+.qz>.opts{margin-top:32px}   /* 3.39.0 the answers right under their question (§12.19) */
+.qz>.q-dock{margin-top:0}
+/* 3.39.0 THE QUESTION AND ITS ANSWERS ARE ONE GROUP (the owner; DESIGN.md §12.19). A short question left its options at the
+   bottom, a long way down: the eye had to travel to find them. Now the question (and its figure) and its answers (options,
+   or a game) are one block, 32 px apart, and the block stands in the middle of the room between the dots and the buttons, as
+   Brilliant does (measured on its lessons: the block's middle stays put whatever its height). The room left is shared, two
+   parts above and one below (the dock's 76 px kept for the result sheet sits below it too), so the block sits a little above
+   the middle, never touches the dots (40 px at least) and lands where a thumb taps most surely. A question too long for the
+   room starts 40 px under the dots and the page scrolls, as before. The two shares are the page's own ::before / ::after. */
+.qz>.q-header{order:-2}
+.page.practice.qz::before{content:'';order:-1;flex:2 1 0}
+.page.practice.qz::after{content:'';order:1;flex:1 1 0}
+.qz>.q-dock{order:2}
+.page.practice.qz.held::before{flex:0 0 var(--q-held)}   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
 .qz>.q-dock:not(.res){padding-top:76px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
   transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
@@ -1446,7 +1462,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    Skip's panel with its lip (a thing to press), an empty place is a well in the not-ready grey, the student's own move is the
    flame, and after Check everything speaks as an option does (green, red with its cross and one shake, the answer shown).
    Moves glide (FLIP, transform only, on the pop spring); nothing on the page jumps. */
-.qz>.gm{margin-top:auto;padding-top:24px}
+.qz>.gm{margin-top:32px}   /* 3.39.0 the game right under its question, one block (§12.19) */
 .gm .num{font-variant-numeric:tabular-nums}
 .gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
 .gm .fly{z-index:3}
@@ -1490,7 +1506,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-key .li{stroke-width:2.2}
 .gm.over .gm-key,.gm.over .gm-bank .gm-tile{opacity:.4;transition:opacity var(--t-fade) var(--ease-std)}   /* answered: the tools step back */
 .gm.over .gm-grip{display:none}
-@media (max-height:720px){.qz>.gm{padding-top:16px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
+@media (max-height:720px){.qz>.gm{margin-top:24px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
 /* checked: as an option speaks (§12.15) */
 .gm .ok{border-color:var(--win);background:var(--win-soft);box-shadow:inset 0 0 0 .34px var(--win)}
 .gm .bad{border-color:var(--wrong);background:var(--surface);box-shadow:inset 0 0 0 .34px var(--wrong)}
@@ -2995,7 +3011,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.38.3',
+  VERSION: '3.39.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -7767,11 +7783,32 @@ ACTIONS.next = function () {
     else { sense('complete'); sumCount(); }
   }
 };
+/* 3.39.0 the room above the question block is held at its size, so a longer result sheet (Why?) takes the room below the
+   block instead of lifting the question away from the eye. Only if the sheet would then cover the answers is the block
+   lifted, and only as far as it must (16 px clear of the sheet), in the same frame. */
+function qHold(box, fit) {
+  var pg = box && box.closest ? box.closest('.qz') : null, hd, bd, ans, over;
+  if (!pg) return;
+  if (!fit) {
+    if (pg.classList.contains('held')) return;
+    hd = pg.querySelector('.q-header'); bd = pg.querySelector('.q-body');
+    if (!hd || !bd) return;
+    pg.style.setProperty('--q-held', Math.max(0, bd.getBoundingClientRect().top - hd.getBoundingClientRect().bottom - (parseFloat(window.getComputedStyle(bd).marginTop) || 0)) + 'px');
+    pg.classList.add('held');
+    return;
+  }
+  ans = pg.querySelector('.opts, .gm');
+  if (!ans || !pg.classList.contains('held')) return;
+  over = ans.getBoundingClientRect().bottom + 16 - box.getBoundingClientRect().top;
+  if (over > 0) pg.style.setProperty('--q-held', Math.max(0, (parseFloat(pg.style.getPropertyValue('--q-held')) || 0) - over) + 'px');
+}
 ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
   var it = S && S.items[S.i], box = $('fb');
   if (!it || qStage(it) !== 'done' || !box) return;
   it.why = !it.why;
+  qHold(box);                                    // 3.39.0 the question and its answers stay where they are read (§12.19)
   box.classList.toggle('open', !!it.why);
+  qHold(box, true);                              //   (lifted only as far as the longer sheet needs)
   el.setAttribute('aria-expanded', it.why ? 'true' : 'false');
 };
 ACTIONS.quit = function () { askQuit(); };
