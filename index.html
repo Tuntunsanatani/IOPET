@@ -643,7 +643,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opts>.opt-btn+.opt-btn{margin-top:8px}
 .opt-btn{display:flex;align-items:center;width:100%;min-height:58px;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-md);padding:12px 16px;font-size:var(--fs-lg);font-weight:600;line-height:1.4;text-align:left;transition:transform var(--t-press) var(--ease-swift),border-color var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
 .opt-btn:active{transform:scale(.98)}
-.opt-btn[disabled]{cursor:default;transform:none}
+.opt-btn[disabled],.opt-btn[aria-disabled=true]{cursor:default;transform:none}
 /* 3.10.0 right: filled green; wrong: a vermilion outline with only a trace of fill — fill against outline tells them apart without colour */
 .opt-btn.correct{background:var(--good-soft);border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}   /* 3.10.0 the right answer is filled, */
 .opt-btn.wrong{background:var(--surface);border-color:var(--wrong);box-shadow:inset 0 0 0 1px var(--wrong)}   /* the wrong pick only outlined */
@@ -1402,7 +1402,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .page.practice.qz::after{content:'';order:1;flex:1 1 0}
 .qz>.q-dock{order:2}
 .page.practice.qz.held::before{flex:0 0 var(--q-held)}
-.page.practice.qz.q-thumb::after{flex:0 0 0}   /* 3.39.1 the owner: what is typed key by key (the number pad, the letter tiles) waits by the thumb, the room all above the block */   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
+.page.practice.qz.q-thumb::after{flex:0 0 0}
+.page.practice.qz.held::after{flex:1 1 0}   /* 3.40.2 held (Why?): the room under the block gives and takes, so the dock stays on the bottom. Without it, a keys block (no room under it) was lifted 16 px at every press of Why?, and the dock with it */   /* 3.39.1 the owner: what is typed key by key (the number pad, the letter tiles) waits by the thumb, the room all above the block */   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
 .qz>.q-dock:not(.res){padding-top:88px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes (3.40.0: 88, the sheet 156 px) */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
   transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
@@ -3016,7 +3017,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.40.1',
+  VERSION: '3.40.2',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5985,7 +5986,8 @@ SCREENS.practice = function () {
   latest = it.retry ? it.pick2 : it.pick;            // the answer shown now (the second try, once there is one)
   sel = ask && typeof it.sel === 'number' ? it.sel : -1;
   ready = it.g ? ask && gReady(it) : sel >= 0;
-  html = '<div class="page bg-practice practice qz' + (it.g && (it.g.t === 'num' || it.g.t === 'spell') ? ' q-thumb' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+  html = '<div class="page bg-practice practice qz' + (it.g && (it.g.t === 'num' || it.g.t === 'spell') ? ' q-thumb' : '') +
+    (stage === 'done' && typeof it.held === 'number' ? ' held" style="--q-held:' + it.held + 'px' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(fresh) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +   /* 3.34.0 one dot a question (the owner, on Brilliant's) */
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>' + (it.g ? gameHtml(it, stage, fresh) : '<div class="opts">');   // 3.33.0 a game in place of the options
   if (!it.g) {
@@ -6002,7 +6004,7 @@ SCREENS.practice = function () {
     else if (out) { cls += ' out'; mk = li('close', 14); }
     else if (orig === latest) { cls += ' wrong' + (fresh ? ' shake' : ''); mk = li('close', 14); }
     else cls += ' dim' + (fresh ? ' dim-in' : '');
-    html += '<button class="' + cls + '" data-act="pick" data-i="' + pos + '"' + (dis ? ' disabled' : ' aria-pressed="' + (pos === sel) + '"') +
+    html += '<button class="' + cls + '" data-act="pick" data-i="' + pos + '"' + (dis ? ' aria-disabled="true"' : ' aria-pressed="' + (pos === sel) + '"') +   // 3.40.2 not "disabled": a tap on a disabled button is never heard, and after "Not quite" a tap on an option is Try again (qTapAway)
       ' aria-label="Option ' + 'ABCD'.charAt(pos) + (out ? ', not this one' : '') + '">' + (mk ? '<span class="opt-mk" aria-hidden="true">' + mk + '</span>' : '') +
       '<span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
   });
@@ -7742,7 +7744,7 @@ ACTIONS.check = function () {
     save();
   }
   S.fresh = true;                                // the next drawing shows the answer arriving (once, not on later redraws)
-  repaint(); revealEnd();                        // show the result first, then sound and vibration
+  repaint(); revealEnd(); qSettle();             // show the result first, then sound and vibration
   sense(ok ? 'correct' : 'wrong');
   if (it.g && !ok && stage === 'ask2') gFixSoon(it);   // 3.33.0 a second miss: then the answer settles into place
 };
@@ -7757,8 +7759,14 @@ ACTIONS.skip = function () {
   else return;
   S.fresh = true;
   if (it.g) { before = gRects(); gSolve(it); }        // 3.33.0 a game skipped: its answer glides into place
-  repaint(); revealEnd(); gFly(before);
+  repaint(); revealEnd(); gFly(before); qSettle();
 };
+/* 3.40.2 the dock changed under the finger (Check -> Continue, Skip -> Continue, Try again -> Skip | Check): the second tap of
+   a quick double tap must not press the button that has just come into the same place. The dock's buttons wait as long as
+   taps wait after a new screen; the options and the page answer at once. */
+var qDockAt = -1e9;
+function qSettle() { qDockAt = window.performance.now(); }
+function qSettling(el) { return window.performance.now() - qDockAt < CONFIG.NAV_LOCK_MS && !!el.closest && !!el.closest('.qz>.q-dock'); }
 /* 3.32.0 one more try after a first wrong answer: the sheet goes down, the wrong option stays out (faded, with its cross) */
 ACTIONS.retry = function () {
   var it, sh, on;
@@ -7769,7 +7777,7 @@ ACTIONS.retry = function () {
     var before = it.g ? gRects() : null;
     S.leaving = false; it.retry = true; it.sel = undefined; it.why = false;
     if (it.g) gRetry(it);                             // 3.33.0 the right places stay, locked; the wrong letters go back to the tray
-    repaint(); gFly(before);
+    repaint(); gFly(before); qSettle();
   };
   sh = $('fb');
   if (sh && !calmMotion()) { S.leaving = true; sh.classList.add('leave'); setTimeout(on, 200); } else on();
@@ -7792,28 +7800,38 @@ ACTIONS.next = function () {
    block instead of lifting the question away from the eye. Only if the sheet would then cover the answers is the block
    lifted, and only as far as it must (16 px clear of the sheet), in the same frame. */
 function qHold(box, fit) {
-  var pg = box && box.closest ? box.closest('.qz') : null, hd, bd, ans, over;
+  var pg = box && box.closest ? box.closest('.qz') : null, it = S && S.items[S.i], hd, bd, ans, over, v;
   if (!pg) return;
   if (!fit) {
     if (pg.classList.contains('held')) return;
     hd = pg.querySelector('.q-header'); bd = pg.querySelector('.q-body');
     if (!hd || !bd) return;
-    pg.style.setProperty('--q-held', Math.max(0, bd.getBoundingClientRect().top - hd.getBoundingClientRect().bottom - (parseFloat(window.getComputedStyle(bd).marginTop) || 0)) + 'px');
-    pg.classList.add('held');
-    return;
+    v = Math.max(0, bd.getBoundingClientRect().top - hd.getBoundingClientRect().bottom - (parseFloat(window.getComputedStyle(bd).marginTop) || 0));
+  } else {
+    ans = pg.querySelector('.opts, .gm');
+    if (!ans || !pg.classList.contains('held')) return;
+    over = ans.getBoundingClientRect().bottom + 16 - box.getBoundingClientRect().top;
+    if (over <= 0) return;
+    v = Math.max(0, (parseFloat(pg.style.getPropertyValue('--q-held')) || 0) - over);
   }
-  ans = pg.querySelector('.opts, .gm');
-  if (!ans || !pg.classList.contains('held')) return;
-  over = ans.getBoundingClientRect().bottom + 16 - box.getBoundingClientRect().top;
-  if (over > 0) pg.style.setProperty('--q-held', Math.max(0, (parseFloat(pg.style.getPropertyValue('--q-held')) || 0) - over) + 'px');
+  v = Math.round(v * 100) / 100;
+  pg.style.setProperty('--q-held', v + 'px');
+  pg.classList.add('held');
+  if (it) it.held = v;                           // 3.40.2 kept with the question: a redraw (a game's answer settling) keeps it
+}
+function qFree(box, it) {
+  var pg = box && box.closest ? box.closest('.qz') : null;
+  if (pg) { pg.classList.remove('held'); pg.style.removeProperty('--q-held'); }
+  delete it.held;
 }
 ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
   var it = S && S.items[S.i], box = $('fb');
   if (!it || qStage(it) !== 'done' || !box) return;
   it.why = !it.why;
-  qHold(box);                                    // 3.39.0 the question and its answers stay where they are read (§12.19)
+  if (it.why) qHold(box);                        // 3.39.0 the question and its answers stay where they are read (§12.19)
+  else qFree(box, it);                           // 3.40.2 folded: everything goes back where it was before Why? (the keys by the thumb)
   box.classList.toggle('open', !!it.why);
-  qHold(box, true);                              //   (lifted only as far as the longer sheet needs)
+  if (it.why) qHold(box, true);                  //   (lifted only as far as the longer sheet needs)
   el.setAttribute('aria-expanded', it.why ? 'true' : 'false');
 };
 ACTIONS.quit = function () { askQuit(); };
@@ -8140,17 +8158,40 @@ function flashNav(el) {
   navFlashEl = el; el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
   navFlashT = setTimeout(function () { if (navFlashEl) navFlashEl.classList.remove('flash'); navFlashEl = null; }, 520);
 }
+/* 3.40.2 the owner, from a student at play: the sheet is put away by a tap on the page, not only by its own button. After a
+   first wrong answer ("Not quite"), a tap anywhere above the sheet is Try again, and a tap on an option also chooses it, as
+   the student meant. With Why? open, a tap above the sheet folds the reason away. The X and the sheet keep their own taps. */
+function qTapAway(t) {
+  var it, dock, act, pos, st;
+  if (!S || S.done || S.exam || S.leaving || !elScreens.contains(t)) return false;
+  it = S.items[S.i]; dock = elScreens.querySelector('.qz>.q-dock');
+  if (!it || !dock || dock.contains(t)) return false;
+  act = upTo(t, 'data-act');
+  if (act && act.getAttribute('data-act') === 'quit') return false;
+  st = qStage(it);
+  if (st === 'miss') {
+    pos = !it.g && act && act.getAttribute('data-act') === 'pick' ? act.getAttribute('data-i') : null;
+    ACTIONS.retry();
+    if (pos !== null) setTimeout(function () { var o = elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'); if (o && S && S.items[S.i] === it && typeof it.sel !== 'number' && o.getAttribute('aria-disabled') !== 'true') ACTIONS.pick(o); }, calmMotion() ? 0 : 230);   // (only if nothing was chosen meanwhile)
+    return true;
+  }
+  if (st === 'done' && it.why) { ACTIONS.why(dock.querySelector('.qr-why') || dock); return true; }
+  return false;
+}
 function onClick(ev) {
   var t = ev.target, el;
   if (t && t.nodeType === 3) t = t.parentNode;
   if (!t) return;
+  if (t !== elModal && !locked() && !busyOn && qTapAway(t)) return;
+  el = upTo(t, 'data-act');
+  if (el && el.getAttribute('data-act') === 'pick' && el.getAttribute('aria-disabled') === 'true') return;   // 3.40.2 a locked option: no knock, nothing (only the options: a not-ready sign-in button still answers)
   if (t === elModal) {                                              // tap outside the dialog closes it —
     if (backdropDown && !locked()) hideModal();                     // but only if the press also started outside
     backdropDown = false;                                           // (dragging to select text must not close it)
     return;
   }
   el = upTo(t, 'data-act');
-  if (!el || el.disabled) return;
+  if (!el || el.disabled || qSettling(el)) return;                 // 3.40.2 (the second tap of a double tap, on the dock)
   if (el.classList && el.classList.contains('nav-item')) { splash(el, ev); flashNav(el); sense('select'); }   // 3.16.0 a tab: felt, never heard
   if (locked() || busyOn) return;                                   // CHANGE #5: navigation lock; nothing is tappable during a network step
   if (/(^| )(btn-primary|ch-card|topic-card-btn|seg-btn|opt-btn|gm-card|gm-tile|gm-slot|gm-key)( |$)/.test(el.className) && !/(^| )btn-check( |$)/.test(el.className)) sense('select');   // (CHECK has its own rhythm: right or wrong)   // the big buttons answer the finger (an answer has its own rhythm)
