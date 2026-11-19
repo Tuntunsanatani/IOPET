@@ -231,7 +231,8 @@ const server = http.createServer((req, res) => {
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const base = 'http://127.0.0.1:' + server.address().port + '/', browser = await chromium.launch();
   /* 3.24.0 Phase 15: the geometry of the system, measured on every page the walk below opens (DESIGN.md §12). A page breaks it
-     when a button is not 56 px high with 16 px corners (44 for the small button inside a card), a block of the page does
+     when a button is not 56 px high with 16 px corners (44 for the small button inside a card; a question's own buttons, in
+     its dock, are Brilliant's 48 px with round ends, 20 px over the bottom: 3.40.0), a block of the page does
      not stand 24 px from both sides, the top-left mark is not at 12,12 (the X's place; 3.37.0), or a page's header is not 16 px over its first
      block. Each rule was measured on all 74 states of the app before it was written down. */
   const GEO = `(function () {
@@ -241,9 +242,9 @@ const server = http.createServer((req, res) => {
     function name(e) { return '"' + (e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 22) + '"'; }
     var root = document.querySelector('#modal.open') || document.querySelector('#screens > .screen') || document.body;
     Array.prototype.forEach.call(root.querySelectorAll('.btn'), function (b) {
-      if (!shown(b)) return; var r = b.getBoundingClientRect(), want = b.classList.contains('sh-btn') ? 44 : 56;
+      if (!shown(b)) return; var r = b.getBoundingClientRect(), quiz = !!b.closest('.qz .q-dock'), want = b.classList.contains('sh-btn') ? 44 : quiz ? 48 : 56, corner = quiz ? '999px' : '16px';
       if (Math.round(r.height) !== want) out.push('button ' + name(b) + ' is ' + Math.round(r.height) + ' px high, not ' + want);
-      if (cs(b).borderTopLeftRadius !== '16px') out.push('button ' + name(b) + ' has ' + cs(b).borderTopLeftRadius + ' corners, not 16px');
+      if (cs(b).borderTopLeftRadius !== corner) out.push('button ' + name(b) + ' has ' + cs(b).borderTopLeftRadius + ' corners, not ' + corner);
     });
     var page = root.querySelector('.page'), blocks = page ? Array.prototype.slice.call(page.children) : [];
     Array.prototype.forEach.call(root.querySelectorAll('.au-sheet .au-iw, .au-sheet .btn, .au-dock'), function (e) { blocks.push(e); });
@@ -262,7 +263,7 @@ const server = http.createServer((req, res) => {
     if (chk && shown(chk)) { var t = document.createElement('i'); t.style.background = 'var(--off)'; document.body.appendChild(t);
       var want = cs(t).backgroundColor; t.remove(); if (cs(chk).backgroundColor !== want) out.push('the not-ready Check is ' + cs(chk).backgroundColor + ', not the one not-ready grey ' + want); }
     Array.prototype.forEach.call(root.querySelectorAll('.q-dock .btn, .sm-dock .btn'), function (b) {
-      if (!shown(b)) return; var off = Math.round(vh - b.getBoundingClientRect().bottom); if (off !== 16) out.push('docked button ' + name(b) + ' is ' + off + ' px over the bottom, not 16'); });
+      if (!shown(b)) return; var off = Math.round(vh - b.getBoundingClientRect().bottom), want = b.closest('.q-dock') ? 20 : 16; if (off !== want) out.push('docked button ' + name(b) + ' is ' + off + ' px over the bottom, not ' + want); });
     return out;
   })()`;
   for (const theme of ['dark', 'light']) {
