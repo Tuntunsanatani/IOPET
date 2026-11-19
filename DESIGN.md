@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.38.0)
+# IOPET design rules (v3, 3.38.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -976,7 +976,14 @@ X and ← is smooth.
   together). A crossfade of two copies was measured to lighten the mark for about 60 ms, so it is not used. Measured on the
   last frame: the carry-overs differ from the real mark by 1/255, the morph into the X by 7/255, the morph into ← by under
   25/255 on 3 to 5 device pixels at its point. None of it can be seen.
-- **Timing**: 380 ms, `cubic-bezier(.2,0,0,1)`: most of the change in the first 150 ms, then it settles.
+- **Timing (3.38.1)**: 420 ms on the app's own `--ease-std` (`cubic-bezier(.4,0,.2,1)`). It starts gently, makes most
+  of its change across the middle 150 to 200 ms, and settles. Measured frame by frame at real speed on a CPU slowed 1x,
+  4x and 6x (like a phone): 17 frames in between at 60 Hz, and no frame moves it more than 11 % of the way.
+  - **Before (3.35 to 3.38.0)**: 380 ms on `cubic-bezier(.2,0,0,1)`. 60 % of the change came in its first 100 ms and
+    the rest in a tail too small to see. On the owner's screen recording (30 frames a second) that was two frames: a
+    jump, not a morph.
+  - **The lesson**: a morph is judged at real speed, frame by frame, the way the phone shows it; frames slowed 20x hide
+    a jump.
 - **When there is none**: with Reduce animations or the phone's reduce-motion, there is no morph. There is none either
   where the other screen has no mark (Home, a tab). A morph still running ends with any new drawing.
 

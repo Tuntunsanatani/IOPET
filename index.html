@@ -2993,7 +2993,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.38.0',
+  VERSION: '3.38.1',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -7169,9 +7169,12 @@ function confetti(cv, hue) {
    stays while the page comes in under it: the next question's X, the summary's X, the next page's ← never flicker.
    How it is drawn: the five strokes are each drawn once, as the icon draws them (an SVG line, round ends), and are then only
    moved by transform and opacity (Web Animations): nothing is drawn again while it moves, so the graphics chip draws every
-   frame at the screen's own rate (60 to 200 Hz) with nothing else asked of the page. At its end the real mark (the same
+   frame at the screen's own rate (60 to 200 Hz) with nothing else asked of the page. 3.38.1 the owner's recording showed it
+   was not smooth: the curve put 60 % of the change in its first 100 ms (two frames of a recording, a jump) and the rest in a
+   tail too small to see. Now 420 ms on --ease-std: it starts gently, does most of its change over the middle 200 ms, and
+   settles; no frame steps more than 11 % of the way (17 % before), measured frame by frame at real speed. At its end the real mark (the same
    geometry) takes its place in the same frame, so the hand-over cannot be seen. With Reduce animations: none. */
-var NAV_MS = 380, NAV_EASE = 'cubic-bezier(.2,0,0,1)', NAV_LINE = 1.4;
+var NAV_MS = 420, NAV_EASE = 'cubic-bezier(.4,0,.2,1)', NAV_LINE = 1.4;   // 3.38.1 the app's own --ease-std, so the change is spread out (the owner: it was not smooth)
 var NAV_SEL = '.icon-btn[data-act=back], .icon-btn[data-act=quit], .sm-top .icon-btn[data-act=home]';
 var NAV_PART = [['M18 6L12 12 18 18', -6, 0], ['M12 12L6 6', 0, 6], ['M12 12L6 18', 0, -6]];   // the X as three strokes (its right half, a <, and its two left half-strokes) and how far each slides in the arrow (24-unit drawing)
 var navEl = null;
