@@ -141,6 +141,9 @@ try {
         for (const r of rules) for (const part of r.sel.split(',')) if (/\.(q-text|rv-q)$/.test(part.trim()))
           for (const m of r.body.matchAll(/(?:^|;)font-weight:([^;]+)/g)) if (m[1] !== 'var(--fw-q)') e.push(r.sel + ' sets font-weight:' + m[1]);
         if (!/@font-face\{font-family:'IOPET Sans';font-style:normal;font-weight:450;font-display:swap;src:url\(noto-hi-450\.woff2\) format\('woff2'\);unicode-range:U\+0900-097F/.test(html)) e.push('the @font-face for weight 450 (noto-hi-450.woff2, the Devanagari range) must stay');
+        if (!/@font-face\{font-family:'IOPET Sans';font-style:normal;font-weight:450;font-display:swap;src:url\(pjs-500\.woff2\) format\('woff2'\);unicode-range:U\+0000-00FF/.test(html)) e.push('the English face must also be given at 450 (pjs-500.woff2): without it the English, numbers and spaces of a question are drawn in the phone\'s own font');
+        const wts = f => [...html.matchAll(/@font-face\{font-family:'IOPET Sans';[^}]*?font-weight:([^;]+);[^}]*?src:url\(([a-z]+)-/g)].filter(m => m[2] === f).map(m => m[1]).sort().join(',');
+        if (wts('pjs') !== wts('noto')) e.push('every weight must have both an English and a Hindi face (English: ' + wts('pjs') + '; Hindi: ' + wts('noto') + ')');
         if (!fs.existsSync(path.join(ROOT, 'noto-hi-450.woff2'))) e.push('noto-hi-450.woff2 must be in the repo');
         if (!sw.includes("'noto-hi-450.woff2'")) e.push('sw.js must cache noto-hi-450.woff2');
         if (!js.includes("['400', '450', '600', '700'].forEach(function (w) { document.fonts.load(")) e.push('the splash must wait for the 450 face with the others');
