@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.35.0)
+# IOPET design rules (v3, 3.36.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -953,4 +953,30 @@ The X keeps its place, size and colour (FINAL, §0 5).
   to change, and by 250 ms it has all but landed. The page itself comes in during the first 200 ms.
 - **When there is none**: with Reduce animations or the phone's reduce-motion, there is no morph. There is none either
   where the other screen has no Back (a set started from Home). A morph still running ends with any new drawing.
+
+**Everywhere (3.36.0, the owner: "one global navigation language").**
+- **The X state:** every close mark is the practice X: no circle, `--ink-x`, 30 px, 12 px higher and further left than its
+  place. That covers the set's X (FINAL), the full paper's X and the summary's X.
+- **The Back state:** every Back is the same drawing in its circle, in the page's ink.
+- **The review pager:** its ‹ › are drawn as the Back.
+- **Carry-over:** whenever the screen changes (`paint`) and both screens have the mark in their top-left corner, the mark
+  carries over; it is never drawn again with the page.
+  - Between X and Back it morphs as above; its circle comes or goes with the state, its colour changes, and it glides.
+  - Between two of the same state it stays (or glides) while the page comes in under it. The next question's X, the
+    summary's X after the last question, and the next page's Back never flicker.
+- **One carry-over (no morph) when** a tab is opened, when a page without the mark is left or reached (Home), with Reduce
+  animations, and on a quiet redraw of the same page.
+
+| From | To | The mark |
+|---|---|---|
+| chapter page ‹ | the set | morphs into the X |
+| the set's X (X, Quit, the phone's Back) | chapter page | morphs into ‹ |
+| a question's X | the next question's X | stays |
+| the last question's X | the summary's X | stays (they share the place) |
+| summary X | Review answers ‹ | morphs, gains its circle |
+| Review ‹ | summary | morphs into the X |
+| paper page ‹ | the paper's X | morphs |
+| a page's ‹ | the next page's ‹ (Settings → Account) | stays |
+| a tab | a page with ‹ | none: ‹ comes with the page |
+| summary X | Home | none |
 
