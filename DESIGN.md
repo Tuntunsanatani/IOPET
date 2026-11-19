@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.34.2)
+# IOPET design rules (v3, 3.35.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -919,4 +919,38 @@ X steps back. The dots say what happened without a word.
   and Back quits safely only where the browser lets the app catch it.
 - **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
 - A full paper keeps its own bar: 90 dots would not fit.
+
+### 12.18 One navigation mark, two states: the X and the Back (3.35.0)
+
+The owner (19 Nov 2026): the practice X and the Back of the page under it (the chapter's Learn / Revise / Master) are to be
+one component in two states, joined by a real morph.
+
+**One drawing.** Every Back (`.icon-btn[data-act=back]`, on every page, as it is one component) is drawn as the practice X:
+30 px, a 1.4-unit line (1.75 px), round ends. The X's four half-strokes (from its crossing to a corner) are 6√2 units long at
+45°, and so are the arrow's two arms, so the two share their proportions exactly. The Back keeps its circle and its colour.
+The X keeps its place, size and colour (FINAL, §0 5).
+
+**The morph.**
+- **Leaving a set** (X, Quit, or the phone's Back): each of the X's two strokes keeps its slant. Its left end draws in and
+  its right end steps left (3.5 units), so the crossing slides left until the strokes meet only at their ends: × narrows into ‹.
+- **The mark moves with it**: it glides from the X's place to the Back's (the Back's place is read as the page will rest),
+  and its colour goes from `--ink-x` to the Back's in the first 60 %.
+- **Starting a set from the chapter page**: the Back opens into the X the same way, in reverse.
+- **Not used**: a turn of the whole, a fade from one icon to the other, a swap.
+
+**How it is drawn (smoothness).**
+- **Strokes**: each half-stroke is one small SVG line, drawn once as the icon draws it, then only slid (`translate`).
+  The overlay moves by translate and fades by opacity (Web Animations). Nothing is scaled or turned, so nothing blurs and
+  the round ends stay round.
+- **Frame rate**: these are the properties the graphics chip animates by itself, at the screen's own refresh rate
+  (60, 90, 120, 144 or 200 Hz). No frame loop runs, and nothing is drawn when nothing moves. Tested: it kept moving while
+  the page's main thread was held for 400 ms.
+- **Overlapping halves**: the two half-strokes that slide over the others are let go (0.5 → 0.75 of the time) once they
+  lie on them, so no line is drawn twice.
+- **The hand-over**: in the last 15 % the real icon comes in under the morph. Measured on the last whole frame, the two
+  differ by under one device pixel, so the hand-over cannot be seen.
+- **Timing**: 380 ms, `cubic-bezier(.2,0,0,1)` (a gentle start, then it settles). By about 75 ms the X has visibly begun
+  to change, and by 250 ms it has all but landed. The page itself comes in during the first 200 ms.
+- **When there is none**: with Reduce animations or the phone's reduce-motion, there is no morph. There is none either
+  where the other screen has no Back (a set started from Home). A morph still running ends with any new drawing.
 
