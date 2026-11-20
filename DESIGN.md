@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.40.2)
+# IOPET design rules (v3, 3.41.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -189,7 +189,23 @@ Every part that can be touched has these, in both looks, from tokens only:
 - A wrong answer is shown on the option (its red border and ✕); the sheet under it is neutral grey (3.32.0, as Brilliant's
   "Incorrect"), never red or amber. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
 - A right answer's sheet is the one vivid moment of a set (3.32.0, measured on Brilliant: light `#D3F5DD` with a
-  `#29CC57` button, dark `#0D3A1B` with `#2DCC5A`), dark ink on the button (8 : 1).
+  `#29CC57` button, dark `#0D3A1B` with `#2DCC5A`).
+- **3.41.0, the owner: the leaf.** The owner found that green dull and sent a photo of a young leaf in the sun; its colour
+  (measured, the median of the lit leaf: `#CFE916`, a lime) is the right answer's now. Of three tried (the sheet in the
+  leaf itself; a step lighter; a light sheet with the leaf on its button), the owner took the third:
+  - light: the sheet `--leaf-sheet` `#F0FAC4`, Continue `--leaf` `#C5E000` on `--leaf-lip` `#8FA600`, "+10 XP"
+    `--leaf-ink` `#4A6400` (6.2 : 1);
+  - dark: the sheet near-black olive `#20280A`, Continue the leaf itself `#CFE916` on `#8FA600`, the XP `#CFE916`
+    (11.2 : 1);
+  - Continue's words dark olive `--on-leaf` `#1C2600` (10.6 : 1 light, 11.5 : 1 dark). White on the leaf reads 1.4 to
+    1.7 : 1, so the white words of 3.40.0 could not stay.
+  - The marks stay green (`--win`): the set's dots (§0 4, FINAL) and the right option's border and ✓. On the white page
+    a lime mark would hardly show (1.3 : 1); the leaf is for the reward's moment only, where a calm page makes it
+    stand out.
+  - Why (the owner): a brighter reward, together with the hierarchy, the sound and the small animations, makes the
+    moment feel earned and the app premium. (What research shows: brighter colours are felt as more pleasant and more
+    saturated ones as more exciting, Valdez and Mehrabian 1994, by people's own ratings. The reward lands most when the
+    colour, the sound and the motion come together on the student's own right answer.)
 - The action orange stays `#FF9F0A`, the logo's flame. A suggested `#FFAB00` measured ΔE 2.9 from it, which is the same
   colour to the eye, and it sits closer to the reward gold.
 - Gradients are not used, except the splash light and the skeleton's passing light.
@@ -323,7 +339,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
 | Sides: Skip and Check | 20 | 24 | **20** |
 | Sides: the sheet's Continue / Try again | 16 | 24 | **16** |
 | The lip's foot over the bottom of the screen | 16 | 12 | **16** (the button 20) |
-| Continue's words on the green | white | dark | **white** (`--on-win`) |
+| Continue's words on the green | white | dark | **white** (3.40.0); dark olive on the leaf since 3.41.0 (`--on-leaf`, §2) |
 
 **Why Brilliant does it:**
 - 48 is the comfortable touch target (Google's Material guidance 48 dp; Apple's 44 pt). A button no bigger than a finger
@@ -345,6 +361,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
   (IOPET 280); Continue or Try again stands exactly where Check stood. The ghost Skip / Check the sheet slides over now
   stands exactly on the real ones at every width (on a 320 px phone it stood 8 px off since 3.32).
 - **Contrast, the owner's choice**: white on the green is 2.1:1 (Brilliant's too), under the 3:1 asked of large words.
+  (3.41.0: the leaf's Continue carries dark olive words, 10.6 : 1 and 11.5 : 1, §2.)
 - **3.40.1, the owner: every button of the app** in this family (the sign-in buttons, a chapter's Practice, the paper's
   Start, the sheets' pairs such as Keep going / Quit, Sign out): 48 px, round ends (§5). Brilliant does the same
   everywhere (measured: the lesson's last Continue 48 px, 16 px sides; Review with Koji / Skip review 48 px, 20 px sides).
@@ -900,7 +917,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | Skip | 2 px border and a 2 px lip | the same, `--edge` |
 | After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order (`--q-ans` 60, `--q-mark` 140, `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms) |
 | The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
-| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | `--win-sheet`, `--win` with `--win-lip`, the XP as words (no pill), no icon by "Correct!" |
+| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | the leaf since 3.41.0 (§2): `--leaf-sheet`, `--leaf` on `--leaf-lip` with `--on-leaf` words, the XP as words in `--leaf-ink` (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
 | The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:88px`, 76 on a short phone, §5b); the sheet slides up inside it over the buttons it replaces |
 

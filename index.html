@@ -60,7 +60,8 @@
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
   --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;
-  --win:#2DCC5A;--win-lip:#1B8E3C;--win-soft:#0E2A16;--win-sheet:#0D3A1B;--win-ink:#5BE584;--miss-sheet:#262626;--off:#1A1A1A;--on-win:#FFFFFF;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */   /* 3.31.0 a finished chapter: the flame's tint, its border and lip in the flame (Brilliant's finished course card) */
+  --win:#2DCC5A;--win-soft:#0E2A16;--miss-sheet:#262626;--off:#1A1A1A;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */
+  --leaf:#CFE916;--leaf-lip:#8FA600;--leaf-sheet:#20280A;--leaf-ink:#CFE916;--on-leaf:#1C2600;   /* 3.41.0 the owner's leaf (a photo, measured #CFE916): the right answer's sheet, its Continue and its XP. Dark: the sheet near-black olive, the button the leaf itself. Words dark: white on the leaf reads 1.4:1 (dark olive 11.5:1). --win stays for the dots (FINAL 4) and the right option */   /* 3.31.0 a finished chapter: the flame's tint, its border and lip in the flame (Brilliant's finished course card) */
   --edge:#2C2C2C;--bw-edge:2px;--edge-in:inset 0 0 0 .34px var(--edge);   /* 3.30.0 Brilliant's rule, measured on the owner's phone: the panel IS the ground and its border
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
@@ -147,7 +148,7 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--win-lip:#15A845;--win-soft:#EDFBF1;--win-sheet:#D3F5DD;--win-ink:#0E7C3A;--miss-sheet:#EBEBEB;--off:#F5F5F5;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
+  --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--win-soft:#EDFBF1;--miss-sheet:#EBEBEB;--off:#F5F5F5;--leaf:#C5E000;--leaf-sheet:#F0FAC4;--leaf-ink:#4A6400;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
   --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
   --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#A3A3A3;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
@@ -1441,11 +1442,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-dock .btn-check:not([disabled]):active{transform:translateY(3px);box-shadow:0 1px 0 var(--neutral-lip)}
 .qz .q-dock .btn-check.rise{animation:q-rise var(--t-state) var(--ease-swift) var(--q-ans) backwards}
 @keyframes q-rise{from{background:var(--off);color:var(--ink-off);box-shadow:0 0 0 var(--neutral-lip);transform:translateY(4px)}}
-.qz .q-result.ok{background:var(--win-sheet)}
+.qz .q-result.ok{background:var(--leaf-sheet)}   /* 3.41.0 the owner's leaf, option C: a light leaf sheet, the leaf on its button */
 .qz .q-result.bad{background:var(--miss-sheet)}
-.qz .fb-xp{margin-left:12px;font-size:var(--fs-lg);font-weight:700;color:var(--win-ink)}
-.qz .qr-go.ok{background:var(--win);color:var(--on-win);box-shadow:0 4px 0 var(--win-lip)}   /* 3.40.0 the owner, as Brilliant: white words on the green */
-.qz .qr-go.ok:active{box-shadow:0 1px 0 var(--win-lip)}
+.qz .fb-xp{margin-left:12px;font-size:var(--fs-lg);font-weight:700;color:var(--leaf-ink)}
+.qz .qr-go.ok{background:var(--leaf);color:var(--on-leaf);box-shadow:0 4px 0 var(--leaf-lip)}   /* 3.41.0 the leaf, dark olive words (3.40.0 had white words on the green; on the leaf white cannot be read) */
+.qz .qr-go.ok:active{box-shadow:0 1px 0 var(--leaf-lip)}
 .qz .q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet) var(--q-sheet) backwards}
 .qz .q-result.fresh .qr-go{animation:q-go var(--t-state) var(--ease-std) var(--q-go) backwards}
 @keyframes q-go{from{background:var(--off);color:var(--ink-off);box-shadow:0 0 0 transparent}}
@@ -3017,7 +3018,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.40.2',
+  VERSION: '3.41.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
