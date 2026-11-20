@@ -148,6 +148,17 @@ try {
         if (!sw.includes("'noto-hi-450.woff2'")) e.push('sw.js must cache noto-hi-450.woff2');
         if (!js.includes("['400', '450', '600', '700'].forEach(function (w) { document.fonts.load(")) e.push('the splash must wait for the 450 face with the others');
         return e;
+      } },
+    { what: 'the right option\'s mark: a white tick on the deeper green circle (black on green was harsh)', since: '3.41.0, 3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+      test: () => {
+        const e = [];
+        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right-lip);color:var(--on-right)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right-lip);color:var(--on-right)');
+        if (!/(^|;)--on-right:#FFFFFF(;|$)/.test(root) || /--on-right/.test(light)) e.push('--on-right must be #FFFFFF in :root and not redefined by the light look');
+        if (!/(^|;)--right-lip:#1C9E42(;|$)/.test(root) || !/(^|;)--right-lip:#18B348(;|$)/.test(light)) e.push('--right-lip must be #1C9E42 (dark) and #18B348 (light)');
+        if (!rule('.qz .opt-mk').includes('width:24px;height:24px;border-radius:50%')) e.push('.qz .opt-mk must stay a 24 px circle');
+        if (!rule('.qz .opt-mk .li').includes('width:14px;height:14px;stroke-width:3.2')) e.push('.qz .opt-mk .li must stay 14 px, stroke 3.2');
+        for (const r of rules) if (r.sel !== '.qz .opt-btn.correct .opt-mk' && /\.correct[^,]*\.opt-mk/.test(r.sel) && /(^|;)(color|background)[:-]/.test(r.body)) e.push(r.sel + ' must not repaint the right option\'s mark');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
