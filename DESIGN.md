@@ -197,11 +197,14 @@ Every part that can be touched has these, in both looks, from tokens only:
     `--leaf-ink` `#4A6400` (6.2 : 1);
   - dark: the sheet near-black olive `#20280A`, Continue the leaf itself `#CFE916` on `#8FA600`, the XP `#CFE916`
     (11.2 : 1);
-  - Continue's words dark olive `--on-leaf` `#1C2600` (10.6 : 1 light, 11.5 : 1 dark). White on the leaf reads 1.4 to
-    1.7 : 1, so the white words of 3.40.0 could not stay.
-  - The marks stay green (`--win`): the set's dots (§0 4, FINAL) and the right option's border and ✓. On the white page
-    a lime mark would hardly show (1.3 : 1); the leaf is for the reward's moment only, where a calm page makes it
-    stand out.
+  - The right option (and a game's right answer) in the same family as the sheet (the owner: one colour from the
+    answer to the sheet): its fill `--leaf-sheet`, its border `--leaf`. Its ✓ is white (the owner: black on the green
+    was harsh) on the leaf's olive `--leaf-lip` `#8FA600` (2.8 : 1); a white ✓ on the leaf itself read 1.5 : 1 and
+    almost vanished, and the ✓ is what tells a colour-blind student the answer was right.
+  - Continue's words are white (`--on-leaf`, the owner: bright and clean). They read 1.5 : 1 light and 1.4 : 1 dark
+    (dark olive words read 10.6 : 1); the owner chose white knowing it. If students find it hard to read in sunlight,
+    the one change is Continue's colour (`.qz .qr-go.ok`) to `#1C2600`; the ✓ keeps `--on-leaf`.
+  - Only the set's dots keep the green (`--win`, §0 4, FINAL).
   - Why (the owner): a brighter reward, together with the hierarchy, the sound and the small animations, makes the
     moment feel earned and the app premium. (What research shows: brighter colours are felt as more pleasant and more
     saturated ones as more exciting, Valdez and Mehrabian 1994, by people's own ratings. The reward lands most when the
@@ -339,7 +342,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
 | Sides: Skip and Check | 20 | 24 | **20** |
 | Sides: the sheet's Continue / Try again | 16 | 24 | **16** |
 | The lip's foot over the bottom of the screen | 16 | 12 | **16** (the button 20) |
-| Continue's words on the green | white | dark | **white** (3.40.0); dark olive on the leaf since 3.41.0 (`--on-leaf`, §2) |
+| Continue's words on the green | white | dark | **white** (3.40.0); white on the leaf too in 3.41.0 (`--on-leaf`, the owner's choice at 1.5 : 1, §2) |
 
 **Why Brilliant does it:**
 - 48 is the comfortable touch target (Google's Material guidance 48 dp; Apple's 44 pt). A button no bigger than a finger
@@ -361,7 +364,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
   (IOPET 280); Continue or Try again stands exactly where Check stood. The ghost Skip / Check the sheet slides over now
   stands exactly on the real ones at every width (on a 320 px phone it stood 8 px off since 3.32).
 - **Contrast, the owner's choice**: white on the green is 2.1:1 (Brilliant's too), under the 3:1 asked of large words.
-  (3.41.0: the leaf's Continue carries dark olive words, 10.6 : 1 and 11.5 : 1, §2.)
+  (3.41.0: white on the leaf reads 1.5 : 1 light, 1.4 : 1 dark, the owner's choice, §2.)
 - **3.40.1, the owner: every button of the app** in this family (the sign-in buttons, a chapter's Practice, the paper's
   Start, the sheets' pairs such as Keep going / Quit, Sign out): 48 px, round ends (§5). Brilliant does the same
   everywhere (measured: the lesson's last Continue 48 px, 16 px sides; Review with Koji / Skip review 48 px, 20 px sides).
@@ -917,7 +920,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | Skip | 2 px border and a 2 px lip | the same, `--edge` |
 | After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order (`--q-ans` 60, `--q-mark` 140, `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms) |
 | The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
-| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | the leaf since 3.41.0 (§2): `--leaf-sheet`, `--leaf` on `--leaf-lip` with `--on-leaf` words, the XP as words in `--leaf-ink` (no pill), no icon by "Correct!" |
+| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | the leaf since 3.41.0 (§2): `--leaf-sheet`, `--leaf` on `--leaf-lip` with white `--on-leaf` words; the right option in `--leaf-sheet` / `--leaf` with a white ✓ on `--leaf-lip`, the XP as words in `--leaf-ink` (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
 | The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:88px`, 76 on a short phone, §5b); the sheet slides up inside it over the buttons it replaces |
 
