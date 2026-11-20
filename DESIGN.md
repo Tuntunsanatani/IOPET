@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.43.0)
+# IOPET design rules (v3, 3.43.1)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -514,7 +514,7 @@ Every moment goes through one table, `SENSE`, and one call, `sense('…')`, so a
 | Moment | Sound | Haptic |
 |---|---|---|
 | select: an option chosen, a tab, a menu chip | none | 10 ms knock |
-| correct: Check, right | the owner's "dham-dham" (3.43.0, below) | `[20, 120, 30]`: on the two drum beats |
+| correct: Check, right | the owner's sound (3.43.1, §7c): a sweet run over three soft pulses that grow | `[14, 126, 20, 120, 30]`: on the three pulses, each a little longer |
 | wrong: Check, not quite | a soft, low double thud with no pitch (3.43.0), 12 dB under the right one | two quick knocks `[20, 50, 20]` |
 | complete: a set's summary appears | C5-E5-G5 | `[15, 30, 15]` |
 | milestone: a Mark passed | the celebration's notes | timed with the celebration |
@@ -540,14 +540,18 @@ Every moment goes through one table, `SENSE`, and one call, `sense('…')`, so a
 - No suspense: the sound starts within ~0.1 s of Check, with the green; the sheet rises in about 250 ms; Continue lights
   last.
 
-**IOPET's (the owner chose it by ear, 20 Nov 2026, after two rounds):**
-- Right: two warm drum beats, "dham-dham", at 0 and 140 ms, under a rising run E4 G4 C5 E5 G5 (70 ms apart).
-  - The drum's pitch falls to C2, in the key of the run, so nothing hums out of tune.
-  - It is full for 150 ms, then its tail closes fast: under 0.45 s nothing low is left (-47 dB). A held low tone read to
-    the owner as a warning, a horror "hmm"; it was taken out.
-  - Gently saturated, so a phone's small speaker, which cannot play below ~200 Hz, still carries its weight.
-  - Between 100 and 300 Hz as much as Brilliant's; above 3 kHz far less (-32 dB), so it does not tire the ear.
-  - Loud: -11.5 LUFS, peak -1 dBFS. Our own notes, in our own order and key: no recording of anyone else is used.
+**IOPET's (the owner chose it by ear, 20 Nov 2026, after three rounds):**
+- Right (3.43.1): a sweet rising run, E4 G4 C5 E5 G5, 70 ms apart, that ends on a soft C major chord (the win), over
+  three soft low pulses that grow: C2, E2, G2 at 0, 140 and 280 ms.
+  - The run is the sound. Its notes are round: a soft octave for warmth, very little of a mallet's woody "clack".
+  - The pulses are a feeling behind it: 8 dB under the run, a slow attack (no click, no hit), no saturation.
+  - Each pulse is a little stronger and higher than the last, so the whole sound rises to its top note (-12 dB at the
+    start, -7 dB at 280 ms). Nothing hums after it.
+  - -13.5 LUFS, peak -1 dBFS, almost nothing above 3 kHz: full, never shrill.
+  - Our own notes, in our own order and key: no recording of anyone else is used.
+- 3.43.0 had two drum beats, "dham-dham", 6 dB louder than the run and loudest at the very start. On the phone the owner
+  felt them as a blow, a punishment, as if a mistake had been made. A held low tone before that read as a horror "hmm".
+  A reward must rise to its peak, not open with it.
 - Wrong: a soft, low double thud with no pitch, 12 dB under the right one (Brilliant's idea, our own sound).
 - Not taken:
   - thin bells: they ring like a warning and tire the ear (the owner);
@@ -559,16 +563,17 @@ heard):
 
 | T | heard | seen |
 |---|---|---|
-| 0-60 ms | the first drum | the chosen card holds at 96 % for a moment |
-| 60 ms (`--q-ans`) | dham 1 | the card turns green and springs back (`--t-win` 420 ms, `--ease-win`); a ring of light leaves it, ten sparks fly from the ✓ (`--t-ring` 520 ms); the page dips 4 px and comes back (`--t-state`); the ✓ pops (`--q-mark`); the sheet starts to rise (`--q-sheet`) |
-| 200 ms (`--q-title`) | dham 2 | "Correct!" pops |
+| 0-60 ms | the first pulse | the chosen card holds at 96 % for a moment |
+| 60 ms (`--q-ans`) | pulse 1 | the card turns green and springs back (`--t-win` 420 ms, `--ease-win`); a ring of light leaves it (`--t-ring` 520 ms); the ✓ pops (`--q-mark`); the sheet starts to rise (`--q-sheet`) |
+| 200 ms (`--q-title`) | pulse 2 | "Correct!" pops |
 | 270 ms (`--q-xp`) | E5 | the XP pops and counts up (+0 to +10 in six steps) |
-| 340 ms (`--q-go`) | G5 | Continue lights |
+| 340 ms (`--q-go`) | G5, the chord, pulse 3: the peak | Continue lights; ten sparks fly from the ✓ (3.43.1: on the peak, where the sound is fullest) |
 
 - Transform and opacity only. The sparks are one element (its shadows), the ring one more: nothing is added to the page.
+- 3.43.0's page dip (4 px with the first drum) was taken out in 3.43.1: with the drum it read as a blow.
 - With Reduce animations or a phone set to less motion, nothing moves: the colours change at once and the XP shows its
   number. Sound and Vibration have their own switches.
-- A wrong answer keeps its calm: the soft thud, the shake, no ring, no sparks, no dip.
+- A wrong answer keeps its calm: the soft thud, the shake, no ring, no sparks.
 - The set's dots (§0 4, FINAL) are untouched: `--q-ans` stays 60 ms. 3.40's beats were Brilliant's (`--q-mark` 140,
   `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms).
 - What research says, and what it does not: dopamine neurons ramp up while a reward is uncertain (Fiorillo, Tobler and
