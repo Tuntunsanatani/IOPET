@@ -160,6 +160,23 @@ try {
         for (const r of rules) if (r.sel !== '.qz .opt-btn.correct .opt-mk' && /\.correct[^,]*\.opt-mk/.test(r.sel) && /(^|;)(color|background)[:-]/.test(r.body)) e.push(r.sel + ' must not repaint the right option\'s mark');
         return e;
       } }
+,
+    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option and a game\'s right answer', since: '3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+      test: () => {
+        const e = [];
+        const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
+                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-ink': '#0E7C3A' } };
+        for (const [k, v] of Object.entries(want.root)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(root)) e.push(':root must hold ' + k + ':' + v);
+        for (const [k, v] of Object.entries(want.light)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(light)) e.push('the light look must hold ' + k + ':' + v);
+        const has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz .q-result.ok', 'background:var(--right-sheet)');
+        has('.qz .qr-go.ok', 'background:var(--right);color:var(--on-right);box-shadow:04px0var(--right-lip)');
+        has('.qz .qr-go.ok:active', 'box-shadow:01px0var(--right-lip)');
+        has('.qz .opt-btn.correct', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right);opacity:1');
+        has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
+        if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
+        return e;
+      } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
 })();
