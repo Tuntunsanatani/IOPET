@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.41.0)
+# IOPET design rules (v3, 3.42.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -32,6 +32,7 @@ in the pull request. `CLAUDE.md` (read by every Claude chat on this repo) points
 | 4 | The set's dots in practice (§12.17), in place of the bar and its count | One dot a question: the first answer right is `--win`. The green grows out of the dot (`::after` scale .15 → 1.08 → 1, `--t-dot` 460 ms, `--ease-dot` `cubic-bezier(.2,1.55,.36,1)`, from `--q-ans`; transform and opacity only). Wrong or skipped is `--ink3`, at once, no motion. The open question is `--line-2` in a ring of `--fill`, 3 px out, 2 px wide. Not reached is `--fill`. Dots are 12 px with 8 px gaps, smaller to fit; a too-long set gets thin pieces. The row is centred in a 44 px, 1fr, 44 px grid | 3.34.0, 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
 | 5 | The practice X | 30 px drawn (line 1.75 px), `--ink-x` #A3A3A3 light, #5C5C5C dark, 12 px higher and 12 px further left than the dots' line; the place to tap 44 px | 3.34.2 | **FINAL** (the owner, 18 Nov 2026) |
 | 6 | The question's words, in a set, a game, a paper and Review (`.q-text`, `.rv-q`): not bold, so Hindi's joined letters stay open and the question's own bold words stand out (§3) | `--fw-q: 450` (it was 700; 600 in 3.38.0, 400 in 3.38.2; the owner chose 450). Its Hindi is its own file, `noto-hi-450.woff2`: the 450 of the same Noto Sans 2.015 the other Hindi files are cut from, in its `@font-face` (the Devanagari range), cached by `sw.js`, waited for by the splash. The English, numbers and spaces in it use the 400 face's file (`pjs-500.woff2`), given again at 450 (3.39.0: until then they were drawn in the phone's own font, a bug); its bold words 700. No rule on `.q-text` / `.rv-q` sets another weight; every weight has both an English and a Hindi face | 3.38.3 | **FINAL** (the owner, 19 Nov 2026) |
+| 7 | The right option's mark (`.qz .opt-btn.correct .opt-mk`): a white ✓ on the deeper green circle; black on the green was harsh (the owner) | `background:var(--right-lip);color:var(--on-right)`; `--on-right` `#FFFFFF` (one value, both looks); `--right-lip` `#18B348` light, `#1C9E42` dark (2.8 : 1 and 3.5 : 1); the circle 24 px, the ✓ 14 px at stroke 3.2 | 3.41.0, 3.42.0 | **FINAL** (the owner, 20 Nov 2026) |
 
 ## 1. Principles
 
@@ -190,25 +191,25 @@ Every part that can be touched has these, in both looks, from tokens only:
   "Incorrect"), never red or amber. Amber was tried in 3.13.0 and dropped: it measured only ΔE 9.5 from the brand orange.
 - A right answer's sheet is the one vivid moment of a set (3.32.0, measured on Brilliant: light `#D3F5DD` with a
   `#29CC57` button, dark `#0D3A1B` with `#2DCC5A`).
-- **3.41.0, the owner: the leaf.** The owner found that green dull and sent a photo of a young leaf in the sun; its colour
-  (measured, the median of the lit leaf: `#CFE916`, a lime) is the right answer's now. Of three tried (the sheet in the
-  leaf itself; a step lighter; a light sheet with the leaf on its button), the owner took the third:
-  - light: the sheet `--leaf-sheet` `#F0FAC4`, Continue `--leaf` `#C5E000` on `--leaf-lip` `#8FA600`, "+10 XP"
-    `--leaf-ink` `#4A6400` (6.2 : 1);
-  - dark: the sheet near-black olive `#20280A`, Continue the leaf itself `#CFE916` on `#8FA600`, the XP `#CFE916`
-    (11.2 : 1);
-  - The right option (and a game's right answer) in the same family as the sheet (the owner: one colour from the
-    answer to the sheet): its fill `--leaf-sheet`, its border `--leaf`. Its ✓ is white (the owner: black on the green
-    was harsh) on the leaf's olive `--leaf-lip` `#8FA600` (2.8 : 1); a white ✓ on the leaf itself read 1.5 : 1 and
-    almost vanished, and the ✓ is what tells a colour-blind student the answer was right.
-  - Continue's words are white (`--on-leaf`, the owner: bright and clean). They read 1.5 : 1 light and 1.4 : 1 dark
-    (dark olive words read 10.6 : 1); the owner chose white knowing it. If students find it hard to read in sunlight,
-    the one change is Continue's colour (`.qz .qr-go.ok`) to `#1C2600`; the ✓ keeps `--on-leaf`.
-  - Only the set's dots keep the green (`--win`, §0 4, FINAL).
-  - Why (the owner): a brighter reward, together with the hierarchy, the sound and the small animations, makes the
-    moment feel earned and the app premium. (What research shows: brighter colours are felt as more pleasant and more
-    saturated ones as more exciting, Valdez and Mehrabian 1994, by people's own ratings. The reward lands most when the
-    colour, the sound and the motion come together on the student's own right answer.)
+- **3.41.0, the leaf, and back (3.42.0).** The owner found the green dull and sent a photo of a young leaf in the sun
+  (measured `#CFE916`, a lime). 3.41.0 put it on the sheet, Continue and the right option. On the phone it looked dull
+  in its turn (an olive sheet in the dark look, white words washed out on the lime), so 3.42.0 went back to Brilliant's
+  green, one step brighter, the owner's way (the shade the research favours):
+  - the same hue (137°) and saturation as 3.40's, more light: brighter colours are felt as more pleasant and more
+    saturated ones as more exciting (Valdez and Mehrabian 1994, people's own ratings), so a brighter shade that keeps its
+    saturation keeps both; a pastel one (tried, `#59EB82`) loses the excitement;
+  - light: the sheet `--right-sheet` `#CFF8DB`, Continue `--right` `#2DE060` on `--right-lip` `#18B348`, "+10 XP"
+    `--right-ink` `#0E7C3A` (4.6 : 1);
+  - dark: the sheet `#0E4520`, Continue `#2FEB64` on `#1C9E42`, the XP `#6CF294` (7.8 : 1);
+  - the right option and a game's right answer in the same family (the owner, 3.41.0: one colour from the answer to
+    the sheet): fill `--right-sheet`, border `--right`;
+  - its ✓ white on `--right-lip` (§0 7, FINAL);
+  - Continue's words white (`--on-right`, the owner, 3.40.0): 1.8 : 1 light, 1.6 : 1 dark (brighter green, fainter
+    white: the price of the brighter shade, chosen knowingly; Brilliant's own is 2.6 : 1);
+  - the set's dots keep `--win` (§0 4, FINAL), the 3.40 green.
+  - What is learned: a brighter green and white words pull against each other; and a colour is judged on the phone, not
+    on a screenshot. Which green moves students most is measured on students (how fast they tap Continue, how many sets
+    they finish), not chosen in advance.
 - The action orange stays `#FF9F0A`, the logo's flame. A suggested `#FFAB00` measured ΔE 2.9 from it, which is the same
   colour to the eye, and it sits closer to the reward gold.
 - Gradients are not used, except the splash light and the skeleton's passing light.
@@ -342,7 +343,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
 | Sides: Skip and Check | 20 | 24 | **20** |
 | Sides: the sheet's Continue / Try again | 16 | 24 | **16** |
 | The lip's foot over the bottom of the screen | 16 | 12 | **16** (the button 20) |
-| Continue's words on the green | white | dark | **white** (3.40.0); white on the leaf too in 3.41.0 (`--on-leaf`, the owner's choice at 1.5 : 1, §2) |
+| Continue's words on the green | white | dark | **white** (3.40.0; `--on-right` since 3.42.0, 1.8 : 1 on the brighter green, §2) |
 
 **Why Brilliant does it:**
 - 48 is the comfortable touch target (Google's Material guidance 48 dp; Apple's 44 pt). A button no bigger than a finger
@@ -364,7 +365,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
   (IOPET 280); Continue or Try again stands exactly where Check stood. The ghost Skip / Check the sheet slides over now
   stands exactly on the real ones at every width (on a 320 px phone it stood 8 px off since 3.32).
 - **Contrast, the owner's choice**: white on the green is 2.1:1 (Brilliant's too), under the 3:1 asked of large words.
-  (3.41.0: white on the leaf reads 1.5 : 1 light, 1.4 : 1 dark, the owner's choice, §2.)
+  (3.42.0: on the brighter green, 1.8 : 1 light, 1.6 : 1 dark, §2.)
 - **3.40.1, the owner: every button of the app** in this family (the sign-in buttons, a chapter's Practice, the paper's
   Start, the sheets' pairs such as Keep going / Quit, Sign out): 48 px, round ends (§5). Brilliant does the same
   everywhere (measured: the lesson's last Continue 48 px, 16 px sides; Review with Koji / Skip review 48 px, 20 px sides).
@@ -920,7 +921,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | Skip | 2 px border and a 2 px lip | the same, `--edge` |
 | After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order (`--q-ans` 60, `--q-mark` 140, `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms) |
 | The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
-| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | the leaf since 3.41.0 (§2): `--leaf-sheet`, `--leaf` on `--leaf-lip` with white `--on-leaf` words; the right option in `--leaf-sheet` / `--leaf` with a white ✓ on `--leaf-lip`, the XP as words in `--leaf-ink` (no pill), no icon by "Correct!" |
+| Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | Brilliant's green one step brighter since 3.42.0 (§2): `--right-sheet`, `--right` on `--right-lip` with white `--on-right` words; the right option in `--right-sheet` / `--right` with a white ✓ on `--right-lip` (§0 7), the XP as words in `--right-ink` (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
 | The sheet's place | it covers the buttons; nothing on the page moves | the dock is as tall as the sheet (`padding-top:88px`, 76 on a short phone, §5b); the sheet slides up inside it over the buttons it replaces |
 
