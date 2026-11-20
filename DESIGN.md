@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.43.1)
+# IOPET design rules (v3, 3.44.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -253,21 +253,37 @@ Dark and light are the same design. Neither is made from the other by turning co
   source, it matches IOPET's own two files pixel for pixel, so the 450 is the same design, one quarter of the way to 600.
   A 450 asked of the old three would have drawn 400. The splash waits for it with the others, so a question never shows
   in a stand-in font.
-- All seven files: 211 KB, OFL (see `OFL.txt`).
+- 3.44.0 (the owner chose T3, 20 Nov 2026): the CSS weight 700 is drawn in Plus Jakarta Sans' own Bold (`pjs-700.woff2`,
+  Fontsource 5.3.0 like the others), not its ExtraBold: the titles in the 800 face read as bold-and-cheap ("chunky"). The 800
+  face stays for 800–900 (the celebration title, figures). The practice pages (`.page.practice`: a set, a game, a paper)
+  keep the drawing they had through `'IOPET Q'`, the same files under another name with 700 → the 800 face, because the
+  question and its bold words are FINAL (§0 6–8). The Hindi files are unchanged.
+- All eight files: 223 KB, OFL (see `OFL.txt`).
 
-| Token | Size | Use |
-|---|---|---|
-| `--fs-cap` | 12 | small CAPS labels only, letter-spacing .8–1.4 px, weight 700 (MADE IN INDIA, chips, eyebrows); 11 until 3.14.0 |
-| `--fs-xs` | 13 | meta lines, hints, footnotes |
-| `--fs-sm` | 14 | secondary text, chips, small links |
-| `--fs-md` | 15 | body text, explanations |
-| `--fs-lg` | 17 | buttons, options, list titles, nav labels |
-| `--fs-xl` | 20 | question text, card titles, result titles |
-| `--fs-2xl` | 24 | screen titles, big stat values |
-| `--fs-3xl` | 28 | hero titles (summary, chapter) |
+| Token | Size | Spacing (3.44.0) | Use |
+|---|---|---|---|
+| `--fs-cap` | 12 | `--ls-cap` .1em | small CAPS labels only, weight 700 (MADE IN INDIA, chips, eyebrows); 11 until 3.14.0 |
+| `--fs-xs` | 13 | `--ls-xs` +.025em | meta lines, hints, footnotes, small counts |
+| `--fs-sm` | 14 | `--ls-sm` +.02em | secondary text, text that is read (FAQ answers, Privacy, Terms: line 1.6), small links |
+| `--fs-md` | 15 | `--ls-md` +.015em | body text, menu rows, an FAQ question |
+| `--fs-lg` | 17 | `--ls-lg` +.01em | buttons, options, card and list titles, nav labels |
+| `--fs-xl` | 20 | `--ls-xl` 0 | question text, section titles, Hindi chapter names, result titles |
+| `--fs-2xl` | 24 | `--ls-2xl` −.015em | screen titles, big stat values |
+| `--fs-3xl` | 28 | `--ls-3xl` −.018em | hero titles (Progress, summary, chapter) |
+
+- **Spacing by size (3.44.0, the owner: "the smaller the text, the more room between its letters").** Every rule that sets
+  a size sets the spacing of that size with it (`font-size:var(--fs-sm);letter-spacing:var(--ls-sm)`); CAPS labels take
+  `--ls-cap`, a CAPS line of 14–17 px .05em. Not the words on action buttons (`--ls-btn`, FINAL 1), not the practice pages
+  (FINAL 6–8), not drawings (`svg`). The values are Material 3's curve (12 px +.033em, 14 px +.018em, 57 px −.004em) and
+  Brilliant's own text measured in IOPET's font (its reading text ≈ 15.5 px at +.014em, its bold list titles +.01–.02em,
+  its small CAPS +.11em). Hindi: Chrome keeps the headline (shirorekha) of a word joined with the spacing (tested); very
+  old phones were not tested.
+- **Lines that break well (3.44.0):** titles, card titles and short descriptions use `text-wrap:balance` (no lone word on a
+  second line: "Class 7 to / 12" was); a range such as (A–Z) never splits at its dash (`escName`: a word joiner after the
+  dash). Phones without `text-wrap` simply wrap as before.
 
 - No other sizes. Icons keep their own sizes. Text inputs stay at 16 px (iPhones zoom in below that).
-- Weights: 700 for titles and values; 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 600 for labels and options; 400 for body.
+- Weights (3.44.0): 700 for titles of 20 px and more and for big values; 600 for every word or number of 17 px and less that stands out (card titles, labels, counts, an FAQ question; the owner: the card titles were "chunky"); 600 for the words on buttons (`--fw-btn`, with `--ls-btn` .03em between the letters: §0, 3.33.1); 400 for body. CAPS labels keep 700.
 - **A question is read, not glanced at (3.38.0; 400 in 3.38.2; 450 in 3.38.3, FINAL, the owner, 19 Nov 2026: §0 6).** Its
   words (`.q-text` in a set and a paper, `.rv-q` in Review) are `--fw-q` 450: a little fuller than the regular 400, far
   lighter than 600; they were 700. The English and the numbers in it stay on the 400 face (Plus Jakarta Sans 500).
@@ -938,7 +954,7 @@ again ("Revise" alone read as Mark 2, which is called Revise).
 | Nudges | "Your progress is only on this phone. Create a free account to back it up. Tap here." | "Back up your progress" + a chevron |
 | Topics | "Mental Ability: reasoning with letters, numbers and figures." | "Mental Ability" |
 | Chapter | "In NMMS, about 7 questions per paper." | "About 7 questions per paper" |
-| Progress | "Your weakest chapter", Mark 1, "13 of 16 right to pass", "Practice for 9 min" | "Weakest", the bar with its flag, "Practice" |
+| Progress | "Your weakest chapter", Mark 1, "13 of 16 right to pass", "Practice for 9 min" | "Weakest", the bar with its flag, "Practice". 3.44.0 (the owner's bug, "20/16"): the weakest is a chapter on the go furthest from its pass, else, all passed, the least mastered (its % mastered, no bar); "Up next" only when nothing was started; a bar never shows more than the pass |
 | Progress stats | Total XP + Level 4, Day streak + Best 7, 82/175 right, Best run 12 | XP, Streak, Accuracy, Questions |
 | Progress | "This week, for your parents" + "Days practised, questions, marks: one WhatsApp message." | "For your parents" + Share |
 | Progress | "last 7 days" by the chart (the days are under it); the sentence under the week table | gone; an arrow by this week's count |
