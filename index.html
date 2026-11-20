@@ -1080,7 +1080,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .btn[disabled]{opacity:1;background:var(--off);color:var(--ink-off);border-color:var(--off);box-shadow:none}   /* 3.32.1 every button that cannot be pressed, of any kind, wears the one not-ready look (it was half see-through) */
 .btn[disabled]:active{transform:none}                 /* what cannot be pressed does not move under the finger */
 .btn.btn-primary[disabled]:active{box-shadow:none}
-.policy .card-title{margin-bottom:8px}
 
 /* ── BOTTOM NAV (CHANGE #6: solid background, no backdrop-filter) ── */
 .bottom-nav{position:absolute;left:0;right:0;bottom:0;display:none;z-index:40;pointer-events:none}
@@ -1705,7 +1704,12 @@ svg{letter-spacing:normal}   /* the drawings keep their letters as drawn */
 .faq-q{font-size:var(--fs-md);letter-spacing:var(--ls-md);line-height:1.35}
 .faq-q>span:first-child{text-wrap:balance;padding-right:12px}
 .faq-a{font-size:var(--fs-sm);letter-spacing:var(--ls-sm);line-height:1.6}
-.policy .card .small{font-size:var(--fs-sm);letter-spacing:var(--ls-sm);line-height:1.6}
+.doc-hero{margin-top:24px;font-size:var(--fs-3xl);font-weight:700;letter-spacing:var(--ls-3xl);line-height:1.2;color:var(--ink)}
+.doc-date{margin-top:8px;font-size:var(--fs-sm);letter-spacing:var(--ls-sm);color:var(--ink3)}
+.doc-sec{margin-top:56px}
+.doc-h{font-size:var(--fs-2xl);font-weight:700;letter-spacing:var(--ls-2xl);line-height:1.25;color:var(--ink);text-wrap:balance}
+.doc-p{margin-top:16px;font-size:var(--fs-lg);letter-spacing:var(--ls-lg);line-height:1.6;color:var(--ink)}
+.doc-h+.doc-p{margin-top:8px}
 </style>
 </head>
 <body>
@@ -1812,7 +1816,7 @@ var EXAMS = [
   { id: 'nmms', name: 'NMMS Bihar',   sub: 'Class 8 scholarship exam (NMMSS)',  emoji: '🎒',
     langs: [ { id: 'hi', name: 'Hindi · हिन्दी', short: 'Hindi',   sub: 'Questions in Hindi',   ico: 'अ' },
              { id: 'en', name: 'English',          short: 'English', sub: 'Questions in English', ico: 'A' } ],
-    goal: { exam: 'NMMS Bihar 2027', date: '2027-01-17', note: 'A placeholder: the last exams were in January (7 Jan 2024, 19 Jan 2025). Set the official date once SCERT Bihar announces it.' } }
+    goal: { exam: 'NMMS Bihar 2027', date: '2027-01-17', note: 'Estimated: past exams were in January. Change it when SCERT Bihar announces the date.' } }
 ];
 /* An exam with `langs` asks for the language of the questions as one more step: its courses are x-<exam>-<lang>
    (x-nmms-hi). Like everything else, a language opens by itself once a topic of x-nmms-hi has questions. */
@@ -3055,7 +3059,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.44.0',
+  VERSION: '3.45.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3086,18 +3090,18 @@ var CONFIG = {
      them, put them here and the rest follows by itself: the sign-in page shows the box and the sentence (auConsent), the
      three ways in wait for the box (auAgreed), "Terms of Service" opens SCREENS.terms, and the You tab lists them beside
      the privacy policy. Shape: { updated: '14 November 2026', parts: [{ t: 'Using IOPET', d: 'Plain words …' }, …] } */
-  TERMS: { updated: '14 November 2026', parts: [                       // 3.24.0 switched on by the owner; every line is something the app really does
-    { t: 'What IOPET is', d: 'IOPET is run by IOPET Authority, handled by Tuntun Sanatani. It is a practice app for school students: questions for exams such as NMMS, with your answers checked and your record kept. It helps you study. It does not replace your school, your teacher or the official notices of the exam, and it cannot promise any result in an exam.' },
-    { t: 'Who can use it', d: 'Anyone can practise as a guest. If you are under 18, use IOPET with the permission of a parent or guardian, and read these terms with them.' },
-    { t: 'Your account', d: 'Sign up with your own email address and keep your password to yourself: what is done with your account is your responsibility. You can delete it at any time: You tab → Account & backup → Delete account.' },
-    { t: 'Using IOPET fairly', d: 'Do not copy, sell or share the questions, the explanations or the packs, and do not share or sell codes. Do not try to open other people’s accounts or the parts of the app that are not yours, and do not try to break or overload it. An account that does these things may be closed.' },
-    { t: 'Questions and answers', d: 'Every question and its answer are checked with care, but a mistake can still slip through. If you think one is wrong, tap the flag on that question and say what is wrong, so that it can be checked and fixed.' },
-    { t: 'Packs and payments', d: 'Some packs are paid. You pay by UPI, outside the app, and get a code (or your teacher gives you one); or your teacher unlocks the pack for your email address. A code works only once, and opens its pack for the account that uses it. Keep your payment screenshot. Refunds: if the pack is not opened yet, within 7 days of paying; once it is opened (its code used or it is unlocked for you), within 24 hours of opening it. Write to iopetsupport@gmail.com with the payment screenshot and your account email, and the money is sent back to the account it came from. If a payment or a code does not work, write to the same address.' },
-    { t: 'Your data', d: 'What the app keeps, where it is kept and who can see it is written in the Privacy policy. In guest mode your record stays on this phone only.' },
-    { t: 'When things change', d: 'Questions, packs and features change as the app gets better, and the app may sometimes be unavailable. When these terms change, the date at the top of this page changes.' },
-    { t: 'Limits', d: 'IOPET is offered as it is. As far as the law allows, IOPET is not responsible for losses that come from using it or from not being able to use it, for example a guest’s record lost when the phone is reset.' },
-    { t: 'Law and contact', d: 'These terms follow the laws of India, and any dispute about them is for the courts of Patna, Bihar. Questions about them: iopetsupport@gmail.com, or Help & Support → Send feedback.' }
-  ] },
+  TERMS: { updated: '20 November 2026', parts: [
+      { t: "What IOPET is", d: ["A practice app for school students, run by IOPET Authority (Tuntun Sanatani). It checks your answers and keeps your record.", "It helps you study. It does not replace your school, your teacher or the exam’s official notices, and it cannot promise a result."] },
+      { t: "Who can use it", d: ["Anyone can practise as a guest.", "Under 18? Use IOPET with the permission of a parent or guardian, and read these terms together."] },
+      { t: "Your account", d: ["Sign up with your own email and keep your password to yourself: you are responsible for your account.", "Delete it any time: You → Account & backup → Delete account."] },
+      { t: "Using IOPET fairly", d: ["Don’t copy, sell or share the questions, explanations, packs or codes.", "Don’t try to get into other people’s accounts or parts of the app, or to break or overload it. An account that does may be closed."] },
+      { t: "Questions and answers", d: ["Every question and answer is checked with care, but a mistake can slip through. If one looks wrong, tap its flag and say what is wrong."] },
+      { t: "Packs and payments", d: ["Some packs are paid. Pay by UPI outside the app and get a code (or get one from your teacher), or your teacher unlocks the pack for your email. A code works once, for the account that uses it. Keep your payment screenshot.", "Refunds: within 7 days of paying if the pack is not opened yet; within 24 hours of opening it if it is. Write to iopetsupport@gmail.com with the screenshot and your account email; the money goes back to the account it came from.", "A payment or a code that does not work: the same address."] },
+      { t: "Your data", d: ["See the Privacy policy. As a guest, your record stays on this phone."] },
+      { t: "When things change", d: ["Questions, packs and features change as the app gets better, and the app may sometimes be down. When these terms change, the date at the top changes."] },
+      { t: "Limits", d: ["IOPET is offered as it is. As far as the law allows, IOPET is not responsible for losses from using it or not being able to, for example a guest’s record lost when the phone is reset."] },
+      { t: "Law and contact", d: ["These terms follow the laws of India; a dispute about them is for the courts of Patna, Bihar.", "Questions: iopetsupport@gmail.com, or Help & Support → Send feedback."] }
+    ] },   // 3.45.0 the same terms in shorter words, a paragraph each
   KEEP_CHOSEN: 12                              // signed-out profiles that only hold a chosen course (no practice yet): the latest 12 are kept on a phone
 };
 /* 3.9.7 PLAY MODE — the same app, opened as the Google Play app: that app opens this page as …/?src=play.
@@ -3115,18 +3119,18 @@ var PLAY = (function () {
 /* (3.9.0: the quotes and study tips that Home used to show are gone — every line on Home now serves the next step.
    The stored positions u.quote / u.tip are still kept as they are, so older versions of the app read the same backup.) */
 var FAQ = [
-  { q: 'Where is my data stored?', a: 'On this phone, so the app works without internet. If you have an account and have confirmed your email, a copy is also kept in the cloud (Google Firebase, Mumbai region) and only you can open it. Guest progress stays on this phone only.' },
-  { q: 'How do I move to a new phone?', a: 'Sign in on the new phone with the same email and password. Your XP, streak, topic progress and settings come back by themselves. This needs a confirmed email on the old phone first: see the You tab → Account & backup.' },
-  { q: 'How does the streak work?', a: 'Answer at least one question on a day and that day counts. Practice on consecutive days and the streak grows. If you miss a full day, it starts again from 1 the next time you practice.' },
-  { q: 'How are questions chosen?', a: 'Every session first brings back questions you got wrong, then questions you have not seen, and finally ones you have already mastered for revision.' },
-  { q: 'What does “mastered” mean?', a: 'A question is mastered when your most recent answer to it was correct. Topic progress is mastered questions divided by total questions.' },
-  { q: 'How is XP calculated?', a: 'A correct answer gives 10 XP (easy), 15 XP (medium) or 20 XP (hard). Re-answering a question you have already mastered gives 2 XP. Every 200 XP is one level.' },
-  { q: 'How do I change my course?', a: 'Open the You tab → Course, or tap the course name at the top of Topics. Choose another exam or class: the topics change at once. Everything you did in the old course is kept and is there again if you switch back.' },
-  { q: 'Why does a course say “Coming soon”?', a: 'Its questions are still being written and checked. A course opens by itself, with an app update, as soon as its first chapter is ready.' },
-  { q: 'Why is a topic locked?', a: 'Some topics open only after you master a set share of an earlier topic. Tap the locked topic to see exactly what is needed.' },
-  { q: 'Does the app work offline?', a: 'Yes. Practice, progress and settings all work without internet. You need internet only to sign in, to create an account and to back up. Anything you do offline is backed up the next time you are online.' },
-  { q: 'I forgot my password', a: 'Tap “Forgot password?” on the sign-in screen and enter your email. A link is sent to that inbox; open it and choose a new password. Only someone who can open your email can do this, so keep your email account safe. Nobody, including the IOPET team, can read your password.' },
-  { q: 'How do I delete my account?', a: 'You tab → Account & backup → Delete account. You are asked for your password, then your login, your cloud backup and the data on this phone are removed for ever.' }
+  { q: 'Where is my data stored?', a: 'On this phone, so the app works offline. With a confirmed account, a copy is also kept in the cloud (Google, Mumbai) that only you can open. As a guest, it stays on this phone.' },
+  { q: 'How do I move to a new phone?', a: 'Sign in with the same email and password; your XP, streak, progress and settings come back. Confirm your email on the old phone first: You → Account & backup.' },
+  { q: 'How does the streak work?', a: 'Answer one question a day to keep it growing. Miss a full day and it starts again from 1.' },
+  { q: 'How are questions chosen?', a: 'First the ones you got wrong, then new ones, then ones you know, for revision.' },
+  { q: 'What does “mastered” mean?', a: 'Your last answer to it was right. Topic progress = mastered ÷ all questions.' },
+  { q: 'How is XP calculated?', a: 'Right answer: 10 XP (easy), 15 (medium), 20 (hard). A mastered one again: 2 XP. Every 200 XP is a level.' },
+  { q: 'How do I change my course?', a: 'You → Course, or tap the course name on Topics. Your progress in every course is kept.' },
+  { q: 'Why does a course say “Coming soon”?', a: 'Its questions are still being written and checked. It opens with an app update once its first chapter is ready.' },
+  { q: 'Why is a topic locked?', a: 'Some open only after you master part of an earlier one. Tap it to see what’s needed.' },
+  { q: 'Does the app work offline?', a: 'Yes. Only signing in, creating an account and backing up need internet. What you do offline backs up later.' },
+  { q: 'I forgot my password', a: 'Tap “Forgot password?” when signing in and enter your email. Open the link we send and choose a new password. Keep your email safe: whoever opens it can do this.' },
+  { q: 'How do I delete my account?', a: 'You → Account & backup → Delete account. Enter your password; your login, backup and the data on this phone are deleted for good.' }
 ];
 
 /* Achievements — each unlocks from real stats. val(u) is the current value, goal is the target. */
@@ -4373,7 +4377,7 @@ function passProblem(pw, email) {
    its own signed-in owner with a confirmed email.
    ════════════════════════════════════════════════════════════════════ */
 var SYNC_MSG = {
-  offline: 'No internet. Your progress is safe on this phone and is backed up when you are online again.',
+  offline: 'Offline. Your progress is safe and backs up when you’re online.',
   denied: 'The server refused the backup (permission denied).',
   auth: 'The server did not accept this sign-in for the backup. It will try again.',
   quota: 'The backup server is very busy today. It will try again later.',
@@ -5102,7 +5106,7 @@ SCREENS.verify = function (p) {
     '<div class="au-body"><div class="au-mark">' + li('mail', 28) + '</div><h1 class="au-title">Confirm your email</h1>' +
     '<div class="au-note">We sent a link to <b class="em">' + esc(db.auth.email) + '</b></div>' +
     auSteps(['Open your email app. Look in Spam too.', 'Tap the link in the email from IOPET.', 'Come back here and tap the button.']) +
-    '<div class="au-fine">Until the email is confirmed, your progress stays on this phone only, and a forgotten password cannot be recovered if the address was typed wrong.</div>' +
+    '<div class="au-fine">Until you confirm your email, your progress stays on this phone only.</div>' +
     '<button type="button" class="btn btn-primary" data-act="verify-check">I have confirmed</button>' +
     '<button type="button" class="btn btn-line" data-act="verify-resend">Send the email again</button>' +
     '<button type="button" class="au-ghost" data-act="verify-skip">' + (p.fresh ? 'Skip for now' : 'Do it later') + '</button>' +
@@ -5244,7 +5248,7 @@ function onAuFocus(ev) {
    opens the terms and keeps the tick. A guest who signs in later has agreed already, so that page has no box. */
 function auConsent(p) {
   return '<div class="au-consent" id="au-cs"><button type="button" class="au-cb" role="checkbox" aria-checked="' + (p.agree ? 'true' : 'false') + '" aria-labelledby="au-ct" data-act="consent">' + CHECK_SVG + '</button>' +
-    '<span class="au-ct" id="au-ct" data-act="consent">By continuing, you acknowledge that you have chosen to proceed and agree to our <button type="button" class="au-tos" data-act="go" data-to="terms">Terms of Service</button>.</span></div>';
+    '<span class="au-ct" id="au-ct" data-act="consent">By continuing, you agree to our <button type="button" class="au-tos" data-act="go" data-to="terms">Terms of Service</button> and <span style="white-space:nowrap"><button type="button" class="au-tos" data-act="go" data-to="privacy">Privacy Policy</button>.</span></span></div>';
 }
 ACTIONS.consent = function () {
   var e = top(), row = $('au-cs'), box = row && row.querySelector('.au-cb');
@@ -5299,7 +5303,7 @@ SCREENS.signup = function (p) {
 };
 SCREENS.forgot = function (p) {
   return '<div class="page bg-auth auth au"><div class="au-top">' + backBtn() + '</div>' +
-    '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We email you a link to choose a new one. It goes only to that inbox.</div>' +
+    '<div class="au-body"><h1 class="au-title">Reset password</h1><div class="au-note">We’ll email you a link to set a new password.</div>' +
     '<div class="au-form" data-enter="forgot-send">' + auEmail(p.email, 'username') + auMsgRow('') + auGo('forgot-send', 'Send reset link') + '</div></div>' + AU_ERR + '</div>';
 };
 AFTER.login = function (sc) { auCheckAll(sc); gisLoad(null); auFit(); };
@@ -5498,7 +5502,7 @@ SCREENS.sent = function (p) {
   return '<div class="page bg-auth auth au"><div class="au-body"><div class="au-mark">' + li('mail', 28) + '</div><h1 class="au-title">Check your email</h1>' +
     '<div class="au-note">If an account exists for <b class="em">' + esc(p.email || '') + '</b>, a reset link is on its way.</div>' +
     auSteps(['Open the email from IOPET. Look in Spam too.', 'Tap the link and choose a new password.', 'Come back and sign in with the new password.']) +
-    '<div class="au-fine">No email after a few minutes? Check the address and ask again. If you have never created an account in this app, go back and tap “Create account” first — a reset link is sent only to an existing account.</div>' +
+    '<div class="au-fine">No email after a few minutes? Check the address and try again. No account yet? Go back and tap “Create account”.</div>' +
     '<div class="au-fine">Setting a new password signs you out on every other phone.</div>' +
     '<button type="button" class="btn btn-primary" data-act="back">Back to sign in</button></div></div>';
 };
@@ -5526,14 +5530,14 @@ SCREENS.course = function (p) {
   var u = user, at = p.at && courseStep(p.at) ? p.at : '', list = courseChoices(at), must = !!p.must, cur = courseOf(u), t, html, on, off;
   if (!at) {
     html = must ? '<div class="page bg-auth auth">' + authHead('Choose your course', 'What are you studying for? You can change it later in the You tab.')
-                : '<div class="page bg-profile">' + subHead('Course') + '<div class="sub">' + (cur ? 'Now: <b class="em">' + esc(courseName(cur)) + '</b>. ' : '') + 'Your progress in every course is kept when you switch.</div>';
+                : '<div class="page bg-profile">' + subHead('Course') + '<div class="sub">' + (cur ? 'Now: <b class="em">' + esc(courseName(cur)) + '</b>. ' : '') + 'Switching keeps your progress.</div>';
     if (must && u.course && !cur) html += '<div class="alert">' + (courseName(u.course) ? 'Your course, ' + esc(courseName(u.course)) + ', is' : 'Your course is') +
       ' not in this version of the app. Update the app to go on with it. ' +
-      (u.guest ? 'Or choose another course below.' : 'If you choose another course here, it becomes the course of this account on every phone.') + '</div>';
+      (u.guest ? 'Or choose another course below.' : 'Your choice applies on every phone you sign in on.') + '</div>';
     else if (must && u.np && db.auth && db.auth.verified) html += sync.err && !has(SYNC_RETRY_MS, sync.err)
       ? '<div class="alert">Your backup could not be loaded. ' + esc(has(SYNC_MSG, sync.err) ? SYNC_MSG[sync.err] + ' ' : '') +
         'You can go on: the course you choose now becomes the course of this account on every phone.</div>'
-      : '<div class="alert info">Your backup is still loading. If you chose a course on another phone, it appears here by itself.</div>';
+      : '<div class="alert info">Loading your backup. A course chosen on another phone will appear here.</div>';
     list.forEach(function (c) { html += courseRow(c, cur, true); });
     if (must) html += '<div class="auth-switch">' + (u.guest ? 'Guest mode' : esc(u.email)) + ' · <button type="button" class="link" data-act="signout-ask">Sign out</button></div>';
     return html + '</div>';
@@ -6667,10 +6671,10 @@ SCREENS.paper = function (p) {
   html = '<div class="page bg-dash paper-intro">' + subHead('');
   if (!t || !t.mock || !qs || !qs.length) return html + '<div class="empty"><div class="empty-t">This paper is not available.</div></div></div>';
   n = qs.length; sv = savedPaper(t.id); mins = Math.round(paperMs(t) / 60000); past = paperPast(u, t);
-  rules = ['Tap an answer to choose it. Nothing says right or wrong until you submit.',
-    'Skip a question and come back to it: the grid shows which ones are left.',
-    'No marks are cut for a wrong answer, so answer every question.',
-    'The clock stops when you leave the app, and your answers are kept.'];
+  rules = ['Answers are checked only when you submit.',
+    'Skip and come back: the grid shows what’s left.',
+    'No marks lost for a wrong answer, so answer every question.',
+    'Leave any time: the clock stops and your answers are kept.'];
   html += '<div class="pi-head"><div class="pi-kick">Full paper</div><div class="pi-name">' + t.name + '</div></div>' +
     '<div class="pi-facts"><div class="pi-fact"><b class="num">' + n + '</b><span>questions</span></div><div class="pi-fact"><b class="num">' + mins + '</b><span>minutes</span></div>' +
     '<div class="pi-fact"><b class="num">' + passMarks(n, PAPER_PASS) + '</b><span>to pass</span></div></div>' +
@@ -6814,7 +6818,7 @@ ACTIONS['paper-go'] = function (el) { startPaper(el.getAttribute('data-topic'), 
 var paperAsk = '';                               // the paper "Start again" was asked for
 ACTIONS['paper-new'] = function (el) {
   paperAsk = el.getAttribute('data-topic') || '';
-  confirmModal({ title: 'Start again?', text: 'The answers you gave in this paper so far go, and the clock starts from the beginning.', no: 'Cancel', yes: 'Start again', act: 'paper-new-yes' });
+  confirmModal({ title: 'Start again?', text: 'Your answers will be cleared and the clock restarts.', no: 'Cancel', yes: 'Start again', act: 'paper-new-yes' });
 };
 ACTIONS['paper-new-yes'] = function () { if (user) dropPaper(user.id); startPaper(paperAsk, false); };
 ACTIONS['p-next'] = function () { if (S && S.exam) paperMove(S.i + 1); };
@@ -6826,7 +6830,7 @@ ACTIONS['p-submit'] = function () {
   if (!S || !S.exam || S.done) return;
   n = S.items.length; done = paperDone();
   confirmModal({ title: 'Submit the paper?', text: done === n ? 'All ' + n + ' questions are answered.'
-    : (n - done) + ' of ' + n + ' questions are not answered. No marks are cut for a wrong answer, so an answer is better than none.', no: 'Keep going', yes: 'Submit', act: 'p-submit-yes' });
+    : (n - done) + ' of ' + n + ' not answered. A wrong answer loses no marks, so answer them.', no: 'Keep going', yes: 'Submit', act: 'p-submit-yes' });
 };
 ACTIONS['p-submit-yes'] = function () { submitPaper(false); };
 ACTIONS['paper-done'] = function () { reset('topics'); };
@@ -6885,7 +6889,7 @@ SCREENS.progress = function () {
   html = '<div class="page bg-progress nav-pad progress"><div class="h1">Progress</div>';
   if (!u.answered) {
     html += '<div class="card empty"><div class="empty-ico">' + li('chart', 34) + '</div><div class="empty-t">No practice yet</div>' +
-      '<div class="empty-d">Finish one set and your XP, accuracy and weekly chart show up here.</div>' +
+      '<div class="empty-d">Finish a set to see your progress here.</div>' +
       '<button class="btn btn-primary" data-act="start-smart" style="margin-top:14px">Start practice</button></div>';
   } else {
     wt = weakestTopic(u); n = wt ? 'Weakest' : 'Up next'; wt = wt || recommendTopic(u);   /* 3.44.0 "Weakest" only when it is */
@@ -6977,7 +6981,7 @@ SCREENS.account = function () {
   var u = user, a = db.auth, html = '<div class="page bg-profile">' + subHead('Account & backup');
   if (u.guest || !a) {
     return html + '<div class="card"><div class="card-title">Guest mode</div>' +
-      '<div class="small muted">Your progress is saved only on this phone. If the phone is lost, reset or the app data is cleared, it cannot be brought back.</div>' +
+      '<div class="small muted">Your progress is only on this phone. If the phone is lost or reset, it can’t be brought back.</div>' +
       '<button class="btn btn-primary" data-act="adopt" data-to="signup">Create account &amp; back up</button>' +
       '<div class="center"><button class="link acc" data-act="adopt" data-to="login">I already have an account</button></div></div>' +
       grp(menuRow('data-act="edit-name"', '✏️', 'Edit name', esc(firstName(u.name))) + legalRows()) +
@@ -6994,7 +6998,7 @@ SCREENS.account = function () {
     menuRow('data-act="pass-edit"', '🔑', 'Change password', '') + legalRows()) +
     '<div class="tier-label">Danger zone</div>' +
     grp(menuRow('data-act="delete-ask"', '❌', 'Delete account', '', ' danger')) +
-    '<div class="foot-note">Your password is checked by Google Firebase and is never stored on this phone.</div></div>';
+    '<div class="foot-note">Your password is never stored on this phone.</div></div>';
   return html;
 };
 
@@ -7034,7 +7038,7 @@ SCREENS.achievements = function () {
 SCREENS.notifications = function () {
   var n = user.notif;
   return '<div class="page bg-profile">' + subHead('Notifications') +
-    '<div class="alert info">These control the alerts and cards inside the app. Push notifications on the phone need a server and are not part of this build.</div>' +
+    '<div class="alert info">These alerts appear inside the app. Phone notifications are not available yet.</div>' +
     grp(toggleRow('notif', 'streak', n.streak, 'Streak alert', 'Warn on Home when your streak is about to end') +
     toggleRow('notif', 'weekly', n.weekly, 'Weekly summary', 'Show the week-on-week card on Progress')) + '</div>';
 };
@@ -7063,26 +7067,28 @@ SCREENS.settings = function () {
       u.guest ? 'Data is saved on this phone only.' : 'Data is saved on this phone and backed up to your account.') + '</div></div>';
 };
 
-SCREENS.privacy = function () {
-  var mail = CONFIG.SUPPORT_EMAIL;
-  return '<div class="page bg-profile policy">' + subHead('Privacy policy') +
-    '<div class="small muted">IOPET · last updated 14 November 2026</div>' +
-    '<div class="card"><div class="card-title">What the app keeps</div><div class="small muted">Your name and email address. The course you choose: the exam, or the class with its board and stream. Your practice record: answers, XP, streak, goals and settings. Feedback and question reports you choose to write. If your account has a pack: which pack and the date, with the code that unlocked it (kept so that a code works only once; it holds no name or email) — or, when the teacher unlocks it for your email address, that email address with the pack. Deleting your account removes that email address too. Nothing else: no contacts, no location, no photos, no phone number.</div></div>' +
-    '<div class="card"><div class="card-title">Your password</div><div class="small muted">It is sent over an encrypted connection to Google Firebase Authentication, which checks it. IOPET never stores it on the phone and nobody on the IOPET team can read it. With “Continue with Google” there is no IOPET password: Google checks who you are.</div></div>' +
-    '<div class="card"><div class="card-title">Where it is kept</div><div class="small muted">On this phone, and, once you confirm your email, in Google Cloud Firestore in Mumbai, India. Sign-in is handled by Google Firebase Authentication, which may process your email on Google servers outside India. In guest mode nothing leaves the phone.</div></div>' +
-    '<div class="card"><div class="card-title">Who can see it</div><div class="small muted">Only you, after signing in: the database refuses everyone else. The IOPET developer can open stored records when it is needed to fix a problem or answer your request. Your data is never sold, never shared with advertisers and never used for ads.</div></div>' +
-    '<div class="card"><div class="card-title">Other services</div><div class="small muted">The app’s fonts (Plus Jakarta Sans and Noto Sans Devanagari) come with the app itself, from the same address; no font service is asked for anything. When the sign-in page opens, the app loads Google’s sign-in script from accounts.google.com, so that “Continue with Google” can open at once. If you choose Google, Google gives IOPET only your name and email address; nothing else in your Google account is read. There are no ad networks and no tracking tools in the app.</div></div>' +
-    '<div class="card"><div class="card-title">Deleting your data</div><div class="small muted">You tab → Account &amp; backup → Delete account removes your login, your cloud backup and the data on this phone, at once and for ever. “Reset progress” in Settings removes only the practice record.</div></div>' +
-    '<div class="card"><div class="card-title">Children</div><div class="small muted">If you are under 18, use IOPET with the permission of a parent or guardian.</div></div>' +
-    '<div class="card"><div class="card-title">Contact</div><div class="small muted">' + (mail ? 'Write to ' + esc(mail) + '.' : 'Use Help &amp; Support → Send feedback.') + '</div></div></div>';
-};
+/* 3.45.0 (the owner, Brilliant's reading pages): a document is read, so it is open, not boxed: a large line on top, then each
+   part as a heading and short paragraphs in the ink at 17 px with room between them. The same facts in fewer words. */
+var POLICY = { updated: '20 November 2026', parts: [
+    { t: "What we keep", d: ["Your name and email.", "Your course: the exam, or your class, board and stream.", "Your practice: answers, XP, streak, goals and settings.", "Feedback and question reports you send.", "For a pack: which pack, when, and the code that opened it, so each code works only once. The code holds no name or email. If your teacher unlocks a pack for your email, that email is kept with the pack until you delete your account.", "Nothing else: no contacts, location, photos or phone number."] },
+    { t: "Your password", d: ["Google Firebase checks it over an encrypted connection. It is never stored on your phone, and no one at IOPET can read it.", "With “Continue with Google” there is no IOPET password: Google checks who you are."] },
+    { t: "Where it is kept", d: ["On your phone. Once you confirm your email, a copy is also kept in Google Cloud in Mumbai, India.", "Sign-in is handled by Google Firebase, which may process your email outside India.", "As a guest, nothing leaves your phone."] },
+    { t: "Who can see it", d: ["Only you, when signed in. The IOPET developer opens a record only to fix a problem or to answer you.", "We never sell your data, share it with advertisers or use it for ads."] },
+    { t: "Other services", d: ["The fonts come with the app; no font service is asked for anything.", "The sign-in page loads Google’s sign-in script from accounts.google.com. If you choose Google, we get only your name and email.", "No ad networks. No tracking tools."] },
+    { t: "Deleting your data", d: ["You → Account & backup → Delete account removes your login, your cloud backup and the data on this phone, for good.", "Settings → Reset progress removes only your practice record."] },
+    { t: "Children", d: ["Under 18? Use IOPET with the permission of a parent or guardian."] },
+    { t: "Contact", d: ["Write to iopetsupport@gmail.com."] }
+  ] };
+function docPage(title, hero, doc) {
+  return '<div class="page bg-profile doc">' + subHead(title) + (hero ? '<div class="doc-hero">' + hero + '</div>' : '') +
+    '<div class="doc-date">Last updated ' + esc(doc.updated) + '</div>' + doc.parts.map(function (x) {
+      return '<section class="doc-sec"><h2 class="doc-h">' + esc(x.t) + '</h2>' + x.d.map(function (p) { return '<p class="doc-p">' + esc(p) + '</p>'; }).join('') + '</section>';
+    }).join('') + '</div>';
+}
+SCREENS.privacy = function () { return docPage('Privacy policy', 'Your data stays yours.', POLICY); };
 
 /* 3.21.0 the Terms of Service, from CONFIG.TERMS: the same page as the privacy policy (the guard keeps it shut while there are none) */
-SCREENS.terms = function () {
-  var T = CONFIG.TERMS, html = '<div class="page bg-profile policy">' + subHead('Terms of Service') + '<div class="small muted">IOPET · last updated ' + esc(T.updated) + '</div>';
-  T.parts.forEach(function (x) { html += '<div class="card"><div class="card-title">' + esc(x.t) + '</div><div class="small muted">' + esc(x.d) + '</div></div>'; });
-  return html + '</div>';
-};
+SCREENS.terms = function () { return docPage('Terms of Service', '', CONFIG.TERMS); };
 function legalRows() {                                               // the policy, and the terms once there are some
   return menuRow('data-act="go" data-to="privacy"', '🔒', 'Privacy policy', '') + (CONFIG.TERMS ? menuRow('data-act="go" data-to="terms"', '📚', 'Terms of Service', '') : '');
 }
@@ -7367,12 +7373,12 @@ function quitNow() {
 }
 function askQuit() {
   if (S && S.exam && !S.done) {
-    confirmModal({ title: 'Leave the paper?', text: 'Your answers and the time left are kept on this phone. Open the paper again to go on.', no: 'Stay', yes: 'Leave', act: 'quit-yes' });
+    confirmModal({ title: 'Leave the paper?', text: 'Your answers and time are saved. Open the paper to go on.', no: 'Stay', yes: 'Leave', act: 'quit-yes' });
     return;
   }
   if (!S || S.done) { quitNow(); return; }
   if (S.correct + S.wrong === 0) { quitNow(); return; }
-  confirmModal({ title: 'Quit this session?', text: 'The answers you have given are already saved, but you will not get the result summary.', no: 'Keep going', yes: 'Quit', act: 'quit-yes', stay: true });   // nothing is lost: not a red button (3.10.0)
+  confirmModal({ title: 'Quit this session?', text: 'Your answers are saved, but you won’t see a result.', no: 'Keep going', yes: 'Quit', act: 'quit-yes', stay: true });   // nothing is lost: not a red button (3.10.0)
 }
 function scrollToEnd() { var sc = elScreens.firstChild; if (sc) sc.scrollTop = sc.scrollHeight; }
 /* no gliding for "Reduce animations", for a phone set to reduce motion, or where the browser cannot glide */
@@ -7646,9 +7652,9 @@ ACTIONS['forgot-send'] = function () {
   });
 };
 ACTIONS['signout-ask'] = function () {
-  confirmModal({ title: 'Sign out?', text: user.guest ? 'Your guest progress stays on this device. Tap “Continue as guest” to pick it up again.'
+  confirmModal({ title: 'Sign out?', text: user.guest ? 'Your progress stays here. Tap “Continue as guest” to go on.'
     : (db.auth && db.auth.verified) ? 'Your progress is backed up first. Sign in again on any phone to get it back.'
-    : 'Your email is not confirmed, so your progress stays on this phone only. Sign in here again to continue.', yes: 'Sign out', act: 'signout-yes' });
+    : 'Email not confirmed: your progress stays on this phone. Sign in here again to go on.', yes: 'Sign out', act: 'signout-yes' });
 };
 function finishSignOut(backedUp) {
   var uid = db.auth ? db.auth.uid : null;
@@ -7657,7 +7663,7 @@ function finishSignOut(backedUp) {
   db.auth = null; db.session = null; user = null; S = null;
   saveSignedOut(); applyPrefs(); idle(); hideModal();
   reset('login');
-  if (uid) toast(backedUp ? 'Signed out. Your progress is safe in the cloud.' : 'Signed out. Progress that is not backed up yet stays on this phone until you sign in again.');
+  if (uid) toast(backedUp ? 'Signed out. Your progress is safe in the cloud.' : 'Signed out. Anything not backed up stays on this phone.');
 }
 ACTIONS['signout-yes'] = function () {
   if (!user) return;
@@ -7945,7 +7951,7 @@ ACTIONS['report-save'] = function (el) {
   if (!it) { hideModal(); return; }
   user.reports.push({ t: Date.now(), q: it.q.id, r: el.getAttribute('data-reason') });
   if (user.reports.length > 50) user.reports = user.reports.slice(-50);
-  save(); hideModal(); toast('Reported. You can see it under Help → Reported questions.');
+  save(); hideModal(); toast('Reported. See it in Help → Reported questions.');
 };
 
 /* ── goals ── */
@@ -7972,7 +7978,7 @@ ACTIONS['goal-save'] = function () {
   /* Nothing was changed: both fields hold what the box was opened with (spaces added or removed do not count). */
   var untouched = !!fe && !!fd && exam === String(fe.defaultValue).trim().replace(/\s+/g, ' ').slice(0, 28) && date === String(fd.defaultValue).trim();
   if (exam.length < 2) return modalErr('Enter the exam name.');
-  if (!validDay(date)) return modalErr('Pick a valid exam date (year-month-day, like 2027-05-02).');
+  if (!validDay(date)) return modalErr('Enter a date like 2027-05-02.');
   if (date < todayKey()) return modalErr('That date has already passed. Pick a future date.');
   if (untouched) return hideModal();                         // nothing was changed: a target that follows the course goes on following it, and
                                                                // one that was changed on another phone meanwhile is not put back to what this box shows
@@ -8092,7 +8098,7 @@ ACTIONS['delete-ask'] = function () {
     return;
   }
   showModal('<div class="m-emoji">❌</div><div class="m-title center">Delete this account?</div>' +
-    '<div class="m-text">Your login, your cloud backup and the data on this phone are deleted for ever. Nobody can bring them back. Enter your password to confirm.</div>' +
+    '<div class="m-text">Your login, backup and the data on this phone will be deleted for good. Enter your password to confirm.</div>' +
     passField('m-pass', 'Password', 'current-password', false) +
     '<div class="m-err" id="m-err" role="alert"></div>' +
     '<div class="m-actions"><button class="btn btn-sec" data-act="modal-close">Cancel</button><button class="btn btn-danger" data-act="delete-yes">Delete for ever</button></div>', 'delete-yes');
@@ -8204,7 +8210,7 @@ function reportsText() {
 ACTIONS.reports = function () {
   var list = user.reports.slice().reverse(), html;
   if (!list.length) {
-    showModal('<div class="m-emoji">🚩</div><div class="m-title center">No reports yet</div><div class="m-text center">While practicing, tap “Report a problem with this question” under the explanation.</div>' +
+    showModal('<div class="m-emoji">🚩</div><div class="m-title center">No reports yet</div><div class="m-text center">Tap the flag on a question to report a problem.</div>' +
       '<div class="m-actions"><button class="btn btn-primary" data-act="modal-close">OK</button></div>');
     return;
   }
@@ -8447,7 +8453,7 @@ function enterApp() {
   } else reset('login');
   if (user && user.settings.calm && !user.flags.calmnote && !note) {      // told once: the opening logo now plays even with "Reduce animations" on
     user.flags.calmnote = 1; save();
-    toast('The opening logo animation now always plays. “Reduce animations” still turns off the other screen effects.');
+    toast('The opening logo now always plays. Other animations stay off.');
   }
   if (note) {
     db.note = ''; saveLocal();
@@ -8745,10 +8751,10 @@ function packsFetch(ids, gen, cb) {
 var REDEEM_MSG = {
   shape: 'A code has 12 letters and numbers, like NMK7-Q2ZP-4D9W.',
   pack: 'This code is not for this app version. Update the app, or check the code.',
-  guest: 'Create an account first: a code unlocks a pack for your account, on every phone you sign in on.',
+  guest: 'Create an account first. A code unlocks the pack for your account, on every phone.',
   verify: 'Confirm your email first (You tab → Account & backup).',
   have: 'You already have this pack.',
-  bad: 'This code does not work. Check it — or it has already been used.',
+  bad: 'This code doesn’t work, or it has been used.',
   offline: 'No internet connection. Connect and try again.',
   quota: 'Too many tries. Wait a few minutes and try again.'
 };
@@ -8956,7 +8962,7 @@ SCREENS.pack = function (p) {
     link = upiLink(k);
     html += '<div class="pay-step"><span class="pay-n">1</span><span class="grow">Pay <b>' + rupees(k.price) + '</b> by UPI' +
       '<span class="pay-qr" role="img" aria-label="UPI QR code for ' + rupees(k.price) + '">' + qrSvg(link, 4) + '</span>' +
-      '<span class="small muted pay-how">Scan it with any UPI app — a parent can scan it with their own phone. Or pay to this UPI ID:</span>' +
+      '<span class="small muted pay-how">Scan with any UPI app (a parent’s phone works too), or pay to this UPI ID:</span>' +
       '<span class="pay-id"><b class="sel">' + esc(pay.upi) + '</b><button class="link" data-act="copy" data-text="' + esc(pay.upi) + '">Copy</button></span>' +
       '<a class="link pay-app" href="' + esc(link) + '">' + PAY_SVG + ' Open a UPI app on this phone</a></span></div>';
   } else html += '<div class="pay-step"><span class="pay-n">1</span><span class="grow">Pay <b>' + rupees(k.price) + '</b> to your teacher.</span></div>';
@@ -9002,7 +9008,7 @@ SCREENS.redeem = function (p) {
   var html = '<div class="page bg-profile">' + subHead('Redeem a code');
   if (PLAY) return html + '<div class="empty"><div class="empty-t">Not available in this app.</div></div></div>';     // 3.9.7
   if (!signedUser(user)) return html + '<div class="alert info">' + REDEEM_MSG.guest + '</div><button class="btn btn-primary" data-act="adopt" data-to="signup">Create account</button></div>';
-  return html + '<div class="sub">Type the code your teacher sent you. It unlocks its pack for this account.</div><div class="card">' + codeForm(p) + '</div>' +
+  return html + '<div class="sub">Enter the code from your teacher.</div><div class="card">' + codeForm(p) + '</div>' +
     (db.auth.verified ? '' : '<div class="alert">' + REDEEM_MSG.verify + '</div>') + '</div>';
 };
 ACTIONS.redeem = function () {

@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.44.0)
+# IOPET design rules (v3, 3.45.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -278,6 +278,14 @@ Dark and light are the same design. Neither is made from the other by turning co
   Brilliant's own text measured in IOPET's font (its reading text ≈ 15.5 px at +.014em, its bold list titles +.01–.02em,
   its small CAPS +.11em). Hindi: Chrome keeps the headline (shirorekha) of a word joined with the spacing (tested); very
   old phones were not tested.
+- **A document is read, not boxed (3.45.0, the owner, after Brilliant's About page).** Privacy and Terms (`docPage`): no
+  cards and no borders; a large line on top (28 px), each part a 24 px heading and short paragraphs at 17 px in the ink,
+  line 1.6, 56 px between parts. Boxing text that is read to fit more in less room makes it harder to read (the owner).
+  Tap groups (menus, settings, the FAQ list) keep their edge. Illustrations and a hand-drawn mark come later; the mark must
+  look drawn by a student with a marker, not a perfect shape.
+- **Fewer words (3.45.0):** 46 lines across the app say the same in 36 % fewer letters: one idea a sentence, the point first,
+  nothing the screen already shows, no technical names outside the Privacy policy (Morkes & Nielsen 1997: concise text
+  alone, 58 % more usable). Sign-in: "By continuing, you agree to our Terms of Service and Privacy Policy."
 - **Lines that break well (3.44.0):** titles, card titles and short descriptions use `text-wrap:balance` (no lone word on a
   second line: "Class 7 to / 12" was); a range such as (A–Z) never splits at its dash (`escName`: a word joiner after the
   dash). Phones without `text-wrap` simply wrap as before.
