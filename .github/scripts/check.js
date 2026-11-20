@@ -314,12 +314,10 @@ const server = http.createServer((req, res) => {
         await page.locator('[data-act=guest]').first().waitFor({ state: 'visible', timeout: 3000 }); await page.waitForTimeout(400);
         await geo('the sign-in page');
       })
-      && await step('the terms box holds the ways in until it is ticked', async () => {
-        if (!await page.locator('#au-cs .au-cb').count()) return;                       // no terms (CONFIG.TERMS null): no box
-        await click('[data-act=guest]', 600);
-        if (!await page.locator('#au-cs.ask').count()) throw new Error('a way in went on with the box empty');
-        await click('#au-cs .au-cb', 300);
-        if ((await page.locator('#au-cs .au-cb').getAttribute('aria-checked')) !== 'true') throw new Error('the box did not tick');
+      && await step('the terms line stands above the ways in, with no box (3.46.0)', async () => {
+        if (await page.locator('.au-cb').count()) throw new Error('a terms box is back: the line above the ways in is the agreement');
+        const t = await page.evaluate(() => { const l = document.querySelector('.au-terms'), g = document.querySelector('.au-g'); return l && g ? { above: l.getBoundingClientRect().bottom <= g.getBoundingClientRect().top, links: l.querySelectorAll('[data-to=terms],[data-to=privacy]').length } : null; });
+        if (t && (!t.above || t.links !== 2)) throw new Error('the terms line must stand above Continue with Google and name both pages');
       })
       && await step('guest and course choice', async () => {
         await click('[data-act=guest]'); await click('[data-act=course-open][data-id=x]'); await click('[data-act=course-open][data-id=x-nmms]'); await click('[data-act=course-open][data-id=x-nmms-hi]', 1500);

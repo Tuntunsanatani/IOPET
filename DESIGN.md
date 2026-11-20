@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.45.0)
+# IOPET design rules (v3, 3.46.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -283,6 +283,15 @@ Dark and light are the same design. Neither is made from the other by turning co
   line 1.6, 56 px between parts. Boxing text that is read to fit more in less room makes it harder to read (the owner).
   Tap groups (menus, settings, the FAQ list) keep their edge. Illustrations and a hand-drawn mark come later; the mark must
   look drawn by a student with a marker, not a perfect shape.
+- **3.46.0 (the owner):** a document's name is its title and its date the line under it; the large line ("Your data stays
+  yours.") is the door into the text: centred, just above the first part, 84 px from it, 112 px below the date. The large
+  line and the part headings are in **Roboto Slab 500** (`rs-500.woff2`, Fontsource 5.3.0, Apache-2.0,
+  `LICENSE-Roboto-Slab.txt`), the voice of a document, as Brilliant's About page sets its headings in a serif; only there.
+  The words of the text and every other screen stay in IOPET Sans.
+- **Sign-in (3.46.0, the owner):** "By continuing, you agree to our Terms of Service and Privacy Policy." stands above the
+  ways in, centred, so it is read first; the tick box is gone (it was one more step; pressing a way in after the line is
+  the agreement). On dark, "Continue with email" has a filled body (`--e-bg`, the fill of a raised part): same 312 x 48 px
+  as the white Google pill, but an outline alone looked smaller.
 - **Fewer words (3.45.0):** 46 lines across the app say the same in 36 % fewer letters: one idea a sentence, the point first,
   nothing the screen already shows, no technical names outside the Privacy policy (Morkes & Nielsen 1997: concise text
   alone, 58 % more usable). Sign-in: "By continuing, you agree to our Terms of Service and Privacy Policy."
