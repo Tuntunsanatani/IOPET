@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.42.0)
+# IOPET design rules (v3, 3.43.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -514,21 +514,67 @@ Every moment goes through one table, `SENSE`, and one call, `sense('…')`, so a
 | Moment | Sound | Haptic |
 |---|---|---|
 | select: an option chosen, a tab, a menu chip | none | 10 ms knock |
-| correct: Check, right | G5-B5-D6 chime, rising, 55 ms apart (triangle) | `[16, 70, 28]` |
-| wrong: Check, not quite | A3 then F#3, soft, 90 ms apart (sine, quieter) | one light 15 ms knock |
+| correct: Check, right | the owner's "dham-dham" (3.43.0, below) | `[20, 120, 30]`: on the two drum beats |
+| wrong: Check, not quite | a soft, low double thud with no pitch (3.43.0), 12 dB under the right one | two quick knocks `[20, 50, 20]` |
 | complete: a set's summary appears | C5-E5-G5 | `[15, 30, 15]` |
 | milestone: a Mark passed | the celebration's notes | timed with the celebration |
 | refuse: a locked chapter, Sign in too early | none | `[28, 40, 28]` |
 | fail: the network fails during a step the student started | none | one 60 ms pulse (never for a background sync) |
 | confirm: a pack unlocked or given | none | `[16, 70, 28]` |
 
-- Sounds are made by the app (Web Audio oscillators): 0 KB, offline, no delay. Only learning moments make a sound,
-  never navigation.
+- The right and the wrong sound are the owner's, kept inside the app as 16 kHz WAV (42 KB together, decoded once when a
+  set opens). The others are made by the app (Web Audio oscillators). Only learning moments make a sound, never
+  navigation.
 - "Sound effects" and "Vibration" in Settings switch them off. Before sign-in the defaults (on) apply.
 - iPhones have no vibration in the browser; a cheap phone's motor may not feel 10 ms (test on the phone).
 - **Skeleton**: where content is on its way (a new phone's first backup; a pack's papers downloading), grey blocks in its
   shape (`--fill-2`) with one soft light passing every 1.2 s; still with reduce motion. Actions keep their own waiting
   state: a skeleton is never used for a button press.
+
+### 7c. The right answer: its sound and its beats (3.43.0, the owner)
+
+**What Brilliant does (measured on the owner's three screen recordings, 19 Nov 2026):**
+- Right: one 0.41 s sound, the same every time: four or five wooden notes about 90 ms apart, peak -12 dBFS. Half its
+  energy sits between 100 and 300 Hz: a warm body, not a bell.
+- Wrong: no pitch at all, a soft "shh" of noise, 11 dB under the right one.
+- No suspense: the sound starts within ~0.1 s of Check, with the green; the sheet rises in about 250 ms; Continue lights
+  last.
+
+**IOPET's (the owner chose it by ear, 20 Nov 2026, after two rounds):**
+- Right: two warm drum beats, "dham-dham", at 0 and 140 ms, under a rising run E4 G4 C5 E5 G5 (70 ms apart).
+  - The drum's pitch falls to C2, in the key of the run, so nothing hums out of tune.
+  - It is full for 150 ms, then its tail closes fast: under 0.45 s nothing low is left (-47 dB). A held low tone read to
+    the owner as a warning, a horror "hmm"; it was taken out.
+  - Gently saturated, so a phone's small speaker, which cannot play below ~200 Hz, still carries its weight.
+  - Between 100 and 300 Hz as much as Brilliant's; above 3 kHz far less (-32 dB), so it does not tire the ear.
+  - Loud: -11.5 LUFS, peak -1 dBFS. Our own notes, in our own order and key: no recording of anyone else is used.
+- Wrong: a soft, low double thud with no pitch, 12 dB under the right one (Brilliant's idea, our own sound).
+- Not taken:
+  - thin bells: they ring like a warning and tire the ear (the owner);
+  - a suspense lead-in before the reveal. It would have to play for wrong answers too, or it would give the answer
+    away, and the owner found it was too much motion: tiring, not exciting.
+
+**The beats** (T = the Check tap; a phone plays a sound about 60 ms late, so what is seen is set to land on what is
+heard):
+
+| T | heard | seen |
+|---|---|---|
+| 0-60 ms | the first drum | the chosen card holds at 96 % for a moment |
+| 60 ms (`--q-ans`) | dham 1 | the card turns green and springs back (`--t-win` 420 ms, `--ease-win`); a ring of light leaves it, ten sparks fly from the ✓ (`--t-ring` 520 ms); the page dips 4 px and comes back (`--t-state`); the ✓ pops (`--q-mark`); the sheet starts to rise (`--q-sheet`) |
+| 200 ms (`--q-title`) | dham 2 | "Correct!" pops |
+| 270 ms (`--q-xp`) | E5 | the XP pops and counts up (+0 to +10 in six steps) |
+| 340 ms (`--q-go`) | G5 | Continue lights |
+
+- Transform and opacity only. The sparks are one element (its shadows), the ring one more: nothing is added to the page.
+- With Reduce animations or a phone set to less motion, nothing moves: the colours change at once and the XP shows its
+  number. Sound and Vibration have their own switches.
+- A wrong answer keeps its calm: the soft thud, the shake, no ring, no sparks, no dip.
+- The set's dots (§0 4, FINAL) are untouched: `--q-ans` stays 60 ms. 3.40's beats were Brilliant's (`--q-mark` 140,
+  `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms).
+- What research says, and what it does not: dopamine neurons ramp up while a reward is uncertain (Fiorillo, Tobler and
+  Schultz 2003, in monkeys; still debated). Feedback tied to success raises motivation; more feedback for its own sake
+  lowered it (Kao et al. 2024). Rising pitch and major chords are felt as positive. Which sound moves students most is
+  measured on students (how fast they tap Continue, how many sets they finish), not chosen in advance.
 
 ## 8. Words (copy)
 
@@ -920,7 +966,7 @@ press, a grey choice, letters and a clock). Those rules are changed here, not on
 | The choice | blue border and tint, at once | the flame's border and tint, in one `--t-state` |
 | Check | not ready: `#F2F2F2` / `#C2C2C2`, flat; ready: charcoal `#383838` with a 4 px edge | `--off` / `--ink-off`, flat; ready: `--neutral` (light `#363636`, dark `#E6E6E6`) rising in 180 ms |
 | Skip | 2 px border and a 2 px lip | the same, `--edge` |
-| After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order (`--q-ans` 60, `--q-mark` 140, `--q-sheet` 220, `--q-go` 460, `--q-xp` 500 ms) |
+| After Check | the answer changes at ~140 ms, the sheet comes up at ~220 ms (280 ms), its button lights and the XP rises at ~500 ms | the same order; since 3.43.0 on the beats of IOPET's own sound (§7c): `--q-ans` 60, `--q-mark` 60, `--q-sheet` 60, `--q-title` 200, `--q-xp` 270, `--q-go` 340 ms |
 | The mark | a ✓ or ✕ on the card's top-right corner | the same (`.opt-mk`), popping in |
 | Right | the sheet `#D3F5DD` / `#00350D`, button `#29CC57`, "+15 XP" as green words | Brilliant's green one step brighter since 3.42.0 (§2): `--right-sheet`, `--right` on `--right-lip` with white `--on-right` words; the right option in `--right-sheet` / `--right` with a white ✓ on `--right-lip` (§0 7), the XP as words in `--right-ink` (no pill), no icon by "Correct!" |
 | Wrong | "Not quite", Try again; the wrong option fades at ~550 ms (250 ms) and keeps a grey ✕ | the same; a neutral sheet; the option shakes first (owner) |
