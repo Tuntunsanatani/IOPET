@@ -51,7 +51,7 @@
   /* TYPE SCALE (3.11.0) — every text size of the app is one of these eight; nothing in between. The cap size is only for
      small CAPS labels (letter-spaced; 12 px since 3.14.0, 11 was too small on cheap screens); 16 px stays on text inputs
      (smaller makes iPhones zoom in). Icons keep their own sizes. */
-  --fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;--fs-in:16px;   /* --fs-in: what is typed */
+  --fs-doc:36px;--fs-cap:12px;--fs-xs:13px;--fs-sm:14px;--fs-md:15px;--fs-lg:17px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:28px;--fs-in:16px;   /* --fs-in: what is typed */
   /* 3.33.1 THE WORDS ON AN ACTION BUTTON (the owner; DESIGN.md §0, FINAL register): one weight lighter than they were (they drew
      in the 800 face) and a little space between the letters, so a word on a button is read at a glance. Every action button. */
   --fw-btn:600;--ls-btn:.03em;--btn-ink:88%;   /* 3.33.3 the owner's pick: a button's words at 88 % of their colour (§0) */
@@ -99,7 +99,7 @@
                       page; on a light page Google has that same line (no shadow), on dark it needs none
        --scrim-soft   the dim behind the sign-in sheet: lighter than a dialog's, the brand stays readable above it
        --on-wrong     a glyph on the red mark;  --logo-flame  the diya's flame (deeper on a light page) */
-  --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--e-bg:var(--fill-2);--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
+  --g-bg:#FFFFFF;--g-ink:#1F1F1F;--g-line:#FFFFFF;--scrim-soft:rgba(0,0,0,.5);--logo-flame:#FFB020;
   --flame:var(--gold);--flame-soft:var(--gold-soft);--flame-ink:var(--gold);--warn:var(--ink2);
   --good:#2FD39A;--good-soft:#16302A;--good-ink:#2FD39A;--good-lip:#1F8C66;
   --knob:#FFFFFF;--knob-shadow:0 2px 4px rgba(0,0,0,.3);--on-toast:#FFFFFF;--toast-line:rgba(255,255,255,.12);--toast-star:#FFD84D;   /* 3.23.1 a switch's knob and a message look the same in both looks */
@@ -174,7 +174,7 @@
   --cta:#FF9F0A;--on-cta:#141414;--on-mark:#141414;
   --gold:#8A5A00;--gold-ink:#8A5A00;--gold-fill:#FFC400;--gold-soft:#FFF6D6;
   --wrong:#D92D20;--wrong-soft:#FDECEA;--wrong-ink:#B42318;--on-wrong:#FFFFFF;--skel-hi:rgba(255,255,255,.8);   /* 3.13.0 the wrong-answer panel: a soft pink (ink 16:1) */
-  --g-line:var(--outline);--e-bg:transparent;--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;--outline-on:#5E5E5E;--ctl-on:#FFFFFF;
+  --g-line:var(--outline);--scrim-soft:rgba(20,20,20,.40);--logo-flame:#F29A0B;--outline-on:#5E5E5E;--ctl-on:#FFFFFF;
   --good:#0B9468;--good-soft:#E3F7EF;--good-ink:#0E7C5A;--good-lip:#087553;--neutral:#363636;--on-neutral:#FFFFFF;--neutral-lip:#000000;
   --haze:rgba(0,0,0,0);--haze-2:rgba(0,0,0,0);--hero-1:var(--surface);--hero-2:var(--surface);--hero-3:var(--surface);
   --chart:#E3E3E3;--track:rgba(20,20,20,.08);--glow:rgba(20,20,20,.04);
@@ -456,7 +456,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    the envelope stand exactly under each other. The block of mark and words is in the middle of the button. */
 .au-g,.au-e{gap:var(--sp-icon);font-weight:600;border:var(--bw-ctl) solid}
 .au-g{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:none}
-.au-e{background:var(--e-bg);color:var(--ink);border-color:var(--outline);box-shadow:none}   /* 3.46.0 (the owner): on dark a filled body, so it reads as big as the white Google pill (same 312 x 48; an outline alone looks smaller) */   /* (the same look as .btn-line, the second button of a page) */
+.au-e{background:var(--g-bg);color:var(--g-ink);border-color:var(--g-line);box-shadow:none}   /* 3.47.0 (the owner): the email way dressed like the Google one, its envelope beside the words */   /* (the same look as .btn-line, the second button of a page) */
 .au-ic{flex:none;width:var(--ic);height:var(--ic);display:grid;place-items:center}
 .au-ic>svg{display:block;width:var(--ic-sm);height:var(--ic-sm)}
 .au-lb{display:inline-grid;text-align:left;white-space:nowrap}
@@ -1700,12 +1700,16 @@ svg{letter-spacing:normal}   /* the drawings keep their letters as drawn */
 .faq-q>span:first-child{text-wrap:balance;padding-right:12px}
 .faq-a{font-size:var(--fs-sm);letter-spacing:var(--ls-sm);line-height:1.6}
 .doc-date{color:var(--ink3)}
-.doc-hero{margin-top:112px;text-align:center;font-family:var(--font-doc);font-size:var(--fs-3xl);font-weight:500;letter-spacing:0;line-height:1.25;color:var(--ink);text-wrap:balance}
+.doc-hero{margin-top:112px;text-align:center;font-family:var(--font-doc);font-size:var(--fs-doc);font-weight:500;letter-spacing:0;line-height:1.25;color:var(--ink);text-wrap:balance}
 .doc-hero+.doc-sec{margin-top:84px}
 .doc-sec{margin-top:56px}
 .doc-h{font-family:var(--font-doc);font-size:var(--fs-2xl);font-weight:500;letter-spacing:0;line-height:1.25;color:var(--ink);text-wrap:balance}
 .doc-p{margin-top:16px;font-size:var(--fs-lg);letter-spacing:var(--ls-lg);line-height:1.6;color:var(--ink)}
-.doc-h+.doc-p{margin-top:8px}
+.doc-h+.doc-p{margin-top:20px}   /* 3.47.0 (the owner): room to breathe under a heading */
+.doc-mk{position:relative;margin-left:.14em;white-space:nowrap}   /* the loop needs room from "stays" */
+.doc-mk svg{position:absolute;overflow:visible;pointer-events:none;fill:var(--logo-flame)}
+.doc-mk .hm-loop{left:-.265em;top:-.035em;width:2.676em;height:1.439em}   /* round "safe." in Roboto Slab with the air of the owner's loop round "yours." (the tall f gets its own) */
+.doc-mk .hm-tick{left:2.183em;top:-.366em;width:.845em;height:.588em}   /* where his tick sat on the loop's corner */
 </style>
 </head>
 <body>
@@ -3055,7 +3059,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.46.0',
+  VERSION: '3.47.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -7067,7 +7071,11 @@ function docPage(title, hero, doc) {
       return '<section class="doc-sec"><h2 class="doc-h">' + esc(x.t) + '</h2>' + x.d.map(function (p) { return '<p class="doc-p">' + esc(p) + '</p>'; }).join('') + '</section>';
     }).join('') + '</div>';
 }
-SCREENS.privacy = function () { return docPage('Privacy policy', 'Your data stays yours.', POLICY); };
+/* 3.47.0 THE HAND MARK (the owner drew it on a screenshot, a loop round "yours." with a tick at its corner): traced from his
+   own stroke with potrace, so its wobble, its open start and its tick are his. The loop is fitted to the word; the tick keeps
+   its shape. In the flame's orange (--logo-flame), bright on dark. One mark on a page, on its one word that matters. */
+var HAND_MARK = '<svg class="hm-loop" viewBox="0 0 1440 632" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="translate(0,632) scale(0.100000,-0.100000)"><path d="M11510 6071 c-14 -4 -50 -21 -80 -37 -55 -29 -55 -29 -310 -34 -255 -5 -255 -5 -316 -37 -33 -17 -89 -37 -124 -43 -35 -6 -91 -26 -124 -43 -61 -32 -61 -32 -2796 -37 -2735 -5 -2735 -5 -2800 -40 -65 -34 -65 -34 -280 -40 -215 -6 -215 -6 -280 -40 -65 -35 -65 -35 -960 -40 -895 -5 -895 -5 -960 -40 -65 -35 -65 -35 -400 -40 l-335 -5 -190 -96 c-190 -97 -190 -97 -412 -317 -195 -194 -227 -230 -259 -294 -20 -40 -58 -98 -84 -128 -33 -39 -87 -134 -180 -320 -133 -265 -133 -265 -140 -360 -6 -80 -13 -107 -41 -160 -30 -61 -33 -73 -39 -200 -6 -127 -8 -139 -40 -200 -32 -61 -34 -73 -40 -200 -6 -128 -8 -138 -41 -200 -34 -65 -34 -65 -34 -680 0 -615 0 -615 34 -680 28 -54 35 -79 41 -160 6 -77 13 -107 38 -156 17 -33 36 -89 42 -124 8 -44 39 -118 105 -250 94 -187 94 -187 197 -290 76 -75 121 -111 172 -137 38 -19 95 -57 128 -84 75 -62 81 -65 158 -79 35 -6 89 -24 120 -40 31 -16 85 -34 120 -40 35 -6 91 -26 124 -43 60 -30 65 -31 236 -37 175 -6 175 -6 240 -40 65 -35 65 -35 360 -35 295 0 295 0 360 35 65 34 65 34 240 40 174 6 175 6 240 40 62 32 72 34 200 40 127 6 139 8 200 40 61 32 73 34 200 40 128 6 138 8 200 40 65 34 66 34 240 40 175 6 175 6 240 40 65 34 65 34 280 40 215 6 215 6 280 40 65 35 65 35 400 40 335 5 335 5 400 40 65 35 65 35 360 40 295 5 295 5 360 40 65 35 65 35 600 40 535 5 535 5 600 40 65 35 65 35 1080 35 1015 0 1015 0 1080 -35 65 -35 65 -35 800 -35 735 0 735 0 800 35 65 35 65 35 360 40 295 5 295 5 360 40 65 35 65 35 400 40 335 5 335 5 400 39 62 33 72 35 200 41 127 6 139 9 200 39 54 28 80 35 161 41 108 9 116 12 197 79 32 27 88 64 123 81 121 61 148 101 159 240 6 81 13 106 41 160 34 65 34 65 34 1000 0 935 0 935 -34 1000 -33 62 -35 72 -41 200 -6 125 -9 140 -37 196 -18 33 -37 89 -43 124 -6 35 -24 89 -40 120 -16 31 -34 85 -40 120 -16 90 -332 721 -400 800 -26 30 -64 88 -84 127 -30 60 -61 97 -179 214 -142 141 -142 141 -332 236 -189 95 -190 96 -285 103 -81 6 -106 13 -160 41 -65 34 -65 34 -505 36 -242 1 -451 -2 -465 -6z m890 -431 c53 -27 81 -34 160 -40 89 -7 103 -11 205 -63 104 -52 118 -63 253 -196 142 -142 142 -142 276 -410 100 -200 137 -284 146 -331 6 -35 25 -91 42 -124 25 -49 32 -79 38 -156 6 -81 13 -106 41 -160 34 -65 34 -65 37 -1138 2 -762 -1 -1086 -9 -1115 -7 -28 -31 -61 -77 -109 -83 -86 -111 -103 -191 -118 -36 -6 -90 -24 -121 -40 -31 -16 -85 -34 -120 -40 -35 -6 -91 -26 -124 -43 -61 -31 -61 -31 -276 -37 -215 -6 -215 -6 -280 -40 -65 -35 -65 -35 -320 -40 -255 -5 -255 -5 -320 -40 -65 -35 -65 -35 -1160 -35 -1095 0 -1095 0 -1160 35 -65 35 -65 35 -880 35 -815 0 -815 0 -880 -35 -65 -35 -65 -35 -480 -40 -415 -5 -415 -5 -480 -40 -65 -35 -65 -35 -400 -40 -335 -5 -335 -5 -400 -40 -65 -35 -65 -35 -520 -40 -455 -5 -455 -5 -520 -40 -65 -34 -65 -34 -280 -40 -215 -6 -215 -6 -280 -40 -65 -34 -65 -34 -240 -40 -174 -6 -175 -6 -240 -40 -62 -32 -72 -34 -200 -40 -127 -6 -139 -8 -200 -40 -61 -32 -73 -34 -200 -40 -128 -6 -138 -8 -200 -40 -65 -34 -66 -34 -240 -40 -175 -6 -175 -6 -240 -40 -65 -35 -65 -35 -440 -35 -375 0 -375 0 -440 34 -54 28 -79 35 -160 41 -77 6 -107 13 -156 38 -33 17 -89 36 -124 42 -82 15 -91 20 -174 99 -82 79 -167 235 -186 341 -6 35 -25 91 -43 124 -28 56 -31 71 -37 196 -6 128 -8 138 -41 200 -34 65 -34 65 -34 440 0 375 0 375 34 440 33 62 35 72 41 200 6 128 8 138 40 200 34 65 34 66 40 240 6 171 7 176 37 236 17 33 37 89 43 124 6 35 24 89 40 120 16 31 34 85 40 120 14 78 20 90 80 160 28 32 77 115 120 200 43 86 92 167 120 200 26 30 64 87 83 126 49 98 212 261 311 311 38 19 95 57 128 84 89 74 86 73 278 79 175 6 175 6 240 40 65 35 65 35 1040 40 975 5 975 5 1040 40 65 34 65 34 240 40 175 6 175 6 240 40 65 35 65 35 3460 38 3376 2 3395 2 3459 -18 79 -25 88 -25 152 0 104 39 132 96 89 180 -54 106 -3 163 140 157 61 -3 87 -10 140 -37z"/></g></svg><svg class="hm-tick" viewBox="0 0 368 256" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="translate(0,256) scale(0.100000,-0.100000)"><path d="M3235 2213 c-16 -9 -52 -35 -80 -58 -27 -24 -79 -57 -115 -75 -36 -18 -90 -54 -120 -80 -30 -26 -86 -64 -125 -83 -52 -27 -102 -67 -195 -157 -93 -90 -143 -130 -195 -157 -38 -19 -95 -57 -125 -83 -30 -26 -84 -62 -120 -80 -40 -20 -102 -67 -160 -120 -58 -53 -120 -100 -160 -120 -40 -20 -102 -67 -160 -120 -58 -53 -121 -100 -160 -120 -36 -18 -87 -52 -115 -75 -109 -92 -155 -88 -216 20 -18 31 -96 120 -191 217 -135 137 -166 175 -198 239 -40 79 -180 232 -263 287 -73 48 -216 41 -268 -14 -72 -76 17 -274 211 -474 95 -98 130 -141 160 -200 30 -59 65 -102 160 -200 96 -98 130 -141 160 -200 27 -53 58 -94 106 -141 83 -79 92 -84 174 -99 35 -6 85 -22 112 -36 72 -37 112 -32 227 26 99 49 99 49 720 669 593 593 622 623 660 698 33 66 64 104 197 241 167 172 194 208 194 257 0 55 -51 72 -115 38z"/></g></svg>';
+SCREENS.privacy = function () { return docPage('Privacy policy', 'Your data<br>stays <span class="doc-mk">safe.' + HAND_MARK + '</span>', POLICY); };
 
 /* 3.21.0 the Terms of Service, from CONFIG.TERMS: the same page as the privacy policy (the guard keeps it shut while there are none) */
 SCREENS.terms = function () { return docPage('Terms of Service', '', CONFIG.TERMS); };

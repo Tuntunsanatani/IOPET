@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.46.0)
+# IOPET design rules (v3, 3.47.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -270,6 +270,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 | `--fs-xl` | 20 | `--ls-xl` 0 | question text, section titles, Hindi chapter names, result titles |
 | `--fs-2xl` | 24 | `--ls-2xl` −.015em | screen titles, big stat values |
 | `--fs-3xl` | 28 | `--ls-3xl` −.018em | hero titles (Progress, summary, chapter) |
+| `--fs-doc` | 36 | 0 (Roboto Slab) | a document's large line only (3.47.0, the owner) |
 
 - **Spacing by size (3.44.0, the owner: "the smaller the text, the more room between its letters").** Every rule that sets
   a size sets the spacing of that size with it (`font-size:var(--fs-sm);letter-spacing:var(--ls-sm)`); CAPS labels take
@@ -290,8 +291,14 @@ Dark and light are the same design. Neither is made from the other by turning co
   The words of the text and every other screen stay in IOPET Sans.
 - **Sign-in (3.46.0, the owner):** "By continuing, you agree to our Terms of Service and Privacy Policy." stands above the
   ways in, centred, so it is read first; the tick box is gone (it was one more step; pressing a way in after the line is
-  the agreement). On dark, "Continue with email" has a filled body (`--e-bg`, the fill of a raised part): same 312 x 48 px
-  as the white Google pill, but an outline alone looked smaller.
+  the agreement). 3.47.0 (the owner): "Continue with email" is dressed like "Continue with Google" (white, its envelope
+  beside the words); the owner will come back to this page.
+- **3.47.0 (the owner):** the large line is "Your data / stays safe." on two lines, 36 px (`--fs-doc`, the one size above the
+  scale, for a document's large line only: the owner asked for 25 % more). Under a heading, 20 px before its first paragraph
+  (room to breathe). **The hand mark:** the owner drew a loop with a tick round a word on a screenshot; it is traced from his
+  own stroke (potrace), so its wobble, its open start and its tick are his (`HAND_MARK`). The loop is fitted round the word
+  with the air his had; the tick keeps its shape and its place on the loop's corner; the flame's orange (`--logo-flame`),
+  bright on dark. One mark on a page, on the one word that matters ("safe").
 - **Fewer words (3.45.0):** 46 lines across the app say the same in 36 % fewer letters: one idea a sentence, the point first,
   nothing the screen already shows, no technical names outside the Privacy policy (Morkes & Nielsen 1997: concise text
   alone, 58 % more usable). Sign-in: "By continuing, you agree to our Terms of Service and Privacy Policy."
