@@ -471,7 +471,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* 3.46.0 THE TERMS LINE (see auTerms): above the ways in, centred, secondary (--ink2, 13 px); its two names are the accent.
    The gap between groups sets it off from the buttons below it. No box (the owner: it was an extra step). */
 .au-terms{padding:0 8px;text-align:center;font-size:var(--fs-xs);line-height:20px;color:var(--ink2);letter-spacing:var(--ls-xs);text-wrap:balance}
-.au-terms+.btn{margin-top:var(--sp-grp)}
+.au-terms+.btn{margin-top:40px}
+/* 3.47.0 (the owner): the ways in breathe, grouped by what they are: the line, the two buttons (12 px apart), the guest
+   way, the foot; the group rises into the empty middle and the brand stays centred in what is left */
+.au-dock .au-e{margin-top:12px}
+.au-dock .au-ghost{margin-top:16px}
+.au-dock .au-foot{margin-top:24px !important}
+.au-dock{padding-bottom:8px}
 .au-nw{white-space:nowrap}
 .au-tos{position:relative;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--primary-ink)}
 .au-tos:after{content:'';position:absolute;top:-12px;right:-4px;bottom:-12px;left:-4px}   /* 44 px to touch */

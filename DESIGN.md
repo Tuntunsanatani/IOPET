@@ -292,7 +292,9 @@ Dark and light are the same design. Neither is made from the other by turning co
 - **Sign-in (3.46.0, the owner):** "By continuing, you agree to our Terms of Service and Privacy Policy." stands above the
   ways in, centred, so it is read first; the tick box is gone (it was one more step; pressing a way in after the line is
   the agreement). 3.47.0 (the owner): "Continue with email" is dressed like "Continue with Google" (white, its envelope
-  beside the words); the owner will come back to this page.
+  beside the words); the owner will come back to this page. The ways in breathe, grouped by what they are (the owner: they
+  read as one crowded box): the line, 40 px, the two buttons 12 px apart, 16 px, the guest way, 24 px, the foot; the group
+  rises into the empty middle and the brand stays centred in what is left (fits a 320 x 568 phone).
 - **3.47.0 (the owner):** the large line is "Your data / stays safe." on two lines, 36 px (`--fs-doc`, the one size above the
   scale, for a document's large line only: the owner asked for 25 % more). Under a heading, 20 px before its first paragraph
   (room to breathe). **The hand mark:** the owner drew a loop with a tick round a word on a screenshot; it is traced from his
