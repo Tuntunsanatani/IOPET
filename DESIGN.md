@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.47.0)
+# IOPET design rules (v3, 3.48.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -292,7 +292,7 @@ Dark and light are the same design. Neither is made from the other by turning co
 - **Sign-in (3.46.0, the owner):** "By continuing, you agree to our Terms of Service and Privacy Policy." stands above the
   ways in, centred, so it is read first; the tick box is gone (it was one more step; pressing a way in after the line is
   the agreement). 3.47.0 (the owner): "Continue with email" is dressed like "Continue with Google" (white, its envelope
-  beside the words); the owner will come back to this page. The ways in breathe, grouped by what they are (the owner: they
+  beside the words; 3.48.0, the owner: Gmail's own multicolour M in place of the envelope, as Google's G); the owner will come back to this page. The ways in breathe, grouped by what they are (the owner: they
   read as one crowded box): the line, 40 px, the two buttons 12 px apart, 16 px, the guest way, 24 px, the foot; the group
   rises into the empty middle and the brand stays centred in what is left (fits a 320 x 568 phone).
 - **3.47.0 (the owner):** the large line is "Your data / stays safe." on two lines, 36 px (`--fs-doc`, the one size above the
@@ -486,7 +486,7 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
   and the word (CAPS, semibold, `--ink3`), with no frame round it (the hairline pill of 3.14.0 is gone). Both stay 12 px,
   the smallest size of the scale; the touch area of Privacy is 48 px high.
 - **Ways to sign in** (3.20.0): one column. Each mark sits in the same 24 px box and each line of words starts at the
-  same place, so the Google "G" and the envelope stand exactly under each other; the block is in the middle of the
+  same place, so the Google "G" and the Gmail "M" (3.48.0; the envelope before) stand exactly under each other; the block is in the middle of the
   button. 3.21.0 the two are one family in both looks: the same size, corners and line; Google is the filled one (white,
   dark letters), email the same shape as a line on the page. No shadow (light had one under Google, and white behind
   email, so the two looked like different parts). Guest: words only, `--ink2`.

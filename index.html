@@ -3065,7 +3065,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.47.0',
+  VERSION: '3.48.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5134,6 +5134,9 @@ AFTER.verify = function () { var e = top(); if (e && e.p && e.p.err) formErr(e.p
 var G_LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>' +
   '<path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/>' +
   '<path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+/* 3.48.0 (the owner): the email way shows Gmail's own M, as the Google way shows Google's G */
+var M_LOGO = '<svg viewBox="52 31 88 88" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34A853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/>' +
+  '<path fill="#FBBC04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#EA4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#C5221F" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg>';
 var EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 var AU_RULE = {
   email: function (v) { return emailOk(v); },
@@ -5264,7 +5267,7 @@ SCREENS.login = function (p) {
     '<div class="au-hero">' + logoMark(64) + auWordmark() +
       (mv ? '<div class="au-tag note">Sign in and your guest progress comes with you</div>' : '<div class="au-tag">Padho. Samjho. Aage badho.</div>') + '</div>' +
     '<div class="au-dock">' + (CONFIG.TERMS && !mv ? auTerms() : '') + auWay('au-g', 'google', G_LOGO, 'Continue with Google', 'Continue with email') +
-      auWay('au-e', 'au-open', li('mail'), 'Continue with email', 'Continue with Google') +
+      auWay('au-e', 'au-open', M_LOGO, 'Continue with email', 'Continue with Google') +
       (mv ? '' : '<button type="button" class="au-ghost" data-act="guest">Continue as guest</button>') +
       auFoot() + '</div>' +
     '<div class="au-scrim" data-act="au-close"></div>' +
