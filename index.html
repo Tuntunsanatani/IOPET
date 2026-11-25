@@ -127,12 +127,12 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
-  /* 3.49.0 the NMMS card (the owner): light mint in both looks; the name in the dark of the boy's bag; a fully dark field
-     with three children cheering on its edge; on it WIN in green and the prize in steel, raised, a glint crossing it */
-  --nm-bg:linear-gradient(170deg,#EAF8F1 0%,#D5F1E4 100%);--nm-ink:#2A2530;--nm-ground:#0F0E11;--nm-rim:#EC9A4C;--nm-win:#3DDC84;--nm-steel-flat:#C9D1D5;
-  --nm-steel:linear-gradient(180deg,#F5F8F9 0%,#D4DBDF 40%,#8F999F 50%,#B9C2C7 60%,#E4E9EB 100%);
+  /* 3.49.0 the NMMS card (the owner): light mint in both looks; the name in the dark of the boy's bag; WIN in green; the
+     prize in steel, raised, a glint crossing it; the orange disc behind the boy reaches under the prize's last figures */
+  --nm-bg:linear-gradient(170deg,#EAF8F1 0%,#D5F1E4 100%);--nm-ink:#2A2530;--nm-win:#0E8A4E;--nm-steel-flat:#4E585E;
+  --nm-steel:linear-gradient(180deg,#9AA4AA 0%,#6C767C 40%,#2F363B 50%,#4C565C 58%,#7D878D 100%);
   --nm-glint:linear-gradient(105deg,transparent 0%,transparent 34%,rgba(255,255,255,.85) 40%,transparent 46%,transparent 52%,rgba(255,255,255,.7) 56%,transparent 61%,transparent 100%);
-  --nm-raise:drop-shadow(0 -1px 0 rgba(255,255,255,.22)) drop-shadow(0 2px 0 rgba(0,0,0,.6)) drop-shadow(0 3px 3px rgba(0,0,0,.35));
+  --nm-raise:drop-shadow(0 -1px 0 rgba(255,255,255,.95)) drop-shadow(0 2px 0 rgba(20,18,24,.35)) drop-shadow(0 4px 5px rgba(20,18,24,.22));
   --nm-sun:linear-gradient(200deg,#F6B26B 0%,#EC9A4C 100%);--fs-prize:36px;--t-shine:3600ms;--t-shine-in:600ms;
   /* 3.21.0 THE SYSTEM IN NUMBERS (DESIGN.md §1b, the rulebook). One place for what was written into single rules:
        lines     A0 a panel's own edge         --edge      2 px + --edge-in   Brilliant's (3.30.0): the panel is the page's colour, its border shows it
@@ -1042,7 +1042,6 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── COURSE CHOOSER ── a row that cannot be opened ("Coming soon") is dimmed, its label is not */
 .nm-card{position:relative;display:block;width:100%;height:188px;margin-top:12px !important;padding:24px 20px;border-radius:var(--r-lg);background:var(--nm-bg);text-align:left;overflow:hidden;transition:transform var(--t-press) var(--ease-swift)}
 .nm-card:active{transform:scale(.98)}
-.nm-card{outline:1px solid var(--line-2);outline-offset:-1px}
 .nm-card.current{outline:2px solid var(--primary);outline-offset:-2px}
 .nm-txt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;height:100%}
 .nm-t{font-size:var(--fs-xl);font-weight:700;line-height:1.2;color:var(--nm-ink);letter-spacing:var(--ls-xl)}
@@ -1055,10 +1054,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .nm-amt>i{animation:none}
 @media (prefers-reduced-motion:reduce){.nm-amt>i{animation:none}}
 .nm-art{position:absolute;top:0;right:0;bottom:0;left:0}
-.nm-land{position:absolute;left:0;right:0;bottom:0;width:100%;height:96px;overflow:visible;color:var(--nm-ground)}
-.nm-sun{position:absolute;right:-30%;bottom:-36%;width:72%;height:0;padding-bottom:72%;border-radius:50%;background:var(--nm-sun)}
-.nm-art img{position:absolute;right:2px;bottom:0;height:90%;width:auto;filter:drop-shadow(-2px 0 0 var(--nm-rim))}
-@media (max-width:340px){.nm-card{--fs-prize:32px}.nm-art img{height:82%}}
+.nm-sun{position:absolute;right:-35%;bottom:-78%;width:100%;height:0;padding-bottom:100%;border-radius:50%;background:var(--nm-sun)}
+.nm-art img{position:absolute;right:2px;bottom:0;height:90%;width:auto}
+@media (max-width:340px){.nm-card{--fs-prize:32px}.nm-art img{height:82%}.nm-sun{right:-37%;bottom:-69%}}
 @media (min-width:400px){.nm-card{--fs-prize:40px}}
 .co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;transition:transform var(--t-press) var(--ease-swift)}
 .co-row:active{transform:scale(.98)}
@@ -5547,17 +5545,13 @@ function courseRow(c, cur, big) {
     '<span class="co-info"><span class="co-name">' + esc(c.name) + '</span>' + (sub ? '<span class="co-sub">' + sub + '</span>' : '') + '</span>' +
     '<span class="co-right">' + right + '</span></button>';
 }
-/* the field under the prize (3.49.0, the owner): a flat, fully dark ground; three children seen from the waist up, cheering
-   on its edge beside the sun */
-var NM_LAND = '<svg class="nm-land" viewBox="0 0 400 96" preserveAspectRatio="xMinYMax slice" aria-hidden="true" focusable="false"><g fill="currentColor"><rect width="400" height="96"/><g transform="translate(116 0) scale(0.86)"><path d="M-9 0V-9Q-9 -15.5 -2.5 -15.5H2.5Q9 -15.5 9 -9V0Z"/><rect x="-2.3" y="-19" width="4.6" height="5"/><circle cx="0" cy="-23.5" r="5.4"/><path d="M-6.5 -12L-10.5 -29" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round"/></g><g transform="translate(177 0) scale(0.8)"><path d="M-9 0V-9Q-9 -15.5 -2.5 -15.5H2.5Q9 -15.5 9 -9V0Z"/><rect x="-2.3" y="-19" width="4.6" height="5"/><circle cx="0" cy="-23.5" r="5.4"/><circle cx="5.6" cy="-26.5" r="2.6"/><path d="M-6.5 -12L-9.5 -29M6.5 -12L9.5 -29" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round"/></g><g transform="translate(147 0) scale(1)"><path d="M-9 0V-9Q-9 -15.5 -2.5 -15.5H2.5Q9 -15.5 9 -9V0Z"/><rect x="-2.3" y="-19" width="4.6" height="5"/><circle cx="0" cy="-23.5" r="5.4"/><path d="M-6.5 -12L-12.5 -27M6.5 -12L12.5 -27" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round"/></g></g></svg>';
 /* 3.49.0 (the owner) an exam with a banner is shown as its picture card: where it is (quiet, one dark colour), the prize
-   (loudest: on a dark field where three children cheer, WIN in green and the prize in steel, raised, a glint
-   crossing it), the student looking up. Your own course: the brand's orange
+   (loudest: WIN in green, the prize in steel, raised, a glint crossing it, its last figures over the orange disc), the student looking up. Your own course: the brand's orange
    line round it, and nothing more. */
 function courseBanner(c, cur) {
   var b = c.banner, mine = !!(cur && (cur === c.id || cur.indexOf(c.id + '-') === 0));
   return '<button type="button" class="nm-card' + (mine ? ' current' : '') + '" data-act="course-open" data-id="' + c.id + '" aria-label="' + esc(b.say) + '"' + (mine ? ' aria-current="true"' : '') + '>' +
-    '<span class="nm-art" aria-hidden="true">' + NM_LAND + '<i class="nm-sun"></i><img src="' + b.art + '" alt="" width="' + b.w + '" height="' + b.h + '"></span>' +
+    '<span class="nm-art" aria-hidden="true"><i class="nm-sun"></i><img src="' + b.art + '" alt="" width="' + b.w + '" height="' + b.h + '"></span>' +
     '<span class="nm-txt" aria-hidden="true"><span class="nm-t">' + esc(b.kick) + ' <b>' + esc(b.name) + '</b></span>' +
     '<span class="nm-win">Win</span><span class="nm-amt"><i><span class="nm-rs">₹</span>' + esc(b.win) + '</i></span></span></button>';
 }
