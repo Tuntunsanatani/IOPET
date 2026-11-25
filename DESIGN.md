@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.48.0)
+# IOPET design rules (v3, 3.49.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -1255,3 +1255,18 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
 - **Not taken**: the options right under the question with all the room below them (the screen looks top-heavy, and on a
   tall phone the answers end up far from the thumb); the question moved down to the options (the reading would start in
   a different place on every question, low on the screen).
+
+### 12.20 An exam's picture card: NMMS Bihar (3.49.0, the owner)
+The owner's picture (made with ChatGPT; the boy cut out of it and traced to `nmms-boy.svg`, 73 KB, about 24 KB on the wire,
+kept on the phone by `sw.js`) and the owner's words, set in the app's type. An exam with `banner` in `EXAMS` is shown in
+Competitive exams as this card in place of its row (only while it is open).
+- **What speaks, in order:** the prize is the loudest (WIN, then ₹48,000 at 36 px, 32 at 320 px and 40 from 400 px, in
+  green `--nm-amt`); "Bihar NMMS" is quiet, on one line (Bihar grey `--nm-ink2`, NMMS a little stronger in orange
+  `--nm-name`). Nothing else: no extra line, no "Current" chip.
+- **The ₹ is gold** (`--nm-gold`) and shines: two white stripes cross it (`--nm-shine`), 1.1 s of a 3.6 s loop
+  (`--t-shine`), after 0.6 s. It stops with Reduce animations and with the phone's reduce-motion; a phone that cannot clip
+  a gradient to text shows it in flat gold.
+- **Ground:** light mint (`--nm-bg`) in both looks; the boy stands in front of an orange disc (`--nm-sun`), right and
+  low, never under the prize (measured at 320, 360 and 412 px).
+- **Your own course:** the brand's orange line round the card (2 px), as on a row; no other card carries orange.
+

@@ -127,6 +127,10 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
+  /* 3.49.0 the NMMS card (the owner): light mint in both looks, the prize in green, the ₹ in gold with a shine */
+  --nm-bg:linear-gradient(170deg,#EAF8F1 0%,#D5F1E4 100%);--nm-ink2:#5E6E67;--nm-name:#E07A1F;--nm-amt:#0B6B3E;--nm-gold:#E9A800;--nm-gold-lip:#B57F00;
+  --nm-shine:linear-gradient(105deg,#FFD447 0%,#F5B400 30%,#FFF7D6 38%,#F5B400 44%,#E9A800 52%,#FFF7D6 58%,#F5B400 63%,#D99A00 100%);
+  --nm-sun:linear-gradient(200deg,#F6B26B 0%,#EC9A4C 100%);--fs-prize:36px;--t-shine:3600ms;--t-shine-in:600ms;
   /* 3.21.0 THE SYSTEM IN NUMBERS (DESIGN.md §1b, the rulebook). One place for what was written into single rules:
        lines     A0 a panel's own edge         --edge      2 px + --edge-in   Brilliant's (3.30.0): the panel is the page's colour, its border shows it
                  A a line inside or between      --line      1 px (--bw)        ~10 % of the way from the ground to ink (a list's rules, the path)
@@ -1033,6 +1037,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .about+.foot-note{margin-top:8px !important}
 
 /* ── COURSE CHOOSER ── a row that cannot be opened ("Coming soon") is dimmed, its label is not */
+.nm-card{position:relative;display:block;width:100%;height:188px;margin-top:12px !important;padding:24px 20px;border-radius:var(--r-lg);background:var(--nm-bg);text-align:left;overflow:hidden;transition:transform var(--t-press) var(--ease-swift)}
+.nm-card:active{transform:scale(.98)}
+.nm-card.current{outline:2px solid var(--primary);outline-offset:-2px}
+.nm-txt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;height:100%}
+.nm-t{font-size:var(--fs-xl);font-weight:700;line-height:1.2;color:var(--nm-ink2);letter-spacing:var(--ls-xl)}
+.nm-t b{font-weight:800;color:var(--nm-name)}
+.nm-win{margin-top:auto;font-size:var(--fs-xs);font-weight:700;letter-spacing:.32em;color:var(--nm-ink2);text-transform:uppercase}
+.nm-amt{display:flex;align-items:baseline;margin-top:2px;font-size:var(--fs-prize);font-weight:800;line-height:1;letter-spacing:var(--ls-3xl);color:var(--nm-amt)}
+.nm-rs{font-size:1.06em;margin-right:.06em;color:var(--nm-gold);filter:drop-shadow(0 1px 0 var(--nm-gold-lip))}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){.nm-rs{background:var(--nm-shine);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:nm-shine var(--t-shine) var(--ease-std) var(--t-shine-in) infinite}}
+@keyframes nm-shine{0%{background-position:100% 0}30%,100%{background-position:0 0}}
+.calm .nm-rs{animation:none}
+@media (prefers-reduced-motion:reduce){.nm-rs{animation:none}}
+.nm-art{position:absolute;top:0;right:0;bottom:0;left:0}
+.nm-sun{position:absolute;right:-30%;bottom:-36%;width:72%;height:0;padding-bottom:72%;border-radius:50%;background:var(--nm-sun)}
+.nm-art img{position:absolute;right:2px;bottom:0;height:90%;width:auto}
+@media (max-width:340px){.nm-card{--fs-prize:32px}.nm-art img{height:82%}}
+@media (min-width:400px){.nm-card{--fs-prize:40px}}
 .co-row{display:flex;align-items:center;width:100%;background:var(--surface);border:var(--bw-ctl) solid var(--line-2);box-shadow:var(--shadow-1);border-radius:var(--r-lg);padding:12px 16px;margin-top:12px !important;transition:transform var(--t-press) var(--ease-swift)}
 .co-row:active{transform:scale(.98)}
 .co-row.big{padding:16px;margin-top:12px !important}
@@ -1822,7 +1844,8 @@ var EXAMS = [
   { id: 'nmms', name: 'NMMS Bihar',   sub: 'Class 8 scholarship exam (NMMSS)',  emoji: '🎒',
     langs: [ { id: 'hi', name: 'Hindi · हिन्दी', short: 'Hindi',   sub: 'Questions in Hindi',   ico: 'अ' },
              { id: 'en', name: 'English',          short: 'English', sub: 'Questions in English', ico: 'A' } ],
-    goal: { exam: 'NMMS Bihar 2027', date: '2027-01-17', note: 'Estimated: past exams were in January. Change it when SCERT Bihar announces the date.' } }
+    goal: { exam: 'NMMS Bihar 2027', date: '2027-01-17', note: 'Estimated: past exams were in January. Change it when SCERT Bihar announces the date.' },
+    banner: { kick: 'Bihar', name: 'NMMS', win: '48,000', say: 'Bihar NMMS, Class 8 scholarship exam. Win 48,000 rupees.', art: 'nmms-boy.svg', w: 657, h: 876 } }   // 3.49.0 (the owner)
 ];
 /* An exam with `langs` asks for the language of the questions as one more step: its courses are x-<exam>-<lang>
    (x-nmms-hi). Like everything else, a language opens by itself once a topic of x-nmms-hi has questions. */
@@ -3065,7 +3088,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.48.0',
+  VERSION: '3.49.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3589,7 +3612,7 @@ function courseChoices(at) {
       { id: 'c', name: 'Academics · Class ' + CLASSES[0] + ' to ' + CLASSES[CLASSES.length - 1], sub: BOARDS.map(function (b) { return b.name; }).join(', '), emoji: '🏫', group: 1, n: cnt(CLASSES, 'c-'), unit: ['class', 'classes'] }
     ];
   }
-  if (at === 'x') return EXAMS.map(function (e) { return { id: 'x-' + e.id, name: e.name, sub: e.sub, emoji: e.emoji }; });
+  if (at === 'x') return EXAMS.map(function (e) { return { id: 'x-' + e.id, name: e.name, sub: e.sub, emoji: e.emoji, banner: e.banner }; });
   if (p[0] === 'x' && p.length === 2) { b = byId(EXAMS, p[1]); return langsOf(b) ? b.langs.map(function (l) { return { id: at + '-' + l.id, name: l.name, sub: l.sub, emoji: l.ico }; }) : null; }
   if (at === 'c') return CLASSES.map(function (k) { return { id: 'c-' + k, name: 'Class ' + k, sub: k >= STREAM_FROM ? STREAMS.map(function (x) { return x.name; }).join(' · ') : '', num: k }; });
   if (p[0] !== 'c' || String(n) !== p[1] || CLASSES.indexOf(n) < 0) return null;
@@ -5510,6 +5533,7 @@ SCREENS.welcome = function () {
    and from the You tab or Topics whenever the student wants to change. One screen for every step: p.at says which.
    A choice without content is shown with "Coming soon" and cannot be opened. ── */
 function courseRow(c, cur, big) {
+  if (c.banner && !c.group && courseOpen(c.id)) return courseBanner(c, cur);
   var open = c.group || courseOpen(c.id), mine = !c.group && cur && (cur === c.id || cur.indexOf(c.id + '-') === 0), right, sub = esc(c.sub);
   if (c.group) sub += '<span class="co-state' + (c.n ? ' on' : '') + '">' + (c.n ? c.n + ' ' + c.unit[c.n === 1 ? 0 : 1] + ' available now' : 'Opening soon') + '</span>';
   right = !open ? '<span class="co-soon">Coming soon</span>' : (mine ? '<span class="co-cur">Current</span>' : '') + '<span class="menu-arrow">' + li('chev', 20) + '</span>';
@@ -5517,6 +5541,15 @@ function courseRow(c, cur, big) {
     (open ? '' : ' aria-disabled="true"') + (mine ? ' aria-current="true"' : '') + '><span class="co-ico" aria-hidden="true">' + (c.num ? '<b>' + c.num + '</b>' : li(has(EMOJI_LI, c.emoji) ? EMOJI_LI[c.emoji] : 'book', 22)) + '</span>' +
     '<span class="co-info"><span class="co-name">' + esc(c.name) + '</span>' + (sub ? '<span class="co-sub">' + sub + '</span>' : '') + '</span>' +
     '<span class="co-right">' + right + '</span></button>';
+}
+/* 3.49.0 (the owner) an exam with a banner is shown as its picture card: where it is (quiet), the prize (loudest: the gold ₹
+   shines), the student looking up. Your own course: the brand's orange line round it, and nothing more. */
+function courseBanner(c, cur) {
+  var b = c.banner, mine = !!(cur && (cur === c.id || cur.indexOf(c.id + '-') === 0));
+  return '<button type="button" class="nm-card' + (mine ? ' current' : '') + '" data-act="course-open" data-id="' + c.id + '" aria-label="' + esc(b.say) + '"' + (mine ? ' aria-current="true"' : '') + '>' +
+    '<span class="nm-art" aria-hidden="true"><i class="nm-sun"></i><img src="' + b.art + '" alt="" width="' + b.w + '" height="' + b.h + '"></span>' +
+    '<span class="nm-txt" aria-hidden="true"><span class="nm-t">' + esc(b.kick) + ' <b>' + esc(b.name) + '</b></span>' +
+    '<span class="nm-win">Win</span><span class="nm-amt"><span class="nm-rs">₹</span>' + esc(b.win) + '</span></span></button>';
 }
 SCREENS.course = function (p) {
   var u = user, at = p.at && courseStep(p.at) ? p.at : '', list = courseChoices(at), must = !!p.must, cur = courseOf(u), t, html, on, off;
