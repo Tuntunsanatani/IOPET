@@ -728,28 +728,32 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .btn.btn-primary[disabled]{opacity:1;background:var(--off);color:var(--ink-off);box-shadow:none}   /* 3.24.0 ONE not-ready look for every primary button (Check before a choice, any other primary that waits): a flat grey block, a faint line, words that can be read (4.6–4.9:1), no edge. The sign-in buttons wear the same (.au-go.off). */
 
 /* ── FULL PAPER (3.9.6): taken like the exam — the count opens the grid, the clock runs down, Previous / Next, then the marks ── */
-.paper .p-count{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font-size:var(--fs-md);font-weight:700;color:var(--ink2);padding:8px 12px}
-.paper .p-count .li{margin-right:8px;stroke-width:2.2}
-.p-timer{min-width:58px;font-size:var(--fs-lg);font-weight:700;color:var(--ink)}
+.qz.paper .q-header{grid-template-columns:44px minmax(0,1fr) auto}
+.qz.paper .p-timer{position:relative;top:-12px}
+.p-timer{display:inline-flex;align-items:center;height:36px;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;line-height:1;color:var(--ink);opacity:.65;letter-spacing:var(--ls-xl);font-variant-numeric:tabular-nums}
+.tm-d{position:relative;display:inline-block;width:.62em;height:1.3em;overflow:hidden;text-align:center}
+.tm-d i{position:absolute;top:0;right:0;left:0;font-style:normal;line-height:1.3em}
+.tm-d i.out{animation:tm-out var(--t-pop) var(--ease-std) forwards}
+.tm-d i.in{animation:tm-in var(--t-pop) var(--ease-pop)}
+@keyframes tm-out{to{transform:translateY(100%);opacity:0}}
+@keyframes tm-in{from{transform:translateY(-100%);opacity:0}}
+.tm-c{display:inline-block;line-height:1.3em}
+.calm .tm-d i{animation:none}
+.calm .tm-d i.out{display:none}
+@media (prefers-reduced-motion:reduce){.tm-d i{animation:none}.tm-d i.out{display:none}}
+.p-dots{order:-2;display:flex;margin-top:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}
+.p-dots::-webkit-scrollbar{display:none}
+.pd{flex:none;display:flex;align-items:center;justify-content:center;width:24px;height:var(--tap);background:none}
+.pd i{display:block;width:12px;height:12px;border-radius:50%;background:var(--fill);transition:transform var(--t-press) var(--ease-swift)}
+.pd.on i{background:var(--primary)}
+.pd.at i{background:var(--line-2);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--fill)}
+.pd.at.on i{background:var(--primary)}
+.pd:active i{transform:scale(1.25)}
+.qz.paper>.q-body{margin-top:24px}
+.qz.paper>.opts{margin-top:32px}
+.qz.paper>.q-dock:not(.res){position:static;padding-top:32px}
+.qz .q-result.p-end{background:var(--miss-sheet)}
 .p-timer.low{color:var(--warn)}
-.paper .q-progress{height:6px}
-.paper .q-card{margin-top:16px}
-.q-level .p-qn{margin-left:auto;font-weight:600;color:var(--ink3)}
-.p-nav{display:flex;margin-top:20px}
-.p-nav .btn{flex:1;display:flex;align-items:center;justify-content:center;margin:0}
-.p-nav .btn+.btn{margin-left:12px}
-.p-nav .btn .li{margin:0 4px}
-.p-nav .btn[disabled]{box-shadow:none;cursor:default}
-.paper .btn-primary{margin-top:0}
-.p-done{margin-top:12px !important}
-.pg-sum{display:flex;align-items:center;flex-wrap:wrap}
-.pg-key{display:inline-block;width:12px;height:12px;border-radius:calc(var(--r-sm) / 3);border:1.5px solid var(--line-2);background:var(--surface);margin:0 4px 0 12px}
-.pg-key:first-child{margin-left:0}
-.pg-key.done{background:var(--primary);border-color:var(--primary)}
-.pg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));grid-gap:8px;max-height:48vh;overflow-y:auto;padding:4px;margin:12px -4px 8px}
-.pg-cell{height:var(--tap);border-radius:var(--r-sm);border:1.5px solid var(--line-2);background:var(--surface);font-size:var(--fs-md);font-weight:700;color:var(--ink2);text-align:center}
-.pg-cell.done{background:var(--primary-soft);border-color:var(--primary);color:var(--primary)}
-.pg-cell.now{box-shadow:0 0 0 2px var(--ink)}
 .paper-intro>*+*{margin-top:16px}
 .pi-head{padding-top:4px}
 .pi-kick{font-size:var(--fs-xs);font-weight:700;letter-spacing:var(--ls-cap);text-transform:uppercase;color:var(--primary)}
@@ -3091,7 +3095,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.49.0',
+  VERSION: '3.50.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4964,7 +4968,7 @@ function tickTimer() {
   var el = $('timer'), left;
   if (S && S.exam && !S.done) {                   // 3.9.6 a full paper: the time left, kept on the phone now and then; at 0:00 it is submitted
     left = paperLeft();
-    if (el) { el.textContent = fmtTime(left); el.classList.toggle('low', left < 300000); }
+    if (el) { timerSet(el, fmtTime(left)); el.classList.toggle('low', left < 300000); }
     if (left <= 0) { submitPaper(true); return; }
     if (Date.now() - S.saved > 15000) { S.saved = Date.now(); savePaper(); }
     return;
@@ -6510,7 +6514,7 @@ function gFit(sc) {
   room = body.getBoundingClientRect().top - sc.getBoundingClientRect().top - 8;
   if (over > 0 && room > 0) sc.scrollTop = Math.ceil(Math.min(over, room));
 }
-AFTER.practice = function (sc) { startTimer(); gFit(sc); if (!actx) setTimeout(warmAudio, 80); };
+AFTER.practice = function (sc) { startTimer(); gFit(sc); if (S && S.exam) paperDotsCentre(sc); if (!actx) setTimeout(warmAudio, 80); };
 
 /* 3.16.0 a new phone, just signed in, fetching its backup: Home's shape in skeletons (no numbers until they are real) */
 SCREENS.restoring = function () {
@@ -6685,7 +6689,7 @@ function savedPaper(id) {
 function savePaper() {
   if (!S || !S.exam || S.done || !user) return;
   Store.savePaper({ uid: user.id, topic: S.topic, ids: S.items.map(function (it) { return it.q.id; }),
-    sel: S.items.map(function (it) { return typeof it.sel === 'number' ? it.sel : -1; }), i: S.i, ms: Math.round(sessionMs()), at: Date.now() });
+    sel: S.items.map(function (it) { return typeof it.sel === 'number' ? it.sel : -1; }), i: S.i, ms: Math.round(sessionMs()), seen: !!S.pSeen, at: Date.now() });
 }
 function dropPaper(uid) { var s = Store.paper(); if (s && (!uid || s.uid === uid)) Store.dropPaper(); }
 /* the marks of this paper so far: { n attempts, best } (from Recent sessions) */
@@ -6727,7 +6731,7 @@ function startPaper(id, resume) {
   S = {
     topic: t.id, exam: true, limit: lim, i: sv ? clamp(Math.floor(sv.i), 0, qs.length - 1) : 0, correct: 0, wrong: 0, skipped: 0, xp: 0,
     elapsed: sv ? Math.min(sv.ms, lim) : 0, tick0: Date.now(), done: false, newAch: [], unlocked: [], lockedBefore: lockedBefore,
-    streak0: liveStreak(u), passed0: false, saved: Date.now(), auto: false,
+    streak0: liveStreak(u), passed0: false, saved: Date.now(), auto: false, pSeen: !!(sv && sv.seen), pEnd: false,
     items: qs.map(function (q, k) {                // the paper's own order, and its options as printed (1)–(4): no shuffling
       var s0 = sv ? sv.sel[k] : -1;
       return { q: q, order: [0, 1, 2, 3], pick: null, sel: s0 >= 0 ? s0 : null, xp: 0 };
@@ -6748,49 +6752,81 @@ function optsClass(q) {
   if (q.o.length === 4 && q.o.every(function (o) { return o.indexOf('[[') < 0 && o.indexOf('<') < 0 && o.length <= 8; })) return 'opts grid short';
   return 'opts';
 }
+/* 3.50.0 (the owner) a full paper in the quiz's own look (§12.21): the question and its options as in a set (no card, no
+   (1)-(4), the chosen one is the flame); in place of the bar and "5/90", one dot a question in a row that scrolls and
+   opens any question with a tap (answered: the flame; not answered: grey); the time, quiet, whose figures turn over.
+   At the bottom, as in a set: Skip, and Next that rises once an option is chosen. After the last question (and from then
+   on, after any), Next and Skip bring the Submit sheet: how many are not answered, and one big Submit. */
 function paperHtml() {
-  var it = S.items[S.i], q = it.q, n = S.items.length, done = paperDone(), left = paperLeft(), last = S.i === n - 1, html;
-  html = '<div class="page bg-practice practice paper"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Leave the paper">' + li('close') + '</button>' +
-    '<button type="button" class="p-count" data-act="p-grid" aria-label="Question ' + (S.i + 1) + ' of ' + n + ', ' + done + ' answered. Show all questions.">' + li('grid', 18) +
-    '<span class="num">' + (S.i + 1) + '/' + n + '</span></button>' +
-    '<div class="q-timer num p-timer' + (left < 300000 ? ' low' : '') + '" id="timer" role="timer" aria-label="Time left">' + fmtTime(left) + '</div></div>' +
-    '<div class="q-progress" role="img" aria-label="' + done + ' of ' + n + ' answered"><i style="width:' + pct(done, n) + '%"></i></div>' +
-    '<div class="q-card"><div class="q-level"><span>' + (q.s || topicById(S.topic).short) + '</span><span class="p-qn">Question ' + (S.i + 1) + '</span></div>' +
-    '<div class="q-text">' + figHtml(q.q) + '</div></div><div class="' + optsClass(q) + '">';
+  var it = S.items[S.i], q = it.q, n = S.items.length, left = paperLeft(), t = fmtTime(left), chosen = typeof it.sel === 'number', miss, html;
+  html = '<div class="page bg-practice practice qz paper"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Leave the paper">' + li('close') + '</button>' +
+    '<span class="q-hd-sp" aria-hidden="true"></span>' +
+    '<div class="p-timer' + (left < 300000 ? ' low' : '') + '" id="timer" role="timer" aria-label="Time left" data-v="' + t + '">' + timerDigits(t) + '</div></div>' +
+    paperDots() +
+    '<div class="q-body"><div class="q-text">' + figHtml(q.q) + '</div></div><div class="' + optsClass(q) + '">';
   it.order.forEach(function (orig, pos) {
     var on = it.sel === pos;
-    html += '<button class="opt-btn' + (on ? ' sel' : '') + '" data-act="pick" data-i="' + pos + '" aria-pressed="' + on + '" aria-label="Option ' + (pos + 1) + '">' +
-      '<span class="opt-key">' + (on ? li('check', 15) : (pos + 1)) + '</span><span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
+    html += '<button class="opt-btn' + (on ? ' sel' + (S.selIn === pos ? ' sel-in' : '') : '') + '" data-act="pick" data-i="' + pos + '" aria-pressed="' + on + '" aria-label="Option ' + (pos + 1) + '">' +
+      '<span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
   });
-  html += '</div><div class="p-nav"><button class="btn btn-sec" data-act="p-prev"' + (S.i ? '' : ' disabled') + '>' + li('back', 18) + '<span>Previous</span></button>' +
-    (last ? '<button class="btn btn-primary" data-act="p-submit">Submit</button>' : '<button class="btn btn-primary" data-act="p-next"><span>Next</span>' + li('chev', 18) + '</button>') + '</div>' +
-    '<div class="center small muted p-done">' + done + ' of ' + n + ' answered</div>' +
-    (last ? '' : '<div class="center"><button class="link" data-act="p-submit">Submit the paper</button></div>');
+  html += '</div>';
+  if (S.pEnd) {
+    miss = n - paperDone();
+    html += '<div class="q-dock res"><div class="q-result p-end' + (S.pEndIn ? ' fresh' : '') + '" role="status"><div class="qr-head"><span class="fb-title">' +
+      (miss ? miss + ' not answered' : 'All ' + n + ' answered') + '</span></div>' +
+      '<button type="button" class="btn qr-go plain" data-act="p-submit-yes">Submit</button></div></div>';
+  } else {
+    html += '<div class="q-dock"><button type="button" class="btn q-skip" data-act="p-skip">Skip</button>' +
+      '<button type="button" class="btn btn-primary btn-check' + (S.ckRise && chosen ? ' rise' : '') + '" data-act="p-next"' + (chosen ? '' : ' disabled') + '>Next</button></div>';
+  }
   return html + '</div>';
+}
+/* one dot a question: tap one to open it (the row scrolls; the open one is brought to the middle when the page is drawn) */
+function paperDots() {
+  return '<div class="p-dots" role="group" aria-label="Questions">' + S.items.map(function (it, k) {
+    var on = typeof it.sel === 'number';
+    return '<button type="button" class="pd' + (on ? ' on' : '') + (k === S.i ? ' at' : '') + '" data-act="p-go" data-i="' + k + '" aria-label="Question ' + (k + 1) +
+      (on ? ', answered' : ', not answered') + '"' + (k === S.i ? ' aria-current="step"' : '') + '><i></i></button>';
+  }).join('') + '</div>';
+}
+function paperDotsCentre(sc) {
+  var row = sc && sc.querySelector('.p-dots'), at = row && row.querySelector('.pd.at'), r, a;
+  if (!at) return;
+  r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+  row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2);
+}
+/* the time's figures, each in its own window, so one can turn over while the others stay */
+function timerDigits(t) {
+  return t.split('').map(function (c) { return /\d/.test(c) ? '<span class="tm-d"><i>' + c + '</i></span>' : '<span class="tm-c">' + c + '</span>'; }).join('');
+}
+function timerSet(el, t) {
+  var was = el.getAttribute('data-v') || '', kids = el.childNodes, calm, k, d;
+  if (was === t) return;
+  el.setAttribute('data-v', t);
+  if (was.length !== t.length || kids.length !== t.length) { el.innerHTML = timerDigits(t); return; }
+  calm = calmMotion();
+  for (k = 0; k < t.length; k++) {
+    if (t.charAt(k) === was.charAt(k)) continue;
+    d = kids[k];
+    if (!d || d.className !== 'tm-d') { el.innerHTML = timerDigits(t); return; }
+    d.innerHTML = calm ? '<i>' + t.charAt(k) + '</i>' : '<i class="out" aria-hidden="true">' + was.charAt(k) + '</i><i class="in">' + t.charAt(k) + '</i>';   // the old figure goes down, the new one comes in from above
+  }
 }
 /* a tap only chooses (and may change the choice); it is kept on the phone at once */
 function paperPick(el) {
   var it = S.items[S.i], pos = parseInt(el.getAttribute('data-i'), 10);
   if (S.done || !it || typeof it.order[pos] !== 'number' || it.sel === pos) return;
-  it.sel = pos;
+  S.ckRise = typeof it.sel !== 'number';                             // the first choice: Next rises (as Check in a set)
+  it.sel = pos; S.selIn = pos;
   savePaper(); sense('select');
-  repaint(); pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
+  repaint(); S.selIn = -1; S.ckRise = false; pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
 }
 function paperMove(i) {
   if (!S || !S.exam || S.done) return;
-  S.i = clamp(i, 0, S.items.length - 1);
+  S.i = clamp(i, 0, S.items.length - 1); S.pEnd = false;
   savePaper(); hideModal();
   paint(true);
   if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
-}
-function paperGrid() {
-  var n = S.items.length, done = paperDone();
-  return '<div class="m-title">All questions</div><div class="m-text small pg-sum"><span class="pg-key done"></span>' + done + ' answered<span class="pg-key"></span>' + (n - done) + ' left</div>' +
-    '<div class="pg-grid">' + S.items.map(function (it, k) {
-      var on = typeof it.sel === 'number';
-      return '<button type="button" class="pg-cell' + (on ? ' done' : '') + (k === S.i ? ' now' : '') + '" data-act="p-go" data-i="' + k + '" aria-label="Question ' + (k + 1) + (on ? ', answered' : ', not answered') + '">' + (k + 1) + '</button>';
-    }).join('') + '</div>' +
-    '<div class="m-actions"><button class="btn btn-sec" data-act="modal-close">Close</button><button class="btn btn-primary" data-act="p-submit">Submit</button></div>';
 }
 function submitPaper(auto) {
   var u = user;
@@ -6850,17 +6886,20 @@ ACTIONS['paper-new'] = function (el) {
   confirmModal({ title: 'Start again?', text: 'Your answers will be cleared and the clock restarts.', no: 'Cancel', yes: 'Start again', act: 'paper-new-yes' });
 };
 ACTIONS['paper-new-yes'] = function () { if (user) dropPaper(user.id); startPaper(paperAsk, false); };
-ACTIONS['p-next'] = function () { if (S && S.exam) paperMove(S.i + 1); };
-ACTIONS['p-prev'] = function () { if (S && S.exam) paperMove(S.i - 1); };
-ACTIONS['p-go'] = function (el) { if (S && S.exam) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
-ACTIONS['p-grid'] = function () { if (S && S.exam && !S.done) showModal(paperGrid()); };
-ACTIONS['p-submit'] = function () {
-  var n, done;
+/* Next and Skip go on to the next question; after the last one (and from then on, after any) they bring the Submit sheet */
+function paperOn() {
   if (!S || !S.exam || S.done) return;
-  n = S.items.length; done = paperDone();
-  confirmModal({ title: 'Submit the paper?', text: done === n ? 'All ' + n + ' questions are answered.'
-    : (n - done) + ' of ' + n + ' not answered. A wrong answer loses no marks, so answer them.', no: 'Keep going', yes: 'Submit', act: 'p-submit-yes' });
+  if (S.i < S.items.length - 1 && !S.pSeen) { paperMove(S.i + 1); return; }
+  S.pSeen = true; S.pEnd = true; S.pEndIn = true;
+  savePaper(); repaint(); S.pEndIn = false;
+}
+ACTIONS['p-next'] = function () { if (S && S.exam && typeof S.items[S.i].sel === 'number') paperOn(); };
+ACTIONS['p-skip'] = function () {                    // a skipped question is left without an answer: its dot stays grey
+  if (!S || !S.exam || S.done) return;
+  S.items[S.i].sel = null;
+  paperOn();
 };
+ACTIONS['p-go'] = function (el) { if (S && S.exam) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
 ACTIONS['p-submit-yes'] = function () { submitPaper(false); };
 ACTIONS['paper-done'] = function () { reset('topics'); };
 
