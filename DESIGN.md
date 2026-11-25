@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.50.0)
+# IOPET design rules (v3, 3.51.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -739,7 +739,7 @@ on every push (`check.js`, "each in the system"), so a page cannot drift off the
 
 | Pattern | When | Where | Pages |
 |---|---|---|---|
-| A, docked | the page is there to do one thing next | pinned at the bottom, 16 px over the edge (+ safe area); a text action may sit under it | quiz (Skip, Check, the result's Continue), summary, review, a chapter (3.27.0), welcome, forgot, the Mark celebration, the streak moment |
+| A, docked | the page is there to do one thing next | pinned at the bottom, 16 px over the edge (+ safe area); a text action may sit under it | quiz (Skip, Check, the result's Continue; since 3.51.0 Skip and Check stand in the page's flow, not pinned, §12.19), summary, review, a chapter (3.27.0), welcome, forgot, the Mark celebration, the streak moment |
 | B, after the content | a short form or a short page | right under the last field or paragraph, full width | sign in, create account, redeem, pack, goals, confirm your email |
 | C, in its card | the action belongs to one card | inside that card, at its foot | Home (Start), Progress (Practice), Account (Create account & back up), Share |
 | D, dangerous | it deletes or resets | the last section ("Danger zone"), a red row, then a dialog in which the safe choice is the orange one | Delete account, Delete guest data, Reset progress |
@@ -1209,6 +1209,12 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
   - the block to the dots and the buttons: what is left of the room, about 100 px and more.
   3.39.0 had 10 / 32: it read as one big block. Brilliant's 48 / 24 was not taken: there a figure is often part of the
   answer (a scale, an equation); in IOPET's questions the figure belongs to the question.
+- **3.51.0 (the owner): Skip and Check are not a panel pinned over the page.** Pinned, with the page's colour behind
+  them, they covered the last options of a long question (a figure and four options: measured on the 131 NMMS questions
+  with a figure, options were hidden on 14 at 780 px, 96 at 640 px, 110 at 568 px). Now the row stands in the page's own
+  flow (`.qz>.q-dock:not(.res){position:static}`): at the bottom when the block fits (every number below unchanged), after
+  the options when it does not, and the page scrolls; choosing brings the whole row into view (Check keeps its 20 px over
+  the bottom). Brilliant has no such panel. The result sheet is unchanged.
 - The block stands in the room between the header and the dock. The room left is shared two parts above, one part below
   (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 88 px for the result sheet below
   that, so the block sits a little above the middle, as Brilliant's does.

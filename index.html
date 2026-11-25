@@ -751,7 +751,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pd:active i{transform:scale(1.25)}
 .qz.paper>.q-body{margin-top:24px}
 .qz.paper>.opts{margin-top:32px}
-.qz.paper>.q-dock:not(.res){position:static;padding-top:32px}
+.qz.paper>.q-dock:not(.res){padding-top:32px}
 .qz .q-result.p-end{background:var(--miss-sheet)}
 .p-timer.low{color:var(--warn)}
 .paper-intro>*+*{margin-top:16px}
@@ -1451,6 +1451,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .page.practice.qz.q-thumb::after{flex:0 0 0}
 .page.practice.qz.held::after{flex:1 1 0}   /* 3.40.2 held (Why?): the room under the block gives and takes, so the dock stays on the bottom. Without it, a keys block (no room under it) was lifted 16 px at every press of Why?, and the dock with it */   /* 3.39.1 the owner: what is typed key by key (the number pad, the letter tiles) waits by the thumb, the room all above the block */   /* Why? opened: the block stays where it is read; the longer sheet takes the room below */
 .qz>.q-dock:not(.res){padding-top:88px}   /* the dock is as tall as the result sheet, so the answers do not move when it comes (3.40.0: 88, the sheet 156 px) */
+.qz>.q-dock:not(.res){position:static}   /* 3.51.0 (the owner) Skip and Check are not a panel pinned over the page: a long question (a figure, four options) scrolled under it and its last options were cut. Now they stand in the page's own flow, at the bottom when there is room, after the options when there is not (choosing brings Check into view); as in Brilliant */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
   transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
 .qz .opts.grid.short .opt-btn{min-height:64px;font-weight:400}
@@ -3095,7 +3096,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.50.0',
+  VERSION: '3.51.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -7873,6 +7874,7 @@ ACTIONS.pick = function (el) {
 };
 function showCheck() {
   var b = elScreens.querySelector('.btn-check');
+  if (b && b.parentNode && /(^| )q-dock( |$)/.test(b.parentNode.className)) b = b.parentNode;   // 3.51.0 the whole row, so Check keeps its 20 px over the bottom
   if (!b || !b.scrollIntoView) return;
   try { b.scrollIntoView({ block: 'nearest', behavior: calmMotion() ? 'auto' : 'smooth' }); } catch (e) { b.scrollIntoView(false); }
 }
