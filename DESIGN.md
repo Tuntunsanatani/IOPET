@@ -1287,9 +1287,11 @@ question open at a tap, and Submit.
   flame; not answered: `--fill`; the open one: the set's ring (`--line-2` in a ring of `--fill`, the flame if answered).
   Drawing a question brings its dot to the middle of the row. The row fades at its two ends. The set's dots (FINAL 4) are
   unchanged.
-- **The time in a capsule** (`.p-timer`, right, its centre on the X's line): a `--fill` pill, the figures 17 px bold,
-  even width. A figure that changes turns over: the old one goes down and fades, the new one comes in from above
-  (`--t-pop`; transform and opacity only); with Reduce animations or the phone's reduce-motion it is simply replaced.
+- **The time** (`.p-timer`, right, its centre on the X's line): no capsule (the owner took it away), the figures 20 px
+  bold (`--fs-xl`, 35 % larger than the 15 px first tried), even width, in the ink at 65 % (35 % less contrast: the time
+  is there, never shouting). A figure that changes turns over: the old one goes down and fades, the new one comes in from
+  above (`--t-pop`; transform and opacity only); with Reduce animations or the phone's reduce-motion it is simply
+  replaced.
 - **At the bottom, as in a set** (the owner): Skip, and Next in Check's place and look: not ready until an option is
   chosen, then it rises in the neutral ink. Skip leaves the question without an answer (a choice made is taken back), so
   its dot stays grey. There is no Previous: the dots go back. The row is in the flow of the page, not pinned (on a small

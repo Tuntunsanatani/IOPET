@@ -730,7 +730,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* ── FULL PAPER (3.9.6): taken like the exam — the count opens the grid, the clock runs down, Previous / Next, then the marks ── */
 .qz.paper .q-header{grid-template-columns:44px minmax(0,1fr) auto}
 .qz.paper .p-timer{position:relative;top:-12px}
-.p-timer{display:inline-flex;align-items:center;height:36px;padding:0 12px;border-radius:var(--r-pill);background:var(--fill);font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;line-height:1;color:var(--ink);letter-spacing:var(--ls-md);font-variant-numeric:tabular-nums}
+.p-timer{display:inline-flex;align-items:center;height:36px;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;line-height:1;color:var(--ink);opacity:.65;letter-spacing:var(--ls-xl);font-variant-numeric:tabular-nums}
 .tm-d{position:relative;display:inline-block;width:.62em;height:1.3em;overflow:hidden;text-align:center}
 .tm-d i{position:absolute;top:0;right:0;left:0;font-style:normal;line-height:1.3em}
 .tm-d i.out{animation:tm-out var(--t-pop) var(--ease-std) forwards}
@@ -6754,7 +6754,7 @@ function optsClass(q) {
 }
 /* 3.50.0 (the owner) a full paper in the quiz's own look (§12.21): the question and its options as in a set (no card, no
    (1)-(4), the chosen one is the flame); in place of the bar and "5/90", one dot a question in a row that scrolls and
-   opens any question with a tap (answered: the flame; not answered: grey); the time in a capsule whose figures turn over.
+   opens any question with a tap (answered: the flame; not answered: grey); the time, quiet, whose figures turn over.
    At the bottom, as in a set: Skip, and Next that rises once an option is chosen. After the last question (and from then
    on, after any), Next and Skip bring the Submit sheet: how many are not answered, and one big Submit. */
 function paperHtml() {
