@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.51.0)
+# IOPET design rules (v3, 3.52.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -1308,4 +1308,16 @@ question open at a tap, and Submit.
   answered") and one big Submit (`.qr-go.plain`, as Continue). Nothing else beside it, and no box asking again: Submit
   opens the result at once. The grey dots show what is left; a tap opens the question, and its Next comes back to the
   sheet. "Seen to the end" is kept with the saved paper.
+
+### 12.22 The dots follow the finger (3.52.0, the owner)
+On a small phone a 12 px dot is hard to hit. So a finger put on a row of dots (a paper's, or a set's) and slid sideways
+chooses the dot under it as it goes:
+- **A paper** opens that question at once; **a set** shows an answered one again, as a tap on it does (§0, 4), and comes
+  back to the open question over its own dot; the dots not reached yet are passed over (the open one stays).
+- **Each new dot is felt**: the short knock of a choice (`sense('select')`, the haptic switch in Settings applies).
+- **Near the ends** of a row that scrolls (32 px), the row moves on by itself under the still finger, faster the nearer
+  the edge; let go, and the chosen dot settles in the middle (smoothly; at once with Reduce animations or reduce-motion).
+- **What stays as it was:** a tap is still a tap (a slide of 6 px or more is a slide, and the tap after it is not taken);
+  a move that starts up or down scrolls the page (`touch-action: pan-y` on the rows); the page is drawn at most once a
+  frame while the finger moves (a paper's page takes about 2 ms), and the row keeps its place under the finger.
 
