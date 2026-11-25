@@ -176,6 +176,33 @@ try {
         has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
         if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
         return e;
+      } },
+    { what: 'the full paper in the quiz\'s look: the question and options as in a set; one dot a question in a row that scrolls and opens any question; the quiet time whose figures turn over; Skip and Next; the Submit sheet', since: '3.50.0', status: 'FINAL, the owner, 25 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, decl) => { if (!rule(sel).includes(decl.replace(/\s+/g, ''))) e.push(sel + ' must hold ' + decl); };
+        has('.p-dots', 'order:-2;display:flex;margin-top:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden');
+        has('.pd', 'flex:none;display:flex;align-items:center;justify-content:center;width:24px;height:var(--tap);background:none');
+        has('.pd i', 'display:block;width:12px;height:12px;border-radius:50%;background:var(--fill)');
+        has('.pd.on i', 'background:var(--primary)');
+        has('.pd.at i', 'background:var(--line-2);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--fill)');
+        has('.pd.at.on i', 'background:var(--primary)');
+        has('.p-timer', 'display:inline-flex;align-items:center;height:36px;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:700;line-height:1;color:var(--ink);opacity:.65;letter-spacing:var(--ls-xl);font-variant-numeric:tabular-nums');
+        if (/background|border-radius|padding/.test(rule('.p-timer'))) e.push('.p-timer must have no capsule (no background, corners or padding)');
+        has('.qz.paper .p-timer', 'position:relative;top:-12px');
+        has('.tm-d i.out', 'animation:tm-out var(--t-pop) var(--ease-std) forwards');
+        has('.tm-d i.in', 'animation:tm-in var(--t-pop) var(--ease-pop)');
+        has('.qz .q-result.p-end', 'background:var(--miss-sheet)');
+        for (const line of ["'<div class=\"page bg-practice practice qz paper\">",
+                            "'<div class=\"q-dock\"><button type=\"button\" class=\"btn q-skip\" data-act=\"p-skip\">Skip</button>'",
+                            "'<button type=\"button\" class=\"btn btn-primary btn-check' + (S.ckRise && chosen ? ' rise' : '') + '\" data-act=\"p-next\"' + (chosen ? '' : ' disabled') + '>Next</button></div>'",
+                            "'<button type=\"button\" class=\"btn qr-go plain\" data-act=\"p-submit-yes\">Submit</button></div></div>'",
+                            "(miss ? miss + ' not answered' : 'All ' + n + ' answered')",
+                            "if (S.i < S.items.length - 1 && !S.pSeen) { paperMove(S.i + 1); return; }",
+                            "'<i class=\"out\" aria-hidden=\"true\">' + was.charAt(k) + '</i><i class=\"in\">' + t.charAt(k) + '</i>'"])
+          if (!js.includes(line)) e.push('the app must keep: ' + line);
+        const ph = js.slice(js.indexOf('function paperHtml()'), js.indexOf('function paperDots()'));
+        if (/opt-key|q-progress|q-card|p-count|Previous/.test(ph)) e.push('the paper must not bring back the (1)-(4) keys, the bar, the card, the count or Previous');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
