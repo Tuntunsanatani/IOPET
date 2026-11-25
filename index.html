@@ -83,7 +83,7 @@
   --edge:#2C2C2C;--bw-edge:2px;--edge-in:inset 0 0 0 .34px var(--edge);   /* 3.30.0 Brilliant's rule, measured on the owner's phone: the panel IS the ground and its border
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
-  --line:#2C2C2C;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--fill-2:rgba(255,255,255,.11);--ink-skip:rgba(242,242,242,.75);   /* 3.33.3 Skip's word: the ink at 75 % (§0) */
+  --line:#2C2C2C;--outline:#6B6B6B;--ok-tint:rgba(47,211,154,.10);--field-bad:#C8574F;--bad-tint:rgba(255,69,58,.06);--line-2:#3D3D3D;--lip:transparent;--fill:rgba(255,255,255,.06);--dot-ring:rgba(255,255,255,.05);--fill-2:rgba(255,255,255,.11);--ink-skip:rgba(242,242,242,.75);   /* 3.33.3 Skip's word: the ink at 75 % (§0) */
   --ink:#F2F2F2;--ink2:#B4B4B4;--ink3:#8F8F8F;--ink-deco:#5C5C5C;--ink-off:#3C3C3C;--ink-x:#5C5C5C;   /* 14.9, 8.0 and 5.2:1 on a card; ink3 never on surface-3 (4.0:1): words on that grey block are --ink-off (4.9:1) */
   --mark-off:#707070;               /* a mark that is not text and is off: chart bars of other days, the off switch, an empty ring (3.4:1) */
   --cream:var(--ink);--cream60:var(--ink2);--cream40:var(--ink3);--border:var(--line);
@@ -174,7 +174,7 @@
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
   --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--miss-sheet:#EBEBEB;--off:#F5F5F5;--right:#2DE060;--right-lip:#18B348;--right-sheet:#CFF8DB;--right-ink:#0E7C3A;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
-  --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
+  --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--dot-ring:rgba(20,20,20,.04);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
   --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#A3A3A3;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
   --primary:#D96C00;--primary-2:#FF9F0A;--primary-soft:#F7F7F7;--primary-ink:#A35200;
@@ -746,7 +746,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pd{flex:none;display:flex;align-items:center;justify-content:center;width:24px;height:var(--tap);background:none}
 .pd i{display:block;width:12px;height:12px;border-radius:50%;background:var(--fill);transition:transform var(--t-press) var(--ease-swift)}
 .pd.on i{background:var(--primary)}
-.pd.at i{background:var(--line-2);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--fill)}
+.pd.at i{background:var(--line-2);box-shadow:0 0 0 3px var(--bg),0 0 0 4.75px var(--dot-ring)}
 .pd.at.on i{background:var(--primary)}
 .pd:active i{transform:scale(1.25)}
 .qz.paper>.q-body{margin-top:24px}
@@ -1406,9 +1406,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    takes its colour at once (here one --t-state); Check rises 60 ms after the first choice; on Check the answer itself changes
    first (~140 ms: its colour, then its corner mark), the sheet comes up at ~220 ms over 280 ms, its button lights and the XP
    rises at ~400-500 ms; a first wrong option fades at ~550 ms over 250 ms. Practice only (.qz): a full paper keeps its look. */
-.qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}   /* 3.34.0 the X stays findable without calling to the eye (the owner). 3.34.2 the owner: higher and further left than the dots' line, so the two never read as one row (12 px each way; the place to tap moves with it) */
-.qz .q-header .icon-btn .li{width:30px;height:30px;stroke-width:1.4}   /* 3.34.2 the owner: larger (30 px) and fainter; its line stays 1.75 px as drawn */
+.qz .q-header .icon-btn{border:0;background:none;color:var(--ink-x);position:relative;top:0;left:-12px}   /* 3.34.0 the X stays findable without calling to the eye (the owner). 3.34.2 the owner: higher and further left than the dots' line, so the two never read as one row (12 px each way; the place to tap moves with it) */
+.qz .q-header .icon-btn .li{width:23px;height:23px;stroke-width:1.8}   /* 3.34.2 the owner: larger (30 px) and fainter; its line stays 1.75 px as drawn */
 .qz .q-header .icon-btn:active{background:var(--fill)}
+.qz.paper .q-header .icon-btn[data-act=quit] .li{width:23px;height:23px;stroke-width:1.8}   /* 3.51.0 the paper's X the same size (its place stays on the time's line) */
 /* 3.34.0 THE SET'S DOTS (DESIGN.md §12.17), measured on the owner's Brilliant screenshot: dots 3.5 % of the screen wide with
    two thirds of a dot between them; the open question's dot a light grey (#CCC there) inside a 2 px ring of the faintest grey
    (#F2F2F2), 3 px from it; a right answer green, a wrong one or a skip dark grey (#666), the rest the faintest grey. */
@@ -1418,14 +1419,18 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-dots .qd.cur{background:var(--line-2)}
 .q-dots .qd.ok{background:var(--win)}
 .q-dots .qd.miss{background:var(--ink3)}   /* wrong or skipped: at once, with no motion (the owner) */
-.q-dots .qd.at{box-shadow:0 0 0 var(--qr) var(--bg),0 0 0 var(--qs) var(--fill)}
+.q-dots .qd.at{box-shadow:0 0 0 var(--qr) var(--bg),0 0 0 var(--qs) var(--dot-ring)}
 .q-dots .qd.at-in{animation:qd-at var(--t-state) var(--ease-swift) backwards}
-@keyframes qd-at{from{background:var(--fill);box-shadow:0 0 0 0 var(--bg),0 0 0 0 var(--fill)}}
+@keyframes qd-at{from{background:var(--fill);box-shadow:0 0 0 0 var(--bg),0 0 0 0 var(--dot-ring)}}
 .q-dots .qd.ok-in{background:var(--line-2)}   /* 3.34.2 right: the green grows out of the dot's middle, a little past its edge, and settles */
 .q-dots .qd.ok-in::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;background:var(--win);will-change:transform,opacity;
   animation:qd-fill var(--t-dot) var(--ease-dot) var(--q-ans) backwards,qd-show var(--t-dot-in) linear var(--q-ans) backwards}   /* transform and opacity only: drawn by the graphics chip at the screen's own rate (60 to 144 Hz), whatever the page does meanwhile */
 @keyframes qd-fill{from{transform:scale(.15)}}
 @keyframes qd-show{from{opacity:0}}
+.q-dots .qd-b{position:relative;flex:none;display:block;padding:0;border:0;background:none;border-radius:50%}
+.q-dots .qd-b::before{content:'';position:absolute;top:-16px;right:-4px;bottom:-16px;left:-4px}   /* a 44 px tall place to tap; half the gap on each side */
+.q-dots.scroll{justify-content:flex-start;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}
+.q-dots.scroll::-webkit-scrollbar{display:none}
 .q-dots.seg{gap:2px}
 .q-dots.seg .qd{flex:1 1 0;width:auto;min-width:0;height:6px;border-radius:var(--r-pill)}
 .q-dots.seg .qd.at{box-shadow:none}
@@ -6084,7 +6089,8 @@ function explainOf(q) {
 function figPlain(s) { return plain(String(s).replace(FIG_ONE, '[figure]')); }
 
 SCREENS.practice = function () {
-  if (S && S.exam) return paperHtml();            // 3.9.6 a full paper: taken like the exam (FULL PAPERS)
+  if (S && S.exam) return paperHtml();
+  if (S && typeof S.peek === 'number' && S.peek !== S.i && S.items[S.peek] && S.items[S.peek].pick !== null) return peekHtml(S.peek);            // 3.9.6 a full paper: taken like the exam (FULL PAPERS)
   /* 3.32.0 THE QUIZ ON BRILLIANT'S RULES (DESIGN.md §12.15). What speaks follows the moment: the bar above whispers (a plain X,
      the line, a grey count; no clock and no chapter name: the clock is for the real test, the chapter was chosen a second
      ago); the options rest as quiet as a panel, with no A B C D, and sit by the thumb; the one chosen is the flame; Check lies
@@ -6145,20 +6151,58 @@ SCREENS.practice = function () {
    light grey dot inside a very faint ring, which comes in when the question opens). The dots fit the row: 12 px with 8 px
    between them, smaller when a set is long or a screen narrow, so the row always stays centred between the X and an empty
    place of the same width; a set too long for dots of 6 px (a pack's) gets one thin piece a question, the row full. */
-function qDots(fresh) {
-  var n = S.items.length, w = (elScreens && elScreens.clientWidth) || window.innerWidth || 360, room, d, g = 8, h = '', seg;
+function qDots(fresh, at) {
+  var n = S.items.length, w = (elScreens && elScreens.clientWidth) || window.innerWidth || 360, room, d, g = 8, h = '', seg, A = typeof at === 'number' ? at : S.i;
   room = w - 2 * (w < 340 ? 16 : 24) - 2 * 44 - 2 * 8;           // the page's sides, the X and its twin place, the two gaps
   d = Math.min(12, Math.floor((room - (n - 1) * g) / n));
   if (d < 8) { g = 4; d = Math.min(12, Math.floor((room - (n - 1) * g) / n)); }
-  seg = d < 6;                                                     // a very long set (a pack): one thin piece a question, the row full
+  seg = d < 6;                                                     // 3.51.0 (the owner) a very long set (a pack): the row scrolls, 12 px dots, the open one in the middle
+  if (seg) { d = 12; g = 8; }
   S.items.forEach(function (it, k) {
     var c = it.pick === null ? (k === S.i ? 'cur' : '') : it.pick === it.q.a ? 'ok' : 'miss';
     if (c === 'ok' && fresh && k === S.i) c += ' ok-in';
-    if (k === S.i) c += ' at' + (S.dotAt !== S.i ? ' at-in' : '');
-    h += '<i class="qd ' + c + '"></i>';
+    if (k === A) c += ' at' + (A === S.i && S.dotAt !== S.i ? ' at-in' : '');
+    /* 3.51.0 (the owner) a dot already answered opens its question to look at again (and the open one brings you back) */
+    if (it.pick !== null || k === S.i) h += '<button type="button" class="qd-b" data-act="q-peek" data-i="' + k + '" aria-label="Question ' + (k + 1) +
+      (k === S.i ? ', the open one' : it.pick === it.q.a ? ', right' : it.pick === -1 ? ', skipped' : ', not right') + '"' + (k === A ? ' aria-current="step"' : '') + '><i class="qd ' + c + '"></i></button>';
+    else h += '<i class="qd ' + c + '"></i>';
   });
-  S.dotAt = S.i;
-  return '<div class="q-dots' + (seg ? ' seg' : '') + '" role="img" aria-label="Question ' + (S.i + 1) + ' of ' + n + '" style="--qd:' + d + 'px;--qg:' + g + 'px;--qr:' + (g > 4 ? 3 : 1) + 'px;--qs:' + (g > 4 ? 5 : 2) + 'px">' + h + '</div>';
+  if (A === S.i) S.dotAt = S.i;
+  return '<div class="q-dots' + (seg ? ' scroll' : '') + '" role="group" aria-label="Question ' + (S.i + 1) + ' of ' + n + '" style="--qd:' + d + 'px;--qg:' + g + 'px;--qr:' + (g > 4 ? 3 : 1) + 'px;--qs:' + (g > 4 ? 4.75 : 1.75) + 'px">' + h + '</div>';
+}
+/* the open dot in the middle of a row that scrolls */
+function qDotsCentre(sc) {
+  var row = sc && sc.querySelector('.q-dots.scroll'), at = row && row.querySelector('.qd.at'), r, a;
+  if (!at) return;
+  r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+  row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2);
+}
+/* 3.51.0 (the owner) a question already answered, looked at again: the answer as it was checked (the right one, the
+   student's, crossed out if not right), the explanation open, and one way back to the open question */
+function peekHtml(k) {
+  var it = S.items[k], q = it.q, latest = it.retry ? it.pick2 : it.pick, ok = latest === q.a, html;
+  html = '<div class="page bg-practice practice qz peek"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+    qDots(false, k) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +
+    '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>';
+  if (it.g) html += gameHtml(it, 'done', false);
+  else {
+    html += '<div class="' + optsClass(q) + '">';
+    it.order.forEach(function (orig, pos) {
+      var cls = 'opt-btn', mk = '', out = it.retry && orig === it.pick;
+      if (orig === q.a) { cls += ' correct'; mk = li('check', 15); }
+      else if (out) { cls += ' out'; mk = li('close', 14); }
+      else if (orig === latest) { cls += ' wrong'; mk = li('close', 14); }
+      else cls += ' dim';
+      html += '<button class="' + cls + '" aria-disabled="true" aria-label="Option ' + 'ABCD'.charAt(pos) + (orig === q.a ? ', right' : orig === latest || out ? ', your answer' : '') + '">' +
+        (mk ? '<span class="opt-mk" aria-hidden="true">' + mk + '</span>' : '') + '<span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
+    });
+    html += '</div>';
+  }
+  html += '<div class="q-dock res"><div class="q-result ' + (ok ? 'ok' : 'bad') + ' open" role="status"><div class="qr-head"><span class="fb-title">' +
+    (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span><span class="qr-sp"></span></div>' +
+    '<div class="qr-text">' + figHtml(explainOf(q)) + '</div>' +
+    '<button type="button" class="btn qr-go plain" data-act="q-peek-back">Back to question ' + (S.i + 1) + '</button></div></div>';
+  return html + '</div>';
 }
 /* 3.32.0 where a question stands: 'ask' (no answer yet), 'miss' (a first wrong answer, one more try offered), 'ask2' (the second
    try), 'done' (right, skipped, or the second try given) */
@@ -6515,7 +6559,7 @@ function gFit(sc) {
   room = body.getBoundingClientRect().top - sc.getBoundingClientRect().top - 8;
   if (over > 0 && room > 0) sc.scrollTop = Math.ceil(Math.min(over, room));
 }
-AFTER.practice = function (sc) { startTimer(); gFit(sc); if (S && S.exam) paperDotsCentre(sc); if (!actx) setTimeout(warmAudio, 80); };
+AFTER.practice = function (sc) { startTimer(); gFit(sc); if (S && S.exam) paperDotsCentre(sc); else qDotsCentre(sc); if (!actx) setTimeout(warmAudio, 80); };
 
 /* 3.16.0 a new phone, just signed in, fetching its backup: Home's shape in skeletons (no numbers until they are real) */
 SCREENS.restoring = function () {
@@ -8001,6 +8045,19 @@ function qFree(box, it) {
   if (pg) { pg.classList.remove('held'); pg.style.removeProperty('--q-held'); }
   delete it.held;
 }
+ACTIONS['q-peek'] = function (el) {
+  var k = parseInt(el.getAttribute('data-i'), 10);
+  if (!S || S.exam || S.done || isNaN(k) || !S.items[k]) return;
+  if (k === S.i) { if (typeof S.peek === 'number') ACTIONS['q-peek-back'](); return; }
+  if (S.items[k].pick === null || S.peek === k) return;
+  S.peek = k; repaint();
+  if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
+};
+ACTIONS['q-peek-back'] = function () {
+  if (!S || typeof S.peek !== 'number') return;
+  S.peek = null; repaint();
+  if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
+};
 ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
   var it = S && S.items[S.i], box = $('fb');
   if (!it || qStage(it) !== 'done' || !box) return;
