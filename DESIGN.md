@@ -1,4 +1,4 @@
-# IOPET design rules (v3, 3.49.0)
+# IOPET design rules (v3, 3.50.0)
 
 This file is the source of truth for how IOPET looks, reads and moves. Every screen follows it,
 whoever changes the code (any Claude chat, any person). If a change breaks a rule, change the rule
@@ -1103,7 +1103,7 @@ X steps back. The dots say what happened without a word.
   44 px. The owner thought of taking the X away (Android's Back also quits). It stays: an installed app on an iPhone has no Back,
   and Back quits safely only where the browser lets the app catch it.
 - **Not taken**: Brilliant joins a run of right answers into one green bar. The owner asked for dots only.
-- A full paper keeps its own bar: 90 dots would not fit.
+- A full paper keeps its own bar: 90 dots would not fit. (3.50.0, the owner: replaced by a row of dots that scrolls, §12.21.)
 - **The question under the dots (3.38.0, the owner):** 40 px under the header (`.qz>.q-body`; 24 before). It starts
   56 px under the dots, 4 times as far as its own figure is from it (14 px). The dots are where you are; the question
   is what you read. (3.39.0: the room above and below the question and its answers is shared, §12.19.) A long question
@@ -1274,4 +1274,22 @@ Competitive exams as this card in place of its row (only while it is open).
   and reads first; it stays clear of "Bihar NMMS" (at least 20 px). Measured at the three widths; at 320 px its place is
   set apart. Light mint (`--nm-bg`) everywhere else, in both looks.
 - **Your own course:** the brand's orange line round the card (2 px), as on a row; no other card carries orange.
+
+### 12.21 A full paper in the quiz's look (3.50.0, the owner)
+The owner: a paper should read like a set (§12.15): the question and its options in the same type and order, so the
+real test feels like the practice. What stays the paper's own: answers are checked only at the end, Previous and Next,
+the time, and Submit.
+- **The question and the options as in a set:** `.page.practice.qz.paper`: no card round the question, no part name, no
+  "Question 5"; the options without their (1)–(4) (four short ones in a 2 x 2 grid, others in a column); the chosen one is
+  the flame (`.qz .opt-btn.sel`, its tint comes in as in a set). Review keeps its own look.
+- **One dot a question, in place of the bar, "5/90" and the grid of all questions:** a row under the X that scrolls
+  sideways (`.p-dots`): 12 px dots on a 24 px step, each one a 44 px place to tap that opens its question. Answered: the
+  flame; not answered: `--fill`; the open one: the set's ring (`--line-2` in a ring of `--fill`, the flame if answered).
+  Drawing a question brings its dot to the middle of the row. The row fades at its two ends. The set's dots (FINAL 4) are
+  unchanged.
+- **The time in a capsule** (`.p-timer`, right, its centre on the X's line): a `--fill` pill, the figures 17 px bold,
+  even width. A figure that changes turns over: the old one goes down and fades, the new one comes in from above
+  (`--t-pop`; transform and opacity only); with Reduce animations or the phone's reduce-motion it is simply replaced.
+- **At the bottom, in the flow of the page** (not pinned: on a small phone a long question would otherwise hide its last
+  option): "12 of 90 answered · Submit the paper", then Previous and Next (Submit on the last question).
 
