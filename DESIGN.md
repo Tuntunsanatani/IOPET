@@ -1263,9 +1263,10 @@ Competitive exams as this card in place of its row (only while it is open).
 - **What speaks, in order:** the prize is the loudest; "Bihar NMMS" is quiet, on one line, in one dark colour: the dark
   of the boy's bag (`--nm-ink`), NMMS a step heavier. Nothing else: no extra line, no "Current" chip. Few colours in the
   words (the owner).
-- **The field under the prize** (the owner): a matte charcoal ground (`--nm-ink`, `NM_LAND`) whose horizon meets the orange
-  disc, with six small children leaping on it as silhouettes in the same charcoal (small on purpose: large ones would
-  crowd the card). The win of many, under the one who looks up.
+- **The field under the prize** (the owner): a flat, fully dark ground (`--nm-ground`, `NM_LAND`) whose horizon meets the
+  orange disc; on its edge, beside the sun, three children seen from the waist up, cheering (arms up), in the same dark,
+  spaced so no arm touches a neighbour. Few and small on purpose: whole bodies, more children or a wavy horizon crowded the
+  card (tried and dropped the same day).
 - **On the field:** WIN in green (`--nm-win`, the caps spacing `--ls-cap`), then ₹48,000 at 36 px (32 at 320 px, 40 from
   400 px) in steel: ₹ and figures in one brushed-steel fill (`--nm-steel`), raised from the ground (`--nm-raise`), as if cut
   from a steel plate. A glint of two white stripes crosses it (`--nm-glint`), 1.1 s of a 3.6 s loop (`--t-shine`), after
@@ -1273,6 +1274,7 @@ Competitive exams as this card in place of its row (only while it is open).
   shows flat steel (`--nm-steel-flat`).
 - **Ground:** light mint sky (`--nm-bg`) in both looks; the boy stands in front of an orange disc (`--nm-sun`), right and
   low, never under the prize (measured at 320, 360 and 412 px); a thin orange rim on his left edge (`--nm-rim`) keeps his
-  bag apart from the charcoal.
+  bag apart from the dark ground. A hairline (`--line-2`) marks the card's edge when it is not your course (in the dark
+  look its ground would melt into the page).
 - **Your own course:** the brand's orange line round the card (2 px), as on a row; no other card carries orange.
 
