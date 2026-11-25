@@ -127,9 +127,12 @@
   --bar:#141414;                    /* the phone's top bar (BAR in app.js, the same value) = the page colour */
   --ic-p:#FFF8E7;--ic-ps:#CFC8B6;--ic-pes:#A39C8C;--ic-pef:#E6DFCC;--ic-pedge:transparent;   /* the drawings' paper: the cream of the diya's bowl */
   --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--r-pill:999px;--r-btn:16px;
-  /* 3.49.0 the NMMS card (the owner): light mint in both looks, the prize in green, the ₹ in gold with a shine */
-  --nm-bg:linear-gradient(170deg,#EAF8F1 0%,#D5F1E4 100%);--nm-ink2:#5E6E67;--nm-name:#E07A1F;--nm-amt:#0B6B3E;--nm-gold:#E9A800;--nm-gold-lip:#B57F00;
-  --nm-shine:linear-gradient(105deg,#FFD447 0%,#F5B400 30%,#FFF7D6 38%,#F5B400 44%,#E9A800 52%,#FFF7D6 58%,#F5B400 63%,#D99A00 100%);
+  /* 3.49.0 the NMMS card (the owner): light mint in both looks; the name in the dark of the boy's bag; the prize in steel,
+     raised from the card, a glint crossing it */
+  --nm-bg:linear-gradient(170deg,#EAF8F1 0%,#D5F1E4 100%);--nm-ink:#2A2530;--nm-ink2:#6F7478;--nm-steel-flat:#5F696F;
+  --nm-steel:linear-gradient(180deg,#A9B2B7 0%,#7E888E 42%,#4A5359 50%,#636D73 58%,#8B959A 100%);
+  --nm-glint:linear-gradient(105deg,transparent 0%,transparent 34%,rgba(255,255,255,.85) 40%,transparent 46%,transparent 52%,rgba(255,255,255,.7) 56%,transparent 61%,transparent 100%);
+  --nm-raise:drop-shadow(0 -1px 0 rgba(255,255,255,.9)) drop-shadow(0 1px 0 rgba(42,37,48,.45)) drop-shadow(0 2px 2px rgba(42,37,48,.18));
   --nm-sun:linear-gradient(200deg,#F6B26B 0%,#EC9A4C 100%);--fs-prize:36px;--t-shine:3600ms;--t-shine-in:600ms;
   /* 3.21.0 THE SYSTEM IN NUMBERS (DESIGN.md §1b, the rulebook). One place for what was written into single rules:
        lines     A0 a panel's own edge         --edge      2 px + --edge-in   Brilliant's (3.30.0): the panel is the page's colour, its border shows it
@@ -1041,15 +1044,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .nm-card:active{transform:scale(.98)}
 .nm-card.current{outline:2px solid var(--primary);outline-offset:-2px}
 .nm-txt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;height:100%}
-.nm-t{font-size:var(--fs-xl);font-weight:700;line-height:1.2;color:var(--nm-ink2);letter-spacing:var(--ls-xl)}
-.nm-t b{font-weight:800;color:var(--nm-name)}
+.nm-t{font-size:var(--fs-xl);font-weight:700;line-height:1.2;color:var(--nm-ink);letter-spacing:var(--ls-xl)}
+.nm-t b{font-weight:800}
 .nm-win{margin-top:auto;font-size:var(--fs-xs);font-weight:700;letter-spacing:.32em;color:var(--nm-ink2);text-transform:uppercase}
-.nm-amt{display:flex;align-items:baseline;margin-top:2px;font-size:var(--fs-prize);font-weight:800;line-height:1;letter-spacing:var(--ls-3xl);color:var(--nm-amt)}
-.nm-rs{font-size:1.06em;margin-right:.06em;color:var(--nm-gold);filter:drop-shadow(0 1px 0 var(--nm-gold-lip))}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){.nm-rs{background:var(--nm-shine);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:nm-shine var(--t-shine) var(--ease-std) var(--t-shine-in) infinite}}
-@keyframes nm-shine{0%{background-position:100% 0}30%,100%{background-position:0 0}}
-.calm .nm-rs{animation:none}
-@media (prefers-reduced-motion:reduce){.nm-rs{animation:none}}
+.nm-amt{display:flex;align-items:baseline;margin-top:4px;font-size:var(--fs-prize);font-weight:800;line-height:1.1;letter-spacing:var(--ls-3xl);color:var(--nm-steel-flat);filter:var(--nm-raise)}
+.nm-rs{font-size:1.06em;margin-right:.06em}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){.nm-amt>i{display:inline;font-style:normal;background:var(--nm-glint),var(--nm-steel);background-size:300% 100%,100% 100%;background-position:100% 0,0 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:nm-shine var(--t-shine) var(--ease-std) var(--t-shine-in) infinite}}
+@keyframes nm-shine{0%{background-position:100% 0,0 0}30%,100%{background-position:0 0,0 0}}
+.calm .nm-amt>i{animation:none}
+@media (prefers-reduced-motion:reduce){.nm-amt>i{animation:none}}
 .nm-art{position:absolute;top:0;right:0;bottom:0;left:0}
 .nm-sun{position:absolute;right:-30%;bottom:-36%;width:72%;height:0;padding-bottom:72%;border-radius:50%;background:var(--nm-sun)}
 .nm-art img{position:absolute;right:2px;bottom:0;height:90%;width:auto}
@@ -5542,14 +5545,15 @@ function courseRow(c, cur, big) {
     '<span class="co-info"><span class="co-name">' + esc(c.name) + '</span>' + (sub ? '<span class="co-sub">' + sub + '</span>' : '') + '</span>' +
     '<span class="co-right">' + right + '</span></button>';
 }
-/* 3.49.0 (the owner) an exam with a banner is shown as its picture card: where it is (quiet), the prize (loudest: the gold ₹
-   shines), the student looking up. Your own course: the brand's orange line round it, and nothing more. */
+/* 3.49.0 (the owner) an exam with a banner is shown as its picture card: where it is (quiet, one dark colour), the prize
+   (loudest: steel, raised from the card, a glint crosses it), the student looking up. Your own course: the brand's orange
+   line round it, and nothing more. */
 function courseBanner(c, cur) {
   var b = c.banner, mine = !!(cur && (cur === c.id || cur.indexOf(c.id + '-') === 0));
   return '<button type="button" class="nm-card' + (mine ? ' current' : '') + '" data-act="course-open" data-id="' + c.id + '" aria-label="' + esc(b.say) + '"' + (mine ? ' aria-current="true"' : '') + '>' +
     '<span class="nm-art" aria-hidden="true"><i class="nm-sun"></i><img src="' + b.art + '" alt="" width="' + b.w + '" height="' + b.h + '"></span>' +
     '<span class="nm-txt" aria-hidden="true"><span class="nm-t">' + esc(b.kick) + ' <b>' + esc(b.name) + '</b></span>' +
-    '<span class="nm-win">Win</span><span class="nm-amt"><span class="nm-rs">₹</span>' + esc(b.win) + '</span></span></button>';
+    '<span class="nm-win">Win</span><span class="nm-amt"><i><span class="nm-rs">₹</span>' + esc(b.win) + '</i></span></span></button>';
 }
 SCREENS.course = function (p) {
   var u = user, at = p.at && courseStep(p.at) ? p.at : '', list = courseChoices(at), must = !!p.must, cur = courseOf(u), t, html, on, off;
