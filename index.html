@@ -751,19 +751,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .pd:active i{transform:scale(1.25)}
 .qz.paper>.q-body{margin-top:24px}
 .qz.paper>.opts{margin-top:32px}
-.qz.paper>.q-dock{position:static;display:block;padding-top:24px}
-.p-sub{display:flex;align-items:center;justify-content:center;font-size:var(--fs-sm);color:var(--ink2);letter-spacing:var(--ls-sm)}
-.p-sub .num{font-weight:600;margin-right:4px}
-.p-sub .p-dot{margin:0 8px;color:var(--ink3)}
-.p-sub .link{font-size:inherit;letter-spacing:inherit}
-.p-dock .p-nav{margin-top:12px}
+.qz.paper>.q-dock:not(.res){position:static;padding-top:32px}
+.qz .q-result.p-end{background:var(--miss-sheet)}
 .p-timer.low{color:var(--warn)}
-.p-nav{display:flex;margin-top:20px}
-.p-nav .btn{flex:1;display:flex;align-items:center;justify-content:center;margin:0}
-.p-nav .btn+.btn{margin-left:12px}
-.p-nav .btn .li{margin:0 4px}
-.p-nav .btn[disabled]{box-shadow:none;cursor:default}
-.paper .btn-primary{margin-top:0}
 .paper-intro>*+*{margin-top:16px}
 .pi-head{padding-top:4px}
 .pi-kick{font-size:var(--fs-xs);font-weight:700;letter-spacing:var(--ls-cap);text-transform:uppercase;color:var(--primary)}
@@ -6699,7 +6689,7 @@ function savedPaper(id) {
 function savePaper() {
   if (!S || !S.exam || S.done || !user) return;
   Store.savePaper({ uid: user.id, topic: S.topic, ids: S.items.map(function (it) { return it.q.id; }),
-    sel: S.items.map(function (it) { return typeof it.sel === 'number' ? it.sel : -1; }), i: S.i, ms: Math.round(sessionMs()), at: Date.now() });
+    sel: S.items.map(function (it) { return typeof it.sel === 'number' ? it.sel : -1; }), i: S.i, ms: Math.round(sessionMs()), seen: !!S.pSeen, at: Date.now() });
 }
 function dropPaper(uid) { var s = Store.paper(); if (s && (!uid || s.uid === uid)) Store.dropPaper(); }
 /* the marks of this paper so far: { n attempts, best } (from Recent sessions) */
@@ -6741,7 +6731,7 @@ function startPaper(id, resume) {
   S = {
     topic: t.id, exam: true, limit: lim, i: sv ? clamp(Math.floor(sv.i), 0, qs.length - 1) : 0, correct: 0, wrong: 0, skipped: 0, xp: 0,
     elapsed: sv ? Math.min(sv.ms, lim) : 0, tick0: Date.now(), done: false, newAch: [], unlocked: [], lockedBefore: lockedBefore,
-    streak0: liveStreak(u), passed0: false, saved: Date.now(), auto: false,
+    streak0: liveStreak(u), passed0: false, saved: Date.now(), auto: false, pSeen: !!(sv && sv.seen), pEnd: false,
     items: qs.map(function (q, k) {                // the paper's own order, and its options as printed (1)–(4): no shuffling
       var s0 = sv ? sv.sel[k] : -1;
       return { q: q, order: [0, 1, 2, 3], pick: null, sel: s0 >= 0 ? s0 : null, xp: 0 };
@@ -6764,9 +6754,11 @@ function optsClass(q) {
 }
 /* 3.50.0 (the owner) a full paper in the quiz's own look (§12.21): the question and its options as in a set (no card, no
    (1)-(4), the chosen one is the flame); in place of the bar and "5/90", one dot a question in a row that scrolls and
-   opens any question with a tap (answered: the flame; open: the ring); the time in a capsule whose figures turn over. */
+   opens any question with a tap (answered: the flame; not answered: grey); the time in a capsule whose figures turn over.
+   At the bottom, as in a set: Skip, and Next that rises once an option is chosen. After the last question (and from then
+   on, after any), Next and Skip bring the Submit sheet: how many are not answered, and one big Submit. */
 function paperHtml() {
-  var it = S.items[S.i], q = it.q, n = S.items.length, done = paperDone(), left = paperLeft(), last = S.i === n - 1, t = fmtTime(left), html;
+  var it = S.items[S.i], q = it.q, n = S.items.length, left = paperLeft(), t = fmtTime(left), chosen = typeof it.sel === 'number', miss, html;
   html = '<div class="page bg-practice practice qz paper"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Leave the paper">' + li('close') + '</button>' +
     '<span class="q-hd-sp" aria-hidden="true"></span>' +
     '<div class="p-timer' + (left < 300000 ? ' low' : '') + '" id="timer" role="timer" aria-label="Time left" data-v="' + t + '">' + timerDigits(t) + '</div></div>' +
@@ -6777,10 +6769,16 @@ function paperHtml() {
     html += '<button class="opt-btn' + (on ? ' sel' + (S.selIn === pos ? ' sel-in' : '') : '') + '" data-act="pick" data-i="' + pos + '" aria-pressed="' + on + '" aria-label="Option ' + (pos + 1) + '">' +
       '<span class="opt-txt">' + figHtml(q.o[orig]) + '</span></button>';
   });
-  html += '</div><div class="q-dock p-dock"><div class="p-sub"><span class="num">' + done + '</span> of ' + n + ' answered' +
-    (last ? '' : '<span class="p-dot" aria-hidden="true">·</span><button type="button" class="link" data-act="p-submit">Submit the paper</button>') + '</div>' +
-    '<div class="p-nav"><button class="btn btn-sec" data-act="p-prev"' + (S.i ? '' : ' disabled') + '>' + li('back', 18) + '<span>Previous</span></button>' +
-    (last ? '<button class="btn btn-primary" data-act="p-submit">Submit</button>' : '<button class="btn btn-primary" data-act="p-next"><span>Next</span>' + li('chev', 18) + '</button>') + '</div></div>';
+  html += '</div>';
+  if (S.pEnd) {
+    miss = n - paperDone();
+    html += '<div class="q-dock res"><div class="q-result p-end' + (S.pEndIn ? ' fresh' : '') + '" role="status"><div class="qr-head"><span class="fb-title">' +
+      (miss ? miss + ' not answered' : 'All ' + n + ' answered') + '</span></div>' +
+      '<button type="button" class="btn qr-go plain" data-act="p-submit-yes">Submit</button></div></div>';
+  } else {
+    html += '<div class="q-dock"><button type="button" class="btn q-skip" data-act="p-skip">Skip</button>' +
+      '<button type="button" class="btn btn-primary btn-check' + (S.ckRise && chosen ? ' rise' : '') + '" data-act="p-next"' + (chosen ? '' : ' disabled') + '>Next</button></div>';
+  }
   return html + '</div>';
 }
 /* one dot a question: tap one to open it (the row scrolls; the open one is brought to the middle when the page is drawn) */
@@ -6818,13 +6816,14 @@ function timerSet(el, t) {
 function paperPick(el) {
   var it = S.items[S.i], pos = parseInt(el.getAttribute('data-i'), 10);
   if (S.done || !it || typeof it.order[pos] !== 'number' || it.sel === pos) return;
+  S.ckRise = typeof it.sel !== 'number';                             // the first choice: Next rises (as Check in a set)
   it.sel = pos; S.selIn = pos;
   savePaper(); sense('select');
-  repaint(); S.selIn = -1; pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
+  repaint(); S.selIn = -1; S.ckRise = false; pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
 }
 function paperMove(i) {
   if (!S || !S.exam || S.done) return;
-  S.i = clamp(i, 0, S.items.length - 1);
+  S.i = clamp(i, 0, S.items.length - 1); S.pEnd = false;
   savePaper(); hideModal();
   paint(true);
   if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
@@ -6887,16 +6886,20 @@ ACTIONS['paper-new'] = function (el) {
   confirmModal({ title: 'Start again?', text: 'Your answers will be cleared and the clock restarts.', no: 'Cancel', yes: 'Start again', act: 'paper-new-yes' });
 };
 ACTIONS['paper-new-yes'] = function () { if (user) dropPaper(user.id); startPaper(paperAsk, false); };
-ACTIONS['p-next'] = function () { if (S && S.exam) paperMove(S.i + 1); };
-ACTIONS['p-prev'] = function () { if (S && S.exam) paperMove(S.i - 1); };
-ACTIONS['p-go'] = function (el) { if (S && S.exam) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
-ACTIONS['p-submit'] = function () {
-  var n, done;
+/* Next and Skip go on to the next question; after the last one (and from then on, after any) they bring the Submit sheet */
+function paperOn() {
   if (!S || !S.exam || S.done) return;
-  n = S.items.length; done = paperDone();
-  confirmModal({ title: 'Submit the paper?', text: done === n ? 'All ' + n + ' questions are answered.'
-    : (n - done) + ' of ' + n + ' not answered. A wrong answer loses no marks, so answer them.', no: 'Keep going', yes: 'Submit', act: 'p-submit-yes' });
+  if (S.i < S.items.length - 1 && !S.pSeen) { paperMove(S.i + 1); return; }
+  S.pSeen = true; S.pEnd = true; S.pEndIn = true;
+  savePaper(); repaint(); S.pEndIn = false;
+}
+ACTIONS['p-next'] = function () { if (S && S.exam && typeof S.items[S.i].sel === 'number') paperOn(); };
+ACTIONS['p-skip'] = function () {                    // a skipped question is left without an answer: its dot stays grey
+  if (!S || !S.exam || S.done) return;
+  S.items[S.i].sel = null;
+  paperOn();
 };
+ACTIONS['p-go'] = function (el) { if (S && S.exam) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
 ACTIONS['p-submit-yes'] = function () { submitPaper(false); };
 ACTIONS['paper-done'] = function () { reset('topics'); };
 

@@ -1277,8 +1277,8 @@ Competitive exams as this card in place of its row (only while it is open).
 
 ### 12.21 A full paper in the quiz's look (3.50.0, the owner)
 The owner: a paper should read like a set (§12.15): the question and its options in the same type and order, so the
-real test feels like the practice. What stays the paper's own: answers are checked only at the end, Previous and Next,
-the time, and Submit.
+real test feels like the practice. What stays the paper's own: answers are checked only at the end, the time, any
+question open at a tap, and Submit.
 - **The question and the options as in a set:** `.page.practice.qz.paper`: no card round the question, no part name, no
   "Question 5"; the options without their (1)–(4) (four short ones in a 2 x 2 grid, others in a column); the chosen one is
   the flame (`.qz .opt-btn.sel`, its tint comes in as in a set). Review keeps its own look.
@@ -1290,6 +1290,13 @@ the time, and Submit.
 - **The time in a capsule** (`.p-timer`, right, its centre on the X's line): a `--fill` pill, the figures 17 px bold,
   even width. A figure that changes turns over: the old one goes down and fades, the new one comes in from above
   (`--t-pop`; transform and opacity only); with Reduce animations or the phone's reduce-motion it is simply replaced.
-- **At the bottom, in the flow of the page** (not pinned: on a small phone a long question would otherwise hide its last
-  option): "12 of 90 answered · Submit the paper", then Previous and Next (Submit on the last question).
+- **At the bottom, as in a set** (the owner): Skip, and Next in Check's place and look: not ready until an option is
+  chosen, then it rises in the neutral ink. Skip leaves the question without an answer (a choice made is taken back), so
+  its dot stays grey. There is no Previous: the dots go back. The row is in the flow of the page, not pinned (on a small
+  phone a long question would otherwise hide its last option).
+- **Submit** (the owner): after the last question, and from then on after any question (Next or Skip), the bottom becomes
+  a sheet like a set's result sheet (`.q-result.p-end`, the neutral `--miss-sheet`): "12 not answered" (or "All 90
+  answered") and one big Submit (`.qr-go.plain`, as Continue). Nothing else beside it, and no box asking again: Submit
+  opens the result at once. The grey dots show what is left; a tap opens the question, and its Next comes back to the
+  sheet. "Seen to the end" is kept with the saved paper.
 
