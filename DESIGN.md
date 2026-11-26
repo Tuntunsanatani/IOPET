@@ -615,7 +615,9 @@ heard):
 
 - On the question, only colours move (3.56.0, the owner: "no extra animation, just like Brilliant"): choosing turns an
   option's border and words to the flame (`--t-state` 180 ms) with nothing that swells; a right answer turns them green;
-  a wrong one fades (`.wrong`, opacity .4, a grey ✕). The sheet keeps its own beats.
+  a wrong one fades (`.wrong`, opacity .4). 3.57.0 (the owner): its ✕ sits on a disc the colour of its own border
+  (`--edge`) in `--ink3`, merged with it as the right one's mark is with its green (Brilliant's, measured: the disc
+  `#303030` on a `#303030` border dark, `#F2F2F2` light, its ✕ a step off). The sheet keeps its own beats.
 - 3.43.0's page dip (4 px with the first drum) was taken out in 3.43.1: with the drum it read as a blow.
 - With Reduce animations or a phone set to less motion, nothing moves: the colours change at once and the XP shows its
   number. Sound and Vibration have their own switches.
