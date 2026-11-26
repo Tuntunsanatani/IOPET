@@ -207,6 +207,24 @@ try {
         const ph = js.slice(js.indexOf('function paperHtml()'), js.indexOf('function paperDots()'));
         if (/opt-key|q-progress|q-card|p-count|Previous/.test(ph)) e.push('the paper must not bring back the (1)-(4) keys, the bar, the card, the count or Previous');
         return e;
+      } },
+    { what: 'a set\'s Skip and Check pinned at the bottom while the page scrolls, with no panel: only the two buttons take room', since: '3.54.0', status: 'FINAL, the owner, 26 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, decl) => { if (!rule(sel).includes(decl)) e.push(sel + ' must hold ' + decl); };
+        has('.qz>.q-dock', 'position:sticky;bottom:0');
+        has('.qz>.q-dock:not(.res)', 'background:transparent;pointer-events:none');
+        has('.qz>.q-dock:not(.res) .btn', 'pointer-events:auto');
+        has('.qz.paper>.q-dock:not(.res)', 'position:static');
+        for (const r of rules) for (const part of r.sel.split(',')) {
+          const s = part.trim();
+          if (!/^\.qz(:not\([^)]*\))?>\.q-dock(:not\(\.res\))?$/.test(s)) continue;
+          const pos = (r.body.match(/(?:^|;)position:([^;]+)/) || [])[1];
+          if (pos && pos !== 'sticky') e.push(s + ' sets position:' + pos + ' (only a paper\'s row stands in the flow)');
+          const bg = (r.body.match(/(?:^|;)background(?:-color)?:([^;]+)/) || [])[1];
+          if (/:not\(\.res\)$/.test(s) && bg && bg !== 'transparent') e.push(s + ' sets background:' + bg + ' (no panel behind Skip and Check)');
+        }
+        if (!js.includes("window.getComputedStyle(b).position === 'sticky') return;")) e.push('choosing must not scroll the page while the row is pinned (showCheck)');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
