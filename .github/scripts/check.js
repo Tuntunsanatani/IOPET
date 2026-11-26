@@ -227,6 +227,24 @@ try {
         }
         if (!js.includes("window.getComputedStyle(b).position === 'sticky') return;")) e.push('choosing must not scroll the page while the row is pinned (showCheck)');
         return e;
+      } },
+    { what: 'an option answers in colour only, as Brilliant\'s: chosen in the flame (border and words), right in one green, wrong faded with its cross merged into its border; nothing swells, springs, sparkles or shakes', since: '3.56.0, 3.57.0', status: 'FINAL, the owner, 26 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz .opt-btn.sel', 'border-color:var(--primary);background:var(--done-bg);box-shadow:inset000.34pxvar(--primary);color:var(--primary)');
+        has('.qz .opt-btn:active', 'transform:none');
+        has('.qz .opt-btn.sel-in', 'animation:q-selvar(--t-state)var(--ease-swift)');
+        has('.qz .opt-btn.ok-in', 'animation:q-okvar(--t-fade)var(--ease-std)var(--q-ans)backwards');
+        has('.qz .opt-btn.wrong,.qz .opt-btn.out', 'opacity:.4;border-color:var(--edge);background:var(--surface);box-shadow:var(--edge-in)');
+        has('.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk', 'background:var(--edge);color:var(--ink3)');
+        has('.qz .opt-btn.wrong.shake,.qz .opt-btn.wrong.fade', 'animation:q-badvar(--t-fade)var(--ease-std)var(--q-ans)backwards');
+        const kf = n => ((html.match(new RegExp('@keyframes ' + n + '\\{([^@]*?\\})\\}')) || [])[1] || '');
+        for (const n of ['q-sel', 'q-ok', 'q-show', 'q-bad', 'q-mk-in', 'gm-ok', 'gm-ok-f', 'gm-bad']) { const k = kf(n); if (!k) e.push('@keyframes ' + n + ' must stay'); else if (/transform|scale|translate/.test(k)) e.push('@keyframes ' + n + ' must change colours only, nothing moves'); }
+        for (const r of rules) for (const part of r.sel.split(',')) { const s = part.trim();
+          if (/^\.qz \.opt-btn[^ ]*::?(before|after)$/.test(s) && /(^|;)content:/.test(r.body)) e.push(s + ': nothing is drawn round an option (no ring, no sparks)');
+          if (/^(\.qz \.opt-btn|\.gm)/.test(s) && /(^|;)animation:[^;]*q-shake/.test(r.body)) e.push(s + ' must not shake'); }
+        if (/pop\(elScreens\.querySelector\('\[data-act=pick\]/.test(js)) e.push('a pick must not swell (pop) the option');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
