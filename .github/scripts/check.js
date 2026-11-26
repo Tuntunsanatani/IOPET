@@ -153,19 +153,20 @@ try {
         if (!js.includes("['400', '450', '600', '700'].forEach(function (w) { document.fonts.load(")) e.push('the splash must wait for the 450 face with the others');
         return e;
       } },
-    { what: 'the right option\'s mark: a white tick on the deeper green circle (black on green was harsh)', since: '3.41.0, 3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+    { what: 'the right option\'s mark, as Brilliant\'s: the disc in the right border\'s green, its tick black (dark) or white (light), the tick at once and the disc fading in', since: '3.41.0, 3.42.0; colours and entrance 3.55.0', status: 'FINAL, the owner, 20 Nov 2026; colours and entrance changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [];
-        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right-lip);color:var(--on-right)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right-lip);color:var(--on-right)');
-        if (!/(^|;)--on-right:#FFFFFF(;|$)/.test(root) || /--on-right/.test(light)) e.push('--on-right must be #FFFFFF in :root and not redefined by the light look');
-        if (!/(^|;)--right-lip:#1C9E42(;|$)/.test(root) || !/(^|;)--right-lip:#18B348(;|$)/.test(light)) e.push('--right-lip must be #1C9E42 (dark) and #18B348 (light)');
+        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right-opt);color:var(--bg)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right-opt);color:var(--bg) (the green of the right option\'s border)');
+        if (!/(^|;)--bg:#141414(;|$)/.test(root) || !/(^|;)--bg:#FFFFFF(;|$)/.test(light)) e.push('--bg must be #141414 (dark) and #FFFFFF (light): the tick is black on the dark look, white on the light');
         if (!rule('.qz .opt-mk').includes('width:24px;height:24px;border-radius:50%')) e.push('.qz .opt-mk must stay a 24 px circle');
         if (!rule('.qz .opt-mk .li').includes('width:14px;height:14px;stroke-width:3.2')) e.push('.qz .opt-mk .li must stay 14 px, stroke 3.2');
+        if (!rule('.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk').includes('animation:q-mk-invar(--t-fade)var(--ease-std)var(--q-mark)backwards')) e.push('the marks must come in by q-mk-in (--t-fade, --ease-std, after --q-mark)');
+        if (!/@keyframes q-mk-in\{from\{background-color:transparent\}\}/.test(html)) e.push('@keyframes q-mk-in must be from{background-color:transparent}: the tick at once, the disc fading in, nothing growing');
         for (const r of rules) if (r.sel !== '.qz .opt-btn.correct .opt-mk' && /\.correct[^,]*\.opt-mk/.test(r.sel) && /(^|;)(color|background)[:-]/.test(r.body)) e.push(r.sel + ' must not repaint the right option\'s mark');
         return e;
       } }
 ,
-    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option and a game\'s right answer', since: '3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [];
         const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
@@ -176,7 +177,8 @@ try {
         has('.qz .q-result.ok', 'background:var(--right-sheet)');
         has('.qz .qr-go.ok', 'background:var(--right);color:var(--on-right);box-shadow:04px0var(--right-lip)');
         has('.qz .qr-go.ok:active', 'box-shadow:01px0var(--right-lip)');
-        has('.qz .opt-btn.correct', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right);opacity:1');
+        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
+        if (!/(^|;)--right-opt:var\(--right\)(;|$)/.test(root) || !/(^|;)--right-opt:var\(--right-lip\)(;|$)/.test(light)) e.push('--right-opt must be var(--right) on the dark look and var(--right-lip) on the light (the right option\'s border, words and mark in one green)');
         has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
         if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
         return e;
@@ -206,6 +208,24 @@ try {
           if (!js.includes(line)) e.push('the app must keep: ' + line);
         const ph = js.slice(js.indexOf('function paperHtml()'), js.indexOf('function paperDots()'));
         if (/opt-key|q-progress|q-card|p-count|Previous/.test(ph)) e.push('the paper must not bring back the (1)-(4) keys, the bar, the card, the count or Previous');
+        return e;
+      } },
+    { what: 'a set\'s Skip and Check pinned at the bottom while the page scrolls, with no panel: only the two buttons take room', since: '3.54.0', status: 'FINAL, the owner, 26 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, decl) => { if (!rule(sel).includes(decl)) e.push(sel + ' must hold ' + decl); };
+        has('.qz>.q-dock', 'position:sticky;bottom:0');
+        has('.qz>.q-dock:not(.res)', 'background:transparent;pointer-events:none');
+        has('.qz>.q-dock:not(.res) .btn', 'pointer-events:auto');
+        has('.qz.paper>.q-dock:not(.res)', 'position:static');
+        for (const r of rules) for (const part of r.sel.split(',')) {
+          const s = part.trim();
+          if (!/^\.qz(:not\([^)]*\))?>\.q-dock(:not\(\.res\))?$/.test(s)) continue;
+          const pos = (r.body.match(/(?:^|;)position:([^;]+)/) || [])[1];
+          if (pos && pos !== 'sticky') e.push(s + ' sets position:' + pos + ' (only a paper\'s row stands in the flow)');
+          const bg = (r.body.match(/(?:^|;)background(?:-color)?:([^;]+)/) || [])[1];
+          if (/:not\(\.res\)$/.test(s) && bg && bg !== 'transparent') e.push(s + ' sets background:' + bg + ' (no panel behind Skip and Check)');
+        }
+        if (!js.includes("window.getComputedStyle(b).position === 'sticky') return;")) e.push('choosing must not scroll the page while the row is pinned (showCheck)');
         return e;
       } }
   ];

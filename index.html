@@ -79,7 +79,7 @@
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
   --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;
   --win:#2DCC5A;--miss-sheet:#262626;--off:#1A1A1A;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */
-  --right:#2FEB64;--right-lip:#1C9E42;--right-sheet:#0E4520;--right-ink:#6CF294;--on-right:#FFFFFF;   /* 3.42.0 a right answer: Brilliant's green one step brighter (the owner, back from the leaf of 3.41.0, which looked dull on the phone). Same hue (137°) and saturation as 3.40's #2DCC5A, more light: brighter colours are felt as more pleasant, saturated ones as more exciting (Valdez & Mehrabian 1994), so it keeps both. White words (1.6:1 dark, 1.8:1 light, the owner's choice); the ✓ white on the deeper green (FINAL 7). --win stays for the set's dots (FINAL 4) */
+  --right:#2FEB64;--right-opt:var(--right);--right-lip:#1C9E42;--right-sheet:#0E4520;--right-ink:#6CF294;--on-right:#FFFFFF;   /* 3.42.0 a right answer: Brilliant's green one step brighter (the owner, back from the leaf of 3.41.0, which looked dull on the phone). Same hue (137°) and saturation as 3.40's #2DCC5A, more light: brighter colours are felt as more pleasant, saturated ones as more exciting (Valdez & Mehrabian 1994), so it keeps both. White words (1.6:1 dark, 1.8:1 light, the owner's choice); the ✓ white on the deeper green (FINAL 7). --win stays for the set's dots (FINAL 4) */
   --edge:#2C2C2C;--bw-edge:2px;--edge-in:inset 0 0 0 .34px var(--edge);   /* 3.30.0 Brilliant's rule, measured on the owner's phone: the panel IS the ground and its border
      shows it (#2C2C2C on #141414; #E5E5E5 on white), 7 px at 3x = 2.33 px. A browser floors a border to whole px, so the border is
      2 px and --edge-in, the same colour inside it, adds the last .34 px (7 px exactly at 3x) */
@@ -158,8 +158,8 @@
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
   --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
-  --q-shake0:40ms;--q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;--q-out:550ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue, the sparks); a phone plays a sound about 60 ms late, so the eye and the ear meet */
-  --t-shake:360ms;--t-lift:320ms;--t-step:250ms;--t-xp:300ms;--t-win:420ms;--t-ring:520ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
+  --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
+  --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
   /* 3.17.0 page switches (the owner's timeline): the page leaves in 120 ms, then the next one comes in 150 ms. What comes in
      settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
      screen would stand empty for ~80 ms (five frames) before the next page — a blink. Evenly, the gap is one frame. */
@@ -173,7 +173,7 @@
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
-  --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--miss-sheet:#EBEBEB;--off:#F5F5F5;--right:#2DE060;--right-lip:#18B348;--right-sheet:#CFF8DB;--right-ink:#0E7C3A;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
+  --edge:#E5E5E5;--done-bg:#FFF5E7;--win:#29CC57;--miss-sheet:#EBEBEB;--off:#F5F5F5;--right:#2DE060;--right-opt:var(--right-lip);--right-lip:#18B348;--right-sheet:#CFF8DB;--right-ink:#0E7C3A;   /* 3.32.0 Brilliant's, measured: sheet #D3F5DD, button #29CC57 on #15B440; not ready #F2F2F2 with #C2C2C2 */   /* 3.30.0 Brilliant's rule: white panel on the white page, a #E5E5E5 border */
   --line:#E5E5E5;--outline:#8A8A8A;--ok-tint:rgba(11,148,104,.08);--field-bad:#C9584E;--bad-tint:rgba(217,45,32,.04);--line-2:#C7C7C7;--fill:rgba(20,20,20,.05);--dot-ring:rgba(20,20,20,.04);--fill-2:rgba(20,20,20,.09);--ink-skip:rgba(20,20,20,.75);
   --ink:#141414;--ink2:#4D4D4D;--ink3:#6A6A6A;--ink-deco:#A3A3A3;--ink-off:#D2D2D2;--ink-x:#A3A3A3;   /* 18.4, 8.4 and 5.4:1 on white (3.22.0: secondary was #5E5E5E, 6.5:1, one small step from tertiary; dark has 14.9 / 8.0 / 5.2) */
   --mark-off:#858585;
@@ -1460,39 +1460,29 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz>.q-dock:not(.res) .btn{pointer-events:auto}   /* a tap between or above the buttons reaches the page under them */
 .qz.paper>.q-dock:not(.res){position:static}   /* FINAL 9 as locked: a paper's Skip and Next stand in the page's flow */
 .qz .opt-btn{border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);font-weight:400;min-height:60px;
-  transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std),transform var(--t-press) var(--ease-swift)}
+  transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift),color var(--t-state) var(--ease-swift),opacity var(--t-fade) var(--ease-std)}
+.qz .opt-btn:active{transform:none}   /* 3.56.0 Brilliant's (the owner): a touch on an option changes its colours only; nothing moves (felt by the knock and the sound) */
 .qz .opts.grid.short .opt-btn{min-height:64px;font-weight:400}
 .qz .opt-mk{position:absolute;top:-8px;right:-8px;z-index:1;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .qz .opt-mk .li{width:14px;height:14px;stroke-width:3.2}
-.qz .opt-btn.sel{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* the student's choice: the flame */
+.qz .opt-btn.sel{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}   /* the student's choice: the flame, its border and its words alike (3.56.0, Brilliant's, the owner) */
 .qz .opt-btn.sel-in{animation:q-sel var(--t-state) var(--ease-swift)}
-@keyframes q-sel{from{border-color:var(--edge);background-color:var(--surface)}}
-.qz .opt-btn.correct{border-color:var(--right);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right);opacity:1}   /* 3.41.0 the right option in the sheet's colours (the owner: one family) */
-.qz .opt-btn.correct .opt-mk{background:var(--right-lip);color:var(--on-right)}   /* FINAL 7 (the owner, 20 Nov 2026): a white ✓ on the deeper green (black on green was harsh; 2.8:1 light, 3.5:1 dark) */
-.qz .opt-btn.ok-in{animation:q-ok var(--t-win) var(--ease-win) var(--q-ans) backwards}   /* the student's own answer, on dham 1: green at once (from the flame), a spring from 96 % */
-@keyframes q-ok{0%{border-color:var(--primary);background-color:var(--done-bg);transform:scale(.96)}1%{border-color:var(--right);background-color:var(--right-sheet)}100%{transform:none}}
-.qz .opt-btn.ok-in::after{content:'';position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;border:var(--bw-edge) solid var(--right);opacity:0;pointer-events:none;animation:q-ring var(--t-ring) var(--ease-sheet) var(--q-ans)}   /* 3.43.0 a ring of light leaves the card */
-@keyframes q-ring{from{opacity:.9;transform:none}to{opacity:0;transform:scale(1.22,1.5)}}
-.qz .opt-btn.ok-in::before{content:'';position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;box-shadow:32px 10px 0 0 var(--right),29px 38px 0 0 var(--right),1px 62px 0 0 var(--right),-20px 28px 0 0 var(--right),-45px 15px 0 0 var(--right),-59px -18px 0 0 var(--right),-20px -27px 0 0 var(--right),-1px -48px 0 0 var(--right),36px -51px 0 0 var(--right),32px -11px 0 0 var(--right);opacity:0;pointer-events:none;animation:q-spark var(--t-ring) var(--ease-sheet) var(--q-go)}   /* 3.43.0 ten sparks from the ✓ (one element, its shadows; transform and opacity only); 3.43.1 on the top note, where the sound peaks */
-@keyframes q-spark{from{opacity:1;transform:scale(.3)}to{opacity:0;transform:none}}
+@keyframes q-sel{from{border-color:var(--edge);background-color:var(--surface);color:var(--ink)}}
+.qz .opt-btn.correct{border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right-opt);opacity:1;color:var(--right-opt)}   /* 3.41.0 the right option in the sheet's colours (the owner: one family); 3.56.0 its border, words and mark in one green (Brilliant's, the owner) */
+.qz .opt-btn.correct .opt-mk{background:var(--right-opt);color:var(--bg)}   /* FINAL 7, changed at the owner's request (26 Nov 2026, Brilliant's): the mark in the right border's own green, its ✓ black on the dark look and white on the light (--bg) */
+.qz .opt-btn.ok-in{animation:q-ok var(--t-fade) var(--ease-std) var(--q-ans) backwards}   /* 3.56.0 the student's own answer: from the flame to the green, its colours only, with the mark (Brilliant's, the owner: the spring, the ring of light and the sparks are gone) */
+@keyframes q-ok{from{border-color:var(--primary);background-color:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}}
 .qz .opt-btn.ok-show{animation:q-show var(--t-state) var(--ease-std) var(--q-show) backwards}   /* the right one shown after a miss: it lights after the miss */
-@keyframes q-show{from{border-color:var(--edge);background-color:var(--surface)}}
-.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk{animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
-@keyframes q-mk{from{transform:scale(0)}}
+@keyframes q-show{from{border-color:var(--edge);background-color:var(--surface);color:var(--ink)}}
+.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk{animation:q-mk-in var(--t-fade) var(--ease-std) var(--q-mark) backwards}   /* 3.55.0 Brilliant's (the owner, his recording): the ✓ or ✗ is there at once, its disc fades in round it; nothing grows */
+@keyframes q-mk-in{from{background-color:transparent}}
 .qz .opt-btn.dim{opacity:.4}
 .qz .opt-btn.dim-in{animation:q-dim var(--t-fade) var(--ease-std) var(--q-dim) backwards}
 @keyframes q-dim{from{opacity:1}}
-.qz .opt-btn.wrong{border-color:var(--wrong);background:var(--surface);box-shadow:inset 0 0 0 .34px var(--wrong)}
-.qz .opt-btn.wrong .opt-mk{background:var(--wrong);color:var(--on-wrong)}
-.qz .opt-btn.shake{animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0)}
-@keyframes q-shake{0%,100%{transform:none}15%{transform:translateX(-6px)}35%{transform:translateX(6px)}55%{transform:translateX(-4px)}75%{transform:translateX(3px)}}
-.qz .opt-btn.wrong.fade{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in);   /* a first miss: it shakes, then steps back. 3.33.2 where it ends is */
-  animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0),q-fade var(--t-step) var(--ease-std) var(--q-out) backwards}   /* the rule itself: the motion only leads there, so with no motion (Reduce animations, a phone set to less motion) no red is left (the owner's bug) */
-@keyframes q-fade{from{opacity:1;border-color:var(--wrong);box-shadow:inset 0 0 0 .34px var(--wrong)}}
-.qz .opt-btn.wrong.fade .opt-mk{background:var(--ink3);color:var(--bg);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards,q-mk-out var(--t-step) var(--ease-std) var(--q-out) backwards}
-@keyframes q-mk-out{from{background:var(--wrong);color:var(--on-wrong)}}
-.qz .opt-btn.out{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in)}   /* found wrong: out of the way, its cross grey */
-.qz .opt-btn.out .opt-mk{background:var(--ink3);color:var(--bg)}
+.qz .opt-btn.wrong,.qz .opt-btn.out{opacity:.4;border-color:var(--edge);background:var(--surface);box-shadow:var(--edge-in)}   /* 3.56.0 a wrong answer fades, its border and its words (Brilliant's, the owner): no red, nothing shakes; the sheet says it */
+.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk{background:var(--edge);color:var(--ink3)}   /* 3.57.0 its cross on a disc the colour of its own border, as the right one's (Brilliant's, measured: #303030 on #303030 dark, #F2F2F2 light; the owner: merged, very little contrast) */
+.qz .opt-btn.wrong.shake,.qz .opt-btn.wrong.fade{animation:q-bad var(--t-fade) var(--ease-std) var(--q-ans) backwards}   /* (the class names are the old ones: the last wrong answer, a first miss) from the flame to faded, its colours only */
+@keyframes q-bad{from{opacity:1;border-color:var(--primary);background-color:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}}
 .qz .q-dock .q-skip{border:var(--bw-edge) solid var(--edge);color:var(--ink-skip);font-weight:var(--fw-btn);box-shadow:0 2px 0 var(--edge),var(--edge-in)}   /* Skip: a quiet panel with a lip; 3.33.1/3.33.3 its word the ink at 75 % (--ink-skip), fainter than Check's (the owner, §0) */
 .qz .q-dock .q-skip:active{transform:translateY(2px);box-shadow:var(--edge-in)}
 .qz .q-dock .btn-check:not([disabled]){background:var(--neutral);color:var(--on-neutral);box-shadow:0 4px 0 var(--neutral-lip)}   /* Check: neutral ink, not the flame */
@@ -1530,7 +1520,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    Moves glide (FLIP, transform only, on the pop spring); nothing on the page jumps. */
 .qz>.gm{margin-top:48px}   /* 3.39.0 the game right under its question, one block (§12.19); 3.39.1 48 px */
 .gm .num{font-variant-numeric:tabular-nums}
-.gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
+.gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk-in var(--t-fade) var(--ease-std) var(--q-mark) backwards}
 .gm .fly{z-index:3}
 /* order: the cards on a ladder; the place numbers stay, the cards move */
 .gm-row{display:flex;align-items:center}
@@ -1576,11 +1566,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* checked: as an option speaks (§12.15) */
 .gm .ok{border-color:var(--right);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right)}   /* 3.41.0 a game's right answer: the same family */
 .gm .bad{border-color:var(--wrong);background:var(--surface);box-shadow:inset 0 0 0 .34px var(--wrong)}
-.gm .ok-in{animation:gm-ok var(--t-lift) var(--ease-pop) calc(var(--q-ans) + var(--i,0) * var(--q-step)) backwards}   /* the student's own answer: right, place by place */
-@keyframes gm-ok{0%{border-color:var(--edge);background-color:var(--surface);transform:none}45%{transform:scale(1.03)}100%{transform:none}}
-.gm-field.ok-in{animation:q-ok var(--t-win) var(--ease-win) var(--q-ans) backwards}
+.gm .ok-in{animation:gm-ok var(--t-fade) var(--ease-std) calc(var(--q-ans) + var(--i,0) * var(--q-step)) backwards}   /* the student's own answer: right, place by place */
+@keyframes gm-ok{from{border-color:var(--edge);background-color:var(--surface)}}   /* 3.56.0 colours only: the piece no longer swells (Brilliant's, the owner) */
+.gm-field.ok-in{animation:gm-ok-f var(--t-fade) var(--ease-std) var(--q-ans) backwards}
+@keyframes gm-ok-f{from{border-color:var(--primary);background-color:var(--done-bg)}}   /* 3.56.0 the typed answer, from the flame to the green: colours only (the spring is gone) */
 .gm .ok-show{animation:q-show var(--t-state) var(--ease-std) var(--q-show) backwards}   /* the answer, shown after a miss */
-.gm .shake{animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0)}
+.gm .shake{animation:gm-bad var(--t-fade) var(--ease-std) var(--q-ans) backwards}
+@keyframes gm-bad{from{border-color:var(--edge);background-color:var(--surface)}}   /* 3.56.0 a wrong piece turns red, nothing shakes (the owner) */
 .calm .gm *,.calm .gm{animation:none !important;transition:none !important}
 .calm .gm-caret{opacity:1}
 @media (prefers-reduced-motion:reduce){.gm *,.gm{animation:none !important;transition:none !important}}
@@ -3103,7 +3095,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.54.0',
+  VERSION: '3.57.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6954,7 +6946,7 @@ function paperPick(el) {
   S.ckRise = typeof it.sel !== 'number';                             // the first choice: Next rises (as Check in a set)
   it.sel = pos; S.selIn = pos;
   savePaper(); sense('select');
-  repaint(); S.selIn = -1; S.ckRise = false; pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));
+  repaint(); S.selIn = -1; S.ckRise = false;   // 3.56.0 as a set: the colours only, no swell
 }
 function paperMove(i) {
   if (!S || !S.exam || S.done) return;
@@ -8004,7 +7996,7 @@ ACTIONS.pick = function (el) {
   S.ckRise = typeof it.sel !== 'number';                             // 3.32.0 the first choice: Check rises (later choices: it is up)
   it.sel = pos; S.selIn = pos;
   repaint(); S.selIn = -1; S.ckRise = false;
-  showCheck(); pop(elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'));   // 3.16.0 (the tap's knock comes from onClick)
+  showCheck();   // 3.56.0 no swell (Brilliant's, the owner): only its colours answer the touch, with the knock (from onClick)
 };
 function showCheck() {
   var b = elScreens.querySelector('.btn-check');
