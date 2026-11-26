@@ -741,7 +741,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .tm-d i{animation:none}
 .calm .tm-d i.out{display:none}
 @media (prefers-reduced-motion:reduce){.tm-d i{animation:none}.tm-d i.out{display:none}}
-.p-dots{order:-2;display:flex;margin-top:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}
+.p-dots{order:-2;display:flex;margin-top:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;touch-action:pan-y;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}
 .p-dots::-webkit-scrollbar{display:none}
 .pd{flex:none;display:flex;align-items:center;justify-content:center;width:24px;height:var(--tap);background:none}
 .pd i{display:block;width:12px;height:12px;border-radius:50%;background:var(--fill);transition:transform var(--t-press) var(--ease-swift)}
@@ -1397,7 +1397,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opts.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:8px;gap:8px;margin-top:4px}
 .opts.grid .opt-btn{position:relative;flex-direction:column;justify-content:center;min-width:0;min-height:96px;margin-top:0 !important;padding:24px 8px 12px}
 .opts.grid .opt-key{position:absolute;top:8px;left:8px;width:24px;height:24px;font-size:var(--fs-cap);margin:0}
-.opts.grid.short .opt-btn{min-height:72px;padding:12px 8px;font-size:var(--fs-xl);font-weight:700}
+.opts.grid.short .opt-btn{min-height:72px;padding:12px 8px;font-size:var(--fs-lg);font-weight:700}   /* 3.53.0 as big as an option in a column (Brilliant's, measured) */
 .opts.grid .opt-txt{flex:none;display:flex;align-items:center;justify-content:center;width:100%}
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
@@ -1414,7 +1414,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    two thirds of a dot between them; the open question's dot a light grey (#CCC there) inside a 2 px ring of the faintest grey
    (#F2F2F2), 3 px from it; a right answer green, a wrong one or a skip dark grey (#666), the rest the faintest grey. */
 .qz .q-header{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;column-gap:8px;align-items:center}
-.q-dots{display:flex;align-items:center;justify-content:center;gap:var(--qg);height:44px;min-width:0}
+.q-dots{display:flex;align-items:center;justify-content:center;gap:var(--qg);height:44px;min-width:0;touch-action:pan-y}
 .q-dots .qd{position:relative;flex:none;display:block;width:var(--qd);height:var(--qd);border-radius:50%;background:var(--fill)}
 .q-dots .qd.cur{background:var(--line-2)}
 .q-dots .qd.ok{background:var(--win)}
@@ -1551,20 +1551,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-slot>.gm-tile{position:absolute;top:0;left:0;right:0;bottom:0;width:auto}
 .gm-bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
 .gm-tile{position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-sm);box-shadow:0 2px 0 var(--edge),var(--edge-in);
-  font-size:var(--fs-2xl);font-weight:700;color:var(--ink);touch-action:manipulation;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+  font-size:var(--fs-xl);font-weight:700;color:var(--ink);touch-action:manipulation;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
 .gm-tile:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
 .gm-tile.ghost{background:var(--fill-2);border-color:transparent;box-shadow:none}
 .gm-slot .gm-tile .opt-mk{top:-8px;right:-8px}
 /* num: the answer, and the app's own keys */
 .gm-field{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);
-  font-size:var(--fs-3xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+  font-size:var(--fs-xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}   /* 3.53.0 one step over the keys (it was 28 px) */
 .gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* what the student typed: the flame */
-.gm-caret{display:block;width:2px;height:32px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
+.gm-caret{display:block;width:2px;height:24px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
 @keyframes gm-blink{50%{opacity:0}}
 .gm-was{margin-right:12px;font-size:var(--fs-lg);font-weight:600;color:var(--ink3);text-decoration:line-through}   /* the number already found wrong */
 .gm-keys{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}
 .gm-key{display:flex;align-items:center;justify-content:center;height:48px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-md);box-shadow:0 2px 0 var(--edge),var(--edge-in);
-  font-size:var(--fs-2xl);font-weight:600;color:var(--ink);touch-action:manipulation}
+  font-size:var(--fs-lg);font-weight:600;color:var(--ink);touch-action:manipulation}   /* 3.53.0 the figures as big as Brilliant's (they were 24 px) */
 .gm-key:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
 .gm-key.nil{visibility:hidden}
 .gm-key .li{stroke-width:2.2}
@@ -3101,7 +3101,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.51.0',
+  VERSION: '3.53.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6177,6 +6177,88 @@ function qDotsCentre(sc) {
   r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
   row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2);
 }
+/* 3.52.0 (the owner) THE DOTS FOLLOW THE FINGER. A finger put on a row of dots (a paper's, or a set's) and slid sideways
+   chooses the dot under it as it goes, so a small phone finds a question without aiming at a 12 px dot: the paper opens
+   that question at once, a set shows an answered one again (or comes back to the open one). Each new dot is felt (a short
+   knock). Near the ends of a row that scrolls, the row moves on by itself. A tap is still a tap, and the page still
+   scrolls up and down from the row. The page is drawn again at most once a frame; the row keeps its place meanwhile. */
+var dScrub = null, dScrubEnd = 0, dHold = -1;
+function dRow() { return elScreens ? elScreens.querySelector('.p-dots, .q-dots') : null; }
+function dNearest(row, x) {
+  var list = row.querySelectorAll(/(^| )p-dots( |$)/.test(row.className) ? '.pd' : '.qd-b'), best = -1, bd = 1e9, i, r, d;
+  for (i = 0; i < list.length; i++) {
+    r = list[i].getBoundingClientRect(); d = Math.abs(r.left + r.width / 2 - x);
+    if (d < bd) { bd = d; best = parseInt(list[i].getAttribute('data-i'), 10); }
+  }
+  return best;
+}
+function dChoose(k) {                               // true when the page must show another question
+  if (k < 0 || !S || S.done || !S.items[k]) return false;
+  if (S.exam) { if (k === S.i && !S.pEnd) return false; S.i = k; S.pEnd = false; return true; }
+  k = k === S.i ? null : k;
+  if ((typeof S.peek === 'number' ? S.peek : null) === k) return false;
+  S.peek = k; return true;
+}
+function dDown(ev) {
+  var row = ev.target && ev.target.closest ? ev.target.closest('.p-dots, .q-dots') : null;
+  if (!row || !S || S.done || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
+  dScrub = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: ev.clientX, on: false, edge: 0, raf: 0, paint: 0 };
+}
+function dMove(ev) {
+  var d = dScrub, dx, dy;
+  if (!d || ev.pointerId !== d.id) return;
+  dx = ev.clientX - d.x0; dy = ev.clientY - d.y0;
+  if (!d.on) {
+    if (Math.abs(dx) < 6) { if (Math.abs(dy) > 10) dScrub = null; return; }   // up or down first: the page scrolls, as always
+    if (Math.abs(dy) > Math.abs(dx)) { dScrub = null; return; }
+    d.on = true;
+  }
+  if (ev.cancelable) ev.preventDefault();
+  d.x = ev.clientX; dStep();
+}
+function dStep() {
+  var d = dScrub, row = dRow(), r, k, edge = 0;
+  if (!d || !d.on || !row) return;
+  r = row.getBoundingClientRect();
+  if (row.scrollWidth > row.clientWidth + 1) {
+    if (d.x < r.left + 32) edge = -Math.min(1, (r.left + 32 - d.x) / 32);
+    else if (d.x > r.right - 32) edge = Math.min(1, (d.x - (r.right - 32)) / 32);
+  }
+  d.edge = edge;
+  k = dNearest(row, Math.max(r.left + 1, Math.min(r.right - 1, d.x)));
+  if (dChoose(k)) { sense('select'); dHold = row.scrollLeft; dPaint(); }
+  if (d.edge && !d.raf) d.raf = requestAnimationFrame(dEdge);
+}
+function dEdge() {                                  // at an end of the row: it moves on under the still finger
+  var d = dScrub, row = dRow();
+  if (!d) return;
+  d.raf = 0;
+  if (!d.on || !d.edge || !row) return;
+  row.scrollLeft += d.edge * 7; dHold = row.scrollLeft;
+  dStep();
+}
+function dPaint() {
+  var d = dScrub;
+  if (!d || d.paint) return;
+  d.paint = requestAnimationFrame(function () { if (dScrub) dScrub.paint = 0; repaint(); });
+}
+function dUp(ev) {
+  var d = dScrub, row, at, r, a;
+  if (!d || ev.pointerId !== d.id) return;
+  dScrub = null;
+  if (!d.on) return;
+  dScrubEnd = Date.now();
+  if (d.raf) cancelAnimationFrame(d.raf);
+  if (d.paint) { cancelAnimationFrame(d.paint); repaint(); }
+  if (S && S.exam) savePaper();
+  dHold = -1;
+  row = dRow(); at = row && row.querySelector('.pd.at, .qd.at');
+  if (at && row.scrollWidth > row.clientWidth + 1) {             // the chosen dot settles in the middle of the row
+    r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+    try { row.scrollBy({ left: (a.left + a.width / 2) - (r.left + r.width / 2), behavior: calmMotion() ? 'auto' : 'smooth' }); }
+    catch (e) { row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2); }
+  }
+}
 /* 3.51.0 (the owner) a question already answered, looked at again: the answer as it was checked (the right one, the
    student's, crossed out if not right), the explanation open, and one way back to the open question */
 function peekHtml(k) {
@@ -6559,7 +6641,13 @@ function gFit(sc) {
   room = body.getBoundingClientRect().top - sc.getBoundingClientRect().top - 8;
   if (over > 0 && room > 0) sc.scrollTop = Math.ceil(Math.min(over, room));
 }
-AFTER.practice = function (sc) { startTimer(); gFit(sc); if (S && S.exam) paperDotsCentre(sc); else qDotsCentre(sc); if (!actx) setTimeout(warmAudio, 80); };
+AFTER.practice = function (sc) {
+  var row;
+  startTimer(); gFit(sc);
+  if (dHold >= 0 && (row = sc.querySelector('.p-dots, .q-dots'))) row.scrollLeft = dHold;   // 3.52.0 a finger on the row: it stays where it is
+  else if (S && S.exam) paperDotsCentre(sc); else qDotsCentre(sc);
+  if (!actx) setTimeout(warmAudio, 80);
+};
 
 /* 3.16.0 a new phone, just signed in, fetching its backup: Home's shape in skeletons (no numbers until they are real) */
 SCREENS.restoring = function () {
@@ -6944,7 +7032,7 @@ ACTIONS['p-skip'] = function () {                    // a skipped question is le
   S.items[S.i].sel = null;
   paperOn();
 };
-ACTIONS['p-go'] = function (el) { if (S && S.exam) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
+ACTIONS['p-go'] = function (el) { if (S && S.exam && Date.now() - dScrubEnd > 400) paperMove(parseInt(el.getAttribute('data-i'), 10) || 0); };
 ACTIONS['p-submit-yes'] = function () { submitPaper(false); };
 ACTIONS['paper-done'] = function () { reset('topics'); };
 
@@ -8047,7 +8135,7 @@ function qFree(box, it) {
 }
 ACTIONS['q-peek'] = function (el) {
   var k = parseInt(el.getAttribute('data-i'), 10);
-  if (!S || S.exam || S.done || isNaN(k) || !S.items[k]) return;
+  if (!S || S.exam || S.done || isNaN(k) || !S.items[k] || Date.now() - dScrubEnd < 400) return;
   if (k === S.i) { if (typeof S.peek === 'number') ACTIONS['q-peek-back'](); return; }
   if (S.items[k].pick === null || S.peek === k) return;
   S.peek = k; repaint();
@@ -9364,6 +9452,10 @@ function boot() {
     else gKeyEv(ev);                                                 // 3.33.0 a number game: the computer's keys type too
   });
   elPhone.addEventListener('pointerdown', gDown);                    // 3.33.0 a card of an order game can be dragged
+  elPhone.addEventListener('pointerdown', dDown);                    // 3.52.0 the dots follow a finger slid along them
+  document.addEventListener('pointermove', dMove, { passive: false });
+  document.addEventListener('pointerup', dUp);
+  document.addEventListener('pointercancel', dUp);
   document.addEventListener('pointermove', gMove, { passive: false });
   document.addEventListener('pointerup', gUp);
   document.addEventListener('pointercancel', gUp);
