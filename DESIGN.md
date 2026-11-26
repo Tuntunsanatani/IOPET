@@ -267,8 +267,8 @@ Dark and light are the same design. Neither is made from the other by turning co
 | `--fs-xs` | 13 | `--ls-xs` +.025em | meta lines, hints, footnotes, small counts |
 | `--fs-sm` | 14 | `--ls-sm` +.02em | secondary text, text that is read (FAQ answers, Privacy, Terms: line 1.6), small links |
 | `--fs-md` | 15 | `--ls-md` +.015em | body text, menu rows, an FAQ question |
-| `--fs-lg` | 17 | `--ls-lg` +.01em | buttons, options, card and list titles, nav labels |
-| `--fs-xl` | 20 | `--ls-xl` 0 | question text, section titles, Hindi chapter names, result titles |
+| `--fs-lg` | 17 | `--ls-lg` +.01em | buttons, options (four short ones too, 3.53.0), card and list titles, nav labels, a game's keys (3.53.0) |
+| `--fs-xl` | 20 | `--ls-xl` 0 | question text, section titles, Hindi chapter names, result titles, a typed answer and a letter tile (3.53.0) |
 | `--fs-2xl` | 24 | `--ls-2xl` −.015em | screen titles, big stat values |
 | `--fs-3xl` | 28 | `--ls-3xl` −.018em | hero titles (Progress, summary, chapter) |
 | `--fs-doc` | 36 | 0 (Roboto Slab) | a document's large line only (3.47.0, the owner) |
@@ -1321,3 +1321,23 @@ chooses the dot under it as it goes:
   a move that starts up or down scrolls the page (`touch-action: pan-y` on the rows); the page is drawn at most once a
   frame while the finger moves (a paper's page takes about 2 ms), and the row keeps its place under the finger.
 
+### 12.23 A question's text as big as Brilliant's (3.53.0, the owner)
+The owner, beside Brilliant on the same phone: Brilliant's options and keys are smaller than IOPET's, "not so small that
+they are not read, not so big that they take the room and the child's attention"; IOPET's key figures (1 2 3) were far
+too big for their keys. Measured on the owner's screenshots and IOPET at the same scale (1080 px wide, a 412 px phone;
+the height of a figure):
+
+| | Brilliant | IOPET before | IOPET now |
+|---|---|---|---|
+| A key's figure (`.gm-key`) | 34 px | 47 px (24 px, 600) | 33 px (`--fs-lg` 17 px, 600) |
+| The typed answer (`.gm-field`) | 34 px | 56 px (28 px, 700) | 40 px (`--fs-xl` 20 px, 700): one step over the keys, it is the answer |
+| Four short options (`.opts.grid.short`) | 35 px | 39 px (20 px) | 33 px (`--fs-lg` 17 px, as an option in a column) |
+| A letter tile (`.gm-tile`) | (none) | 24 px, 700 | `--fs-xl` 20 px, 700, as the typed answer |
+| The question (`.q-text`, FINAL 6) | capital 40 px | capital 38 px | unchanged: already Brilliant's size |
+
+- Only the letters changed: the keys stay 48 px, the field and the tiles 56 px, so nothing on the page moves (the caret
+  is as tall as the line: 24 px). The weights are as they were. A paper's options follow a set's (§0, 9: "as in a set").
+- **Every phone the same size of letters**, 320 to 430 px wide (checked at 320, 360, 375, 412, 430): as Brilliant and
+  the phones' own apps do, a letter keeps its size from phone to phone and the page gives the room (at 320 px a key is
+  41 px wide and its figure fits). Measured: every key, field, tile, card, option and the dock in the same place as before,
+  to the pixel (320 x 568, 412 x 915).

@@ -1397,7 +1397,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opts.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:8px;gap:8px;margin-top:4px}
 .opts.grid .opt-btn{position:relative;flex-direction:column;justify-content:center;min-width:0;min-height:96px;margin-top:0 !important;padding:24px 8px 12px}
 .opts.grid .opt-key{position:absolute;top:8px;left:8px;width:24px;height:24px;font-size:var(--fs-cap);margin:0}
-.opts.grid.short .opt-btn{min-height:72px;padding:12px 8px;font-size:var(--fs-xl);font-weight:700}
+.opts.grid.short .opt-btn{min-height:72px;padding:12px 8px;font-size:var(--fs-lg);font-weight:700}   /* 3.53.0 as big as an option in a column (Brilliant's, measured) */
 .opts.grid .opt-txt{flex:none;display:flex;align-items:center;justify-content:center;width:100%}
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
@@ -1551,20 +1551,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-slot>.gm-tile{position:absolute;top:0;left:0;right:0;bottom:0;width:auto}
 .gm-bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
 .gm-tile{position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-sm);box-shadow:0 2px 0 var(--edge),var(--edge-in);
-  font-size:var(--fs-2xl);font-weight:700;color:var(--ink);touch-action:manipulation;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+  font-size:var(--fs-xl);font-weight:700;color:var(--ink);touch-action:manipulation;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
 .gm-tile:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
 .gm-tile.ghost{background:var(--fill-2);border-color:transparent;box-shadow:none}
 .gm-slot .gm-tile .opt-mk{top:-8px;right:-8px}
 /* num: the answer, and the app's own keys */
 .gm-field{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);
-  font-size:var(--fs-3xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+  font-size:var(--fs-xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}   /* 3.53.0 one step over the keys (it was 28 px) */
 .gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* what the student typed: the flame */
-.gm-caret{display:block;width:2px;height:32px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
+.gm-caret{display:block;width:2px;height:24px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
 @keyframes gm-blink{50%{opacity:0}}
 .gm-was{margin-right:12px;font-size:var(--fs-lg);font-weight:600;color:var(--ink3);text-decoration:line-through}   /* the number already found wrong */
 .gm-keys{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}
 .gm-key{display:flex;align-items:center;justify-content:center;height:48px;padding:0;background:var(--surface);border:var(--bw-edge) solid var(--edge);border-radius:var(--r-md);box-shadow:0 2px 0 var(--edge),var(--edge-in);
-  font-size:var(--fs-2xl);font-weight:600;color:var(--ink);touch-action:manipulation}
+  font-size:var(--fs-lg);font-weight:600;color:var(--ink);touch-action:manipulation}   /* 3.53.0 the figures as big as Brilliant's (they were 24 px) */
 .gm-key:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
 .gm-key.nil{visibility:hidden}
 .gm-key .li{stroke-width:2.2}
@@ -3101,7 +3101,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.52.0',
+  VERSION: '3.53.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
