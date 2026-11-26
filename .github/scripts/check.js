@@ -153,14 +153,15 @@ try {
         if (!js.includes("['400', '450', '600', '700'].forEach(function (w) { document.fonts.load(")) e.push('the splash must wait for the 450 face with the others');
         return e;
       } },
-    { what: 'the right option\'s mark: a white tick on the deeper green circle (black on green was harsh)', since: '3.41.0, 3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+    { what: 'the right option\'s mark, as Brilliant\'s: the disc in the right border\'s green, its tick black (dark) or white (light), the tick at once and the disc fading in', since: '3.41.0, 3.42.0; colours and entrance 3.55.0', status: 'FINAL, the owner, 20 Nov 2026; colours and entrance changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [];
-        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right-lip);color:var(--on-right)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right-lip);color:var(--on-right)');
-        if (!/(^|;)--on-right:#FFFFFF(;|$)/.test(root) || /--on-right/.test(light)) e.push('--on-right must be #FFFFFF in :root and not redefined by the light look');
-        if (!/(^|;)--right-lip:#1C9E42(;|$)/.test(root) || !/(^|;)--right-lip:#18B348(;|$)/.test(light)) e.push('--right-lip must be #1C9E42 (dark) and #18B348 (light)');
+        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right);color:var(--bg)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right);color:var(--bg)');
+        if (!/(^|;)--bg:#141414(;|$)/.test(root) || !/(^|;)--bg:#FFFFFF(;|$)/.test(light)) e.push('--bg must be #141414 (dark) and #FFFFFF (light): the tick is black on the dark look, white on the light');
         if (!rule('.qz .opt-mk').includes('width:24px;height:24px;border-radius:50%')) e.push('.qz .opt-mk must stay a 24 px circle');
         if (!rule('.qz .opt-mk .li').includes('width:14px;height:14px;stroke-width:3.2')) e.push('.qz .opt-mk .li must stay 14 px, stroke 3.2');
+        if (!rule('.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk').includes('animation:q-mk-invar(--t-fade)var(--ease-std)var(--q-mark)backwards')) e.push('the marks must come in by q-mk-in (--t-fade, --ease-std, after --q-mark)');
+        if (!/@keyframes q-mk-in\{from\{background-color:transparent\}\}/.test(html)) e.push('@keyframes q-mk-in must be from{background-color:transparent}: the tick at once, the disc fading in, nothing growing');
         for (const r of rules) if (r.sel !== '.qz .opt-btn.correct .opt-mk' && /\.correct[^,]*\.opt-mk/.test(r.sel) && /(^|;)(color|background)[:-]/.test(r.body)) e.push(r.sel + ' must not repaint the right option\'s mark');
         return e;
       } }

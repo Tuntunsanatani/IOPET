@@ -1468,7 +1468,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-btn.sel-in{animation:q-sel var(--t-state) var(--ease-swift)}
 @keyframes q-sel{from{border-color:var(--edge);background-color:var(--surface)}}
 .qz .opt-btn.correct{border-color:var(--right);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right);opacity:1}   /* 3.41.0 the right option in the sheet's colours (the owner: one family) */
-.qz .opt-btn.correct .opt-mk{background:var(--right-lip);color:var(--on-right)}   /* FINAL 7 (the owner, 20 Nov 2026): a white ✓ on the deeper green (black on green was harsh; 2.8:1 light, 3.5:1 dark) */
+.qz .opt-btn.correct .opt-mk{background:var(--right);color:var(--bg)}   /* FINAL 7, changed at the owner's request (26 Nov 2026, Brilliant's): the mark in the right border's own green, its ✓ black on the dark look and white on the light (--bg) */
 .qz .opt-btn.ok-in{animation:q-ok var(--t-win) var(--ease-win) var(--q-ans) backwards}   /* the student's own answer, on dham 1: green at once (from the flame), a spring from 96 % */
 @keyframes q-ok{0%{border-color:var(--primary);background-color:var(--done-bg);transform:scale(.96)}1%{border-color:var(--right);background-color:var(--right-sheet)}100%{transform:none}}
 .qz .opt-btn.ok-in::after{content:'';position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;border:var(--bw-edge) solid var(--right);opacity:0;pointer-events:none;animation:q-ring var(--t-ring) var(--ease-sheet) var(--q-ans)}   /* 3.43.0 a ring of light leaves the card */
@@ -1477,8 +1477,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes q-spark{from{opacity:1;transform:scale(.3)}to{opacity:0;transform:none}}
 .qz .opt-btn.ok-show{animation:q-show var(--t-state) var(--ease-std) var(--q-show) backwards}   /* the right one shown after a miss: it lights after the miss */
 @keyframes q-show{from{border-color:var(--edge);background-color:var(--surface)}}
-.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk{animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
-@keyframes q-mk{from{transform:scale(0)}}
+.qz .opt-btn.ok-in .opt-mk,.qz .opt-btn.ok-show .opt-mk,.qz .opt-btn.shake .opt-mk,.qz .opt-btn.fade .opt-mk{animation:q-mk-in var(--t-fade) var(--ease-std) var(--q-mark) backwards}   /* 3.55.0 Brilliant's (the owner, his recording): the ✓ or ✗ is there at once, its disc fades in round it; nothing grows */
+@keyframes q-mk-in{from{background-color:transparent}}
 .qz .opt-btn.dim{opacity:.4}
 .qz .opt-btn.dim-in{animation:q-dim var(--t-fade) var(--ease-std) var(--q-dim) backwards}
 @keyframes q-dim{from{opacity:1}}
@@ -1489,7 +1489,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-btn.wrong.fade{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in);   /* a first miss: it shakes, then steps back. 3.33.2 where it ends is */
   animation:q-shake var(--t-shake) var(--ease-std) var(--q-shake0),q-fade var(--t-step) var(--ease-std) var(--q-out) backwards}   /* the rule itself: the motion only leads there, so with no motion (Reduce animations, a phone set to less motion) no red is left (the owner's bug) */
 @keyframes q-fade{from{opacity:1;border-color:var(--wrong);box-shadow:inset 0 0 0 .34px var(--wrong)}}
-.qz .opt-btn.wrong.fade .opt-mk{background:var(--ink3);color:var(--bg);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards,q-mk-out var(--t-step) var(--ease-std) var(--q-out) backwards}
+.qz .opt-btn.wrong.fade .opt-mk{background:var(--ink3);color:var(--bg);animation:q-mk-out var(--t-step) var(--ease-std) var(--q-out) backwards,q-mk-in-bad var(--t-fade) var(--ease-std) var(--q-mark) backwards}
+@keyframes q-mk-in-bad{from{background-color:transparent}to{background-color:var(--wrong)}}   /* the red disc fades in, holds, then greys at --q-out (the last named wins while it runs) */
 @keyframes q-mk-out{from{background:var(--wrong);color:var(--on-wrong)}}
 .qz .opt-btn.out{opacity:.4;border-color:var(--edge);box-shadow:var(--edge-in)}   /* found wrong: out of the way, its cross grey */
 .qz .opt-btn.out .opt-mk{background:var(--ink3);color:var(--bg)}
@@ -1530,7 +1531,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    Moves glide (FLIP, transform only, on the pop spring); nothing on the page jumps. */
 .qz>.gm{margin-top:48px}   /* 3.39.0 the game right under its question, one block (§12.19); 3.39.1 48 px */
 .gm .num{font-variant-numeric:tabular-nums}
-.gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk var(--t-pop) var(--ease-pop) var(--q-mark) backwards}
+.gm .opt-mk{background:var(--wrong);color:var(--on-wrong);animation:q-mk-in var(--t-fade) var(--ease-std) var(--q-mark) backwards}
 .gm .fly{z-index:3}
 /* order: the cards on a ladder; the place numbers stay, the cards move */
 .gm-row{display:flex;align-items:center}
@@ -3103,7 +3104,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.54.0',
+  VERSION: '3.55.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
