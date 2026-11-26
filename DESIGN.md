@@ -416,7 +416,8 @@ a premium screen needs. Copy Brilliant, learn why, then make it our own.
 
 ## 6. Components
 
-- **Bottom dock**: the main action area of a screen. It is anchored to the bottom (sticky), on the page colour.
+- **Bottom dock**: the main action area of a screen. It is anchored to the bottom (sticky), on the page colour. A set's
+  Skip and Check (3.54.0, the owner): pinned, with no colour behind them (§12.19).
 - **Result panel** (quiz): slides up from the bottom and is tinted by the result (green-soft after right,
   wrong-soft after wrong, grey after a skip). Row 1: icon + "Correct!" / "Not quite" / "Skipped" + "+10 XP" + flag. Row 2: the
   explanation (open after a wrong answer or a skip, behind "Why?" after a right one). Row 3: one
@@ -1215,6 +1216,17 @@ the buttons, and the eye had to travel a long way down to find them. Tiring, and
   flow (`.qz>.q-dock:not(.res){position:static}`): at the bottom when the block fits (every number below unchanged), after
   the options when it does not, and the page scrolls; choosing brings the whole row into view (Check keeps its 20 px over
   the bottom). Brilliant has no such panel. The result sheet is unchanged.
+- **3.54.0 (the owner, his phone, a question with the number pad): Skip and Check stay pinned at the bottom, and only
+  the two buttons take room.** The row in the flow (3.51.0) still had the page's colour behind it, from 88 px over the
+  buttons (the room kept for the result sheet) to the bottom, and it was drawn over what touched it: the last row of
+  keys lost its 2 px lip, so the keys looked cut. Now the row is pinned again (`position: sticky`, so it never leaves the
+  bottom while the page scrolls, and at the end of a long page it rests after the last option, so nothing stays hidden)
+  and has no colour of its own (`background: transparent`); the empty room in it lets a tap through to the page
+  (`pointer-events: none`, the buttons `auto`). A long question passes behind the two buttons while it scrolls and is
+  seen around them. Choosing an option no longer scrolls the page (the row is always in sight). Measured, light and dark,
+  320 x 568, 360 x 640, 412 x 904: the keys' lip drawn whole; an option seen above the buttons taken by a tap; at the end
+  of the scroll the last option 76 px over Skip; the page still after a choice; the result sheet where it was. A paper
+  keeps its row in the flow, as locked (§0, 9). The other docked pages (Start, the summary, Review's Done) are unchanged.
 - The block stands in the room between the header and the dock. The room left is shared two parts above, one part below
   (the page's own `::before` and `::after`, `flex: 2` and `flex: 1`). The dock keeps its 88 px for the result sheet below
   that, so the block sits a little above the middle, as Brilliant's does.
