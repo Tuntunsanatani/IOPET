@@ -245,6 +245,18 @@ try {
           if (/^(\.qz \.opt-btn|\.gm)/.test(s) && /(^|;)animation:[^;]*q-shake/.test(r.body)) e.push(s + ' must not shake'); }
         if (/pop\(elScreens\.querySelector\('\[data-act=pick\]/.test(js)) e.push('a pick must not swell (pop) the option');
         return e;
+      } },
+    { what: 'a question\'s keys, typed answer, short options and letter tiles as big as Brilliant\'s', since: '3.53.0', status: 'FINAL, the owner, 26 Nov 2026',
+      test: () => {
+        const e = [], inc = (sel, decl) => { if (!rule(sel).includes(decl)) e.push(sel + ' must hold ' + decl); };
+        inc('.gm-key', 'height:48px'); inc('.gm-key', 'font-size:var(--fs-lg);font-weight:600');
+        inc('.gm-field', 'min-height:56px'); inc('.gm-field', 'font-size:var(--fs-xl);font-weight:700;line-height:1.2');
+        inc('.gm-caret', 'width:2px;height:24px');
+        inc('.opts.grid.short .opt-btn', 'font-size:var(--fs-lg)');
+        inc('.gm-tile', 'font-size:var(--fs-xl);font-weight:700');
+        for (const r of rules) for (const part of r.sel.split(',')) { const s = part.trim();
+          if (/(^|[ >])\.(gm-key|gm-field|gm-tile)$|\.opts\.grid\.short \.opt-btn$/.test(s) && /(^|;)font-size:/.test(r.body) && !/(^|;)font-size:var\(--fs-(lg|xl)\)/.test(r.body)) e.push(s + ' sets another size'); }
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
