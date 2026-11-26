@@ -1508,7 +1508,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-btn.dim-in{animation:q-dim var(--t-fade) var(--ease-std) var(--q-dim) backwards}
 @keyframes q-dim{from{opacity:1}}
 .qz .opt-btn.wrong,.qz .opt-btn.out{opacity:.4;border-color:var(--edge);background:var(--surface);box-shadow:var(--edge-in)}   /* 3.56.0 a wrong answer fades, its border and its words (Brilliant's, the owner): no red, nothing shakes; the sheet says it */
-.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk{background:var(--edge);color:var(--ink3)}   /* 3.57.0 its cross on a disc the colour of its own border, as the right one's (Brilliant's, measured: #303030 on #303030 dark, #F2F2F2 light; the owner: merged, very little contrast) */
+.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk{background:var(--edge);color:var(--bg)}   /* 3.57.0 its cross on a disc the colour of its own border (Brilliant's: merged, very little contrast); 3.59.0 the owner: the cross in the page's own colour (white on the light look) */
 .qz .opt-btn.wrong.shake,.qz .opt-btn.wrong.fade{animation:q-bad var(--t-fade) var(--ease-std) var(--q-ans) backwards}   /* (the class names are the old ones: the last wrong answer, a first miss) from the flame to faded, its colours only */
 @keyframes q-bad{from{opacity:1;border-color:var(--primary);background-color:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}}
 .qz .q-dock .q-skip{border:var(--bw-edge) solid var(--edge);color:var(--ink-skip);font-weight:var(--fw-btn);box-shadow:0 2px 0 var(--edge),var(--edge-in)}   /* Skip: a quiet panel with a lip; 3.33.1/3.33.3 its word the ink at 75 % (--ink-skip), fainter than Check's (the owner, §0) */
@@ -3123,7 +3123,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.58.0',
+  VERSION: '3.59.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)

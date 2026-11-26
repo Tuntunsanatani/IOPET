@@ -228,7 +228,7 @@ try {
         if (!js.includes("window.getComputedStyle(b).position === 'sticky') return;")) e.push('choosing must not scroll the page while the row is pinned (showCheck)');
         return e;
       } },
-    { what: 'an option answers in colour only, as Brilliant\'s: chosen in the flame (border and words), right in one green, wrong faded with its cross merged into its border; nothing swells, springs, sparkles or shakes', since: '3.56.0, 3.57.0', status: 'FINAL, the owner, 26 Nov 2026',
+    { what: 'an option answers in colour only, as Brilliant\'s: chosen in the flame (border and words), right in one green, wrong faded with its cross merged into its border; nothing swells, springs, sparkles or shakes', since: '3.56.0, 3.57.0; the cross\'s colour 3.59.0', status: 'FINAL, the owner, 26 Nov 2026; the cross\'s colour changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
         has('.qz .opt-btn.sel', 'border-color:var(--primary);background:var(--done-bg);box-shadow:inset000.34pxvar(--primary);color:var(--primary)');
@@ -236,7 +236,7 @@ try {
         has('.qz .opt-btn.sel-in', 'animation:q-selvar(--t-state)var(--ease-swift)');
         has('.qz .opt-btn.ok-in', 'animation:q-okvar(--t-fade)var(--ease-std)var(--q-ans)backwards');
         has('.qz .opt-btn.wrong,.qz .opt-btn.out', 'opacity:.4;border-color:var(--edge);background:var(--surface);box-shadow:var(--edge-in)');
-        has('.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk', 'background:var(--edge);color:var(--ink3)');
+        has('.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk', 'background:var(--edge);color:var(--bg)');
         has('.qz .opt-btn.wrong.shake,.qz .opt-btn.wrong.fade', 'animation:q-badvar(--t-fade)var(--ease-std)var(--q-ans)backwards');
         const kf = n => ((html.match(new RegExp('@keyframes ' + n + '\\{([^@]*?\\})\\}')) || [])[1] || '');
         for (const n of ['q-sel', 'q-ok', 'q-show', 'q-bad', 'q-mk-in', 'gm-ok', 'gm-ok-f', 'gm-bad']) { const k = kf(n); if (!k) e.push('@keyframes ' + n + ' must stay'); else if (/transform|scale|translate/.test(k)) e.push('@keyframes ' + n + ' must change colours only, nothing moves'); }
