@@ -156,7 +156,7 @@ try {
     { what: 'the right option\'s mark, as Brilliant\'s: the disc in the right border\'s green, its tick black (dark) or white (light), the tick at once and the disc fading in', since: '3.41.0, 3.42.0; colours and entrance 3.55.0', status: 'FINAL, the owner, 20 Nov 2026; colours and entrance changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [];
-        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right);color:var(--bg)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right);color:var(--bg)');
+        if (rule('.qz .opt-btn.correct .opt-mk') !== 'background:var(--right-opt);color:var(--bg)') e.push('.qz .opt-btn.correct .opt-mk must be exactly background:var(--right-opt);color:var(--bg) (the green of the right option\'s border)');
         if (!/(^|;)--bg:#141414(;|$)/.test(root) || !/(^|;)--bg:#FFFFFF(;|$)/.test(light)) e.push('--bg must be #141414 (dark) and #FFFFFF (light): the tick is black on the dark look, white on the light');
         if (!rule('.qz .opt-mk').includes('width:24px;height:24px;border-radius:50%')) e.push('.qz .opt-mk must stay a 24 px circle');
         if (!rule('.qz .opt-mk .li').includes('width:14px;height:14px;stroke-width:3.2')) e.push('.qz .opt-mk .li must stay 14 px, stroke 3.2');
@@ -166,7 +166,7 @@ try {
         return e;
       } }
 ,
-    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option and a game\'s right answer', since: '3.42.0', status: 'FINAL, the owner, 20 Nov 2026',
+    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026',
       test: () => {
         const e = [];
         const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
@@ -177,7 +177,8 @@ try {
         has('.qz .q-result.ok', 'background:var(--right-sheet)');
         has('.qz .qr-go.ok', 'background:var(--right);color:var(--on-right);box-shadow:04px0var(--right-lip)');
         has('.qz .qr-go.ok:active', 'box-shadow:01px0var(--right-lip)');
-        has('.qz .opt-btn.correct', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right);opacity:1');
+        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
+        if (!/(^|;)--right-opt:var\(--right\)(;|$)/.test(root) || !/(^|;)--right-opt:var\(--right-lip\)(;|$)/.test(light)) e.push('--right-opt must be var(--right) on the dark look and var(--right-lip) on the light (the right option\'s border, words and mark in one green)');
         has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
         if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
         return e;
