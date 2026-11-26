@@ -1200,14 +1200,14 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    orange (--primary-ink): it marks the one thing to find. (3.10.0: it was amber, which would read as a reward.) */
 .figs{display:block;text-align:center;margin:10px 0 2px;line-height:0}
 .fig{display:inline-block;vertical-align:middle;margin:4px 6px;line-height:1.3}
-.fig svg{display:block;overflow:visible}
-.fig text{fill:currentColor;font-family:var(--font-display);font-weight:700}
-.fig .fig-lbl{font-family:var(--font-body);font-weight:800;opacity:.8}
+.fig svg{display:block;overflow:visible;width:calc(var(--fw) * var(--fig-k, 1));max-width:100%;height:auto}   /* 3.60.0 drawn at --fig-k of its own size (a question .8, an option .75) */
+.fig text{fill:currentColor;font-family:var(--font-display);font-weight:600}   /* 3.60.0 (the owner) a figure's numbers one step lighter than its lines were, as dark as before */
+.fig .fig-lbl{font-family:var(--font-body);font-weight:600;opacity:.8}
 .fig .fig-q,.fig-grid td.fig-q{fill:var(--primary-ink);color:var(--primary-ink);font-weight:800}
-.fig-line{fill:none;stroke:currentColor;stroke-width:1.6;stroke-opacity:.75}
-.fig-hub{fill:var(--fill-2);stroke:currentColor;stroke-width:1.4;stroke-opacity:.7}
+.fig-line{fill:none;stroke:var(--ink2);stroke-width:1.25;vector-effect:non-scaling-stroke}   /* 3.60.0 (the owner) slim and softer: the numbers carry it */
+.fig-hub{fill:var(--fill-2);stroke:var(--ink2);stroke-width:1.25;vector-effect:non-scaling-stroke}
 .fig-grid{border-collapse:collapse;margin:0 auto}
-.fig-grid td{min-width:40px;height:36px;padding:2px 8px;border:1.5px solid var(--line-2);text-align:center;font-family:var(--font-display);font-size:var(--fs-md);font-weight:700}
+.fig-grid td{min-width:36px;height:32px;padding:2px 8px;border:1px solid var(--line-2);text-align:center;font-family:var(--font-display);font-size:var(--fs-md);font-weight:600}   /* 3.60.0 a slimmer table, its numbers lighter */
 .opt-txt .figs{margin:0;text-align:left}
 .opt-txt .fig{margin:0}
 .rv-q .figs,.rv-line .figs,.rv-x .figs{margin:8px 0 2px}
@@ -1410,16 +1410,16 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opt-btn.sel .opt-key{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 
 /* ── NON-VERBAL FIGURES ── ink on paper, like the exam; colour only in the explanation patches (H1–H4) */
-.fv-l{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.fv-k{fill:none;stroke:currentColor;stroke-width:1.6;stroke-dasharray:5 4;opacity:.8}
-.fv-f{fill:currentColor;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
-.fv-h{stroke-width:2;stroke-linejoin:round;fill-opacity:.55}
+.fv-l{fill:none;stroke:var(--ink2);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}   /* 3.60.0 (the owner) slim lines in the softer ink, the same width at any size */
+.fv-k{fill:none;stroke:var(--ink2);stroke-width:1.25;stroke-dasharray:5 4;opacity:.8;vector-effect:non-scaling-stroke}
+.fv-f{fill:var(--ink2);stroke:var(--ink2);stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.fv-h{stroke-width:1.5;stroke-linejoin:round;fill-opacity:.55;vector-effect:non-scaling-stroke}
 .fv-h1{fill:#FFC233;stroke:#CF8E00}
 .fv-h2{fill:#33B5F0;stroke:#0A7DB3}
 .fv-h3{fill:#F2559A;stroke:#B52E69}
 .fv-h4{fill:#33C25E;stroke:#1E8A40}
-.fig .fv-lbl{fill:currentColor;font-family:var(--font-body);font-weight:800;opacity:.75}
-.fig .fw-t{fill:currentColor;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:800}
+.fig .fv-lbl{fill:currentColor;font-family:var(--font-body);font-weight:600;opacity:.75}
+.fig .fw-t{fill:currentColor;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:600}
 .fig-word,.fig-fig{color:var(--ink)}
 .fig-fig svg,.fig-word svg{max-width:100%;height:auto}
 .opts.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:8px;gap:8px;margin-top:4px}
@@ -1430,6 +1430,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .opts.grid .figs{margin:0;text-align:center}
 .opts.grid .fig,.opts.grid .figs{display:block;width:100%;margin:0}
 .opts.grid .fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.qz .opt-txt{--fig-k:.75}   /* 3.60.0 (the owner) an option's figure smaller still: 75 % */
 /* 3.32.0 THE QUIZ ON BRILLIANT'S RULES (DESIGN.md §12.15). Measured on the owner's Brilliant recordings, frame by frame: a choice
    takes its colour at once (here one --t-state); Check rises 60 ms after the first choice; on Check the answer itself changes
    first (~140 ms: its colour, then its corner mark), the sheet comes up at ~220 ms over 280 ms, its button lights and the XP
@@ -1467,7 +1468,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .calm .q-dots .qd,.calm .q-dots .qd::after{animation:none !important}
 @media (prefers-reduced-motion:reduce){.q-dots .qd,.q-dots .qd::after{animation:none !important}}
 .qz>.opts{margin-top:48px}   /* 3.39.0 the answers right under their question (§12.19); 3.39.1 the owner's pick, 48 px */
-.qz .q-text .figs{margin-top:24px}   /* 3.39.1 a figure 24 px under its question: with it, yet its own part (§12.19) */
+.qz .q-text .figs{margin-top:24px;--fig-k:.8}   /* 3.60.0 (the owner) a question's figure at 80 % of its drawing: with the question, not over it */
+.qz .q-text .fig-tri,.qz .q-text .fig-circ,.qz .q-text .fig-cross,.qz .q-text .fig-venn3{--fig-k:.9}   /* a figure of numbers at 90 %: its numbers stay readable (13.5 px; 11.7 in a ring) */   /* 3.39.1 a figure 24 px under its question: with it, yet its own part (§12.19) */
 .qz>.q-dock{margin-top:0}
 /* 3.39.0 THE QUESTION AND ITS ANSWERS ARE ONE GROUP (the owner; DESIGN.md §12.19). A short question left its options at the
    bottom, a long way down: the eye had to travel to find them. Now the question (and its figure) and its answers (options,
@@ -1609,7 +1611,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .rv-x .figs .fig-fig{margin:4px}
 .rv-x .fig-word svg{max-width:200px}
 .fig-wide{display:block;margin:6px 0}
-.fig-wide svg,.rv-x .fig-wide svg{width:100%;max-width:420px;max-height:none;height:auto;margin:0 auto}
+.fig-wide svg,.rv-x .fig-wide svg{width:calc(var(--fw) * var(--fig-k, 1));max-width:100%;max-height:none;height:auto;margin:0 auto}   /* 3.60.0 at its own size times --fig-k (was the full width, up to 420 px) */
 
 /* ── 3.8.0 PAID PACKS: the pack on the Topics page, its unlock page, the code box, the admin page ── */
 .pay-or{margin:8px 2px 0}.adm-sub{margin-top:16px}
@@ -3123,7 +3125,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.59.0',
+  VERSION: '3.60.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6008,7 +6010,7 @@ var FIG_RUN = /\[\[[a-z0-9]+:[^\[\]]*\]\](?:\s*\[\[[a-z0-9]+:[^\[\]]*\]\])*/g, F
 function figNum(v, x, y, size) {
   return '<text x="' + x + '" y="' + y + '" dy=".35em" text-anchor="middle" font-size="' + (size || 15) + '"' + (v === '?' ? ' class="fig-q"' : '') + '>' + esc(v) + '</text>';
 }
-function figSvg(w, h, body) { return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true">' + body + '</svg>'; }
+function figSvg(w, h, body) { return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="--fw:' + w + 'px" aria-hidden="true">' + body + '</svg>'; }   // (--fw: its own width; a page draws it at --fig-k of that, 3.60.0)
 function figVals(arg, n, m) { var v = arg.split(','); return v.length >= n && v.length <= m ? v.map(function (x) { return x.trim(); }) : null; }
 var VENN = {   /* [circles as x, y, r] — drawn in a 96 x 64 box */
   nest3:      [[48, 32, 29], [48, 32, 19], [48, 32, 9]],              // A inside B inside C
