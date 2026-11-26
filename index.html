@@ -164,7 +164,7 @@
      settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
      screen would stand empty for ~80 ms (five frames) before the next page — a blink. Evenly, the gap is one frame. */
   --ease-swift:cubic-bezier(.25,1,.5,1);--ease-leave:linear;--t-out:120ms;--t-in:150ms;
-  --phone-r:0px;                   /* the phone's corners: none when the app fills the screen, 40px in the frame (below) */
+  --phone-r:0px;                   /* the phone's corners: none (3.58.0: a tablet has no phone frame any more; it was 40px) */
   --font-display:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;
   --font-body:'IOPET Sans',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;--font-doc:'IOPET Slab','Roboto Slab',Georgia,serif;
   color-scheme:dark;
@@ -216,9 +216,37 @@ sub,sup{font-size:.72em;line-height:0}
 /* ── LAYOUT: fixed to the viewport edges, no vh/dvh units needed ── */
 #app{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;background:var(--bg-deep)}
 .phone{position:relative;width:100%;height:100%;overflow:hidden;background:var(--bg)}
+/* 3.58.0 A TABLET (the owner: "set itself up on every device"). Gone: the phone-shaped frame in the middle. Standing (or any
+   screen that is not a wide landscape): the phone's own page, the full height, drawn a little bigger (zoom --k, 1 to 1.25,
+   set by zoomSet()). Lying (landscape, 900 px and wider): a set or a paper uses the width (.phone.wide, below); every other
+   page stays the phone's column. On a phone nothing here applies (--k is 1). */
 @media (min-width:500px) and (min-height:560px){
-  :root{--phone-r:40px}
-  .phone{width:390px;height:844px;max-height:calc(100% - 28px);border-radius:var(--phone-r);box-shadow:0 0 0 1px var(--line),0 30px 80px var(--shadow)}
+  .phone{width:412px;height:100%;max-height:none;border-radius:0;box-shadow:0 0 0 1px var(--line);zoom:var(--k,1)}
+}
+@media (min-width:500px) and (min-height:560px) and (orientation:portrait){
+  .qz .qr-text{max-height:55vh}   /* a tall screen: the reason (Why?) gets more of it */
+}
+/* Lying: the X top left, the dots on top, the question in the middle of its side, the answers on the right with Skip | Check
+   right under them; the result and Continue in their place; Why? opens the reason as a panel the page's height on the right,
+   the question still in sight. */
+@media (min-width:900px) and (min-height:560px) and (orientation:landscape){
+  .phone.wide{width:100%;box-shadow:none}
+  .phone.wide .page.practice.qz{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 380px;grid-template-rows:auto auto minmax(0,1fr) auto auto minmax(0,1fr);column-gap:72px;padding:24px 48px 32px}
+  .phone.wide .qz::before,.phone.wide .qz::after{display:none}
+  .phone.wide .qz>.q-header{grid-column:1/-1;grid-row:1}
+  .phone.wide .qz>.p-dots{grid-column:1/-1;grid-row:2;margin-top:0}
+  .phone.wide .qz>.q-body{grid-column:1;grid-row:3/7;align-self:center;justify-self:center;width:fit-content;max-width:520px;margin-top:0}
+  .phone.wide .qz>.opts,.phone.wide .qz>.gm{grid-column:2;grid-row:4;margin-top:0}
+  .phone.wide .qz>.q-dock{grid-column:2;grid-row:5;position:static;margin:24px 0 0;padding:0}
+  .phone.wide .qz>.q-dock:not(.res){padding-top:0}
+  .phone.wide .qz>.q-dock.res{position:relative;border-radius:var(--r-lg)}
+  .phone.wide .qz .q-result{border-radius:var(--r-lg);padding:16px}
+  .phone.wide .qz .q-ghost{display:none}
+  .phone.wide .qz>.q-dock.res.why{grid-area:auto;position:absolute;top:72px;right:0;bottom:0;width:50%;margin:0;border-radius:var(--r-lg) 0 0 0;z-index:6}
+  .phone.wide .qz>.q-dock.res.why .q-result{height:100%;display:flex;flex-direction:column;border-radius:var(--r-lg) 0 0 0;padding:32px 48px 32px 40px}
+  .phone.wide .qz .q-result.open .qr-text{flex:1 1 auto;max-height:none;margin-top:24px;font-size:var(--fs-lg);line-height:1.75}
+  .phone.wide .qz .q-result.open .qr-go{margin-top:24px !important}
+  .phone.wide .qz.why>.q-body{justify-self:start;max-width:420px}   /* the question stays whole beside the reason */
 }
 #screens,.screen{position:absolute;top:0;right:0;bottom:0;left:0}
 .screen{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;animation:scr var(--t-fade) var(--ease-swift)}
@@ -250,7 +278,7 @@ sub,sup{font-size:.72em;line-height:0}
 .vt-theme::view-transition-new(root){animation:th-in var(--t-fade) linear both}
 @keyframes th-in{from{opacity:0}}
 /* the browser draws these pictures above the page, without the phone's own clip: they are clipped to its shape here (on a
-   tablet or a computer the phone has round corners; the bar keeps the 28px fade it has above itself) */
+   tablet or a computer the phone had round corners until 3.58.0, --phone-r now 0; the bar keeps the 28px fade it has above itself) */
 ::view-transition-group(page){clip-path:inset(0 round var(--phone-r))}
 ::view-transition-group(nav){clip-path:inset(-28px 0 0 round 0 0 var(--phone-r) var(--phone-r))}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -1344,7 +1372,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* 3.7.2 the phone's top bar and the app meet without a line: on a phone (the app fills the screen) its top 24px — the screens'
    own top margin — fade out of the bar's colour. It stays put while a screen scrolls under it, and lies over a dimmed screen
    (a question box) but under the messages and the "please wait" card; the celebration brings its own. On a tablet or a computer
-   (the phone-sized frame) there is no such edge, so nothing changes there. */
+   (the page's column, 3.58.0) there is no such edge, so nothing changes there. */
 @media not all and (min-width:500px) and (min-height:560px){
   .phone::after{content:'';position:absolute;top:0;left:0;right:0;height:24px;background:linear-gradient(var(--bar),var(--bar) 2px,transparent);pointer-events:none;z-index:65}
   .cele{background:linear-gradient(var(--bar),transparent 24px),radial-gradient(90% 55% at 50% 38%,var(--glow-a),transparent 75%),var(--bg)}
@@ -3095,7 +3123,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.57.0',
+  VERSION: '3.58.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -3543,7 +3571,7 @@ var mailAt = {};          // when the last email of each kind was asked for
 var loginFails = 0, loginBlock = 0;
 var verifyAt = 0;
 var delTried = '';          // account whose login-delete request was sent but not confirmed (the answer got lost)
-var elPhone, elScreens, elNav, elModal, elToast, elBusy;
+var elApp, elPhone, elScreens, elNav, elModal, elToast, elBusy;
 
 function newSync() { return { busy: false, queue: [], timer: 0, err: '', detail: '', tries: 0, frozen: false, pushes: [], last: 0, tombAt: 0, tombUt: '' }; }
 
@@ -3886,12 +3914,38 @@ var barHold = false;                      // the splash is fading out: the phone
    meet without a line, as in the phone's own apps. 3.10.0: in dark that is the page colour itself (no haze, no purple), the same
    as the splash, the manifest and the first theme-color, so the bar keeps one colour from the phone's start screen (the icon on a
    dark ground, the manifest's theme_color = its background_color, 3.7.3) to the last screen.
-   On a tablet or a computer the app is a phone-sized frame in the middle of the screen, so the bar meets the dark ground around
-   the frame, not the app: there it keeps the plain ground colours it always had. */
+   On a tablet or a computer the app is a column in the middle of the screen (3.58.0; a phone-sized frame before), so the bar
+   meets the ground beside it, not the app: there it keeps the plain ground colours it always had. */
 var BAR = { dark: '#141414', light: '#FFFFFF' }, BAR_FRAMED = { dark: '#0E0E0E', light: '#E6E6E6' }, FRAME_MQ = '(min-width:500px) and (min-height:560px)', frameMq = null;
 function framed() {
   try { if (!frameMq && window.matchMedia) frameMq = window.matchMedia(FRAME_MQ); } catch (e) { frameMq = null; }
   return !!(frameMq && frameMq.matches);
+}
+/* 3.58.0 A TABLET draws the app bigger: CSS zoom on .phone (--k; 1 on a phone, so nothing below changes there). Browsers
+   disagree on what getBoundingClientRect gives inside a zoomed box: Chrome 128 and later the drawn pixels, Safari and older
+   Chrome the box's own pixels; a finger's clientX/clientY are always drawn pixels. So every sum that turns a box or a finger
+   into a style, a scroll or a hit is done in the box's own pixels: zR(el) a box, zP(v) a finger's coordinate. zRV(el) gives
+   the drawn pixels, for a mark drawn outside the phone (navMorph). zRectK says which way this browser measures. */
+var WIDE_MQ = '(min-width:900px) and (min-height:560px) and (orientation:landscape)', zK = 1, zRectK = 1;
+function zoomSet() {
+  var W = window.innerWidth || 0, H = window.innerHeight || 0, k = 1, r, sc;
+  if (framed()) k = W > H && W >= 900 ? Math.max(1, Math.min(1.15, H / 700)) : Math.max(1, Math.min(1.25, H / 900, W / 412));
+  k = Math.round(k * 1000) / 1000;
+  if (elApp) elApp.style.setProperty('--k', String(k));
+  zK = k; zRectK = 1;
+  if (elPhone && k !== 1 && elPhone.offsetWidth) { r = elPhone.getBoundingClientRect(); zRectK = Math.abs(r.width / elPhone.offsetWidth - 1) < 0.01 ? 1 : k; }
+  sc = elScreens && elScreens.querySelector('.page.qz');
+  if (elPhone) elPhone.classList.toggle('wide', !!sc && wideNow());
+}
+function wideNow() { try { return !!(window.matchMedia && window.matchMedia(WIDE_MQ).matches); } catch (e) { return false; } }
+function zR(el) {
+  var r = el.getBoundingClientRect(), f = zRectK;
+  return f === 1 ? r : { left: r.left / f, top: r.top / f, right: r.right / f, bottom: r.bottom / f, width: r.width / f, height: r.height / f };
+}
+function zP(v) { return v / zK; }
+function zRV(el) {
+  var r = zR(el), k = zK;
+  return k === 1 ? r : { left: r.left * k, top: r.top * k, right: r.right * k, bottom: r.bottom * k, width: r.width * k, height: r.height * k };
 }
 function bootUser() { return db && db.session && has(db.users, db.session) ? db.users[db.session] : null; }
 function watchTheme() {
@@ -4746,6 +4800,7 @@ function paint(quiet) {
   }
   elScreens.innerHTML = '<div class="screen' + (quiet ? ' quiet' : '') + (off ? ' still' : '') + '" data-screen="' + e.s + '">' + html + '</div>';
   sc = elScreens.firstChild;
+  if (elPhone) elPhone.classList.toggle('wide', !!sc.querySelector('.page.qz') && wideNow());   // 3.58.0 a lying tablet: a set or a paper across the screen
   if (quiet) sc.scrollTop = keep; else if (e.scroll) sc.scrollTop = e.scroll;
   paintNav(e.s);
   if (!quiet) lock(Math.max(CONFIG.NAV_LOCK_MS, offMs));   // (3.9.5 after the splash: until its light has opened onto the screen)
@@ -4919,9 +4974,9 @@ function formErr(msg) {
 function auErrPlace(el) {
   var pg = el.parentNode, an = pg && (pg.classList.contains('open') ? pg.querySelector('.au-sheet') : pg.querySelector('.au-body')), pr, r;
   if (!an) return;
-  pr = pg.getBoundingClientRect(); r = an.getBoundingClientRect();
+  pr = zR(pg); r = zR(an);
   el.style.top = 'auto'; el.style.bottom = Math.round(pr.bottom - r.top + 12) + 'px';
-  if (el.getBoundingClientRect().top < pr.top + 60) { el.style.bottom = 'auto'; el.style.top = '60px'; }
+  if (zR(el).top < pr.top + 60) { el.style.bottom = 'auto'; el.style.top = '60px'; }
 }
 function formNote(msg) {
   var el = $('err'), e = top();
@@ -5382,7 +5437,7 @@ function onAuDown(ev) {
     if (!sh || !modalOpen) return;
     d = { sh: sh, modal: true, bg: rgbaOf(getComputedStyle(elModal).backgroundColor) };
   }
-  d.g = g; d.id = ev.pointerId; d.y0 = d.y = ev.clientY; d.t = d.t0 = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
+  d.g = g; d.id = ev.pointerId; d.y0 = d.y = zP(ev.clientY); d.t = d.t0 = Date.now(); d.v = 0; d.dy = 0; d.h = sh.offsetHeight || 1; d.moved = false;
   auDrag = d;
   g.classList.add('on'); sense('select');                             // 3.17.1 the line: felt, and it widens (3.21.0 on every sheet)
   try { g.setPointerCapture(ev.pointerId); } catch (x) { /* (an old browser: the tap still closes) */ }
@@ -5401,12 +5456,12 @@ function onAuMove(ev) {
   var d = auDrag, now = Date.now(), ty;
   if (!d || ev.pointerId !== d.id) return;
   if (!d.moved) {
-    if (Math.abs(ev.clientY - d.y0) < 5) return;                     // not yet a drag: maybe a tap
+    if (Math.abs(zP(ev.clientY) - d.y0) < 5) return;                 // not yet a drag: maybe a tap
     d.moved = true;                                                  // from here the sheet stays under the finger
   }
-  ty = ev.clientY - d.y0; if (ty < 0) ty = ty / 5;                   // pulled up, it gives only a little
-  if (now > d.t) d.v = 0.7 * (ev.clientY - d.y) / (now - d.t) + 0.3 * d.v;   // px per ms, smoothed
-  d.y = ev.clientY; d.t = now; d.dy = ty;
+  ty = zP(ev.clientY) - d.y0; if (ty < 0) ty = ty / 5;               // pulled up, it gives only a little (3.58.0 zP: a tablet's zoom)
+  if (now > d.t) d.v = 0.7 * (zP(ev.clientY) - d.y) / (now - d.t) + 0.3 * d.v;   // px per ms, smoothed
+  d.y = zP(ev.clientY); d.t = now; d.dy = ty;
   auDragSet(d, ty, 0);
 }
 function onAuUp(ev) {
@@ -6097,7 +6152,7 @@ SCREENS.practice = function () {
   latest = it.retry ? it.pick2 : it.pick;            // the answer shown now (the second try, once there is one)
   sel = ask && typeof it.sel === 'number' ? it.sel : -1;
   ready = it.g ? ask && gReady(it) : sel >= 0;
-  html = '<div class="page bg-practice practice qz' + (it.g && (it.g.t === 'num' || it.g.t === 'spell') ? ' q-thumb' : '') +
+  html = '<div class="page bg-practice practice qz' + (it.g && (it.g.t === 'num' || it.g.t === 'spell') ? ' q-thumb' : '') + (stage === 'done' && it.why ? ' why' : '') +
     (stage === 'done' && typeof it.held === 'number' ? ' held" style="--q-held:' + it.held + 'px' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(fresh) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +   /* 3.34.0 one dot a question (the owner, on Brilliant's) */
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>' + (it.g ? gameHtml(it, stage, fresh) : '<div class="opts">');   // 3.33.0 a game in place of the options
@@ -6128,7 +6183,7 @@ SCREENS.practice = function () {
     ok = latest === q.a;
     /* the result sheet (3.12.0; 3.32.0 one height in every state, so nothing on the page moves when it comes; the way to the
        answer is one tap away, "Why?", once the answer is shown) */
-    html += '<div class="q-dock res">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
+    html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
       (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
       (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-expanded="' + (it.why ? 'true' : 'false') + '">Why?</button>' : '') +
@@ -6168,7 +6223,7 @@ function qDots(fresh, at) {
 function qDotsCentre(sc) {
   var row = sc && sc.querySelector('.q-dots.scroll'), at = row && row.querySelector('.qd.at'), r, a;
   if (!at) return;
-  r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+  r = zR(row); a = zR(at);
   row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2);
 }
 /* 3.52.0 (the owner) THE DOTS FOLLOW THE FINGER. A finger put on a row of dots (a paper's, or a set's) and slid sideways
@@ -6181,7 +6236,7 @@ function dRow() { return elScreens ? elScreens.querySelector('.p-dots, .q-dots')
 function dNearest(row, x) {
   var list = row.querySelectorAll(/(^| )p-dots( |$)/.test(row.className) ? '.pd' : '.qd-b'), best = -1, bd = 1e9, i, r, d;
   for (i = 0; i < list.length; i++) {
-    r = list[i].getBoundingClientRect(); d = Math.abs(r.left + r.width / 2 - x);
+    r = zR(list[i]); d = Math.abs(r.left + r.width / 2 - x);
     if (d < bd) { bd = d; best = parseInt(list[i].getAttribute('data-i'), 10); }
   }
   return best;
@@ -6196,7 +6251,7 @@ function dChoose(k) {                               // true when the page must s
 function dDown(ev) {
   var row = ev.target && ev.target.closest ? ev.target.closest('.p-dots, .q-dots') : null;
   if (!row || !S || S.done || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
-  dScrub = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: ev.clientX, on: false, edge: 0, raf: 0, paint: 0 };
+  dScrub = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: zP(ev.clientX), on: false, edge: 0, raf: 0, paint: 0 };   // (x in the row's own px: zP)
 }
 function dMove(ev) {
   var d = dScrub, dx, dy;
@@ -6208,12 +6263,12 @@ function dMove(ev) {
     d.on = true;
   }
   if (ev.cancelable) ev.preventDefault();
-  d.x = ev.clientX; dStep();
+  d.x = zP(ev.clientX); dStep();
 }
 function dStep() {
   var d = dScrub, row = dRow(), r, k, edge = 0;
   if (!d || !d.on || !row) return;
-  r = row.getBoundingClientRect();
+  r = zR(row);
   if (row.scrollWidth > row.clientWidth + 1) {
     if (d.x < r.left + 32) edge = -Math.min(1, (r.left + 32 - d.x) / 32);
     else if (d.x > r.right - 32) edge = Math.min(1, (d.x - (r.right - 32)) / 32);
@@ -6248,7 +6303,7 @@ function dUp(ev) {
   dHold = -1;
   row = dRow(); at = row && row.querySelector('.pd.at, .qd.at');
   if (at && row.scrollWidth > row.clientWidth + 1) {             // the chosen dot settles in the middle of the row
-    r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+    r = zR(row); a = zR(at);
     try { row.scrollBy({ left: (a.left + a.width / 2) - (r.left + r.width / 2), behavior: calmMotion() ? 'auto' : 'smooth' }); }
     catch (e) { row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2); }
   }
@@ -6257,7 +6312,7 @@ function dUp(ev) {
    student's, crossed out if not right), the explanation open, and one way back to the open question */
 function peekHtml(k) {
   var it = S.items[k], q = it.q, latest = it.retry ? it.pick2 : it.pick, ok = latest === q.a, html;
-  html = '<div class="page bg-practice practice qz peek"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+  html = '<div class="page bg-practice practice qz peek why"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(false, k) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>';
   if (it.g) html += gameHtml(it, 'done', false);
@@ -6274,7 +6329,7 @@ function peekHtml(k) {
     });
     html += '</div>';
   }
-  html += '<div class="q-dock res"><div class="q-result ' + (ok ? 'ok' : 'bad') + ' open" role="status"><div class="qr-head"><span class="fb-title">' +
+  html += '<div class="q-dock res why"><div class="q-result ' + (ok ? 'ok' : 'bad') + ' open" role="status"><div class="qr-head"><span class="fb-title">' +
     (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span><span class="qr-sp"></span></div>' +
     '<div class="qr-text">' + figHtml(explainOf(q)) + '</div>' +
     '<button type="button" class="btn qr-go plain" data-act="q-peek-back">Back to question ' + (S.i + 1) + '</button></div></div>';
@@ -6432,13 +6487,13 @@ function gSolve(it) {
 /* the tiles that changed place glide there from where they were (FLIP: measured before and after the drawing; transform only) */
 function gRects() {
   var m = {};
-  [].forEach.call(elScreens.querySelectorAll('.gm [data-tk]'), function (el) { m[el.getAttribute('data-tk')] = el.getBoundingClientRect(); });
+  [].forEach.call(elScreens.querySelectorAll('.gm [data-tk]'), function (el) { m[el.getAttribute('data-tk')] = zR(el); });
   return m;
 }
 function gFly(before) {
   if (!before || calmMotion()) return;
   [].forEach.call(elScreens.querySelectorAll('.gm [data-tk]'), function (el) {
-    var a = before[el.getAttribute('data-tk')], b = el.getBoundingClientRect(), dx, dy, sx, sy, an;
+    var a = before[el.getAttribute('data-tk')], b = zR(el), dx, dy, sx, sy, an;
     if (!a || !el.animate || !b.width || !b.height) return;
     dx = a.left - b.left; dy = a.top - b.top; sx = a.width / b.width; sy = a.height / b.height;
     if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && Math.abs(sx - 1) < 0.02 && Math.abs(sy - 1) < 0.02) return;
@@ -6583,14 +6638,14 @@ function gDown(ev) {
   if (!el || el.disabled || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
   it = gIt();
   if (!it || it.g.t !== 'order') return;
-  gDrag = { el: el, k: parseInt(el.getAttribute('data-i'), 10), x: ev.clientX, y: ev.clientY, id: ev.pointerId, on: false, over: -1 };
+  gDrag = { el: el, k: parseInt(el.getAttribute('data-i'), 10), x: zP(ev.clientX), y: zP(ev.clientY), id: ev.pointerId, on: false, over: -1 };   // (3.58.0 in the cards' own px)
 }
 function gMove(ev) {
   var d = gDrag, dy, over = -1, cards, i, r, it;
   if (!d || ev.pointerId !== d.id) return;
-  dy = ev.clientY - d.y;
+  dy = zP(ev.clientY) - d.y;
   if (!d.on) {
-    if (Math.abs(dy) < 8 && Math.abs(ev.clientX - d.x) < 8) return;
+    if (Math.abs(dy) < 8 && Math.abs(zP(ev.clientX) - d.x) < 8) return;
     it = gIt();
     if (!it || !d.el.isConnected) { gDrag = null; return; }
     d.on = true; d.el.classList.add('drag');
@@ -6601,8 +6656,8 @@ function gMove(ev) {
   cards = elScreens.querySelectorAll('.gm-card');
   for (i = 0; i < cards.length; i++) {
     if (cards[i] === d.el || cards[i].disabled) continue;
-    r = cards[i].getBoundingClientRect();
-    if (ev.clientY >= r.top && ev.clientY <= r.bottom) over = i;
+    r = zR(cards[i]);
+    if (zP(ev.clientY) >= r.top && zP(ev.clientY) <= r.bottom) over = i;
   }
   if (over !== d.over) {
     if (d.over >= 0 && cards[d.over]) cards[d.over].classList.remove('drop');
@@ -6631,8 +6686,8 @@ function gFit(sc) {
   S.gFit = S.i;
   body = sc.querySelector('.q-body'); dock = sc.querySelector('.q-dock'); all = sc.querySelectorAll('.gm-card,.gm-key,.gm-slot,.gm-bank .gm-tile');
   if (!body || !dock || !all.length) return;
-  over = all[all.length - 1].getBoundingClientRect().bottom - dock.getBoundingClientRect().top;
-  room = body.getBoundingClientRect().top - sc.getBoundingClientRect().top - 8;
+  over = zR(all[all.length - 1]).bottom - zR(dock).top;
+  room = zR(body).top - zR(sc).top - 8;
   if (over > 0 && room > 0) sc.scrollTop = Math.ceil(Math.min(over, room));
 }
 AFTER.practice = function (sc) {
@@ -6919,7 +6974,7 @@ function paperDots() {
 function paperDotsCentre(sc) {
   var row = sc && sc.querySelector('.p-dots'), at = row && row.querySelector('.pd.at'), r, a;
   if (!at) return;
-  r = row.getBoundingClientRect(); a = at.getBoundingClientRect();
+  r = zR(row); a = zR(at);
   row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2);
 }
 /* the time's figures, each in its own window, so one can turn over while the others stay */
@@ -7490,15 +7545,15 @@ var NAV_SEL = '.icon-btn[data-act=back], .icon-btn[data-act=quit], .sm-top .icon
 var NAV_PART = [['M18 6L12 12 18 18', -6, 0], ['M12 12L6 6', 0, 6], ['M12 12L6 18', 0, -6]];   // the X as three strokes (its right half, a <, and its two left half-strokes) and how far each slides in the arrow (24-unit drawing)
 var navEl = null;
 function navFind() {                                               // the mark of the screen now drawn (the first in its top-left corner)
-  var all = elScreens.querySelectorAll(NAV_SEL), i, r;
+  var all = elScreens.querySelectorAll(NAV_SEL), p = zR(elPhone), i, r;
   for (i = 0; i < all.length; i++) {
-    r = all[i].getBoundingClientRect();
-    if (r.width && r.top < 160 && r.left < 120 && r.bottom > 0) return all[i];
+    r = zR(all[i]);                                               // (3.58.0 from the phone's own corner: a tablet's page is not at the screen's)
+    if (r.width && r.top - p.top < 160 && r.left - p.left < 120 && r.bottom > p.top) return all[i];
   }
   return null;
 }
 function navState(btn, rect) {                                     // all that is needed to draw a mark: where, which state, its colour
-  var svg = btn.querySelector('.li'), r = rect || (svg && svg.getBoundingClientRect());
+  var svg = btn.querySelector('.li'), r = rect || (svg && zRV(svg));   // (drawn px: the mark is drawn over the page, outside the phone)
   if (!svg || !r || !r.width) return null;
   return { r: r, arrow: btn.getAttribute('data-act') === 'back', c: window.getComputedStyle(svg).color };
 }
@@ -7506,7 +7561,7 @@ function navCapture() { var b = calmMotion() ? null : navFind(); return b ? navS
 function navSettled(el) {                                          // where the new screen's mark will rest once the screen has come in
   var sc = elScreens.firstChild, an = sc && sc.getAnimations ? sc.getAnimations() : [], was = [], r;
   an.forEach(function (a) { was.push(a.currentTime); try { a.currentTime = a.effect.getComputedTiming().endTime; } catch (e) { /* */ } });
-  r = el.getBoundingClientRect();
+  r = zRV(el);
   an.forEach(function (a, i) { try { a.currentTime = was[i]; } catch (e) { /* */ } });
   return r;
 }
@@ -8104,16 +8159,17 @@ ACTIONS.next = function () {
    lifted, and only as far as it must (16 px clear of the sheet), in the same frame. */
 function qHold(box, fit) {
   var pg = box && box.closest ? box.closest('.qz') : null, it = S && S.items[S.i], hd, bd, ans, over, v;
-  if (!pg) return;
+  if (!pg || elPhone.classList.contains('wide')) return;   // 3.58.0 laid across a lying tablet, the sheet has its own place: nothing to hold
+
   if (!fit) {
     if (pg.classList.contains('held')) return;
     hd = pg.querySelector('.q-header'); bd = pg.querySelector('.q-body');
     if (!hd || !bd) return;
-    v = Math.max(0, bd.getBoundingClientRect().top - hd.getBoundingClientRect().bottom - (parseFloat(window.getComputedStyle(bd).marginTop) || 0));
+    v = Math.max(0, zR(bd).top - zR(hd).bottom - (parseFloat(window.getComputedStyle(bd).marginTop) || 0));
   } else {
     ans = pg.querySelector('.opts, .gm');
     if (!ans || !pg.classList.contains('held')) return;
-    over = ans.getBoundingClientRect().bottom + 16 - box.getBoundingClientRect().top;
+    over = zR(ans).bottom + 16 - zR(box).top;
     if (over <= 0) return;
     v = Math.max(0, (parseFloat(pg.style.getPropertyValue('--q-held')) || 0) - over);
   }
@@ -8147,6 +8203,8 @@ ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "W
   if (it.why) qHold(box);                        // 3.39.0 the question and its answers stay where they are read (§12.19)
   else qFree(box, it);                           // 3.40.2 folded: everything goes back where it was before Why? (the keys by the thumb)
   box.classList.toggle('open', !!it.why);
+  if (box.parentNode && box.parentNode.classList) box.parentNode.classList.toggle('why', !!it.why);   // 3.58.0 a lying tablet: the reason as a panel
+  if (box.closest && box.closest('.qz')) box.closest('.qz').classList.toggle('why', !!it.why);
   if (it.why) qHold(box, true);                  //   (lifted only as far as the longer sheet needs)
   el.setAttribute('aria-expanded', it.why ? 'true' : 'false');
 };
@@ -8459,8 +8517,8 @@ function run(name, el, ev) {
    Nothing of it with "Reduce animations" or a phone set to reduce motion. */
 function splash(el, ev, cls) {
   if (calmMotion() || !el.getBoundingClientRect) return;
-  var r = el.getBoundingClientRect(), clip = document.createElement('span'), dot = document.createElement('span');
-  var x = ev && ev.clientX ? ev.clientX - r.left : r.width / 2, y = ev && ev.clientY ? ev.clientY - r.top : r.height / 2;
+  var r = zR(el), clip = document.createElement('span'), dot = document.createElement('span');
+  var x = ev && ev.clientX ? zP(ev.clientX) - r.left : r.width / 2, y = ev && ev.clientY ? zP(ev.clientY) - r.top : r.height / 2;
   clip.className = 'rip-clip'; dot.className = 'ripple' + (cls ? ' ' + cls : '');
   dot.style.left = Math.round(x) + 'px'; dot.style.top = Math.round(y) + 'px';
   clip.appendChild(dot); el.appendChild(clip);
@@ -9421,7 +9479,8 @@ ACTIONS['adm-gdrop-yes'] = function (el) {
 };
 
 function boot() {
-  elPhone = $('phone'); elScreens = $('screens'); elNav = $('nav'); elModal = $('modal'); elToast = $('toast'); elBusy = $('busy');
+  elApp = $('app'); elPhone = $('phone'); elScreens = $('screens'); elNav = $('nav'); elModal = $('modal'); elToast = $('toast'); elBusy = $('busy');
+  zoomSet(); window.addEventListener('resize', zoomSet);   // 3.58.0 a tablet: drawn bigger; turned, it lays a set out across (zoomSet)
   elPhone.setAttribute('data-net', '0');
   try { if (window.history.state && window.history.state.iopetTrap) hist.armed = true; } catch (e) { hist.ok = false; }
   document.addEventListener('click', armBack, true);
