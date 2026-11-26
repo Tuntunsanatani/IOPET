@@ -1393,16 +1393,17 @@ The owner, with 14 screenshots of NMMS figures: the figures were too big, their 
 numbers in them as bold as the lines; they took the eye from the question and crowded the page ("give everything room to
 breathe"; "the student who has read the question will still see what the figure shows"). The text in a figure stays as
 dark as it was, only lighter in weight, so the words and the drawing read as two different things.
-- **Smaller:** a figure is drawn at `--fig-k` of its own size (`figSvg` gives each drawing `--fw`, its width): in a
-  question 80 % (a figure of numbers, `tri`, `circ`, `cross`, `venn3`, 90 %, so its numbers stay readable: 13.5 px, the small ones
-  in a ring 11.7 px), in an
-  option 75 % (an 82 px box is now 62 px). A row of boxes is no longer stretched to the width: 342 px is now 274. In an
-  explanation a figure keeps its size.
+- **Smaller, in the same room:** a figure is drawn at `--fig-k` of its size (`transform: scale`) inside the room it
+  always had, so the question, the answers and the buttons stay exactly where they were (the owner: the answers must not
+  rise when the figure gets smaller; measured, 11 kinds of figure at 412 x 915 and 320 x 568: every box in the same place
+  to the pixel). In a question 80 % (a figure of numbers, `tri`, `circ`, `cross`, `venn3`, 90 %, so its numbers stay
+  readable: 13.5 px, the small ones in a ring 11.7 px), in an option 75 % (an 82 px box is drawn 62 px). In an explanation
+  a figure keeps its size.
 - **Slimmer, softer lines:** the lines are `--ink2` (`#4D4D4D` light, `#B4B4B4` dark) in place of the ink, and the same width
   at any size (`vector-effect: non-scaling-stroke`): a drawing's lines 1.5 px (2), its dashed lines and a figure of
-  numbers' lines 1.25 px (1.6, at 75 %); a filled shape in `--ink2` too. The table of numbers: 1 px lines (1.5), its cells
-  36 x 32 (40 x 36).
+  numbers' lines 1.25 px (1.6, at 75 %); a filled shape in `--ink2` too.
 - **Text in a figure one step lighter, as dark:** numbers and labels at 600 (700, drawn in the 800 face on a practice
   page; labels 800); their colour unchanged. The "?" to find keeps its weight and colour.
-- Measured on the old and the new app at 412 x 915 and 320 x 568, light and dark: a figure of numbers, a table, a circle,
-  a plus, three circles, a counting figure, a row of boxes, a mirror, figure options of 82, 64 and 56 px; no script errors.
+- The table of numbers keeps its size and its light lines; its numbers at 600.
+- Seen on the old and the new app at 412 x 915 and 320 x 568, light and dark: a figure of numbers, a table, a circle, a
+  plus, three circles, a counting figure, a row of boxes, a mirror, figure options of 82, 64 and 56 px; no script errors.
