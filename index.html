@@ -733,7 +733,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-result.bad{background:var(--wrong-soft)}
 .q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet)}
 @keyframes qr-in{from{transform:translateY(100%)}to{transform:none}}
-.qr-head{display:flex;align-items:center;min-height:40px}
+.qr-head{display:flex;align-items:center;min-height:44px}   /* 3.75.0 (the owner) one height for every result sheet, flag or no flag (44, the flag's): nothing moves from question to question but the ? */
 .qr-head .fb-ico{margin-right:8px}
 .q-result.ok .fb-ico{background:var(--good);color:var(--on-mark)}
 .q-result.bad .fb-ico{background:var(--wrong);color:var(--on-wrong)}
@@ -742,6 +742,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-sp{flex:1}
 .qz .qr-why{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)}   /* 3.62.0 (the owner) Why? as a ? right after Correct! / Not quite, so it reads as about the answer */
 .qz .q-result.ok .qr-why{color:var(--right-ink)}
+.qz .qr-head .fb-title{min-width:4.65em}   /* 3.75.0 (the owner) the ? stands in one place: each word takes the room of the widest, Not quite */
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qz .qr-q{display:inline-block;transform-origin:50% 8%}
 .qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-press) both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
@@ -3167,7 +3168,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.74.0',
+  VERSION: '3.75.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
