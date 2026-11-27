@@ -308,6 +308,30 @@ try {
         if (!rule('.icon-btn[data-act=back]').includes('position:relative;top:-6px;left:-12px')) e.push('.icon-btn[data-act=back] must stand top:-6px;left:-12px');
         has('.sub-header.titled', 'margin-top:-6px');
         return e;
+      } },
+    { what: 'the dot under a finger grows and its number rises over it, in the dot\'s colour, at the options\' size and weight; each new dot felt softer the faster the thumb goes', since: '3.72.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), inc = (sel, d) => { if (!rule(sel).includes(d)) e.push(sel + ' must hold ' + d); };
+        inc('.q-dots .qd-b.hot .qd,.pd.hot i', 'transform:scale(1.45)');
+        inc('.dot-lbl', 'font-size:var(--fs-lg);font-weight:400');
+        inc('.dot-lbl.ok', 'color:var(--win)'); inc('.dot-lbl.on', 'color:var(--primary)');
+        if (!js.includes('ms = dt > 160 ? 12 : dt > 80 ? 7 : dt > 40 ? 3 : 0;')) e.push('the knocks must soften with speed: 12 / 7 / 3 ms, none past ~25 dots a second');
+        return e;
+      } },
+    { what: 'a swipe turns the question: a set back over the answered ones and forward to the open one, a paper anywhere; off while a reason is open', since: '3.72.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n');
+        if (rule('.page.qz') .indexOf('touch-action:pan-y') < 0) e.push('.page.qz must hold touch-action:pan-y');
+        for (const line of ["if (k < 0 || k >= S.items.length || (!S.exam && k > S.i)) return -1;", "|| pg.classList.contains('why')) return;", "if (Date.now() - swEnd < 350) return;"])
+          if (!js.includes(line)) e.push('the app must keep: ' + line);
+        return e;
+      } },
+    { what: 'every result sheet the same: the ? in one place after Correct!, Not quite and Skipped; one height, flag or no flag', since: '3.75.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [];
+        if (rule('.qz .qr-head .fb-title') !== 'min-width:4.65em') e.push('.qz .qr-head .fb-title must be exactly min-width:4.65em');
+        if (!rule('.qr-head').includes('min-height:44px')) e.push('.qr-head must hold min-height:44px');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
