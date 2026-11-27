@@ -76,6 +76,7 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
+  --hl1:#FFD60A;--hl1-e:#FFD60A;--hl2:#38BDF8;--hl2-e:#38BDF8;--hl3:#F472B6;--hl3-e:#F472B6;--hl4:#4ADE80;--hl4-e:#4ADE80;   /* 3.65.0 a reason's coloured parts: bright on the dark panel */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
   --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;
   --win:#2DCC5A;--miss-sheet:#262626;--off:#1A1A1A;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */
@@ -170,6 +171,7 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
+  --hl1:#FACC15;--hl1-e:#CA8A04;--hl2:#38BDF8;--hl2-e:#0284C7;--hl3:#F472B6;--hl3-e:#DB2777;--hl4:#4ADE80;--hl4-e:#16A34A;
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
@@ -738,12 +740,24 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-head .fb-title{flex:none;font-size:var(--fs-xl);font-weight:700}
 .qr-head .fb-xp{margin-left:8px}
 .qr-sp{flex:1}
+.qz .qr-why{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)}   /* 3.62.0 (the owner) Why? as a ? right after Correct! / Not quite, so it reads as about the answer */
+.qz .q-result.ok .qr-why{color:var(--right-ink)}
+.qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
 .qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-x)}   /* 3.40.0 the owner: not a first action, so the X's quiet grey (Brilliant's flag is #9F9F9F) */
 .qr-flag .li{width:20px;height:20px}
 .qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
 .q-result.open .qr-text{display:block}
+.qz:not(.peek) .q-result.open .qr-head{display:none}   /* 3.63.0 (the owner) while the reason is read, only the reason: the word, ? and flag step aside; Continue stays */
+.qz:not(.peek) .q-result.open .qr-text{margin-top:0}
+.qr-text .figs{margin:12px 0}   /* 3.64.0 (the owner) a reason's figures: only the size they need, side by side where they fit */
+.qr-text .fig{zoom:.8}
+.qr-text .fig-fig{zoom:.6}   /* a drawing without numbers at 60 % */
+.qr-text .fv-l,.qr-text .fv-f,.rv-x .fv-l,.rv-x .fv-f{stroke-width:1.25}
+.qr-text .fv-h,.rv-x .fv-h{stroke-width:1.5;fill-opacity:.75}   /* 3.65.0 (the owner) a clear tint with a bright edge: lively on the panel, never heavy */
+.qr-text .fv-h1,.rv-x .fv-h1{fill:var(--hl1);stroke:var(--hl1-e)}.qr-text .fv-h2,.rv-x .fv-h2{fill:var(--hl2);stroke:var(--hl2-e)}.qr-text .fv-h3,.rv-x .fv-h3{fill:var(--hl3);stroke:var(--hl3-e)}.qr-text .fv-h4,.rv-x .fv-h4{fill:var(--hl4);stroke:var(--hl4-e)}
+[data-theme="light"] .qr-text .fv-h,[data-theme="light"] .rv-x .fv-h{fill-opacity:.6}
 .qr-go{margin-top:16px !important}
 .qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 var(--good-lip)}
 .qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 var(--good-lip)}
@@ -3127,7 +3141,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.61.0',
+  VERSION: '3.66.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6189,8 +6203,8 @@ SCREENS.practice = function () {
        answer is one tap away, "Why?", once the answer is shown) */
     html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
+      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '">?</button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
       (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
-      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-expanded="' + (it.why ? 'true' : 'false') + '">Why?</button>' : '') +
       '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
       (stage === 'done' ? '<div class="qr-text">' + figHtml(explainOf(q)) + '</div>' : '') +
       (stage === 'miss' ? '<button type="button" class="btn qr-go plain" data-act="retry">Try again</button>'
