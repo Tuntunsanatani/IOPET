@@ -157,7 +157,7 @@
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
-  --t-pop:250ms;--t-sheet:280ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  --t-pop:250ms;--t-sheet:280ms;--t-hint:720ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
@@ -743,16 +743,20 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .qr-why{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)}   /* 3.62.0 (the owner) Why? as a ? right after Correct! / Not quite, so it reads as about the answer */
 .qz .q-result.ok .qr-why{color:var(--right-ink)}
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
+.qz .qr-why.hint{animation:qr-hint var(--t-hint) var(--ease-std) var(--t-sheet) 2 both}   /* 3.73.0 (the owner) an answered question looked at again: its ? breathes twice, so the reason is found, never pushed open */
+@keyframes qr-hint{0%,100%{transform:none;box-shadow:0 0 0 0 transparent}45%{transform:scale(1.14);box-shadow:0 0 0 6px color-mix(in srgb,currentColor 16%,transparent)}}
+.calm .qz .qr-why.hint{animation:none}
+@media (prefers-reduced-motion:reduce){.qz .qr-why.hint{animation:none}}
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
 .qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-x)}   /* 3.40.0 the owner: not a first action, so the X's quiet grey (Brilliant's flag is #9F9F9F) */
 .qr-flag .li{width:20px;height:20px}
 .qr-text{display:none;margin-top:12px;max-height:38vh;overflow-y:auto;font-size:var(--fs-md);line-height:1.7;color:var(--ink)}
 .q-result.open .qr-text{display:block}
-.qz:not(.peek) .q-result.open .qr-head{display:none}   /* 3.63.0 (the owner) while the reason is read, only the reason: the word, ? and flag step aside; Continue stays */
-.qz:not(.peek) .q-result.open .qr-text{margin-top:0}
+.qz .q-result.open .qr-head{display:none}   /* 3.63.0 (the owner) while the reason is read, only the reason: the word, ? and flag step aside; Continue stays */
+.qz .q-result.open .qr-text{margin-top:0}
 .qz>:not(.q-dock){transition:filter var(--t-sheet) var(--ease-sheet),opacity var(--t-sheet) var(--ease-sheet)}
-.qz.why:not(.peek)>:not(.q-dock){filter:blur(5.2px) saturate(.5);opacity:.5;pointer-events:none}   /* 3.70.0 (the owner) while the reason is read, the question behind it steps back: blurred (52 %) and half as loud (50 %), in and out with the sheet's own curve */
+.qz.why>:not(.q-dock){filter:blur(5.2px) saturate(.5);opacity:.5;pointer-events:none}   /* 3.70.0 (the owner) while the reason is read, the question behind it steps back: blurred (52 %) and half as loud (50 %), in and out with the sheet's own curve */
 .calm .qz>:not(.q-dock){transition:none}
 @media (prefers-reduced-motion:reduce){.qz>:not(.q-dock){transition:none}}
 .qr-text .figs{margin:12px 0}   /* 3.64.0 (the owner) a reason's figures: only the size they need, side by side where they fit */
@@ -3160,7 +3164,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.72.0',
+  VERSION: '3.73.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4965,7 +4969,11 @@ function appBack() {
   var e = top();
   if (!e) return false;
   if (e.s === 'login' && auClose()) return true;    // 3.11.0 the email sheet goes down first
-  if (e.s === 'practice') { askQuit(); return true; }
+  if (e.s === 'practice') {
+    if (S && !S.exam && !S.done && typeof S.peek === 'number' && S.peek !== S.i) { if (S.peekWhy) ACTIONS.why(); else ACTIONS['q-peek-back'](); return true; }   // 3.73.0
+    if (S && !S.exam && !S.done && S.items[S.i] && S.items[S.i].why && qStage(S.items[S.i]) === 'done') { ACTIONS.why(elScreens.querySelector('.qr-why') || elScreens); return true; }
+    askQuit(); return true;
+  }
   if (stack.length > 1) { stack.pop(); paint(); return true; }
   if (TABS[e.s] && e.s !== 'home') { reset('home'); return true; }
   return false;
@@ -6298,7 +6306,7 @@ function dChoose(k) {                               // true when the page must s
   if (S.exam) { if (k === S.i && !S.pEnd) return false; S.i = k; S.pEnd = false; return true; }
   k = k === S.i ? null : k;
   if ((typeof S.peek === 'number' ? S.peek : null) === k) return false;
-  S.peek = k; return true;
+  S.peek = k; S.peekWhy = false; S.peekHint = k !== null; return true;
 }
 function dDown(ev) {
   var row = ev.target && ev.target.closest ? ev.target.closest('.p-dots, .q-dots') : null;
@@ -6410,7 +6418,7 @@ function swTarget(dir) {                            // dir +1 the next question,
 function swDown(ev) {
   var t = ev.target, pg = elScreens && elScreens.querySelector('.page.qz');
   if (!pg || !S || S.done || dScrub || (ev.pointerType === 'mouse' && ev.button !== 0) || !t || !t.closest || !pg.contains(t)) return;
-  if (t.closest('.q-header, .p-dots, .q-dots, .q-dock, .gm, input, textarea') || (pg.classList.contains('why') && !pg.classList.contains('peek'))) return;
+  if (t.closest('.q-header, .p-dots, .q-dots, .q-dock, .gm, input, textarea') || pg.classList.contains('why')) return;
   sw = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, t0: Date.now(), dx: 0, on: false, parts: null };
 }
 function swMove(ev) {
@@ -6459,7 +6467,9 @@ function swUp(ev) {
    student's, crossed out if not right), the explanation open, and one way back to the open question */
 function peekHtml(k) {
   var it = S.items[k], q = it.q, latest = it.retry ? it.pick2 : it.pick, ok = latest === q.a, html;
-  html = '<div class="page bg-practice practice qz peek why"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
+  var open = !!S.peekWhy, hint = !!S.peekHint && !open;
+  S.peekHint = false;
+  html = '<div class="page bg-practice practice qz peek' + (open ? ' why' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(false, k) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +
     '<div class="q-body"><div class="q-text">' + figHtml(it.g && it.g.stem ? it.g.stem : q.q) + '</div></div>';
   if (it.g) html += gameHtml(it, 'done', false);
@@ -6476,8 +6486,10 @@ function peekHtml(k) {
     });
     html += '</div>';
   }
-  html += '<div class="q-dock res why"><div class="q-result ' + (ok ? 'ok' : 'bad') + ' open" role="status"><div class="qr-head"><span class="fb-title">' +
-    (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span><span class="qr-sp"></span></div>' +
+  /* 3.73.0 (the owner) the reason is not opened by itself: the ? waits by the result's word, as on the open question */
+  html += '<div class="q-dock res' + (open ? ' why' : '') + '"><div class="q-result ' + (ok ? 'ok' : 'bad') + (open ? ' open' : '') + '" role="status"><div class="qr-head"><span class="fb-title">' +
+    (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
+    '<button type="button" class="qr-why' + (hint ? ' hint' : '') + '" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (open ? 'true' : 'false') + '">?</button><span class="qr-sp"></span></div>' +
     '<div class="qr-text">' + figHtml(explainOf(q), true) + '</div>' +
     '<button type="button" class="btn qr-go plain" data-act="q-peek-back">Back to question ' + (S.i + 1) + '</button></div></div>';
   return html + '</div>';
@@ -8335,16 +8347,25 @@ ACTIONS['q-peek'] = function (el) {
   if (!S || S.exam || S.done || isNaN(k) || !S.items[k] || Date.now() - dScrubEnd < 400) return;
   if (k === S.i) { if (typeof S.peek === 'number') ACTIONS['q-peek-back'](); return; }
   if (S.items[k].pick === null || S.peek === k) return;
-  S.peek = k; repaint();
+  S.peek = k; S.peekWhy = false; S.peekHint = true; repaint();
   if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
 };
 ACTIONS['q-peek-back'] = function () {
   if (!S || typeof S.peek !== 'number') return;
-  S.peek = null; repaint();
+  S.peek = null; S.peekWhy = false; repaint();
   if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
 };
 ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "Why?"
-  var it = S && S.items[S.i], box = $('fb');
+  var it = S && S.items[S.i], box = $('fb'), pg, dock, b;
+  if (S && !S.exam && typeof S.peek === 'number' && S.peek !== S.i) {   // 3.73.0 an answered question looked at again: the same sheet, the same blur
+    pg = elScreens.querySelector('.page.qz.peek'); dock = pg && pg.querySelector('.q-dock'); box = dock && dock.querySelector('.q-result');
+    if (!box) return;
+    S.peekWhy = !S.peekWhy;
+    box.classList.toggle('open', S.peekWhy); dock.classList.toggle('why', S.peekWhy); pg.classList.toggle('why', S.peekWhy);
+    b = pg.querySelector('.qr-why');
+    if (b) { b.classList.remove('hint'); b.setAttribute('aria-expanded', S.peekWhy ? 'true' : 'false'); }
+    return;
+  }
   if (!it || qStage(it) !== 'done' || !box) return;
   it.why = !it.why;
   if (it.why) qHold(box);                        // 3.39.0 the question and its answers stay where they are read (§12.19)
@@ -8686,6 +8707,10 @@ function qTapAway(t) {
   var it, dock, act, pos, st;
   if (!S || S.done || S.exam || S.leaving || !elScreens.contains(t)) return false;
   it = S.items[S.i]; dock = elScreens.querySelector('.qz>.q-dock');
+  if (typeof S.peek === 'number' && S.peek !== S.i) {         // 3.73.0 (the owner) the peek's open reason folds at a tap beside it
+    if (!S.peekWhy || !dock || dock.contains(t)) return false;
+    ACTIONS.why(); return true;
+  }
   if (!it || !dock || dock.contains(t)) return false;
   act = upTo(t, 'data-act');
   if (act && act.getAttribute('data-act') === 'quit') return false;

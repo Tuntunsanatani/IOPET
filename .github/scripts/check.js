@@ -268,11 +268,13 @@ try {
         if (!js.includes('aria-label="Why? Show the explanation"')) e.push('the ? must keep its name for a screen reader: Why? Show the explanation');
         return e;
       } },
-    { what: 'while the explanation is open, only the explanation: the result word, the ? and the flag step aside, and the question behind is blurred (52 %) and half as loud (50 %) on the sheet\'s curve', since: '3.63.0, 3.70.0', status: 'FINAL, the owner, 27 Nov 2026',
+    { what: 'while the explanation is open, only the explanation: the result word, the ? and the flag step aside, and the question behind is blurred (52 %) and half as loud (50 %) on the sheet\'s curve', since: '3.63.0, 3.70.0', status: 'FINAL, the owner, 27 Nov 2026; the peek folded with a breathing ? and a tap beside it folds the reason, at the owner\'s request 27 Nov 2026',
       test: () => {
-        const e = [], has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
-        has('.qz:not(.peek) .q-result.open .qr-head', 'display:none');
-        has('.qz.why:not(.peek)>:not(.q-dock)', 'filter:blur(5.2px)saturate(.5);opacity:.5;pointer-events:none');
+        const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz .q-result.open .qr-head', 'display:none');
+        has('.qz.why>:not(.q-dock)', 'filter:blur(5.2px)saturate(.5);opacity:.5;pointer-events:none');
+        if (!rule('.qz .qr-why.hint').includes('animation:qr-hintvar(--t-hint)var(--ease-std)var(--t-sheet)2both')) e.push('an answered question looked at again: its ? breathes twice (qr-hint), the reason is not opened by itself');
+        if (/class="page bg-practice practice qz peek why"/.test(js)) e.push('the peek must not open its reason by itself');
         if (!rule('.qz>:not(.q-dock)').includes('transition:filtervar(--t-sheet)var(--ease-sheet),opacityvar(--t-sheet)var(--ease-sheet)')) e.push('the blur comes and goes over --t-sheet on --ease-sheet');
         if (!rule('.calm .qz>:not(.q-dock)').includes('transition:none')) e.push('with the app\'s Reduce animations the blur must come at once');
         return e;
