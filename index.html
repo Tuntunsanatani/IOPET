@@ -738,6 +738,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-head .fb-title{flex:none;font-size:var(--fs-xl);font-weight:700}
 .qr-head .fb-xp{margin-left:8px}
 .qr-sp{flex:1}
+.qz .qr-why{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)}   /* 3.62.0 (the owner) Why? as a ? right after Correct! / Not quite, so it reads as about the answer */
+.qz .q-result.ok .qr-why{color:var(--right-ink)}
+.qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
 .qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-x)}   /* 3.40.0 the owner: not a first action, so the X's quiet grey (Brilliant's flag is #9F9F9F) */
@@ -3127,7 +3130,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.61.0',
+  VERSION: '3.62.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6189,8 +6192,8 @@ SCREENS.practice = function () {
        answer is one tap away, "Why?", once the answer is shown) */
     html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
+      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '">?</button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
       (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
-      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-expanded="' + (it.why ? 'true' : 'false') + '">Why?</button>' : '') +
       '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
       (stage === 'done' ? '<div class="qr-text">' + figHtml(explainOf(q)) + '</div>' : '') +
       (stage === 'miss' ? '<button type="button" class="btn qr-go plain" data-act="retry">Try again</button>'
