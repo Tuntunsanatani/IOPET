@@ -76,7 +76,7 @@
      many eyes with astigmatism; off-white text (#F2F2F2) for the same reason. One exception: the coloured patches inside a
      question's figure (.fv-h1..h4) are part of the question, not of the UI.
      The old names (--cream60, --pur-bg, --flame …) stay as aliases, so every rule keeps working. */
-  --hl1:#FFD60A;--hl1-e:#FFD60A;--hl2:#40C8FF;--hl2-e:#40C8FF;--hl3:#FF5FA2;--hl3-e:#FF5FA2;--hl4:#34E07A;--hl4-e:#34E07A;   /* 3.65.0 a reason's coloured parts: bright on the dark panel */
+  --hl1:#FFD60A;--hl1-e:#FFD60A;--hl2:#38BDF8;--hl2-e:#38BDF8;--hl3:#F472B6;--hl3-e:#F472B6;--hl4:#4ADE80;--hl4-e:#4ADE80;   /* 3.65.0 a reason's coloured parts: bright on the dark panel */
   --bg:#141414;--bg-deep:#0E0E0E;--surface:#141414;--surface-2:#282828;--surface-3:#323232;
   --done-bg:#302513;--done-line:#FF9F0A;--lip:6px;
   --win:#2DCC5A;--miss-sheet:#262626;--off:#1A1A1A;   /* 3.32.0 a right answer, as vivid as Brilliant's (measured: sheet #00350D, button #22B14C); a miss is neutral; not ready lies faint */
@@ -171,7 +171,7 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
-  --hl1:#FFC233;--hl1-e:#CF8E00;--hl2:#33B5F0;--hl2-e:#0A7DB3;--hl3:#F2559A;--hl3-e:#B52E69;--hl4:#33C25E;--hl4-e:#1E8A40;
+  --hl1:#FACC15;--hl1-e:#CA8A04;--hl2:#38BDF8;--hl2-e:#0284C7;--hl3:#F472B6;--hl3-e:#DB2777;--hl4:#4ADE80;--hl4-e:#16A34A;
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
   --bg:#FFFFFF;--bg-deep:#E6E6E6;--surface:#FFFFFF;--surface-2:#F7F7F7;--surface-3:#EDEDED;
@@ -754,10 +754,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qr-text .figs{margin:12px 0}   /* 3.64.0 (the owner) a reason's figures: only the size they need, side by side where they fit */
 .qr-text .fig{zoom:.8}
 .qr-text .fig-fig{zoom:.6}   /* a drawing without numbers at 60 % */
-.qr-text .fv-l,.qr-text .fv-f{stroke-width:1.25}
-.qr-text .fv-h{stroke-width:1.5;fill-opacity:.75}   /* 3.65.0 (the owner) a clear tint with a bright edge: lively on the panel, never heavy */
-.qr-text .fv-h1{fill:var(--hl1);stroke:var(--hl1-e)}.qr-text .fv-h2{fill:var(--hl2);stroke:var(--hl2-e)}.qr-text .fv-h3{fill:var(--hl3);stroke:var(--hl3-e)}.qr-text .fv-h4{fill:var(--hl4);stroke:var(--hl4-e)}
-[data-theme="light"] .qr-text .fv-h{fill-opacity:.6}
+.qr-text .fv-l,.qr-text .fv-f,.rv-x .fv-l,.rv-x .fv-f{stroke-width:1.25}
+.qr-text .fv-h,.rv-x .fv-h{stroke-width:1.5;fill-opacity:.75}   /* 3.65.0 (the owner) a clear tint with a bright edge: lively on the panel, never heavy */
+.qr-text .fv-h1,.rv-x .fv-h1{fill:var(--hl1);stroke:var(--hl1-e)}.qr-text .fv-h2,.rv-x .fv-h2{fill:var(--hl2);stroke:var(--hl2-e)}.qr-text .fv-h3,.rv-x .fv-h3{fill:var(--hl3);stroke:var(--hl3-e)}.qr-text .fv-h4,.rv-x .fv-h4{fill:var(--hl4);stroke:var(--hl4-e)}
+[data-theme="light"] .qr-text .fv-h,[data-theme="light"] .rv-x .fv-h{fill-opacity:.6}
 .qr-go{margin-top:16px !important}
 .qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 var(--good-lip)}
 .qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 var(--good-lip)}
@@ -3141,7 +3141,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.65.0',
+  VERSION: '3.66.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
