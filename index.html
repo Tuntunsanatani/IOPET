@@ -1514,6 +1514,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-mk .li{width:14px;height:14px;stroke-width:3.2}
 .qz .opt-btn.sel{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}   /* the student's choice: the flame, its border and its words alike (3.56.0, Brilliant's, the owner) */
 .qz .opt-btn.sel-in{animation:q-sel var(--t-state) var(--ease-swift)}
+.qz .opt-btn.sel,.gm-field.has{border-width:var(--bw-ctl)}   /* 3.69.0 (the owner) a choice answers the tap: its border one step thinner (2 to 1.5 px), the box the same size */
 @keyframes q-sel{from{border-color:var(--edge);background-color:var(--surface);color:var(--ink)}}
 .qz .opt-btn.correct{border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right-opt);opacity:1;color:var(--right-opt)}   /* 3.41.0 the right option in the sheet's colours (the owner: one family); 3.56.0 its border, words and mark in one green (Brilliant's, the owner) */
 .qz .opt-btn.correct .opt-mk{background:var(--right-opt);color:var(--bg)}   /* FINAL 7, changed at the owner's request (26 Nov 2026, Brilliant's): the mark in the right border's own green, its ✓ black on the dark look and white on the light (--bg) */
@@ -1597,7 +1598,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 /* num: the answer, and the app's own keys */
 .gm-field{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);
   font-size:var(--fs-xl);font-weight:600;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}   /* 3.53.0 one step over the keys (it was 28 px) */
-.gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* what the student typed: the flame */
+.gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}   /* what the student typed: the flame */
 .gm-caret{display:block;width:2px;height:24px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
 @keyframes gm-blink{50%{opacity:0}}
 .gm-was{margin-right:12px;font-size:var(--fs-lg);font-weight:600;color:var(--ink3);text-decoration:line-through}   /* the number already found wrong */
@@ -3144,7 +3145,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.68.0',
+  VERSION: '3.69.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
