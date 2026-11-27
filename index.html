@@ -157,7 +157,7 @@
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
-  --t-pop:250ms;--t-sheet:280ms;--t-hint:720ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  --t-pop:250ms;--t-sheet:280ms;--t-hint:860ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
@@ -743,10 +743,13 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .qr-why{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)}   /* 3.62.0 (the owner) Why? as a ? right after Correct! / Not quite, so it reads as about the answer */
 .qz .q-result.ok .qr-why{color:var(--right-ink)}
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
-.qz .qr-why.hint{animation:qr-hint var(--t-hint) var(--ease-std) var(--t-sheet) 2 both}   /* 3.73.0 (the owner) an answered question looked at again: its ? breathes twice, so the reason is found, never pushed open */
-@keyframes qr-hint{0%,100%{transform:none;box-shadow:0 0 0 0 transparent}45%{transform:scale(1.14);box-shadow:0 0 0 6px color-mix(in srgb,currentColor 16%,transparent)}}
-.calm .qz .qr-why.hint{animation:none}
-@media (prefers-reduced-motion:reduce){.qz .qr-why.hint{animation:none}}
+.qz .qr-q{display:inline-block;transform-origin:50% 8%}
+.qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-press) both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
+.qz .qr-why.hint .qr-q{animation:qr-swing var(--t-hint) linear var(--t-press) both}
+@keyframes qr-hint{0%{transform:none;animation-timing-function:cubic-bezier(.2,.8,.2,1)}28%{transform:scale(1.15)}70%{transform:scale(1.15);animation-timing-function:cubic-bezier(.4,0,.2,1)}100%{transform:none}}
+@keyframes qr-swing{0%,20%{transform:none;animation-timing-function:ease-out}32%{transform:rotate(-14deg);animation-timing-function:ease-in-out}45%{transform:rotate(11deg);animation-timing-function:ease-in-out}57%{transform:rotate(-7deg);animation-timing-function:ease-in-out}67%{transform:rotate(3deg);animation-timing-function:ease-out}76%,100%{transform:none}}
+.calm .qz .qr-why.hint,.calm .qz .qr-why.hint .qr-q{animation:none}
+@media (prefers-reduced-motion:reduce){.qz .qr-why.hint,.qz .qr-why.hint .qr-q{animation:none}}
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .qr-why:after{content:'';position:absolute;top:-2px;right:0;bottom:-2px;left:0}   /* 40 px drawn, 44 px to touch */
 .qr-flag{flex:none;width:44px;height:44px;margin-left:4px;margin-right:-8px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-x)}   /* 3.40.0 the owner: not a first action, so the X's quiet grey (Brilliant's flag is #9F9F9F) */
@@ -3164,7 +3167,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.73.0',
+  VERSION: '3.74.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6245,7 +6248,7 @@ SCREENS.practice = function () {
        answer is one tap away, "Why?", once the answer is shown) */
     html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
-      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '">?</button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
+      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '"><span class="qr-q">?</span></button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
       (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
       '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
       (stage === 'done' ? '<div class="qr-text">' + figHtml(explainOf(q), true) + '</div>' : '') +
@@ -6489,7 +6492,7 @@ function peekHtml(k) {
   /* 3.73.0 (the owner) the reason is not opened by itself: the ? waits by the result's word, as on the open question */
   html += '<div class="q-dock res' + (open ? ' why' : '') + '"><div class="q-result ' + (ok ? 'ok' : 'bad') + (open ? ' open' : '') + '" role="status"><div class="qr-head"><span class="fb-title">' +
     (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
-    '<button type="button" class="qr-why' + (hint ? ' hint' : '') + '" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (open ? 'true' : 'false') + '">?</button><span class="qr-sp"></span></div>' +
+    '<button type="button" class="qr-why' + (hint ? ' hint' : '') + '" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (open ? 'true' : 'false') + '"><span class="qr-q">?</span></button><span class="qr-sp"></span></div>' +
     '<div class="qr-text">' + figHtml(explainOf(q), true) + '</div>' +
     '<button type="button" class="btn qr-go plain" data-act="q-peek-back">Back to question ' + (S.i + 1) + '</button></div></div>';
   return html + '</div>';
