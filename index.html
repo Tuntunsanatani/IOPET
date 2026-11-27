@@ -1579,7 +1579,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-slot .gm-tile .opt-mk{top:-8px;right:-8px}
 /* num: the answer, and the app's own keys */
 .gm-field{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:8px 16px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);
-  font-size:var(--fs-xl);font-weight:700;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}   /* 3.53.0 one step over the keys (it was 28 px) */
+  font-size:var(--fs-xl);font-weight:600;line-height:1.2;transition:border-color var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}   /* 3.53.0 one step over the keys (it was 28 px) */
 .gm-field.has{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary)}   /* what the student typed: the flame */
 .gm-caret{display:block;width:2px;height:24px;margin-left:4px;border-radius:var(--r-pill);background:var(--primary);animation:gm-blink var(--t-blink) steps(1) infinite}
 @keyframes gm-blink{50%{opacity:0}}
@@ -1590,6 +1590,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .gm-key:active:not([disabled]){transform:translateY(2px);box-shadow:var(--edge-in)}
 .gm-key.nil{visibility:hidden}
 .gm-key .li{stroke-width:2.2}
+.gm-key.del{color:var(--ink3)}
+.gm-key.del .li{width:22px;height:22px;stroke-width:1.6}   /* 3.61.0 (the owner) the delete key quiet: thin, a step darker than its edge only */
 .gm.over .gm-key,.gm.over .gm-bank .gm-tile{opacity:.4;transition:opacity var(--t-fade) var(--ease-std)}   /* answered: the tools step back */
 .gm.over .gm-grip{display:none}
 @media (max-height:720px){.qz>.gm{margin-top:32px}.gm-keys{margin-top:8px}.gm-bank{margin-top:16px}}   /* a short screen: the game a little closer together */
@@ -3125,7 +3127,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.60.0',
+  VERSION: '3.61.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5776,7 +5778,7 @@ var LI_PATHS = {
   back: '<path d="M14.5 6l-6 6 6 6"/>',
   arrow: '<path d="M12 6l-6 6 6 6M6 12h12"/>',                          /* 3.37.0 Back (the owner): an arrow in the X's own 12 x 12 box, its arms the X's half-strokes */
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
-  del: '<path d="M9.5 5.5H20v13H9.5L3.5 12z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>',   /* 3.33.0 delete a digit (the number game) */
+  del: '<path d="M9.5 5.5H20v13H9.5L3.5 12z"/><path d="M11.75 9.75l4.5 4.5M16.25 9.75l-4.5 4.5"/>',   /* 3.33.0 delete a digit (the number game); 3.61.0 the cross in the key's optical middle (the owner: it sat to the right) */
   grip: '<path d="M9 6.5v.01M15 6.5v.01M9 12v.01M15 12v.01M9 17.5v.01M15 17.5v.01"/>',   /* 3.33.0 a card that can be moved */
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
