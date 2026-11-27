@@ -342,14 +342,14 @@ sub,sup{font-size:.72em;line-height:0}
 .pbar.thin{height:6px;margin-top:8px}
 .icon-btn{flex:none;width:var(--tap);height:var(--tap);border-radius:50%;background:var(--surface);border:var(--bw) solid var(--line-2);font-size:17px;line-height:1;text-align:center;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .icon-btn svg{width:22px;height:22px}
-.icon-btn[data-act=back]{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}   /* 3.37.0 the owner: every Back is the X's twin, an arrow (←) of the same size in the same place (§12.18): no circle, its grey, 12 px up and left */
+.icon-btn[data-act=back]{border:0;background:none;color:var(--ink-x);position:relative;top:-6px;left:-12px}   /* 3.37.0 the owner: every Back is the X's twin, an arrow (←) of the same size in the same place (§12.18): no circle, its grey, 12 px up and left */
 .icon-btn[data-act=back]:active{background:var(--fill)}
 .icon-btn[data-act=back] .li{width:30px;height:30px;stroke-width:1.4}
 .nav-morph{position:fixed;z-index:80;pointer-events:none;transform-origin:0 0;will-change:transform,opacity}   /* 3.35.0 the X ↔ ← morph (§12.18) */
 .nav-morph .nm-s{position:absolute;top:0;left:0;display:block;overflow:visible;will-change:transform}
 /* 3.36.0 one mark everywhere (§12.18): every X is the practice X (no circle, --ink-x, 30 px, 12 px up and left of its place);
    3.37.0 every Back is its twin (above). The review's ‹ › (a pair that steps through questions) are drawn at the mark's size */
-.paper .q-header .icon-btn[data-act=quit],.sm-top .icon-btn[data-act=home]{border:0;background:none;color:var(--ink-x);position:relative;top:-12px;left:-12px}
+.paper .q-header .icon-btn[data-act=quit],.sm-top .icon-btn[data-act=home]{border:0;background:none;color:var(--ink-x);position:relative;top:-6px;left:-12px}
 .paper .q-header .icon-btn[data-act=quit]:active,.sm-top .icon-btn[data-act=home]:active{background:var(--fill)}
 .paper .q-header .icon-btn[data-act=quit] .li,.sm-top .icon-btn[data-act=home] .li,.rv-nav .icon-btn .li{width:30px;height:30px;stroke-width:1.4}
 .icon-btn:active{background:var(--surface-2)}
@@ -1033,7 +1033,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .sign-out:active{transform:scale(.98)}
 .sub-header{display:flex;align-items:center}
 .sub-title{font-size:var(--fs-2xl);font-weight:700;margin-left:12px;letter-spacing:var(--ls-2xl)}
-.sub-header.titled{margin-top:-12px}   /* 3.37.0 the Back stands in the X's place, 12 px up and left; a title stays on its line, beside it, and the page under it keeps its 16 */
+.sub-header.titled{margin-top:-6px}   /* 3.37.0 the Back stands in the X's place, 12 px up and left; a title stays on its line, beside it, and the page under it keeps its 16 */
 .sub-header.titled .icon-btn[data-act=back]{top:0}
 .sub-header.titled .sub-title{margin-left:0}
 .toggle-row{display:flex;align-items:center;min-height:64px;background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in);border-radius:var(--r-md);padding:12px 16px;margin-top:8px !important}
@@ -1500,6 +1500,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
    the middle, never touches the dots (40 px at least) and lands where a thumb taps most surely. A question too long for the
    room starts 40 px under the dots and the page scrolls, as before. The two shares are the page's own ::before / ::after. */
 .qz>.q-header{order:-2}
+.qz:not(.paper)>.q-header{position:relative;top:-6px}   /* 3.71.0 (the owner) the X, the dots and every Back on one line, 40 px down (the centre): the X and the dots 6 px up, the Back 6 px down, so nothing jumps from page to page */
 .page.practice.qz::before{content:'';order:-1;flex:2 1 0}
 .page.practice.qz::after{content:'';order:1;flex:1 1 0}
 .qz>.q-dock{order:2}
@@ -3149,7 +3150,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.70.0',
+  VERSION: '3.71.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)

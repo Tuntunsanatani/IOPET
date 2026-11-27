@@ -6,6 +6,7 @@ offGrid   .fig-wide { margin:6px 0 }
 offGrid   .figs { margin:10px 0 2px }
 offGrid   .lvl-medal { margin:-18px 0 0 -15px }
 offGrid   .ripple { margin:-22px 0 0 -22px }
+offGrid   .sub-header.titled { margin-top:-6px }
 rawColor  .cele-icon .chi { filter:drop-shadow(0 12px 14px rgba(0,0,0,.35)) }
 rawColor  .cele.sk { background:radial-gradient(80% 45% at 50% 30%,rgba(255,216,77,.14),transparent 75%),var(--bg) }
 rawColor  .fv-h1 { fill:#FFC233 }
