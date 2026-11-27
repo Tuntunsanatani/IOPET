@@ -733,7 +733,7 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-result.bad{background:var(--wrong-soft)}
 .q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet)}
 @keyframes qr-in{from{transform:translateY(100%)}to{transform:none}}
-.qr-head{display:flex;align-items:center;min-height:40px}
+.qr-head{display:flex;align-items:center;min-height:44px}   /* 3.75.0 (the owner) one height for every result sheet, flag or no flag (44, the flag's): nothing moves from question to question but the ? */
 .qr-head .fb-ico{margin-right:8px}
 .q-result.ok .fb-ico{background:var(--good);color:var(--on-mark)}
 .q-result.bad .fb-ico{background:var(--wrong);color:var(--on-wrong)}
