@@ -273,7 +273,7 @@ try {
         const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
         has('.qz .q-result.open .qr-head', 'display:none');
         has('.qz.why>:not(.q-dock)', 'filter:blur(5.2px)saturate(.5);opacity:.5;pointer-events:none');
-        if (!rule('.qz .qr-why.hint').includes('animation:qr-hintvar(--t-hint)var(--ease-std)var(--t-sheet)2both')) e.push('an answered question looked at again: its ? breathes twice (qr-hint), the reason is not opened by itself');
+        if (!rule('.qz .qr-why.hint').includes('animation:qr-hintvar(--t-hint)linearvar(--t-press)both') || !rule('.qz .qr-why.hint .qr-q').includes('animation:qr-swingvar(--t-hint)linearvar(--t-press)both')) e.push('an answered question looked at again: its circle grows a little and its ? swings once (qr-hint, qr-swing), the reason is not opened by itself');
         if (/class="page bg-practice practice qz peek why"/.test(js)) e.push('the peek must not open its reason by itself');
         if (!rule('.qz>:not(.q-dock)').includes('transition:filtervar(--t-sheet)var(--ease-sheet),opacityvar(--t-sheet)var(--ease-sheet)')) e.push('the blur comes and goes over --t-sheet on --ease-sheet');
         if (!rule('.calm .qz>:not(.q-dock)').includes('transition:none')) e.push('with the app\'s Reduce animations the blur must come at once');
