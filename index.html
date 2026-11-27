@@ -749,6 +749,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-result.open .qr-text{display:block}
 .qz:not(.peek) .q-result.open .qr-head{display:none}   /* 3.63.0 (the owner) while the reason is read, only the reason: the word, ? and flag step aside; Continue stays */
 .qz:not(.peek) .q-result.open .qr-text{margin-top:0}
+.qr-text .figs{margin:12px 0}   /* 3.64.0 (the owner) a reason's figures: only the size they need, side by side where they fit */
+.qr-text .fig{zoom:.8}
+.qr-text .fig-fig{zoom:.6}   /* a drawing without numbers at 60 % */
+.qr-text .fv-l,.qr-text .fv-f{stroke-width:1.25}
+.qr-text .fv-h{stroke-width:1;fill-opacity:.4;stroke-opacity:.75}   /* the coloured part soft, its edge thin: the eye reads the shape, not the border */
 .qr-go{margin-top:16px !important}
 .qr-go.ok{background:var(--good);color:var(--on-mark);box-shadow:0 4px 0 var(--good-lip)}
 .qr-go.ok:active{transform:translateY(3px);box-shadow:0 1px 0 var(--good-lip)}
@@ -3132,7 +3137,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.63.0',
+  VERSION: '3.64.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
