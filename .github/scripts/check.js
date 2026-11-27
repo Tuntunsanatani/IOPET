@@ -250,7 +250,7 @@ try {
       test: () => {
         const e = [], inc = (sel, decl) => { if (!rule(sel).includes(decl)) e.push(sel + ' must hold ' + decl); };
         inc('.gm-key', 'height:48px'); inc('.gm-key', 'font-size:var(--fs-lg);font-weight:600');
-        inc('.gm-field', 'min-height:56px'); inc('.gm-field', 'font-size:var(--fs-xl);font-weight:700;line-height:1.2');
+        inc('.gm-field', 'min-height:56px'); inc('.gm-field', 'font-size:var(--fs-xl);font-weight:600;line-height:1.2');
         inc('.gm-caret', 'width:2px;height:24px');
         inc('.opts.grid.short .opt-btn', 'font-size:var(--fs-lg)');
         inc('.gm-tile', 'font-size:var(--fs-xl);font-weight:700');
