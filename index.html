@@ -1487,6 +1487,16 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .q-dots.seg .qd.ok-in::after{transform-origin:0 50%;animation-name:qd-fill-seg,qd-show}
 @keyframes qd-fill-seg{from{transform:scaleX(0)}}
 .calm .q-dots .qd,.calm .q-dots .qd::after{animation:none !important}
+.page.qz{touch-action:pan-y}   /* 3.72.0 a swipe sideways is the app's (it turns the question); up and down stay the page's */
+.q-dots .qd-b .qd,.pd i{transition:transform var(--t-state) var(--ease-swift),background-color var(--t-state) var(--ease-swift)}
+.q-dots .qd-b.hot .qd,.pd.hot i{transform:scale(1.45)}   /* 3.72.0 (the owner) the dot under the finger grows a little */
+.dot-lbl{position:absolute;z-index:30;top:0;left:0;pointer-events:none;font-size:var(--fs-lg);font-weight:400;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink3);white-space:nowrap;
+  opacity:0;transform:translate(-50%,6px) scale(.92);transition:opacity var(--t-state) var(--ease-swift),transform var(--t-state) var(--ease-swift),left var(--t-press) var(--ease-swift),top var(--t-press) var(--ease-swift)}   /* 3.72.0 (the owner) its number, just over it: the options' size, not bold, the dot's own colour */
+.dot-lbl.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.dot-lbl.ok{color:var(--win)}
+.dot-lbl.on{color:var(--primary)}
+.calm .dot-lbl,.calm .q-dots .qd-b .qd,.calm .pd i{transition:none}
+@media (prefers-reduced-motion:reduce){.dot-lbl,.q-dots .qd-b .qd,.pd i{transition:none}}
 @media (prefers-reduced-motion:reduce){.q-dots .qd,.q-dots .qd::after{animation:none !important}}
 .qz>.opts{margin-top:48px}   /* 3.39.0 the answers right under their question (§12.19); 3.39.1 the owner's pick, 48 px */
 .qz .q-text .figs{margin-top:24px;--fig-k:.8}   /* 3.60.0 (the owner) a question's figure at 80 % of its drawing: with the question, not over it */
@@ -3150,7 +3160,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.71.0',
+  VERSION: '3.72.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6293,15 +6303,16 @@ function dChoose(k) {                               // true when the page must s
 function dDown(ev) {
   var row = ev.target && ev.target.closest ? ev.target.closest('.p-dots, .q-dots') : null;
   if (!row || !S || S.done || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
-  dScrub = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: zP(ev.clientX), on: false, edge: 0, raf: 0, paint: 0 };   // (x in the row's own px: zP)
+  dScrub = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: zP(ev.clientX), on: false, edge: 0, raf: 0, paint: 0, k: dNearest(row, zP(ev.clientX)), lt: 0 };   // (x in the row's own px: zP)
+  dMark();                                          // 3.72.0 the dot under the finger grows and shows its number at once
 }
 function dMove(ev) {
   var d = dScrub, dx, dy;
   if (!d || ev.pointerId !== d.id) return;
   dx = ev.clientX - d.x0; dy = ev.clientY - d.y0;
   if (!d.on) {
-    if (Math.abs(dx) < 6) { if (Math.abs(dy) > 10) dScrub = null; return; }   // up or down first: the page scrolls, as always
-    if (Math.abs(dy) > Math.abs(dx)) { dScrub = null; return; }
+    if (Math.abs(dx) < 6) { if (Math.abs(dy) > 10) { dScrub = null; dMark(); } return; }   // up or down first: the page scrolls, as always
+    if (Math.abs(dy) > Math.abs(dx)) { dScrub = null; dMark(); return; }
     d.on = true;
   }
   if (ev.cancelable) ev.preventDefault();
@@ -6317,7 +6328,8 @@ function dStep() {
   }
   d.edge = edge;
   k = dNearest(row, Math.max(r.left + 1, Math.min(r.right - 1, d.x)));
-  if (dChoose(k)) { sense('select'); dHold = row.scrollLeft; dPaint(); }
+  if (k !== d.k && k >= 0) { d.k = k; dTick(d); }
+  if (dChoose(k)) { dHold = row.scrollLeft; dPaint(); } else dMark();
   if (d.edge && !d.raf) d.raf = requestAnimationFrame(dEdge);
 }
 function dEdge() {                                  // at an end of the row: it moves on under the still finger
@@ -6331,12 +6343,13 @@ function dEdge() {                                  // at an end of the row: it 
 function dPaint() {
   var d = dScrub;
   if (!d || d.paint) return;
-  d.paint = requestAnimationFrame(function () { if (dScrub) dScrub.paint = 0; repaint(); });
+  d.paint = requestAnimationFrame(function () { if (dScrub) dScrub.paint = 0; repaint(); dMark(); });
 }
 function dUp(ev) {
   var d = dScrub, row, at, r, a;
   if (!d || ev.pointerId !== d.id) return;
   dScrub = null;
+  dMark();
   if (!d.on) return;
   dScrubEnd = Date.now();
   if (d.raf) cancelAnimationFrame(d.raf);
@@ -6349,6 +6362,98 @@ function dUp(ev) {
     try { row.scrollBy({ left: (a.left + a.width / 2) - (r.left + r.width / 2), behavior: calmMotion() ? 'auto' : 'smooth' }); }
     catch (e) { row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2); }
   }
+}
+/* 3.72.0 (the owner) THE DOT UNDER THE FINGER answers it: it grows a little and its number rises just over it, in the
+   dot's own colour (green right, the flame answered in a paper, grey otherwise), at the options' size and weight. The
+   number lives on the phone, not in the page, so it glides from dot to dot while the page is drawn again under it. Each
+   new dot is felt: a slow finger gets a clear knock, a quick one a softer one, a very quick one none (the phone never
+   shakes). */
+var dLbl = null;
+function dMark() {
+  var d = dScrub, row = dRow(), el, i, p, r, st = '';
+  if (row) Array.prototype.forEach.call(row.querySelectorAll('.hot'), function (h) { h.classList.remove('hot'); });
+  if (!d || !row || !elPhone || !(d.k >= 0) || !(el = row.querySelector('[data-i="' + d.k + '"]')) || !(i = el.querySelector('i'))) {
+    if (dLbl) dLbl.classList.remove('show'); return;
+  }
+  el.classList.add('hot');
+  if (!dLbl) { dLbl = document.createElement('div'); dLbl.className = 'dot-lbl'; dLbl.setAttribute('aria-hidden', 'true'); elPhone.appendChild(dLbl); }
+  if (el.classList.contains('on') || /(^| )ok( |$)/.test(i.className)) st = el.classList.contains('on') ? ' on' : ' ok';
+  r = zR(i); p = zR(elPhone);
+  dLbl.textContent = String(d.k + 1);
+  dLbl.className = 'dot-lbl show' + st;
+  dLbl.style.left = (r.left + r.width / 2 - p.left) + 'px';
+  dLbl.style.top = (r.top - p.top - 30) + 'px';
+}
+function dTick(d) {
+  var t = Date.now(), dt = d.lt ? t - d.lt : 999, ms = dt > 160 ? 12 : dt > 80 ? 7 : dt > 40 ? 3 : 0;
+  d.lt = t;
+  if (ms) buzz(ms);
+}
+/* 3.72.0 (the owner) A SWIPE turns the question: slid left, the next; slid right, the one before. A set goes back over the
+   answered ones and forward to the open one (no further); a paper goes anywhere. The question follows the thumb, then turns
+   or settles back on the sheet's curve; past an end it gives a little and returns. Up and down still scroll the page. */
+var sw = null, swEnd = 0;
+function swParts() {
+  var pg = elScreens && elScreens.querySelector('.page.qz'), out = [], k, c;
+  if (!pg) return out;
+  for (k = 0; k < pg.children.length; k++) { c = pg.children[k]; if (!/(^| )(q-header|q-dock|p-dots)( |$)/.test(c.className)) out.push(c); }
+  return out;
+}
+function swTarget(dir) {                            // dir +1 the next question, -1 the one before; -1 when there is none
+  var v, k;
+  if (!S || S.done) return -1;
+  v = S.exam ? S.i : typeof S.peek === 'number' ? S.peek : S.i;
+  k = v + dir;
+  if (k < 0 || k >= S.items.length || (!S.exam && k > S.i)) return -1;
+  return k;
+}
+function swDown(ev) {
+  var t = ev.target, pg = elScreens && elScreens.querySelector('.page.qz');
+  if (!pg || !S || S.done || dScrub || (ev.pointerType === 'mouse' && ev.button !== 0) || !t || !t.closest || !pg.contains(t)) return;
+  if (t.closest('.q-header, .p-dots, .q-dots, .q-dock, .gm, input, textarea') || (pg.classList.contains('why') && !pg.classList.contains('peek'))) return;
+  sw = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, t0: Date.now(), dx: 0, on: false, parts: null };
+}
+function swMove(ev) {
+  var d = sw, dx, dy, k, g;
+  if (!d || ev.pointerId !== d.id) return;
+  dx = ev.clientX - d.x0; dy = ev.clientY - d.y0;
+  if (!d.on) {
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    if (Math.abs(dy) >= Math.abs(dx)) { sw = null; return; }
+    d.on = true; d.parts = swParts();
+  }
+  if (ev.cancelable) ev.preventDefault();
+  d.dx = zP(dx);
+  k = swTarget(dx < 0 ? 1 : -1);
+  g = k < 0 ? d.dx * 0.25 : d.dx;                   // past an end it only gives a little
+  if (calmMotion()) return;
+  d.parts.forEach(function (e) { e.style.transition = 'none'; e.style.transform = 'translateX(' + g + 'px)'; });
+}
+function swUp(ev) {
+  var d = sw, w, dir, k, fast, calm = calmMotion();
+  if (!d || ev.pointerId !== d.id) return;
+  sw = null;
+  if (!d.on) return;
+  swEnd = Date.now();
+  w = (elScreens && elScreens.clientWidth) || 360;
+  dir = d.dx < 0 ? 1 : -1; k = swTarget(dir);
+  fast = Math.abs(d.dx) > 32 && Math.abs(d.dx) / Math.max(1, Date.now() - d.t0) > 0.5;
+  if (k < 0 || (Math.abs(d.dx) < w * 0.22 && !fast)) {             // not far enough: it settles back
+    d.parts.forEach(function (e) { e.style.transition = calm ? 'none' : 'transform var(--t-sheet) var(--ease-sheet)'; e.style.transform = ''; });
+    return;
+  }
+  feel('tap');
+  if (!dChoose(k)) return;
+  if (S.exam) savePaper();
+  repaint();
+  if (elScreens.firstChild) elScreens.firstChild.scrollTop = 0;
+  if (calm) return;
+  swParts().forEach(function (e) {                  // the new question comes in from the side the thumb left
+    e.style.transition = 'none'; e.style.opacity = '0'; e.style.transform = 'translateX(' + (dir * w * 0.3) + 'px)';
+    void e.offsetWidth;
+    e.style.transition = 'transform var(--t-sheet) var(--ease-sheet),opacity var(--t-sheet) var(--ease-sheet)';
+    e.style.opacity = ''; e.style.transform = '';
+  });
 }
 /* 3.51.0 (the owner) a question already answered, looked at again: the answer as it was checked (the right one, the
    student's, crossed out if not right), the explanation open, and one way back to the open question */
@@ -8599,6 +8704,7 @@ function onClick(ev) {
   if (t && t.nodeType === 3) t = t.parentNode;
   if (!t) return;
   if (t !== elModal && !locked() && !busyOn && qTapAway(t)) return;
+  if (Date.now() - swEnd < 350) return;                             // 3.72.0 the end of a swipe is not a tap
   el = upTo(t, 'data-act');
   if (el && el.getAttribute('data-act') === 'pick' && el.getAttribute('aria-disabled') === 'true') return;   // 3.40.2 a locked option: no knock, nothing (only the options: a not-ready sign-in button still answers)
   if (t === elModal) {                                              // tap outside the dialog closes it —
@@ -9548,6 +9654,10 @@ function boot() {
   });
   elPhone.addEventListener('pointerdown', gDown);                    // 3.33.0 a card of an order game can be dragged
   elPhone.addEventListener('pointerdown', dDown);                    // 3.52.0 the dots follow a finger slid along them
+  elPhone.addEventListener('pointerdown', swDown);                   // 3.72.0 a swipe turns the question
+  document.addEventListener('pointermove', swMove, { passive: false });
+  document.addEventListener('pointerup', swUp);
+  document.addEventListener('pointercancel', swUp);
   document.addEventListener('pointermove', dMove, { passive: false });
   document.addEventListener('pointerup', dUp);
   document.addEventListener('pointercancel', dUp);
