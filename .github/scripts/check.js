@@ -258,6 +258,54 @@ try {
         for (const r of rules) for (const part of r.sel.split(',')) { const s = part.trim();
           if (/(^|[ >])\.(gm-key|gm-field|gm-tile)$|\.opts\.grid\.short \.opt-btn$/.test(s) && /(^|;)font-size:/.test(r.body) && !/(^|;)font-size:var\(--fs-(lg|xl)\)/.test(r.body)) e.push(s + ' sets another size'); }
         return e;
+      } },
+    { what: 'the result\'s Why? as a ? circle right after Correct! / Not quite (green on a right answer)', since: '3.62.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz .qr-why', 'display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;height:32px;margin-left:12px;padding:0;border-radius:50%;font-size:var(--fs-lg);line-height:1;color:var(--ink)');
+        has('.qz .q-result.ok .qr-why', 'color:var(--right-ink)');
+        has('.qz .qr-why:after', 'top:-6px;right:-6px;bottom:-6px;left:-6px');
+        if (!js.includes('aria-label="Why? Show the explanation"')) e.push('the ? must keep its name for a screen reader: Why? Show the explanation');
+        return e;
+      } },
+    { what: 'while the explanation is open, only the explanation: the result word, the ? and the flag step aside, and the question behind is blurred (52 %) and half as loud (50 %) on the sheet\'s curve', since: '3.63.0, 3.70.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz:not(.peek) .q-result.open .qr-head', 'display:none');
+        has('.qz.why:not(.peek)>:not(.q-dock)', 'filter:blur(5.2px)saturate(.5);opacity:.5;pointer-events:none');
+        if (!rule('.qz>:not(.q-dock)').includes('transition:filtervar(--t-sheet)var(--ease-sheet),opacityvar(--t-sheet)var(--ease-sheet)')) e.push('the blur comes and goes over --t-sheet on --ease-sheet');
+        if (!rule('.calm .qz>:not(.q-dock)').includes('transition:none')) e.push('with the app\'s Reduce animations the blur must come at once');
+        return e;
+      } },
+    { what: 'a reason\'s figures: drawings at 60 %, figures of numbers at 80 %, small drawings (120 px or less) at 150 % with their box cut to the drawing; bright tints with a bright edge (--hl1..4); in Review answers too', since: '3.64.0, 3.65.0, 3.66.0, 3.67.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qr-text .fig', 'zoom:.8'); has('.qr-text .fig-fig', 'zoom:.6');
+        has('.qr-text .fig-fig.fig-sm,.rv-x .fig-fig.fig-sm', 'zoom:1.5');
+        has('.qr-text .fv-h,.rv-x .fv-h', 'stroke-width:1.5;fill-opacity:.75');
+        has('[data-theme="light"] .qr-text .fv-h,[data-theme="light"] .rv-x .fv-h', 'fill-opacity:.6');
+        if (!/(^|;)--hl1:#FFD60A;--hl1-e:#FFD60A;--hl2:#38BDF8;--hl2-e:#38BDF8;--hl3:#F472B6;--hl3-e:#F472B6;--hl4:#4ADE80;--hl4-e:#4ADE80(;|$)/.test(root)) e.push('--hl1..4 (dark) must be #FFD60A #38BDF8 #F472B6 #4ADE80, edge the same');
+        if (!/(^|;)--hl1:#FACC15;--hl1-e:#CA8A04;--hl2:#38BDF8;--hl2-e:#0284C7;--hl3:#F472B6;--hl3-e:#DB2777;--hl4:#4ADE80;--hl4-e:#16A34A(;|$)/.test(light)) e.push('--hl1..4 (light) must be #FACC15/#CA8A04 #38BDF8/#0284C7 #F472B6/#DB2777 #4ADE80/#16A34A');
+        if (js.split('figHtml(explainOf(q), true)').length < 4) e.push('every reason (the sheet, the peek, Review) must draw its figures tight: figHtml(explainOf(q), true)');
+        if (!js.includes("' fig-sm'")) e.push('a small drawing must be marked fig-sm');
+        return e;
+      } },
+    { what: 'clean figure lines: even dashes with half a gap at each end (kLine, pathLength), drawn in layers (tint, dashes, lines, edges and dots, words)', since: '3.68.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n');
+        if (!rule('.fv-k').includes('stroke-dasharray:.55.45;stroke-dashoffset:-.225;stroke-linecap:butt')) e.push('.fv-k must hold stroke-dasharray:.55 .45;stroke-dashoffset:-.225;stroke-linecap:butt');
+        if (!js.includes('function kLine(') || !js.includes('pathLength=')) e.push('every dashed line must be drawn by kLine with its pathLength');
+        if (!js.includes("body = ly.join('');")) e.push('a figure must be drawn in its layers (ly)');
+        if (rule('.fig .fv-h:not(.fv-ho)') !== 'stroke:none') e.push('a coloured part\'s tint has no edge; its edge (fv-ho) is drawn over the lines');
+        return e;
+      } },
+    { what: 'the practice X, its dots and every Back on one line: their centres 40 px down', since: '3.71.0', status: 'FINAL, the owner, 27 Nov 2026',
+      test: () => {
+        const e = [], has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        has('.qz:not(.paper)>.q-header', 'position:relative;top:-6px');
+        if (!rule('.icon-btn[data-act=back]').includes('position:relative;top:-6px;left:-12px')) e.push('.icon-btn[data-act=back] must stand top:-6px;left:-12px');
+        has('.sub-header.titled', 'margin-top:-6px');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
