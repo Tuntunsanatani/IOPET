@@ -1755,6 +1755,7 @@ a.link{text-decoration:none}
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
 .chp-ic{flex:none;width:72px;height:72px;margin-right:20px}
 .chp-ic .chi{display:block}
+.chp-emo{display:flex;align-items:center;justify-content:center;font-size:calc(var(--fs-2xl) * 2);line-height:1;filter:grayscale(1);opacity:.85}   /* 3.87.0 a course without drawn icons: its emoji, without hue (3.10.0), in the icon's place */
 .ch-en{display:block;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);line-height:1.3;letter-spacing:var(--ls-sm)}
 .path .ch-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3;margin-top:8px;letter-spacing:var(--ls-xl)}
 .path .ch-prog{margin-top:12px}
@@ -3193,7 +3194,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.86.0',
+  VERSION: '3.87.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5805,20 +5806,24 @@ SCREENS.home = function () {
 SCREENS.topics = function () {
   var u = user, html, lastSubject = null, plan = planOf(courseOf(u));
   if (plan) return '<div class="page bg-topics nav-pad">' + markTopics(u, plan) + '</div>';     // (the course is changed in the You tab)
-  html = '<div class="page bg-topics nav-pad"><div class="h1">Topics</div>' +
-    '<div><button class="course-pill" data-act="go" data-to="course" aria-label="Change course, now ' + esc(courseName(courseOf(u))) + '"><span>' + esc(courseShort(courseOf(u))) + '</span></button></div>';
-  html += '<div class="sub">Pick a chapter. Each session is ' + plural(u.settings.size, 'question') + '.</div>' + packSection(u);
-  topicsOf(u).filter(function (t) { return !t.pack; }).forEach(function (t) {
-    var st = topicStats(u, t), lk = isLocked(u, t), meta, rt;
-    if (t.subject !== lastSubject) { html += '<div class="tier-label">' + t.subject + '</div>'; lastSubject = t.subject; }
-    if (lk) { rt = topicById(t.req.topic); meta = 'Master ' + t.req.pct + '% of ' + rt.short + ' to unlock'; }
-    else meta = st.attempted ? st.mastered + ' of ' + st.total + ' mastered' : 'Not started yet';
-    html += '<button class="topic-row' + (lk ? ' locked' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + t.id + '">' +
-      '<span class="topic-emoji-big" style="background:var(--t-violet)">' + t.emoji + '</span><span class="topic-info">' +
-      '<span class="topic-row-name">' + t.name + '</span><span class="topic-row-meta">' + meta + '</span>' +
-      (lk ? '' : '<span class="pbar thin"><i style="width:' + st.pct + '%"></i></span>') + '</span>' +
-      '<span class="topic-right">' + (lk ? li('lock', 20) : st.pct + '%') + '</span></button>';
-  });
+  /* 3.87.0 (the owner: one rule for every course) a course without a plan shows its chapters on the same path as NMMS: the same
+     panels, lip, line and press. The subject small and grey above the name; a thin bar while on the go; a tick when mastered. */
+  var cn = courseName(courseOf(u)), subs = [];
+  topicsOf(u).forEach(function (t) { var sj = String(t.subject || '').split(' · ')[0]; if (!t.pack && sj && subs.indexOf(sj) < 0) subs.push(sj); });
+  html = '<div class="page bg-topics nav-pad"><div class="mat-hero"><div class="mh-row"><div class="grow">' +
+    '<div class="mh-kick">' + esc(cn) + '</div>' +
+    '<div class="mh-title" role="heading" aria-level="1">Topics</div>' +
+    (subs.length ? '<div class="mh-desc">' + esc(subs.join(' · ')) + '</div>' : '') + '</div></div></div>';
+  html += packSection(u) + '<div class="ch-list path">' + topicsOf(u).filter(function (t) { return !t.pack; }).map(function (t) {
+    var st = topicStats(u, t), lk = isLocked(u, t), k = lk ? 'locked' : st.pct >= 100 ? 'done' : st.attempted ? 'active' : 'ready', badge = '', bar = '';
+    if (k === 'active' || k === 'done') bar = '<span class="ch-prog"><span class="ch-bar"><i style="width:' + (k === 'done' ? 100 : st.pct) + '%"></i></span></span>';
+    if (k === 'done') badge = '<span class="ch-badge ch-st done" aria-hidden="true">' + SEAL_TICK + '</span>';
+    else if (k === 'locked') badge = '<span class="lock-mid" aria-hidden="true"></span>';
+    return '<button type="button" class="topic-row ch-card ch-panel k-' + k + (lk ? ' locked' : '') + '" data-act="' + (lk ? 'locked' : 'start') + '" data-topic="' + t.id + '"' +
+      ' aria-label="' + esc(t.name) + (k === 'done' ? ', mastered' : lk ? ', locked' : st.attempted ? ', ' + st.pct + ' percent' : '') + '">' +
+      '<span class="chp-ic chp-emo" aria-hidden="true">' + t.emoji + '</span><span class="topic-info"><span class="ch-en">' + esc(t.subject || '').replace(/ (\d+)$/, '&nbsp;$1') + '</span>' +
+      '<span class="topic-row-name ch-name">' + esc(t.name) + '</span>' + bar + '</span>' + badge + '</button>';
+  }).join('') + '</div>';
   return html + '</div>';
 };
 
