@@ -170,7 +170,7 @@ try {
       test: () => {
         const e = [];
         const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-opt-bg': '#0A2914', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
-                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-opt-bg': '#CFF8DB', '--right-ink': '#0E7C3A' } };
+                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-opt-bg': '#EFFCF3', '--right-ink': '#0E7C3A' } };
         for (const [k, v] of Object.entries(want.root)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(root)) e.push(':root must hold ' + k + ':' + v);
         for (const [k, v] of Object.entries(want.light)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(light)) e.push('the light look must hold ' + k + ':' + v);
         const has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
