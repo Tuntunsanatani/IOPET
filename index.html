@@ -159,7 +159,7 @@
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
   --try-sheet:#3A3218;--try-ink:#FFDB70;--try-ink2:#D8C79A;--try-x:rgba(255,255,255,.4);--t-pop:250ms;--t-sheet:280ms;--t-hint:1510ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
-  --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
+  --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:480ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
   /* 3.17.0 page switches (the owner's timeline): the page leaves in 120 ms, then the next one comes in 150 ms. What comes in
      settles on the swift deceleration; what leaves goes evenly: on the swift curve it would be 84 % gone in 50 ms, and the
@@ -1574,14 +1574,15 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 @keyframes q-rise{from{background:var(--off);color:var(--ink-off);box-shadow:0 0 0 var(--neutral-lip);transform:translateY(4px)}}
 .qz .q-result.ok{background:var(--right-sheet)}   /* 3.42.0 Brilliant's green, one step brighter */
 .qz .q-result.bad{background:var(--miss-sheet)}
-.qz .fb-xp{margin-left:12px;font-size:var(--fs-lg);font-weight:700;color:var(--right-ink)}
+.qz .fb-xp{margin-left:12px;font-size:var(--fs-md);font-weight:700;color:var(--right-ink)}   /* 3.82.0 (the owner, Brilliant's) the options' size step down: a note, not a headline */
+.fb-xp .xp-p{display:inline-block;position:relative;top:-.07em;margin-right:.04em}   /* the + on the figures' middle, not their foot */
 .qz .qr-go.ok{background:var(--right);color:var(--on-right);box-shadow:0 4px 0 var(--right-lip)}   /* white words on the green (3.40.0, the owner) */
 .qz .qr-go.ok:active{box-shadow:0 1px 0 var(--right-lip)}
 .qz .q-result.fresh{animation:qr-in var(--t-sheet) var(--ease-sheet) var(--q-sheet) backwards}
 .qz .q-result.fresh .qr-go{animation:q-go var(--t-state) var(--ease-std) var(--q-go) backwards}
 @keyframes q-go{from{background:var(--off);color:var(--ink-off);box-shadow:0 0 0 transparent}}
 .qz .q-result.fresh .fb-xp{animation:q-xp var(--t-xp) var(--ease-win) var(--q-xp) backwards}   /* E5: the XP pops in and counts up */
-@keyframes q-xp{from{opacity:0;transform:translateY(8px) scale(.5)}}
+@keyframes q-xp{from{opacity:0;transform:translateY(14px) scale(.85)}}   /* 3.82.0 (the owner) it rises from below and pops in place, on the coin's note */
 .qz .q-result.fresh.ok .fb-title{animation:q-title var(--t-xp) var(--ease-win) var(--q-title) backwards}   /* 3.43.0 dham 2: "Correct!" */
 @keyframes q-title{from{opacity:0;transform:scale(.6)}}
 .qz .q-result.leave{transform:translateY(100%);transition:transform var(--t-fade) var(--ease-std)}
@@ -3180,7 +3181,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.81.0',
+  VERSION: '3.82.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -4228,6 +4229,10 @@ function sfx(kind) {
     else if (kind === 'bad' && SND.bad) playSnd(SND.bad);                                                    // 3.43.0 a soft low thud
     else if (kind === 'ok') { tone(784, 0, 0.14, 0.1, 'triangle'); tone(988, 0.055, 0.14, 0.1, 'triangle'); tone(1175, 0.11, 0.24, 0.09, 'triangle'); }   // (a phone that cannot read the file) 3.16.0 G-B-D
     else if (kind === 'bad') { tone(220, 0, 0.16, 0.07); tone(185, 0.09, 0.26, 0.06); }                          // (the same) 3.16.0 A then F#
+    else if (kind === 'coin') {                    // 3.82.0 the XP's coin, made here (no recording): a light tick, then a short two-note bell that rings out
+      tone(1568, 0, 0.05, 0.035, 'square');
+      tone(2093, 0.06, 0.32, 0.055); tone(2637, 0.06, 0.38, 0.045); tone(3136, 0.085, 0.42, 0.03); tone(4186, 0.06, 0.14, 0.014, 'triangle');
+    }
     else if (kind === 'done') { tone(523, 0, 0.12, 0.1); tone(659, 0.1, 0.12, 0.1); tone(784, 0.2, 0.22, 0.1); }
     else if (kind === 'win') {                                  /* timed with the celebration: the icon lands at 0.7 s, the tick pops at 1 s */
       tone(392, 0.05, 0.1, 0.06); tone(523, 0.68, 0.14, 0.12); tone(659, 0.77, 0.14, 0.12); tone(784, 0.86, 0.16, 0.12); tone(1047, 0.95, 0.42, 0.13); tone(1568, 1.02, 0.3, 0.05);
@@ -6262,7 +6267,7 @@ SCREENS.practice = function () {
     html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (stage === 'miss' ? ' try' : '') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
       (stage === 'done' ? '<button type="button" class="qr-why' + (it.why || it.whySeen ? '' : ' hint') + '" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '"><span class="qr-q">?</span></button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
-      (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
+      (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num"><span class="xp-p">+</span>' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
       '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
       (stage === 'done' ? '<div class="qr-text">' + figHtml(explainOf(q), true) + '</div>' : '') +
       (stage === 'miss' ? '<div class="qr-go qr-try" data-act="retry"><span>Try again</span></div>'   /* 3.78.0 (the owner) not a button: the student taps an option again */
@@ -8291,14 +8296,16 @@ ACTIONS.skip = function () {
    is given the final number once, when the count is done. Not with Reduce animations. */
 function xpCount() {
   var el = elScreens.querySelector('.q-result.fresh .fb-xp'), n, k = 0, at;
-  if (!el || calmMotion()) return;
+  if (!el) return;
   n = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10);
   if (!n) return;
   at = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--q-xp'), 10) || 0;
-  el.setAttribute('aria-hidden', 'true'); el.textContent = '+0 XP';
+  setTimeout(function () { if (el.parentNode) sfx('coin'); }, at);   // 3.82.0 (the owner) the XP lands with a coin: heard once the right answer's own sound is done
+  if (calmMotion()) return;
+  el.setAttribute('aria-hidden', 'true'); el.innerHTML = '<span class="xp-p">+</span>0 XP';
   setTimeout(function step() {
     if (!el.parentNode) return;
-    k++; el.textContent = '+' + Math.round(n * k / 6) + ' XP';
+    k++; el.innerHTML = '<span class="xp-p">+</span>' + Math.round(n * k / 6) + ' XP';
     if (k < 6) setTimeout(step, 28); else el.removeAttribute('aria-hidden');
   }, at);
 }
