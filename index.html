@@ -1813,6 +1813,12 @@ a.link{text-decoration:none}
 .path .k-done .ch-name{font-weight:var(--fw-q);color:var(--ink3)}   /* 3.89.0 (the owner) a passed chapter steps back: lighter words, a fainter picture; its tick stays bright */
 .path .k-done .ch-en{opacity:.75}
 .path .k-done .chp-ic{opacity:.45}
+.path .ch-panel{min-height:88px;padding:16px 20px;margin-top:24px !important;border-radius:var(--r-btn)}   /* 3.90.0 (the owner) slimmer panels, sharper corners, more air between them */
+.path .chp-ic{width:56px;height:56px;margin-right:16px}
+.path .chp-ic .chi{width:56px;height:56px}
+.path .chp-emo{font-size:calc(var(--fs-2xl) * 1.5)}
+.path .ch-prog{margin-top:8px}
+.path:before{top:44px;bottom:44px}
 .path:before{width:3px;margin-left:-1.5px}   /* 3.86.0 (the owner, Brilliant's measured) the path's line a little bolder, 3 px; the same colour */
 .path .ch-panel{box-shadow:0 4px 0 var(--pn-line),var(--edge-in);transition:background-color var(--t-press) var(--ease-swift),transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift)}   /* 3.86.0 Brilliant's lip: a thin border all round and a 4 px lip below in the border's colour says it can be pressed */
 .path .k-active,.path .k-revise{box-shadow:0 4px 0 var(--done-line),inset 0 0 0 .34px var(--done-line)}
@@ -3199,7 +3205,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.89.0',
+  VERSION: '3.90.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
