@@ -1801,8 +1801,10 @@ a.link{text-decoration:none}
 @keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(2.6);opacity:0}}
 /* 3.9.1 purple belongs to the syllabus: only a chapter passed or on the go has a light purple ground (the one on the go also its
    strong edge); a chapter not started and a locked one stay neutral */
-.path .k-active,.path .k-revise{background:var(--surface)}
-.path .k-done{background:var(--done-bg);border-color:var(--done-line);box-shadow:inset 0 0 0 .34px var(--done-line)}   /* 3.31.0 Brilliant's finished card, in the flame (3.26.0 had no tint) */
+.path .k-active,.path .k-revise{background:var(--done-bg);border-color:var(--done-line);box-shadow:inset 0 0 0 .34px var(--done-line)}   /* 3.84.0 (the owner, Brilliant's) only the chapter on the go wears the flame: the eye goes where the work is */
+.path .k-done{background:var(--pn);border-color:var(--pn-line);box-shadow:none}   /* a passed chapter is calm: its tick and its full bar say it */
+.path .ch-bar{height:4px}   /* thin, as Brilliant's */
+.path .k-done .ch-bar>i{background:var(--ink3)}   /* 3.31.0 Brilliant's finished card, in the flame (3.26.0 had no tint) */
 /* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
 @media (max-width:370px){.nav-lbl{font-size:var(--fs-lg)}}
 @media (max-width:340px){.nav-ic{width:60px;height:36px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:var(--fs-md)}}
@@ -3181,7 +3183,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.83.0',
+  VERSION: '3.84.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -5920,7 +5922,7 @@ function chCard(u, v) {
     st = topicStats(u, t); need = passNeed(t);
     bar = '<span class="ch-prog"><span class="ch-bar"><i style="width:' + Math.min(100, pct(st.mastered, need)) + '%"></i></span></span>';
   }
-  if (k === 'done') badge = '<span class="ch-badge ch-st done" aria-hidden="true">' + SEAL_TICK + '</span>';
+  if (k === 'done') { badge = '<span class="ch-badge ch-st done" aria-hidden="true">' + SEAL_TICK + '</span>'; bar = '<span class="ch-prog"><span class="ch-bar"><i style="width:100%"></i></span></span>'; }   // 3.84.0 a full bar
   else if (k === 'locked') badge = '<span class="lock-mid" aria-hidden="true"></span>';     // a small lock in the top right corner, clear of the names
   else if (k === 'soon') badge = '<span class="ch-badge soon" aria-hidden="true">' + li('clock', 16) + '</span>';
   act = k === 'soon' ? 'ch-soon' : k === 'locked' ? 'locked' : 'chapter';
