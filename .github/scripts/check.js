@@ -166,20 +166,20 @@ try {
         return e;
       } }
 ,
-    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026',
+    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026; its inside darker at night (--right-opt-bg) at the owner\'s request 28 Nov 2026',
       test: () => {
         const e = [];
-        const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
-                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-ink': '#0E7C3A' } };
+        const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-opt-bg': '#0A2914', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
+                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-opt-bg': '#CFF8DB', '--right-ink': '#0E7C3A' } };
         for (const [k, v] of Object.entries(want.root)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(root)) e.push(':root must hold ' + k + ':' + v);
         for (const [k, v] of Object.entries(want.light)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(light)) e.push('the light look must hold ' + k + ':' + v);
         const has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
         has('.qz .q-result.ok', 'background:var(--right-sheet)');
         has('.qz .qr-go.ok', 'background:var(--right);color:var(--on-right);box-shadow:04px0var(--right-lip)');
         has('.qz .qr-go.ok:active', 'box-shadow:01px0var(--right-lip)');
-        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
+        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-opt-bg);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
         if (!/(^|;)--right-opt:var\(--right\)(;|$)/.test(root) || !/(^|;)--right-opt:var\(--right-lip\)(;|$)/.test(light)) e.push('--right-opt must be var(--right) on the dark look and var(--right-lip) on the light (the right option\'s border, words and mark in one green)');
-        has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
+        has('.gm .ok', 'border-color:var(--right);background:var(--right-opt-bg);box-shadow:inset000.34pxvar(--right)');
         if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
         return e;
       } },
