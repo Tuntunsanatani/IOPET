@@ -166,20 +166,20 @@ try {
         return e;
       } }
 ,
-    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026',
+    { what: 'the right answer\'s green: Brilliant\'s green one step brighter, on the sheet, Continue, the right option (its border, words and mark in one green) and a game\'s right answer', since: '3.42.0; the right option 3.56.0', status: 'FINAL, the owner, 20 Nov 2026; the right option changed at the owner\'s request 26 Nov 2026; its inside darker at night (--right-opt-bg) at the owner\'s request 28 Nov 2026',
       test: () => {
         const e = [];
-        const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
-                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-ink': '#0E7C3A' } };
+        const want = { root: { '--right': '#2FEB64', '--right-lip': '#1C9E42', '--right-sheet': '#0E4520', '--right-opt-bg': '#0A2914', '--right-ink': '#6CF294', '--on-right': '#FFFFFF' },
+                       light: { '--right': '#2DE060', '--right-lip': '#18B348', '--right-sheet': '#CFF8DB', '--right-opt-bg': '#EFFCF3', '--right-ink': '#0E7C3A' } };
         for (const [k, v] of Object.entries(want.root)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(root)) e.push(':root must hold ' + k + ':' + v);
         for (const [k, v] of Object.entries(want.light)) if (!new RegExp('(^|;)' + k + ':' + v + '(;|$)').test(light)) e.push('the light look must hold ' + k + ':' + v);
         const has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
         has('.qz .q-result.ok', 'background:var(--right-sheet)');
         has('.qz .qr-go.ok', 'background:var(--right);color:var(--on-right);box-shadow:04px0var(--right-lip)');
         has('.qz .qr-go.ok:active', 'box-shadow:01px0var(--right-lip)');
-        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
+        has('.qz .opt-btn.correct', 'border-color:var(--right-opt);background:var(--right-opt-bg);box-shadow:inset000.34pxvar(--right-opt);opacity:1;color:var(--right-opt)');
         if (!/(^|;)--right-opt:var\(--right\)(;|$)/.test(root) || !/(^|;)--right-opt:var\(--right-lip\)(;|$)/.test(light)) e.push('--right-opt must be var(--right) on the dark look and var(--right-lip) on the light (the right option\'s border, words and mark in one green)');
-        has('.gm .ok', 'border-color:var(--right);background:var(--right-sheet);box-shadow:inset000.34pxvar(--right)');
+        has('.gm .ok', 'border-color:var(--right);background:var(--right-opt-bg);box-shadow:inset000.34pxvar(--right)');
         if (!rule('.qz .fb-xp').includes('color:var(--right-ink)')) e.push('.qz .fb-xp must be color:var(--right-ink)');
         return e;
       } },
@@ -228,13 +228,15 @@ try {
         if (!js.includes("window.getComputedStyle(b).position === 'sticky') return;")) e.push('choosing must not scroll the page while the row is pinned (showCheck)');
         return e;
       } },
-    { what: 'an option answers in colour only, as Brilliant\'s: chosen in the flame (border and words), right in one green, wrong faded with its cross merged into its border; nothing swells, springs, sparkles or shakes', since: '3.56.0, 3.57.0; the cross\'s colour 3.59.0', status: 'FINAL, the owner, 26 Nov 2026; the cross\'s colour changed at the owner\'s request 26 Nov 2026; the chosen border thinner (1.5 px) at the owner\'s request 27 Nov 2026',
+    { what: 'an option answers in colour only, as Brilliant\'s: chosen in the flame (border and words), right in one green, wrong faded with its cross merged into its border; nothing swells, springs, sparkles or shakes', since: '3.56.0, 3.57.0; the cross\'s colour 3.59.0', status: 'FINAL, the owner, 26 Nov 2026; the cross\'s colour changed at the owner\'s request 26 Nov 2026; the chosen border thinner (1.5 px) at the owner\'s request 27 Nov 2026; a drawn option\'s lines in its colour (3.81.0) FINAL 28 Nov 2026',
       test: () => {
         const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
         has('.qz .opt-btn.sel', 'border-color:var(--primary);background:var(--done-bg);box-shadow:inset000.34pxvar(--primary);color:var(--primary)');
         has('.qz .opt-btn:active', 'transform:none');
         has('.qz .opt-btn.sel-in', 'animation:q-selvar(--t-state)var(--ease-swift)');
         has('.qz .opt-btn.sel,.gm-field.has', 'border-width:var(--bw-ctl)');
+        has('.qz .opt-btn.sel .fig,.qz .opt-btn.correct .fig', 'color:inherit');
+        if (!rule('.qz .opt-btn.sel .fv-l,.qz .opt-btn.sel .fv-k,.qz .opt-btn.sel .fig-line,.qz .opt-btn.correct .fv-l,.qz .opt-btn.correct .fv-k,.qz .opt-btn.correct .fig-line').includes('stroke:currentColor')) e.push('a drawn option\'s lines must take the option\'s colour (stroke:currentColor)');
         has('.qz .opt-btn.ok-in', 'animation:q-okvar(--t-fade)var(--ease-std)var(--q-ans)backwards');
         has('.qz .opt-btn.wrong,.qz .opt-btn.out', 'opacity:.4;border-color:var(--edge);background:var(--surface);box-shadow:var(--edge-in)');
         has('.qz .opt-btn.wrong .opt-mk,.qz .opt-btn.out .opt-mk', 'background:var(--edge);color:var(--bg)');
