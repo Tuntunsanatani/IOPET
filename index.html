@@ -1809,6 +1809,10 @@ a.link{text-decoration:none}
 .path .k-done{background:var(--pn);border-color:var(--pn-line);box-shadow:none}   /* a passed chapter is calm: its tick and its full bar say it */
 .path .ch-bar{height:4px}   /* thin, as Brilliant's */
 .path .k-done .ch-bar>i{background:var(--ink3)}   /* 3.31.0 Brilliant's finished card, in the flame (3.26.0 had no tint) */
+.path .k-done .ch-prog{margin-right:-24px}   /* 3.89.0 (the owner) one bar for every card: a passed card's as long as one on the go (its words keep room for the tick) */
+.path .k-done .ch-name{font-weight:var(--fw-q);color:var(--ink3)}   /* 3.89.0 (the owner) a passed chapter steps back: lighter words, a fainter picture; its tick stays bright */
+.path .k-done .ch-en{opacity:.75}
+.path .k-done .chp-ic{opacity:.45}
 .path:before{width:3px;margin-left:-1.5px}   /* 3.86.0 (the owner, Brilliant's measured) the path's line a little bolder, 3 px; the same colour */
 .path .ch-panel{box-shadow:0 4px 0 var(--pn-line),var(--edge-in);transition:background-color var(--t-press) var(--ease-swift),transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift)}   /* 3.86.0 Brilliant's lip: a thin border all round and a 4 px lip below in the border's colour says it can be pressed */
 .path .k-active,.path .k-revise{box-shadow:0 4px 0 var(--done-line),inset 0 0 0 .34px var(--done-line)}
@@ -3195,7 +3199,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.88.0',
+  VERSION: '3.89.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
