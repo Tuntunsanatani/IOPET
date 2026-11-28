@@ -157,7 +157,7 @@
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
-  --t-pop:250ms;--t-sheet:280ms;--t-hint:860ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  --t-pop:250ms;--t-sheet:280ms;--t-hint:3s;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
@@ -745,10 +745,10 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .qr-head .fb-title{min-width:4.65em}   /* 3.75.0 (the owner) the ? stands in one place: each word takes the room of the widest, Not quite */
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qz .qr-q{display:inline-block;transform-origin:50% 8%}
-.qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-press) both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
-.qz .qr-why.hint .qr-q{animation:qr-swing var(--t-hint) linear var(--t-press) both}
-@keyframes qr-hint{0%{transform:none;animation-timing-function:cubic-bezier(.2,.8,.2,1)}28%{transform:scale(1.15)}70%{transform:scale(1.15);animation-timing-function:cubic-bezier(.4,0,.2,1)}100%{transform:none}}
-@keyframes qr-swing{0%,20%{transform:none;animation-timing-function:ease-out}32%{transform:rotate(-14deg);animation-timing-function:ease-in-out}45%{transform:rotate(11deg);animation-timing-function:ease-in-out}57%{transform:rotate(-7deg);animation-timing-function:ease-in-out}67%{transform:rotate(3deg);animation-timing-function:ease-out}76%,100%{transform:none}}
+.qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
+.qz .qr-why.hint .qr-q{animation:qr-swing var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.76.0 (the owner) the same 860 ms motion, then a rest: again every 3 s until the reason is opened once, the first three felt */
+@keyframes qr-hint{0%{transform:none;animation-timing-function:cubic-bezier(.2,.8,.2,1)}8%{transform:scale(1.15)}20%{transform:scale(1.15);animation-timing-function:cubic-bezier(.4,0,.2,1)}28.7%,100%{transform:none}}
+@keyframes qr-swing{0%,5.7%{transform:none;animation-timing-function:ease-out}9.2%{transform:rotate(-14deg);animation-timing-function:ease-in-out}12.9%{transform:rotate(11deg);animation-timing-function:ease-in-out}16.3%{transform:rotate(-7deg);animation-timing-function:ease-in-out}19.2%{transform:rotate(3deg);animation-timing-function:ease-out}21.8%,100%{transform:none}}
 .calm .qz .qr-why.hint,.calm .qz .qr-why.hint .qr-q{animation:none}
 @media (prefers-reduced-motion:reduce){.qz .qr-why.hint,.qz .qr-why.hint .qr-q{animation:none}}
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
@@ -3168,7 +3168,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.75.0',
+  VERSION: '3.76.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -6249,7 +6249,7 @@ SCREENS.practice = function () {
        answer is one tap away, "Why?", once the answer is shown) */
     html += '<div class="q-dock res' + (stage === 'done' && it.why ? ' why' : '') + '">' + (fresh ? '<div class="q-ghost" aria-hidden="true"><span class="btn q-skip">Skip</span><span class="btn btn-check">Check</span></div>' : '') + '<div class="q-result ' + (ok ? 'ok' : 'bad') + (it.why ? ' open' : '') + (fresh ? ' fresh' : '') +
       '" id="fb" role="status"><div class="qr-head"><span class="fb-title">' + (ok ? 'Correct!' : latest === -1 ? 'Skipped' : 'Not quite') + '</span>' +
-      (stage === 'done' ? '<button type="button" class="qr-why" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '"><span class="qr-q">?</span></button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
+      (stage === 'done' ? '<button type="button" class="qr-why' + (it.why || it.whySeen ? '' : ' hint') + '" data-act="why" aria-label="Why? Show the explanation" aria-expanded="' + (it.why ? 'true' : 'false') + '"><span class="qr-q">?</span></button>' : '') +   // 3.62.0 (the owner) a ? right by the result's word
       (ok && it.pick === q.a && it.xp ? '<span class="fb-xp num">+' + it.xp + ' XP</span>' : '') + '<span class="qr-sp"></span>' +
       '<button type="button" class="qr-flag" data-act="report" aria-label="Report a problem with this question">' + li('flag') + '</button></div>' +
       (stage === 'done' ? '<div class="qr-text">' + figHtml(explainOf(q), true) + '</div>' : '') +
@@ -6375,6 +6375,14 @@ function dUp(ev) {
     catch (e) { row.scrollLeft += (a.left + a.width / 2) - (r.left + r.width / 2); }
   }
 }
+/* 3.76.0 (the owner) the ? calls until its reason is read: each swing is felt (a light knock as the ? tips), the first three only */
+function qHintFelt(ev) {
+  var el = ev.target;
+  if (!el || ev.animationName !== 'qr-hint' || !el.classList || !el.classList.contains('hint')) return;
+  el.hintN = (el.hintN || 0) + 1;
+  if (el.hintN > 3) return;
+  setTimeout(function () { if (document.body.contains(el) && el.classList.contains('hint')) buzz(8); }, 280);
+}
 /* 3.72.0 (the owner) THE DOT UNDER THE FINGER answers it: it grows a little and its number rises just over it, in the
    dot's own colour (green right, the flame answered in a paper, grey otherwise), at the options' size and weight. The
    number lives on the phone, not in the page, so it glides from dot to dot while the page is drawn again under it. Each
@@ -6471,7 +6479,7 @@ function swUp(ev) {
    student's, crossed out if not right), the explanation open, and one way back to the open question */
 function peekHtml(k) {
   var it = S.items[k], q = it.q, latest = it.retry ? it.pick2 : it.pick, ok = latest === q.a, html;
-  var open = !!S.peekWhy, hint = !!S.peekHint && !open;
+  var open = !!S.peekWhy, hint = !open && !it.whySeen;
   S.peekHint = false;
   html = '<div class="page bg-practice practice qz peek' + (open ? ' why' : '') + '"><div class="q-header"><button class="icon-btn" data-act="quit" aria-label="Quit session">' + li('close') + '</button>' +
     qDots(false, k) + '<span class="q-hd-sp" aria-hidden="true"></span></div>' +
@@ -8364,14 +8372,15 @@ ACTIONS.why = function (el) {                    // 3.12.0 the result panel's "W
   if (S && !S.exam && typeof S.peek === 'number' && S.peek !== S.i) {   // 3.73.0 an answered question looked at again: the same sheet, the same blur
     pg = elScreens.querySelector('.page.qz.peek'); dock = pg && pg.querySelector('.q-dock'); box = dock && dock.querySelector('.q-result');
     if (!box) return;
-    S.peekWhy = !S.peekWhy;
+    S.peekWhy = !S.peekWhy; S.items[S.peek].whySeen = true;
     box.classList.toggle('open', S.peekWhy); dock.classList.toggle('why', S.peekWhy); pg.classList.toggle('why', S.peekWhy);
     b = pg.querySelector('.qr-why');
     if (b) { b.classList.remove('hint'); b.setAttribute('aria-expanded', S.peekWhy ? 'true' : 'false'); }
     return;
   }
   if (!it || qStage(it) !== 'done' || !box) return;
-  it.why = !it.why;
+  it.why = !it.why; it.whySeen = true;
+  if (el && el.classList) el.classList.remove('hint');
   if (it.why) qHold(box);                        // 3.39.0 the question and its answers stay where they are read (§12.19)
   else qFree(box, it);                           // 3.40.2 folded: everything goes back where it was before Why? (the keys by the thumb)
   box.classList.toggle('open', !!it.why);
@@ -9683,7 +9692,9 @@ function boot() {
   });
   elPhone.addEventListener('pointerdown', gDown);                    // 3.33.0 a card of an order game can be dragged
   elPhone.addEventListener('pointerdown', dDown);                    // 3.52.0 the dots follow a finger slid along them
-  elPhone.addEventListener('pointerdown', swDown);                   // 3.72.0 a swipe turns the question
+  elPhone.addEventListener('pointerdown', swDown);
+  elPhone.addEventListener('animationstart', qHintFelt);             // 3.76.0
+  elPhone.addEventListener('animationiteration', qHintFelt);                   // 3.72.0 a swipe turns the question
   document.addEventListener('pointermove', swMove, { passive: false });
   document.addEventListener('pointerup', swUp);
   document.addEventListener('pointercancel', swUp);
