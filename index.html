@@ -1757,7 +1757,8 @@ a.link{text-decoration:none}
 .chp-ic .chi{display:block}
 .chp-emo{display:flex;align-items:center;justify-content:center;font-size:calc(var(--fs-2xl) * 2);line-height:1;filter:grayscale(1);opacity:.85}   /* 3.87.0 a course without drawn icons: its emoji, without hue (3.10.0), in the icon's place */
 .ch-en{display:block;font-size:var(--fs-sm);font-weight:600;color:var(--ink3);line-height:1.3;letter-spacing:var(--ls-sm)}
-.path .ch-name{font-size:var(--fs-xl);font-weight:700;line-height:1.3;margin-top:8px;letter-spacing:var(--ls-xl)}
+.path .ch-name{font-size:var(--fs-lg);font-weight:600;line-height:1.3;margin-top:4px;letter-spacing:var(--ls-lg)}   /* 3.88.0 (the owner's pick of two) a chapter's name 17 px at 600: still the card's title, no longer shouting */
+.path .ch-en{font-size:var(--fs-xs);letter-spacing:var(--ls-xs)}
 .path .ch-prog{margin-top:12px}
 .path .ch-bar{height:6px}
 /* 3.26.0 the card on the way is told by its own bar, not an orange frame; 3.30.0 it keeps the panel's border like every other card
@@ -1978,8 +1979,8 @@ var PLANS = {
     paper: 'MAT paper: 90 questions · 90 minutes',
     note: 'Bihar NMMS has two papers of 90 questions each, 90 minutes each: MAT (mental ability) and SAT (Science 35, Social Science 35, Maths 20). The number beside each chapter (~6.8) is how many of its questions come in one paper, on average over the MAT papers of 2023 to 2026.',
     chapters: [
-      { id: 'ab', name: 'English alphabet (A–Z)', hi: 'अंग्रेज़ी वर्णमाला', per: 0,   group: 'Foundation', why: 'About 14 questions of every paper use English letters, even in Hindi.' },
-      { id: 'cl', name: 'Classification',          hi: 'वर्गीकरण (बेमेल चुनिए)', per: 6.8, group: 'Verbal · Tier 1' },
+      { id: 'ab', name: 'English alphabet',       hi: 'अंग्रेज़ी वर्णमाला', per: 0,   group: 'Foundation', why: 'About 14 questions of every paper use English letters, even in Hindi.' },
+      { id: 'cl', name: 'Classification',          hi: 'वर्गीकरण', per: 6.8, group: 'Verbal · Tier 1' },
       { id: 'mn', name: 'Missing number',          hi: 'लुप्त संख्या',        per: 6.8, group: 'Verbal · Tier 1' },
       { id: 'an', name: 'Analogy',                 hi: 'सादृश्यता',          per: 6.3, group: 'Verbal · Tier 1' },
       { id: 'se', name: 'Series',                  hi: 'शृंखला',              per: 5.8, group: 'Verbal · Tier 1' },
@@ -3194,7 +3195,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.87.0',
+  VERSION: '3.88.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
