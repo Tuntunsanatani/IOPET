@@ -1745,12 +1745,13 @@ a.link{text-decoration:none}
 @media (max-height:700px){.hm-mid{padding:0}.hm-art{margin-bottom:12px}}
 @media (max-height:600px){.hm-art,.hm-en,.hm .nudge~.hm-line{display:none}.hm-name{margin-top:0}}   /* a short phone keeps the card and its button above the bar */
 /* 3.9.1 CHAPTER PANELS on one path: a big icon with room around it, two names, nothing else; a line joins one panel to the next */
-.path .ch-panel{position:relative;display:flex;align-items:center;min-height:112px;border-radius:var(--r-lg);border-bottom-width:var(--lip) !important;
+.path .ch-panel{position:relative;z-index:1;display:flex;align-items:center;min-height:112px;border-radius:var(--r-lg);
   background:var(--surface);border:var(--bw-edge) solid var(--edge);box-shadow:var(--edge-in)}   /* 3.26.0 only the syllabus: no lip; every card the same height. 3.29.0 the faint line every panel has */
 .path .ch-panel:first-child{margin-top:0 !important}
-.path .ch-panel+.ch-panel:before{content:'';position:absolute;left:50%;top:-18px;width:3px;height:16px;margin-left:-1.5px;background:var(--line)}
-.path .ch-panel{transition:transform var(--t-press) var(--ease-swift),border-bottom-width var(--t-press) var(--ease-swift),margin-bottom var(--t-press) var(--ease-swift),background-color var(--t-press) var(--ease-swift)}
-.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(4px);border-bottom-width:2px !important;margin-bottom:4px;
+.path{position:relative}
+.path:before{content:'';position:absolute;left:50%;top:56px;bottom:56px;width:var(--bw-edge);margin-left:calc(var(--bw-edge) / -2);background:var(--pn-line)}   /* 3.85.0 (the owner: every detail measured) one line behind the whole path, as wide as a panel's border and in its colour; the panels lie on it, so it meets each one exactly, at any zoom, pressed or not */
+.path .ch-panel{transition:background-color var(--t-press) var(--ease-swift)}
+.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{   /* 3.85.0 Brilliant's: a press only tints the panel; nothing moves, so nothing comes apart */
   background:var(--pn);background:linear-gradient(var(--tap-tint),var(--tap-tint)),var(--pn)}
 .chp-ic{flex:none;width:72px;height:72px;margin-right:20px}
 .chp-ic .chi{display:block}
@@ -1764,6 +1765,7 @@ a.link{text-decoration:none}
 .ch-badge .li{stroke-width:2.6}
 .ch-badge.done{background:var(--good);color:var(--on-mark)}
 .path .k-locked,.path .k-soon{border-style:solid}
+.path .k-soon{background:var(--pn)}   /* opaque, so the path's line stays behind it */
 .path .k-locked .chp-ic,.path .k-locked .topic-info,.path .k-soon .chp-ic,.path .k-soon .topic-info{opacity:.45}
 .path .k-locked .chp-ic .chi,.path .k-soon .chp-ic .chi{filter:grayscale(.7)}
 @media (max-width:370px){.chp-ic{width:64px;height:64px;margin-right:16px}.chp-ic .chi{width:64px;height:64px}.path .ch-panel{padding:20px}.mh-art .chi{width:80px;height:80px}.mh-title{font-size:var(--fs-3xl);letter-spacing:var(--ls-3xl)}}
@@ -3183,7 +3185,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.84.0',
+  VERSION: '3.85.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
