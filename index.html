@@ -157,7 +157,7 @@
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
-  --try-sheet:#FAE29F;--try-ink:#141414;--try-ink2:#5C5C5C;--try-x:rgba(20,20,20,.42);--t-pop:250ms;--t-sheet:280ms;--t-hint:1510ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  --try-sheet:#3A3218;--try-ink:#FFDB70;--try-ink2:#D8C79A;--try-x:rgba(255,255,255,.4);--t-pop:250ms;--t-sheet:280ms;--t-hint:1510ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
@@ -171,6 +171,7 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
+  --try-sheet:#FAE29F;--try-ink:#141414;--try-ink2:#5C5C5C;--try-x:rgba(20,20,20,.42);   /* 3.80.0 one more try: Brilliant's light yellow; at night a deep amber with yellow words (the owner: the light yellow glared in the dark) */
   --hl1:#FACC15;--hl1-e:#CA8A04;--hl2:#38BDF8;--hl2-e:#0284C7;--hl3:#F472B6;--hl3-e:#DB2777;--hl4:#4ADE80;--hl4-e:#16A34A;
   /* LIGHT: a matte light grey page, white cards, the same meanings. The flame is too light for letters on white, so text and
      thin marks use its deeper tones (--primary-ink 5.6:1, --primary for marks 3.5:1); the button keeps the bright flame. */
@@ -747,6 +748,8 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .q-result.try .qr-flag{color:var(--try-x)}
 .qr-try{display:flex;align-items:center;justify-content:center;min-height:var(--h-btn);font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:700;line-height:1;color:var(--try-ink2)}   /* "Try again" where its button was, a little higher, a step over Not quite */
 .qr-try span{position:relative;top:-6px}
+.qz .q-result.fresh .qr-go.qr-try{animation:q-try var(--t-sheet) var(--ease-sheet) var(--q-show) backwards}   /* 3.80.0 (the owner) no box before it: the words come in bright white and settle into their colour as the sheet lands */
+@keyframes q-try{from{color:#FFFFFF}}
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qz .qr-q{display:inline-block;transform-origin:50% 8%}
 .qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
@@ -3172,7 +3175,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.79.0',
+  VERSION: '3.80.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
