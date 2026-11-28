@@ -1824,6 +1824,12 @@ a.link{text-decoration:none}
 .path .ch-badge.done{width:24px;height:24px;right:12px;top:12px;color:var(--ink3)}   /* the tick, small, in the corner: a grey disc */
 .path .ch-badge.done .seal{width:24px;height:24px}
 .path .ch-badge.done .seal path{stroke:var(--pn)}   /* its mark the panel's own white */
+.path .ch-panel{align-items:stretch}   /* 3.92.0 (the owner, Brilliant measured) the words fill the panel: the English label at the top, bold and mid-grey; */
+.path .chp-ic{align-self:center}
+.path .topic-info{display:flex;flex-direction:column}
+.path .ch-en{font-weight:700;letter-spacing:var(--ls-xs)}
+.path .ch-name{margin-top:12px}   /* the Hindi name with room to breathe under it (Devanagari reads closer than Latin); */
+.path .ch-prog{margin-top:auto;padding-top:12px}   /* the bar down by the panel's bottom, clear of the name */
 .path:before{width:3px;margin-left:-1.5px}   /* 3.86.0 (the owner, Brilliant's measured) the path's line a little bolder, 3 px; the same colour */
 .path .ch-panel{box-shadow:0 4px 0 var(--pn-line),var(--edge-in);transition:background-color var(--t-press) var(--ease-swift),transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift)}   /* 3.86.0 Brilliant's lip: a thin border all round and a 4 px lip below in the border's colour says it can be pressed */
 .path .k-active,.path .k-revise{box-shadow:0 4px 0 var(--done-line),inset 0 0 0 .34px var(--done-line)}
@@ -3210,7 +3216,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.91.0',
+  VERSION: '3.92.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
