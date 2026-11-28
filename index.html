@@ -1544,6 +1544,11 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .opt-mk .li{width:14px;height:14px;stroke-width:3.2}
 .qz .opt-btn.sel{border-color:var(--primary);background:var(--done-bg);box-shadow:inset 0 0 0 .34px var(--primary);color:var(--primary)}   /* the student's choice: the flame, its border and its words alike (3.56.0, Brilliant's, the owner) */
 .qz .opt-btn.sel-in{animation:q-sel var(--t-state) var(--ease-swift)}
+.qz .opt-btn .fv-l,.qz .opt-btn .fv-k,.qz .opt-btn .fv-f,.qz .opt-btn .fig-line,.qz .opt-btn .fig-hub{transition:stroke var(--t-state) var(--ease-swift),fill var(--t-state) var(--ease-swift)}
+.qz .opt-btn.sel .fv-l,.qz .opt-btn.sel .fv-k,.qz .opt-btn.sel .fig-line,.qz .opt-btn.correct .fv-l,.qz .opt-btn.correct .fv-k,.qz .opt-btn.correct .fig-line{stroke:currentColor}   /* 3.81.0 (the owner) a drawn option answers like a worded one: its lines take the option's colour, the flame chosen, the green right */
+.qz .opt-btn.sel .fv-f,.qz .opt-btn.sel .fig-hub,.qz .opt-btn.correct .fv-f,.qz .opt-btn.correct .fig-hub{stroke:currentColor}
+.qz .opt-btn.sel .fv-f,.qz .opt-btn.correct .fv-f{fill:currentColor}
+.qz .opt-btn.sel .fig,.qz .opt-btn.correct .fig{color:inherit}   /* the drawing takes the option's colour, not its own ink */
 .qz .opt-btn.sel,.gm-field.has{border-width:var(--bw-ctl)}   /* 3.69.0 (the owner) a choice answers the tap: its border one step thinner (2 to 1.5 px), the box the same size */
 @keyframes q-sel{from{border-color:var(--edge);background-color:var(--surface);color:var(--ink)}}
 .qz .opt-btn.correct{border-color:var(--right-opt);background:var(--right-sheet);box-shadow:inset 0 0 0 .34px var(--right-opt);opacity:1;color:var(--right-opt)}   /* 3.41.0 the right option in the sheet's colours (the owner: one family); 3.56.0 its border, words and mark in one green (Brilliant's, the owner) */
@@ -3175,7 +3180,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.80.0',
+  VERSION: '3.81.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
