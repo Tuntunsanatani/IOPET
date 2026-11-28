@@ -332,6 +332,18 @@ try {
         if (rule('.qz .qr-head .fb-title') !== 'min-width:4.65em') e.push('.qz .qr-head .fb-title must be exactly min-width:4.65em');
         if (!rule('.qr-head').includes('min-height:44px')) e.push('.qr-head must hold min-height:44px');
         return e;
+      } },
+    { what: 'one more try: its own sheet (Brilliant\'s light yellow by day, a deep amber with yellow words at night), Try again as words where its button was (no button; the options are tapped again), coming in white with no box; a tapped option chosen at once', since: '3.78.0, 3.79.0, 3.80.0', status: 'FINAL, the owner, 28 Nov 2026',
+      test: () => {
+        const e = [], js = scripts.join('\n'), has = (sel, body) => { if (rule(sel) !== body) e.push(sel + ' must be exactly ' + body); };
+        if (!/(^|;)--try-sheet:#3A3218;--try-ink:#FFDB70;--try-ink2:#D8C79A;--try-x:rgba\(255,255,255,\.4\)(;|$)/.test(root)) e.push('--try-* (dark) must be #3A3218, #FFDB70, #D8C79A, rgba(255,255,255,.4)');
+        if (!/(^|;)--try-sheet:#FAE29F;--try-ink:#141414;--try-ink2:#5C5C5C;--try-x:rgba\(20,20,20,\.42\)(;|$)/.test(light)) e.push('--try-* (light) must be #FAE29F, #141414, #5C5C5C, rgba(20,20,20,.42)');
+        has('.qz .q-result.bad.try', 'background:var(--try-sheet);color:var(--try-ink)');
+        if (!rule('.qr-try').includes('font-size:var(--fs-2xl);font-weight:700;line-height:1;color:var(--try-ink2)')) e.push('.qr-try must be --fs-2xl, 700, --try-ink2');
+        has('.qz .q-result.fresh .qr-go.qr-try', 'animation:q-tryvar(--t-sheet)var(--ease-sheet)var(--q-show)backwards');
+        if (!js.includes(`'<div class="qr-go qr-try" data-act="retry"><span>Try again</span></div>'`) || /class="btn qr-go plain" data-act="retry"/.test(js)) e.push('Try again must stay words, not a button');
+        if (!js.includes("if (pos !== null) { act.classList.add('sel', 'sel-in'); sense('select'); }")) e.push('an option tapped on the Try-again sheet must be chosen at once');
+        return e;
       } }
   ];
   for (const f of FINAL) { const e = f.test(); if (e.length) bad('FINAL (' + f.since + ', ' + f.status + ') ' + f.what + ': ' + e.join('; ')); else ok('FINAL holds: ' + f.what + ' (' + f.since + ', ' + f.status + ')'); }
