@@ -157,7 +157,7 @@
   --t-press:120ms;--t-state:180ms;--t-fade:200ms;--ease-std:cubic-bezier(.4,0,.2,1);
   /* 3.16.0 MOTION TOKENS (DESIGN.md §7): two springs, written over at start by applyEase() as the real spring curves
      (CSS linear()); these cubic curves are what an old browser keeps. pop: small things, a little overshoot; sheet: no bounce. */
-  --t-pop:250ms;--t-sheet:280ms;--t-hint:3s;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
+  --t-pop:250ms;--t-sheet:280ms;--t-hint:1510ms;--ease-pop:cubic-bezier(.34,1.3,.64,1);--ease-sheet:cubic-bezier(.05,.7,.1,1);--skel-hi:rgba(255,255,255,.07);
   /* 3.32.0 THE ANSWER'S TIMELINE, measured on Brilliant's recordings (DESIGN.md §12.15): what changes when, after Check */
   --q-ans:60ms;--q-dim:80ms;--q-mark:60ms;--q-sheet:60ms;--q-title:200ms;--q-show:240ms;--q-xp:270ms;--q-go:340ms;   /* 3.43.0 the right answer's beats follow its sound (the owner): the first soft pulse heard at ~60 ms (green, ✓, the sheet), the second at 200 ("Correct!"), E5 at 270 (the XP), the top note, its chord and the third pulse at 340 (Continue; the sparks until 3.56.0); a phone plays a sound about 60 ms late, so the eye and the ear meet */
   --t-xp:300ms;--ease-win:cubic-bezier(.34,1.7,.5,1);--q-step:40ms;--t-blink:1060ms;--t-dot:460ms;--t-dot-in:90ms;--ease-dot:cubic-bezier(.2,1.55,.36,1);   /* 3.33.0 a game's places light one after another; the caret blinks */
@@ -746,9 +746,9 @@ html.on-splash{--bg:#100F1C;--bg-deep:#100F1C;--bar:#100F1C}   /* from the very 
 .qz .qr-why:after{top:-6px;right:-6px;bottom:-6px;left:-6px}   /* 44 px to touch */
 .qz .qr-q{display:inline-block;transform-origin:50% 8%}
 .qz .qr-why.hint{animation:qr-hint var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.74.0 (the owner) an answered question looked at again: its circle grows a little, as iOS does, and as it nears its size the ? swings like a pendulum; then both settle, once, in 860 ms */
-.qz .qr-why.hint .qr-q{animation:qr-swing var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.76.0 (the owner) the same 860 ms motion, then a rest: again every 3 s until the reason is opened once, the first three felt */
-@keyframes qr-hint{0%{transform:none;animation-timing-function:cubic-bezier(.2,.8,.2,1)}8%{transform:scale(1.15)}20%{transform:scale(1.15);animation-timing-function:cubic-bezier(.4,0,.2,1)}28.7%,100%{transform:none}}
-@keyframes qr-swing{0%,5.7%{transform:none;animation-timing-function:ease-out}9.2%{transform:rotate(-14deg);animation-timing-function:ease-in-out}12.9%{transform:rotate(11deg);animation-timing-function:ease-in-out}16.3%{transform:rotate(-7deg);animation-timing-function:ease-in-out}19.2%{transform:rotate(3deg);animation-timing-function:ease-out}21.8%,100%{transform:none}}
+.qz .qr-why.hint .qr-q{animation:qr-swing var(--t-hint) linear var(--t-sheet) infinite both}   /* 3.76.0 (the owner) the same 860 ms motion, then a 650 ms rest: again every 1.51 s until the reason is opened once, the first three felt */
+@keyframes qr-hint{0%{transform:none;animation-timing-function:cubic-bezier(.2,.8,.2,1)}16%{transform:scale(1.15)}39.9%{transform:scale(1.15);animation-timing-function:cubic-bezier(.4,0,.2,1)}57%,100%{transform:none}}
+@keyframes qr-swing{0%,11.4%{transform:none;animation-timing-function:ease-out}18.2%{transform:rotate(-14deg);animation-timing-function:ease-in-out}25.6%{transform:rotate(11deg);animation-timing-function:ease-in-out}32.5%{transform:rotate(-7deg);animation-timing-function:ease-in-out}38.2%{transform:rotate(3deg);animation-timing-function:ease-out}43.3%,100%{transform:none}}
 .calm .qz .qr-why.hint,.calm .qz .qr-why.hint .qr-q{animation:none}
 @media (prefers-reduced-motion:reduce){.qz .qr-why.hint,.qz .qr-why.hint .qr-q{animation:none}}
 .qr-why{position:relative;flex:none;min-height:40px;padding:0 16px;border-radius:var(--r-pill);background:var(--fill-2);font-size:var(--fs-md);font-weight:700;color:var(--ink)}
@@ -3168,7 +3168,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.76.0',
+  VERSION: '3.77.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
