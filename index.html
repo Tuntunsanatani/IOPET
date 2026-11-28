@@ -3172,7 +3172,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.78.0',
+  VERSION: '3.79.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
@@ -8301,7 +8301,7 @@ var qDockAt = -1e9;
 function qSettle() { qDockAt = window.performance.now(); }
 function qSettling(el) { return window.performance.now() - qDockAt < CONFIG.NAV_LOCK_MS && !!el.closest && !!el.closest('.qz>.q-dock'); }
 /* 3.32.0 one more try after a first wrong answer: the sheet goes down, the wrong option stays out (faded, with its cross) */
-ACTIONS.retry = function () {
+ACTIONS.retry = function (pos) {
   var it, sh, on;
   if (!S || S.done || S.leaving) return;
   it = S.items[S.i];
@@ -8310,7 +8310,9 @@ ACTIONS.retry = function () {
     var before = it.g ? gRects() : null;
     S.leaving = false; it.retry = true; it.sel = undefined; it.why = false;
     if (it.g) gRetry(it);                             // 3.33.0 the right places stay, locked; the wrong letters go back to the tray
-    repaint(); gFly(before); qSettle();
+    if (typeof pos === 'number') { it.sel = pos; S.ckRise = true; }   // 3.79.0 the option tapped on the sheet is already chosen
+    repaint(); gFly(before); qSettle(); S.ckRise = false;
+    if (typeof pos === 'number') showCheck();
   };
   sh = $('fb');
   if (sh && !calmMotion()) { S.leaving = true; sh.classList.add('leave'); setTimeout(on, 200); } else on();
@@ -8734,8 +8736,11 @@ function qTapAway(t) {
   st = qStage(it);
   if (st === 'miss') {
     pos = !it.g && act && act.getAttribute('data-act') === 'pick' ? act.getAttribute('data-i') : null;
-    ACTIONS.retry();
-    if (pos !== null) setTimeout(function () { var o = elScreens.querySelector('[data-act=pick][data-i="' + pos + '"]'); if (o && S && S.items[S.i] === it && typeof it.sel !== 'number' && o.getAttribute('aria-disabled') !== 'true') ACTIONS.pick(o); }, calmMotion() ? 0 : 230);   // (only if nothing was chosen meanwhile)
+    /* 3.79.0 (the owner) the option answers the tap at once: chosen now, while the sheet goes down; Check is ready after */
+    pos = pos === null ? null : parseInt(pos, 10);
+    if (pos !== null && !(typeof it.order[pos] === 'number' && it.order[pos] !== it.pick)) pos = null;   // the option found wrong stays out
+    if (pos !== null) { act.classList.add('sel', 'sel-in'); sense('select'); }
+    ACTIONS.retry(pos);
     return true;
   }
   if (st === 'done' && it.why) { ACTIONS.why(dock.querySelector('.qr-why') || dock); return true; }
