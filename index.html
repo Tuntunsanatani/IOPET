@@ -1807,6 +1807,14 @@ a.link{text-decoration:none}
 .path .k-done{background:var(--pn);border-color:var(--pn-line);box-shadow:none}   /* a passed chapter is calm: its tick and its full bar say it */
 .path .ch-bar{height:4px}   /* thin, as Brilliant's */
 .path .k-done .ch-bar>i{background:var(--ink3)}   /* 3.31.0 Brilliant's finished card, in the flame (3.26.0 had no tint) */
+.path:before{width:3px;margin-left:-1.5px}   /* 3.86.0 (the owner, Brilliant's measured) the path's line a little bolder, 3 px; the same colour */
+.path .ch-panel{box-shadow:0 4px 0 var(--pn-line),var(--edge-in);transition:background-color var(--t-press) var(--ease-swift),transform var(--t-press) var(--ease-swift),box-shadow var(--t-press) var(--ease-swift)}   /* 3.86.0 Brilliant's lip: a thin border all round and a 4 px lip below in the border's colour says it can be pressed */
+.path .k-active,.path .k-revise{box-shadow:0 4px 0 var(--done-line),inset 0 0 0 .34px var(--done-line)}
+.path .k-done{box-shadow:0 4px 0 var(--pn-line)}
+.path .k-locked,.path .k-soon{box-shadow:none}   /* nothing to press, no lip */
+.path .ch-panel:not(.k-locked):not(.k-soon):active,.path .ch-panel.press{transform:translateY(4px);box-shadow:0 0 0 var(--pn-line),var(--edge-in)}   /* the press: the panel goes down over its lip, and its bottom stays where it was */
+.path .k-active:not(.k-locked):not(.k-soon):active,.path .k-active.press,.path .k-revise:not(.k-locked):not(.k-soon):active,.path .k-revise.press{box-shadow:0 0 0 var(--done-line),inset 0 0 0 .34px var(--done-line)}
+.path .k-done:not(.k-locked):not(.k-soon):active,.path .k-done.press{box-shadow:0 0 0 var(--pn-line)}
 /* 3.9.1 the bar on small phones: the names step down so the longest one (Progress) never touches its neighbours, in any font */
 @media (max-width:370px){.nav-lbl{font-size:var(--fs-lg)}}
 @media (max-width:340px){.nav-ic{width:60px;height:36px}.nav-item svg{width:30px;height:30px}.nav-lbl{font-size:var(--fs-md)}}
@@ -3185,7 +3193,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
    CONFIG — the knobs you are most likely to change
    ════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  VERSION: '3.85.0',
+  VERSION: '3.86.0',
   SPLASH_MS: 500,                              // CHANGE #7 (was 2200); 3.9.5 the least the splash shows: the lamp has caught by then (160–500 ms), and its light opens the app
   SPLASH_RM_MS: 300,                           // 3.9.5 ... when the phone asks for no animations: nothing catches, the lamp only fades off
   SPLASH_MAX_MS: 1500,                         // 3.9.2 ... and the most it waits for the app to be ready (the first screen's letters)
